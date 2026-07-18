@@ -604,6 +604,18 @@ normalizes to one extension per name and deletes same-base siblings), but
 the **wrong-number** half is not — it's on you to point the hero pick at
 `banner1` every rebrand.
 
+**The OG/Twitter image comes from `slide1` (not a `public/` file).**
+`MainLayout.astro` sets the `og:image`/`twitter:image` via the `ImageOg`
+prop default. It **must** be `import ogImage from "../assets/slide1.png"`
++ `ImageOg = ogImage.src` — so the social preview always tracks the
+current brand, because the uploader overwrites `src/assets/slide1.png`
+every rebrand. Do **not** point it at a `/slide*.webp` (or any bare
+`public/` path): the uploader never writes slides to `public/`, so a
+hardcoded `public/slideN.webp` is a stale leftover from a previous brand
+that silently ships as the wrong preview image. If you find `ImageOg`
+pointing at a `public/` path during a rebrand, repoint it to the
+`slide1` import.
+
 ## Phase 5 — Verify (always do this, it's where bugs surface)
 
 1. `npm run build` — this is the **one** build for the whole rebrand (all
@@ -621,6 +633,10 @@ the **wrong-number** half is not — it's on you to point the hero pick at
    - every `<img src=.../_image?href=...>` should reference the
      *new* asset filenames — grep for the old ones to make sure the
      Phase 4 glob trap didn't resurface
+   - `grep -o 'og:image" content="[^"]*"' dist/index.html` should point
+     at a hashed `/_astro/slide1.*` asset (the current brand's slide1),
+     **not** a bare `/slide*.webp` — a `public/` path here means the OG
+     image is a stale leftover (see the OG note in Phase 4)
    - grep for `undefined`, `NaN`, `[object Object]` as a cheap check
      for broken prop plumbing
    - `grep -c '<!--' dist/index.html` should be 0 — Astro ships HTML

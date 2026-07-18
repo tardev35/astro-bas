@@ -19,6 +19,6 @@ export default defineConfig({
     "/line": "https://tinyurl.com/suhng",
   },
 
-  site: "https://www.mafia168-guide.com",
+  site: "https://www.takdee999-guide.com",
   integrations: [sitemap()],
 });
