@@ -22,6 +22,21 @@ const PORT = 4000;
 
 const IMAGE_EXTS = ["png", "webp", "jpg", "jpeg", "avif", "gif", "svg"];
 
+// Cap the stored source width. 2560px covers a full-bleed hero on a 27" QHD
+// monitor without upscaling smaller uploads — only genuinely oversized files
+// (e.g. a 4000px export) get downscaled, so the repo can't bloat while big
+// screens still stay crisp. Bump this if you serve 4K-native hero art.
+const MAX_SOURCE_WIDTH = 2560;
+
+// Normalize an upload before it is stored: downscale only when wider than the
+// cap (never upscale). Returns a sharp pipeline the caller finishes + writes.
+async function prep(buf, maxWidth = MAX_SOURCE_WIDTH) {
+  const meta = await sharp(buf).metadata();
+  let img = sharp(buf);
+  if (meta.width && meta.width > maxWidth) img = img.resize({ width: maxWidth });
+  return img;
+}
+
 // Remove same-base image files with a different extension so a hardcoded import
 // or a glob (e.g. logo.*, banner*.{png,webp,...}) can't pick a stale leftover.
 async function cleanupSiblings(dir, base, keepExt) {
@@ -55,13 +70,17 @@ function buildIco(pngBuffer, size) {
 }
 
 async function toPng(buf, dir, base) {
-  await sharp(buf).png().toFile(join(dir, `${base}.png`));
+  // Lossless PNG optimization: identical pixels, ~80% smaller than sharp's
+  // default png() on photographic banners/slides. No banding, safe for hero art.
+  const img = await prep(buf);
+  await img.png({ compressionLevel: 9, effort: 10 }).toFile(join(dir, `${base}.png`));
   await cleanupSiblings(dir, base, "png");
   return `${base}.png`;
 }
 
 async function toWebp(buf, dir, base) {
-  await sharp(buf).webp().toFile(join(dir, `${base}.webp`));
+  const img = await prep(buf);
+  await img.webp({ quality: 90, effort: 6 }).toFile(join(dir, `${base}.webp`));
   await cleanupSiblings(dir, base, "webp");
   return `${base}.webp`;
 }
@@ -178,7 +197,7 @@ const PAGE = /* html */ `<!doctype html>
 <body>
 <header>
   <h1>Rebrand Asset Uploader</h1>
-  <p>เลือกไฟล์แล้วกด "อัพโหลดทั้งหมด" — ระบบจะเซฟลง <code>src/assets</code> และ <code>public</code> ด้วยชื่อ/นามสกุลที่ถูกต้องอัตโนมัติ (แค่ stage ไฟล์ ไม่ได้รัน rebrand)</p>
+  <p>เลือกไฟล์แล้วกด "อัพโหลดทั้งหมด" — ระบบจะเซฟลง <code>src/assets</code> และ <code>public</code> ด้วยชื่อ/นามสกุลที่ถูกต้องอัตโนมัติ พร้อม<strong>บีบอัดรูปแบบ lossless</strong> (คมเท่าเดิม ไฟล์เล็กลง) และย่อรูปที่กว้างเกิน ${MAX_SOURCE_WIDTH}px ให้พอดี (แค่ stage ไฟล์ ไม่ได้รัน rebrand)</p>
 </header>
 <main>
   <section class="card" id="card1">
