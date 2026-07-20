@@ -101,12 +101,20 @@ ssh -T git@gitlab.com
 ทำ **หลังจากแอดมินเชิญเข้ากลุ่มแล้ว** (ข้อ 2.2) เปิด Git Bash หรือ PowerShell:
 
 ```bash
-git clone git@gitlab.com:tardev-group/astro-full-schema.git
-cd astro-full-schema
+git clone git@gitlab.com:tardev-group/astro-full-schema.git ชื่อแบรนด์ของคุณ
+cd ชื่อแบรนด์ของคุณ
 npm install
 ```
 
+(เปลี่ยน `ชื่อแบรนด์ของคุณ` เป็นชื่อแบรนด์ที่กำลังจะทำ เช่น `chokdee1688` —
+โฟลเดอร์จะได้ไม่ชนกันเวลาทำหลายแบรนด์)
+
 `npm install` รันครั้งเดียวพอ (นาน 1–2 นาที รอจนขึ้นบรรทัดว่างกลับมา)
+
+> 🚨 **สำคัญมาก — ยังอย่าเพิ่ง `git push`**
+> ตอนนี้โปรเจกต์ในเครื่องยังชี้ไปที่ **repo ต้นแบบของแอดมิน** อยู่
+> ก่อนเริ่มบันทึกงาน ให้ไปทำ **ข้อ 6.1 (สร้าง repo ของตัวเอง)** ก่อนเสมอ
+> ไม่งั้นงานของคุณจะไป push ทับ repo ต้นแบบ
 
 > โปรเจกต์อื่น ๆ ของทีมก็โคลนแบบเดียวกัน แค่เปลี่ยนชื่อ repo ท้าย URL เช่น
 > `git clone git@gitlab.com:tardev-group/yoalink-frontend.git`
@@ -169,29 +177,63 @@ Claude จะทำตามขั้นตอนมาตรฐานในไ�
 
 ---
 
-## 6. บันทึกงานขึ้น GitLab (Git) — copy วางได้เลย
+## 6. บันทึกงานขึ้น GitLab (Git)
 
-ทำ **หลังรีแบรนด์เสร็จ** เพื่อเก็บงานไว้และให้ทีมเห็นตรงกัน
+### 6.1 ครั้งแรกของแบรนด์ใหม่ — สร้าง repo ของตัวเอง (ทีมงานทุกคนต้องทำ)
+
+> 🚨 **repo `astro-full-schema` คือ "ต้นแบบกลาง" ของแอดมิน — ห้าม push งานแบรนด์ของคุณเข้าไป**
+> ทุกคนต้องมี **repo ของตัวเอง แยก 1 อันต่อ 1 แบรนด์** ที่ clone มาตอนแรกยังชี้ไปที่ repo ต้นแบบอยู่
+> ถ้า `git push` เลยโดยไม่ทำขั้นตอนนี้ งานจะไปทับ repo ของแอดมิน
+
+**ขั้นที่ 1 — สร้าง project ใหม่บน GitLab**
+1. เข้า **https://gitlab.com/tardev-group** → ปุ่ม **New project** → **Create blank project**
+2. **Project name** = ชื่อแบรนด์ที่กำลังทำ (เช่น `chokdee1688`)
+3. **Visibility Level** = **Private**
+4. ⚠️ **อย่าติ๊ก** "Initialize repository with a README" (ถ้าติ๊กจะ push ชนกัน)
+5. กด **Create project**
+
+> ถ้าสร้างไม่ได้ (ไม่มีสิทธิ์) → แจ้งแอดมินให้สร้างให้ แล้วขอชื่อ repo มา
+
+**ขั้นที่ 2 — ชี้โปรเจกต์ในเครื่องไปที่ repo ใหม่ของคุณ**
+```powershell
+git remote set-url origin git@gitlab.com:tardev-group/ชื่อ-repo-ของคุณ.git
+git remote -v
+```
+บรรทัดที่ 2 ใช้เช็ก — ต้องขึ้นชื่อ repo **ของคุณ** ไม่ใช่ `astro-full-schema`
+
+**ขั้นที่ 3 — push ครั้งแรก**
+```powershell
+git push -u origin main
+```
+
+เสร็จแล้วงานทั้งหมดของคุณจะขึ้น repo ตัวเอง ไม่ยุ่งกับของแอดมินและของเพื่อนร่วมทีม
+
+---
+
+### 6.2 บันทึกงานประจำวัน — copy วางได้เลย
+
+ทำ **หลังรีแบรนด์เสร็จ** หรือทุกครั้งที่แก้งานเสร็จ
 พิมพ์ทีละบรรทัด (บรรทัดที่ 2 เปลี่ยนข้อความในเครื่องหมายคำพูดเป็นสิ่งที่ทำ):
 
 ```powershell
-git pull            # ดึงงานล่าสุดของทีมลงมาก่อน (กันชนกับคนอื่น)
 git add .
-git commit -m "rebrand TAKDEE999"
+git commit -m "rebrand CHOKDEE1688"
 git push
 ```
 
-- `git pull` = ดึงงานล่าสุดจาก GitLab ลงมาก่อนเริ่มแก้ (ทำก่อนเสมอ)
 - `git add .` = หยิบไฟล์ที่แก้ทั้งหมด
 - `git commit -m "..."` = บันทึกเป็นเวอร์ชัน พร้อมข้อความอธิบายสั้น ๆ
 - `git push` = ส่งขึ้น GitLab
 
-> 💡 **ถ้า `git push` แล้วขึ้น error `rejected` / `non-fast-forward`**
-> แปลว่ามีคนอื่น push งานขึ้นไปก่อน — สั่ง `git pull` ดึงลงมาก่อน แล้วค่อย `git push` ใหม่
+> 💡 **ไม่ต้อง `git pull` ทุกครั้ง** — เพราะ repo นี้เป็นของคุณคนเดียว ไม่มีใครมา push ชน
+> (จะต้อง pull ก็ต่อเมื่อมีคนอื่นทำงานใน repo เดียวกับคุณ หรือคุณแก้จากหลายเครื่อง)
 >
 > 💡 **ถ้าขึ้น error `no upstream branch`** (มักเจอครั้งแรกของ branch ใหม่)
 > ใช้ `git push -u origin main` **ครั้งเดียว** จากนั้นพิมพ์ `git push` เฉย ๆ ได้เลย
 > (commit ที่ค้างไม่หาย — แค่ยังไม่ถูกส่งขึ้น)
+>
+> 💡 **ถ้าขึ้น error `rejected` / `non-fast-forward`**
+> มีคนอื่น (หรือตัวคุณจากอีกเครื่อง) push ก่อน — สั่ง `git pull` แล้วค่อย `git push` ใหม่
 
 ---
 
@@ -264,6 +306,8 @@ git push
 | build ไม่ผ่าน (`deploy` หยุดกลางคัน) | โค้ดมีปัญหา — บอก Claude ว่า `build ไม่ผ่าน ช่วยดูให้หน่อย` |
 | รูปไม่ขึ้น / รูปเป็นของแบรนด์เก่า | อัปโหลดรูปใหม่ผ่าน `npm run rebrand:upload` (ข้อ 5.2) แล้วบอก Claude ให้ตรวจรูปซ้ำ |
 | deploy แล้วเว็บไม่อัปเดต (เห็นของเก่า) | Cloudflare cache หน้าเก่าไว้ — purge cache ที่ CF หรือตั้ง Cache Rule ครั้งเดียว (ข้อ 7.1); **restart nginx ไม่ช่วย** |
+| ไม่แน่ใจว่า push ไปเข้า repo ไหน | รัน `git remote -v` — ต้องขึ้นชื่อ repo **ของคุณ** ถ้ายังเป็น `astro-full-schema` ให้ทำข้อ 6.1 |
+| เผลอ push เข้า repo ต้นแบบของแอดมิน | แจ้งแอดมินทันที **อย่า push ซ้ำ** แล้วทำข้อ 6.1 ให้ถูกก่อนบันทึกงานต่อ |
 
 ปัญหาที่แก้เองไม่ได้ → ถาม Claude Code เป็นภาษาไทยตรง ๆ หรือแจ้งทีม dev
 
@@ -275,8 +319,9 @@ git push
    `ContentBox*`, `Footer*` เวอร์ชันที่ดูเหมือนไม่ได้ใช้ คือ "คลัง" ไว้ทำแบรนด์
    หน้า ไม่ใช่ขยะ
 2. **ห้ามเดา URL/โดเมนเอง** — ใส่เฉพาะ URL จริงที่ได้รับมาเท่านั้น
-3. **ห้ามแก้ไฟล์คนอื่นพร้อมกัน** — ถ้าหลายคนทำงานคนละแบรนด์ ตกลงกันก่อน
-   ว่าใครถือ repo ตอนไหน (กัน commit ชนกัน) และ `git pull` ก่อนเริ่มเสมอ
+3. **ห้าม push งานแบรนด์ตัวเองเข้า repo ต้นแบบ `astro-full-schema`** — ทุกคน
+   ต้องสร้าง repo ของตัวเองก่อนเสมอ (ข้อ 6.1) เช็กด้วย `git remote -v` ว่าชี้ถูก
+   ก่อน push ครั้งแรกทุกครั้ง
 4. **ยืนยันงานเสร็จ = build ผ่าน + เปิดดูหน้าเว็บจริงด้วยตา** เสมอ ไม่ใช่แค่
    Claude บอกว่าเสร็จ
 
@@ -290,15 +335,19 @@ git config --global user.name "ชื่อ"
 git config --global user.email "อีเมล"
 ssh-keygen -t ed25519 -C "อีเมล"     # สร้าง SSH key แล้วเพิ่มใน GitLab
 
-# โคลนโปรเจกต์ (ครั้งแรก)
-git clone git@gitlab.com:tardev-group/astro-full-schema.git
+# เริ่มแบรนด์ใหม่ (ครั้งแรกของแต่ละแบรนด์)
+git clone git@gitlab.com:tardev-group/astro-full-schema.git ชื่อแบรนด์
+cd ชื่อแบรนด์
+git remote set-url origin git@gitlab.com:tardev-group/ชื่อ-repo-ของคุณ.git   # ข้อ 6.1 ห้ามลืม!
+git remote -v                   # เช็กว่าชี้ไป repo ของคุณจริง
+git push -u origin main
 
 # ทำงานประจำวัน
 npm install                     # ติดตั้ง (ครั้งแรกครั้งเดียว)
 npm run dev                     # เปิดดูเว็บที่ localhost:8888
 npm run rebrand:upload          # อัปโหลดรูปแบรนด์ที่ localhost:4000
 npm run build                   # build ตรวจว่าโค้ดสมบูรณ์
-git pull ; git add . ; git commit -m "..." ; git push   # บันทึกขึ้น GitLab
+git add . ; git commit -m "..." ; git push   # บันทึกขึ้น GitLab
 .\deploy.ps1 -Domain <โดเมน>    # เอาเว็บขึ้นจริง
 ```
 
