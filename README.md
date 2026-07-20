@@ -213,6 +213,41 @@ git push
 > ⚠️ **ระวังพิมพ์ชื่อโดเมนให้ถูก** — ใส่โดเมนของแบรนด์ที่กำลังทำเท่านั้น
 > ถ้าใส่ผิด จะไปทับเว็บของอีกแบรนด์บน server ดูให้ชัวร์ก่อนกด Enter
 
+### 7.1 ตั้ง Cloudflare Cache Rule (ครั้งเดียวต่อโดเมน — แล้วไม่ต้อง purge อีก)
+
+ปกติเวลา deploy เสร็จ เนื้อหาใหม่มักไม่ขึ้นทันทีเพราะ **Cloudflare cache หน้าเก่าไว้** —
+`deploy.ps1` เลยยิง purge cache ให้ทุกครั้ง แต่ถ้าตั้ง **Cache Rule** ครั้งเดียว
+เว็บใหม่จะขึ้นเองภายใน ~2 นาที **โดยไม่ต้อง purge** และ **PageSpeed ดีขึ้น**
+(asset ที่มี hash จะถูก cache ยาว ผ่าน audit "efficient cache policy")
+
+> ℹ️ **restart nginx ไม่ช่วย** — cache อยู่ที่ Cloudflare ไม่ใช่ที่ server;
+> restart nginx ไม่แตะ cache ของ CF เลย ต้องตั้งที่ Cloudflare เท่านั้น
+
+เข้า **dashboard.cloudflare.com → เลือกโดเมน → Caching → Cache Rules → Create rule**
+
+**Rule 1 — asset ที่มี hash (cache ยาว)** — ลากให้อยู่ **บนสุด**
+| ช่อง | ค่า |
+|---|---|
+| Rule name | `Cache hashed assets` |
+| When incoming requests match | **URI Path** · **starts with** · `/_astro/` |
+| Cache eligibility | **Eligible for cache** |
+| Edge TTL | Override origin → **1 year** |
+| Browser TTL | Override origin → **1 year** |
+
+**Rule 2 — HTML / หน้าเพจ (cache สั้น ให้ fresh)**
+| ช่อง | ค่า |
+|---|---|
+| Rule name | `HTML short TTL` |
+| When incoming requests match | **URI Path** · **does not start with** · `/_astro/` |
+| Cache eligibility | **Eligible for cache** |
+| Edge TTL | Override origin → **2 minutes** |
+| Browser TTL | Override origin → **Respect origin** |
+
+> ⚠️ ถ้ามี **Page Rule เก่าแบบ "Cache Everything"** (เมนู Rules → Page Rules) ให้ลบทิ้ง
+> — มันคือตัวที่ทำให้ HTML ถูก cache จนต้อง purge ทุกครั้ง Cache Rules ใหม่ทำหน้าที่แทนแล้ว
+
+หลังตั้งเสร็จ: deploy → ผู้ใช้เห็นเว็บใหม่เองใน ~2 นาที ไม่ต้อง purge / ไม่ต้อง restart nginx
+
 ---
 
 ## 8. เจอปัญหาบ่อย ๆ (Troubleshooting)
@@ -228,6 +263,7 @@ git push
 | `npm run dev` เปิดไม่ขึ้น / error | ปิดหน้าต่างเดิมก่อน แล้วรันใหม่ ถ้ายังไม่หาย รัน `npm install` อีกครั้ง |
 | build ไม่ผ่าน (`deploy` หยุดกลางคัน) | โค้ดมีปัญหา — บอก Claude ว่า `build ไม่ผ่าน ช่วยดูให้หน่อย` |
 | รูปไม่ขึ้น / รูปเป็นของแบรนด์เก่า | อัปโหลดรูปใหม่ผ่าน `npm run rebrand:upload` (ข้อ 5.2) แล้วบอก Claude ให้ตรวจรูปซ้ำ |
+| deploy แล้วเว็บไม่อัปเดต (เห็นของเก่า) | Cloudflare cache หน้าเก่าไว้ — purge cache ที่ CF หรือตั้ง Cache Rule ครั้งเดียว (ข้อ 7.1); **restart nginx ไม่ช่วย** |
 
 ปัญหาที่แก้เองไม่ได้ → ถาม Claude Code เป็นภาษาไทยตรง ๆ หรือแจ้งทีม dev
 
