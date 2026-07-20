@@ -954,3 +954,33 @@ NavbarStyle family, Footer family** โดย:
 - **ปุ่มสมัคร:** เดิมเป็น gradient แดงเข้ม (`#4a0000→#ef4444`) อยู่แล้ว เข้าธีม คงไว้
 - **Verify:** `npm run build` ผ่าน 9 หน้า; grep NavbarStyle7 source = ไม่เหลือ blue/`#020617`; dist มี "TAKDEE999 Logo" ×2
 - **ยกเว้น:** `#020617`/`border-blue` ที่ยังเหลือใน dist/index มาจาก component อื่นบนหน้า (นอกสโคป navbar) = expected drift; ไม่แตะ inventory navbar ตัวอื่น
+
+## 2026-07-20 — รีแบรนด์ TAKDEE999 → CHOKDEE1688 (2-agent parallel)
+
+**เป้าหมาย:** รีแบรนด์ + retheme ทั้งไซต์เป็น **CHOKDEE1688** (real URL `https://www.chokdee1688-brand.com`) ธีมใหม่ **เขียวมรกต + ทอง** (จากพื้นหลังวัดสีเขียวเข้ม + ทองในโลโก้/แบนเนอร์) — เปลี่ยนจากธีมแดง/ดำ/ทองของ TAKDEE999 ชัดเจน รันแบบ 2-agent ขนานตาม playbook
+
+**docx (7 สเวกชัน, flat H1 + 6×H2):** H1 intro / จุดเด่น / รีวิวตรงๆ / ค่ายเกม (PG Soft, Pragmatic Play, JILI, Habanero) / ระบบออโต้ / ทางเข้าล่าสุด / วิธีสมัครสมาชิก — เรนเดอร์ครบทุกหัวข้อ ตรงลำดับ docx 1:1 (verify แล้ว)
+
+**พาเลตต์ (old→new):** `red-*`→`emerald-*`; red glow `rgba(220,38,38,x)`→`rgba(16,185,129,x)`; พื้นเข้ม `#14040a`→`#021207`; CTA แดง→**ทอง** (`from-amber-400 via-amber-500 to-yellow-600 text-emerald-950`); คง gold/amber/yellow, LINE เขียว, สีธนาคาร; brand `TAKDEE999`→`CHOKDEE1688`
+
+**URL (3 จุด):** `astro.config.mjs` site, `robots.txt` Sitemap, `index.astro` webSiteSchema.url → `https://www.chokdee1688-brand.com`
+
+**Variant rotation (ห้ามซ้ำ TAKDEE999):**
+- Navbar: `NavbarStyle7` → **`NavbarStyle9`** (เขียวมรกต+ทองอยู่แล้ว; แก้แค่ alt) [orchestrator/P1]
+- Footer: `FooterPremium` → **`FooterStyle2`** (เขียว#10b981+ทอง; brand VEGUS24R→CHOKDEE1688; column `<h3>`→`<p>` 3 จุด; LINE @CHOKDEE1688) [P1]
+- Announcement: `Announcement5` → **`Announcement2`** (green+gold; default message = CHOKDEE1688 + URL; ทุกหน้า casino repoint import มาที่ตัวนี้) [P1 retheme, แต่ละหน้า repoint เอง]
+- LatestWinners: `LatestWinnersPremium` → **`LatestWinners4`** (retheme cyan→emerald; ไม่มี brand string) [Agent A]
+- ContentBox mix: (TAKDEE999 = Premium-led: ContentBoxPremium×3 + SevenThreePremium×2 + FeatureHighlights) → **CHOKDEE1688 = `ContentBoxSpecial`(H1) + plain `ContentBox`×4 + `ContentBoxSevenThree`(รีวิว/slide2) + `ContentBoxSevenThreeNeumorphism`(ออโต้/slide1) + `FeatureHighlights`(HTTPS/SSL/Official H3) + `ContentBox3Three`** — เลิก Premium-led glossy, นำด้วย Special + plain + Neumorphism shape [Agent A]
+
+**การแบ่งงาน 2 agent (ไฟล์ไม่ทับกัน):**
+- P1 orchestrator retheme chrome ร่วม: MainLayout, NavbarStyle9, FooterStyle2, Navfoot (red→emerald, CTA→gold), Announcement2, ContentBox (plain), AnnouncementHuay (brand name)
+- Agent A (Landing): `index.astro` + 12 component เฉพาะ index (ContentBoxSpecial, SevenThree, SevenThreeNeumorphism, ContentBox3Three, FeatureHighlights, LoginRtpSection+ContentBoxTwo, ProviderGrid, GameRankingBoard, LatestWinners4, SmoothCarousel, ReviewCardSumo2)
+- Agent B (Sub-pages): contact-us, promotion, ทางเข้า, ทดลองเล่น, login, register (standalone raw-hex/rgba swap: `--brand-red:#dc2626`→`--brand-emerald:#10b981`, `#14040a`→`#021207`), + Huay pages (แนวทาง, ตรวจหวย, ContentBoxHuay — คงธีมหวยแดง/ทอง เปลี่ยนแค่ชื่อแบรนด์)
+
+**รูปภาพ:** banner1 = hero (glob เดิม target banner1 อยู่แล้ว); banner2 = inline §7 วิธีสมัคร (cap `max-w-2xl`); slide2 = §3 รีวิว; slide1 = §5 ออโต้ + OG image; slide3/4 = ใน SmoothCarousel; **banner3 = stale (ลงก่อน drop 20 ก.ค.) ข้ามถูกต้อง**
+
+**บั๊กที่เจอ + แก้:** P1 แก้ import MainLayout เป็น NavbarStyle9 แต่ลืมแก้ usage `<NavbarStyle7 />` ที่ body → build error "NavbarStyle7 is not defined" (ตรวจหวย) → แก้ usage เป็น `<NavbarStyle9 />` แล้ว build ผ่าน
+
+**Verify (Phase 5, build เดียว):** build 9 หน้า 0 fail; `grep dist/` ทั้งหมด: old brand name = 0, `<!--` = 0, og:image = hashed slide1 โดเมนใหม่, undefined/NaN = 0, H1=1/H2=10(6 docx + widget)/H3=3(FeatureHighlights), หัวข้อ docx ตรงลำดับ 1:1, banner3 ไม่ถูกอ้าง
+
+**Out of scope / คงไว้:** inventory variants เดิม (ContentBoxPremium, SevenThreePremium, NavbarStyle7, FooterPremium, Announcement5, LatestWinnersPremium ฯลฯ) ไม่ลบ; หน้าหวย (แนวทาง/ตรวจหวย) คงธีมแดง/ทอง + AnnouncementHuay โดยตั้งใจ (มี `rgba(220,38,38)` แดงเหลืออยู่ = ธีมหวย ไม่ใช่บั๊ก); `text-red-500` 1 จุดใน FooterStyle2 = สีแบรนด์ JOKERGAMING (provider strip) คงไว้ตามกฎ; slide3/4 ใช้ใน carousel; banner3 ไฟล์ค้างไม่ลบ

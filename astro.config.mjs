@@ -19,6 +19,6 @@ export default defineConfig({
     "/line": "https://tinyurl.com/suhng",
   },
 
-  site: "https://www.takdee999-guide.com",
+  site: "https://www.chokdee1688-brand.com",
   integrations: [sitemap()],
 });

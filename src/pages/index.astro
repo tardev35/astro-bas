@@ -1,13 +1,15 @@
 ---
 import MainLayout from "../layouts/MainLayout.astro";
-import ContentBoxPremium from "../components/ContentBoxPremium.astro";
-import ContentBoxSevenThreePremium from "../components/ContentBoxSevenThreePremium.astro";
+import ContentBox from "../components/ContentBox.astro";
+import ContentBoxSpecial from "../components/ContentBoxSpecial.astro";
+import ContentBoxSevenThree from "../components/ContentBoxSevenThree.astro";
+import ContentBoxSevenThreeNeumorphism from "../components/ContentBoxSevenThreeNeumorphism.astro";
 import FeatureHighlights from "../components/FeatureHighlights.astro";
 import LoginRtpSection from "../components/LoginRtpSection.astro";
-import Announcement from "../components/Announcement5.astro";
+import Announcement from "../components/Announcement2.astro";
 import ProviderGrid from "../components/ProviderGrid.astro";
 import GameRankingBoard from "../components/GameRankingBoard.astro";
-import LatestWinners from "../components/LatestWinnersPremium.astro";
+import LatestWinners from "../components/LatestWinners4.astro";
 import SmoothCarousel from "../components/SmoothCarousel.astro";
 import ReviewCardSumo from "../components/ReviewCardSumo2.astro";
 import Navfoot from "../components/Navfoot.astro";
@@ -15,94 +17,84 @@ const currentPath = Astro.url.pathname;
 const homePage = Astro.url.origin;
 const logoUrl = homePage + "/logo.webp";
 
+const pageTitle = "CHOKDEE1688 เว็บสล็อตที่นิยม รีวิวตรงๆ ระบบออโต้ ทางเข้าล่าสุด";
+const pageDescription = "CHOKDEE1688 เว็บสล็อตที่นิยม รีวิวตรงๆ สำรวจเกมสล็อต จุดเด่นของเว็บไซต์ ระบบออโต้ และข้อมูลทางเข้าล่าสุด เพื่อศึกษาก่อนเข้าใช้งาน";
+
 const webPageSchema = {
   "@context": "https://schema.org",
   "@type": "WebPage",
-  name: "TAKDEE999 รีวิว สล็อตที่แตกบ่อย จริงไหม? ผลทดสอบเว็บไซต์ ทางเข้า",
-  description: "TAKDEE999 รีวิว สล็อตที่แตกบ่อย เจาะลึกทุกองค์ประกอบ มีข้อมูลอะไรที่ควรรู้ ผลทดสอบ ตั้งแต่สมัครจนถึง ทางเข้า เล่น วิธีเลือก ให้ปลอดภัย",
+  name: pageTitle,
+  description: pageDescription,
   url: currentPath,
 };
 const webSiteSchema = {
   "@context": "https://schema.org",
   "@type": "WebSite",
-  name: "TAKDEE999",
-  alternateName: ["TAKDEE999", "TAKDEE999 รีวิว สล็อตที่แตกบ่อย"],
-  url: "https://takdee999-guide.com/",
+  name: "CHOKDEE1688",
+  alternateName: ["CHOKDEE1688", "CHOKDEE1688 เว็บสล็อตที่นิยม รีวิวตรงๆ"],
+  url: "https://www.chokdee1688-brand.com/",
 };
 const orgSchema = {
   "@context": "https://schema.org",
   "@type": "Organization",
-  name: "TAKDEE999",
+  name: "CHOKDEE1688",
   logo: logoUrl,
   url: homePage,
 };
 const allSchemas = [webPageSchema, orgSchema, webSiteSchema];
 
-const testSteps = [
+const entryChecks = [
   {
-    icon: "📝",
-    title: "ขั้นตอนสมัครสมาชิก",
-    description: "เริ่มจากการสมัครที่ใช้ข้อมูลไม่เยอะ กรอกรายละเอียดไม่กี่ช่องก็เปิดบัญชีได้",
+    icon: "🔒",
+    title: "HTTPS ปลอดภัย",
+    description: "ตรวจสอบว่าลิงก์ทางเข้าเปิดผ่าน HTTPS และมีสัญลักษณ์แม่กุญแจ เพื่อการเชื่อมต่อที่เข้ารหัสและปลอดภัยตลอดการใช้งาน",
     accent: "gold" as const,
   },
   {
-    icon: "✅",
-    title: "ยืนยันบัญชี",
-    description: "หลังยืนยันบัญชีเรียบร้อย ระบบเปิดสิทธิ์ให้เข้าใช้งานเมนูต่าง ๆ ได้ทันที",
+    icon: "🛡️",
+    title: "SSL เข้ารหัสข้อมูล",
+    description: "เว็บไซต์เข้ารหัสข้อมูลด้วย SSL ช่วยปกป้องข้อมูลบัญชีและการทำรายการต่าง ๆ ระหว่างที่ใช้งานระบบออโต้",
     accent: "blue" as const,
   },
   {
-    icon: "🎮",
-    title: "เข้าเมนูเกมและเลือกค่าย",
-    description: "สามารถเข้าเมนูเกมและเลือกค่ายได้ทันที เมนูจัดหมวดตรงไปตรงมา หาไม่ยาก",
-    accent: "gold" as const,
-  },
-  {
-    icon: "⚡",
-    title: "หน้าเว็บไซต์โหลดไว",
-    description: "ระหว่างใช้งานหน้าเว็บโหลดค่อนข้างไว เปิดเกมและสลับหมวดไม่ค่อยสะดุด",
-    accent: "blue" as const,
-  },
-  {
-    icon: "🔁",
-    title: "ระบบทำงานต่อเนื่อง",
-    description: "ความรู้สึกโดยรวมคือระบบทำงานต่อเนื่องดี แต่ความเร็วจริงยังขึ้นกับอุปกรณ์ อินเทอร์เน็ต และช่วงเวลาที่เข้าใช้งาน",
+    icon: "🔗",
+    title: "ลิงก์ทางการล่าสุด",
+    description: "เลือกใช้ทางเข้าล่าสุดจากลิงก์ทางการของ CHOKDEE1688 เท่านั้น เพื่อเข้าถึงระบบได้ครบทุกฟังก์ชันและลดโอกาสเข้าสู่ลิงก์ที่ไม่ถูกต้อง",
     accent: "gold" as const,
   },
 ];
 
 import { Picture } from "astro:assets";
-import imgOverview from "../assets/slide1.png";
-import imgProviders from "../assets/slide2.png";
+import imgReview from "../assets/slide2.png";
+import imgAuto from "../assets/slide1.png";
+import imgRegister from "../assets/banner2.png";
 ---
 
-<MainLayout
-  title="TAKDEE999 รีวิว สล็อตที่แตกบ่อย จริงไหม? ผลทดสอบเว็บไซต์ ทางเข้า"
-  description="TAKDEE999 รีวิว สล็อตที่แตกบ่อย เจาะลึกทุกองค์ประกอบ มีข้อมูลอะไรที่ควรรู้ ผลทดสอบ ตั้งแต่สมัครจนถึง ทางเข้า เล่น วิธีเลือก ให้ปลอดภัย">
+<MainLayout title={pageTitle} description={pageDescription}>
   <script type="application/ld+json" set:html={JSON.stringify(allSchemas)} />
 
-  <Announcement message="📢 TAKDEE999 รีวิว สล็อตที่แตกบ่อย ผลทดสอบเว็บไซต์จริง เจาะลึกทุกองค์ประกอบ ตั้งแต่สมัครจนถึงทางเข้าเล่น อัปเดตใหม่ทุกวัน takdee999-guide.com" />
+  <Announcement message="📢 CHOKDEE1688 เว็บสล็อตที่นิยม รีวิวตรงๆ ระบบออโต้ พร้อมข้อมูลทางเข้าล่าสุด อัปเดตใหม่ทุกวันที่ chokdee1688-brand.com" />
 
-  <div class="mx-auto w-full max-w-5xl px-4 py-8 text-center">
-    <h1 class="leading-tight">
-      <span class="block bg-gradient-to-b from-gray-100 to-gray-400 bg-clip-text text-4xl font-black text-transparent drop-shadow-sm md:text-5xl">
-        TAKDEE<span class="bg-gradient-to-b from-amber-300 to-amber-600 bg-clip-text text-transparent">999</span>
-      </span>
-      <span class="mt-4 block text-xl font-bold tracking-wide text-amber-300 md:text-3xl">
-        รีวิว สล็อตที่แตกบ่อย ผลทดสอบ การใช้ เว็บไซต์ อย่างละเอียด
-      </span>
-    </h1>
-    <p class="mx-auto mt-6 max-w-3xl leading-relaxed text-gray-300">
-      <strong class="text-amber-300">TAKDEE999</strong> ถูกพูดถึงในกลุ่มคนเล่นสล็อตจากกระแสเกมแตกบ่อย โบนัสเข้าไว และมีค่ายยอดนิยมให้เลือกค่อนข้างครบ
-      เราจึงลองรีวิวจากการใช้เว็บไซต์จริง ตั้งแต่การเปิดหน้าเว็บ เลือกเกม สมัครสมาชิก ไปจนถึงระบบฝากถอน เพื่อดูว่าภาพรวมทำได้ดีแค่ไหน
-      ผลทดสอบที่ได้มีทั้งส่วนที่ใช้งานลื่นและรายละเอียดบางอย่างที่ผู้เล่นควรเช็กก่อนเริ่มเล่น
+  <ContentBoxSpecial as="h1" title="CHOKDEE1688 เว็บสล็อตที่นิยม รีวิวตรงๆ ระบบออโต้ ทางเข้าล่าสุด">
+    <p class="mx-auto max-w-4xl text-center leading-relaxed">
+      CHOKDEE1688 เป็นเว็บสล็อตที่นิยมซึ่งรวบรวมเกมสล็อตจากหลายผู้ให้บริการไว้ภายในเว็บไซต์เดียว พร้อมระบบออโต้ที่ช่วยจัดการขั้นตอนการใช้งานตั้งแต่สมัครสมาชิก ฝากเงิน ไปจนถึงการทำรายการต่าง ๆ
+      ได้สะดวกยิ่งขึ้น จากการสำรวจองค์ประกอบของเว็บไซต์ ทั้งในด้านเกมสล็อต ระบบการใช้งาน จุดเด่นของแพลตฟอร์ม และข้อมูลเกี่ยวกับทางเข้าล่าสุด เพื่อให้เห็นภาพรวมของ CHOKDEE1688 ก่อนเข้าใช้งาน
     </p>
-  </div>
+  </ContentBoxSpecial>
 
-  <ContentBoxSevenThreePremium titleright="ก่อนเข้าใช้งาน TAKDEE999 มีข้อมูลอะไรที่ควรรู้">
+  <SmoothCarousel />
+
+  <ContentBox as="h2" title="CHOKDEE1688 เว็บสล็อตที่นิยม มีจุดเด่นอะไรบ้าง">
+    <p class="leading-relaxed">
+      CHOKDEE1688 รวบรวมเกมสล็อตจากหลายค่ายไว้ในเว็บไซต์เดียว พร้อมระบบออโต้ที่ช่วยจัดการขั้นตอนการใช้งานได้สะดวก เมนูแบ่งหมวดหมู่ชัดเจน ค้นหาเกมง่าย รองรับทั้งคอมพิวเตอร์และมือถือ
+      ทำให้เข้าถึงเกมและบริการต่าง ๆ ได้รวดเร็ว จึงเป็นอีกเหตุผลที่ทำให้เว็บไซต์ได้รับความนิยมจากผู้ใช้งานจำนวนมาก
+    </p>
+  </ContentBox>
+
+  <ContentBoxSevenThree titleright="รีวิวตรงๆ หลังทดลองเล่นเกมสล็อตของ CHOKDEE1688">
     <div slot="left" class="flex h-full flex-col justify-center">
       <Picture
-        src={imgOverview}
+        src={imgReview}
         loading="lazy"
         fetchpriority="low"
         widths={[200, 400, 600, 800]}
@@ -111,89 +103,96 @@ import imgProviders from "../assets/slide2.png";
         formats={["avif", "webp"]}
         fallbackFormat="webp"
         quality={80}
-        alt="TAKDEE999 ภาพรวมเว็บไซต์ ค่ายเกม ระบบสมาชิก และเงื่อนไขโปรโมชั่นที่ควรรู้ก่อนใช้งาน"
-        class="mx-auto h-auto w-full rounded-2xl border-2 border-red-400/30 shadow-[0_10px_30px_rgba(220,38,38,0.3)]"
+        alt="CHOKDEE1688 ทดลองเล่นเกมสล็อตจากหลายค่าย เปรียบเทียบเกมได้ในระบบเดียว"
+        class="mx-auto h-auto w-full rounded-2xl border-2 border-emerald-400/30 shadow-[0_10px_30px_rgba(16,185,129,0.3)]"
       />
     </div>
     <div slot="right">
       <p class="leading-relaxed">
-        ก่อนเข้าใช้งานควรดูให้ครบทั้งค่ายเกม ระบบสมาชิก เงื่อนไขโปรโมชั่น และยอดฝากถอนที่รองรับ เพราะรายละเอียดเหล่านี้มีผลต่อการเล่นโดยตรง
-        เว็บไซต์รวมสล็อตหลายแนวไว้ในบัญชีเดียว ทั้งเกมทุนต่ำ เกมโบนัสถี่ และเกมความผันผวนสูง คนที่ชอบลุ้นรอบโบนัสจึงควรเลือกเกมให้ตรงสไตล์
-        ไม่ใช่เห็นคำว่าแตกบ่อยแล้วกดเล่นทันที
+        หลังทดลองใช้งาน พบว่าหน้าเกมและเมนูต่าง ๆ ทำงานต่อเนื่อง การเลือกเกมไม่ซับซ้อน และแบ่งค่ายเกมไว้อย่างเป็นระเบียบ ผู้เล่นสามารถเปรียบเทียบเกมสล็อตจากหลายผู้ให้บริการได้ในระบบเดียว
+        ช่วยให้เลือกเกมที่ตรงกับความชอบได้ง่ายขึ้น
       </p>
     </div>
-  </ContentBoxSevenThreePremium>
+  </ContentBoxSevenThree>
 
-  <ContentBoxPremium as="h2" title="รีวิวเว็บไซต์ TAKDEE999 เจาะลึกทุกองค์ประกอบ">
+  <ReviewCardSumo />
+
+  <ContentBox as="h2" title="ค่ายเกมสล็อตของ CHOKDEE1688 มีอะไรให้เลือกบ้าง">
     <p class="leading-relaxed">
-      จากที่ลองใช้งาน หน้าเว็บจัดหมวดเกมค่อนข้างตรงไปตรงมา เมนูหลักหาไม่ยาก และสลับค่ายเกมได้เร็ว จุดที่รู้สึกว่าทำได้ดีคือการใช้งานบนมือถือ
-      ปุ่มต่าง ๆ กดถนัดและไม่ต้องไล่หาหลายหน้า ภาพรวมของรีวิวจึงอยู่ในระดับใช้งานง่าย เหมาะกับทั้งผู้เล่นเก่าและคนที่เพิ่งเริ่มเล่นสล็อตออนไลน์
+      CHOKDEE1688 รวมเกมสล็อตจากค่ายยอดนิยม เช่น PG Soft, Pragmatic Play, JILI และ Habanero พร้อมอัปเดตเกมใหม่อย่างต่อเนื่อง แต่ละค่ายมีรูปแบบและฟีเจอร์แตกต่างกัน
+      ทำให้ผู้เล่นเลือกเกมได้หลากหลายภายในบัญชีเดียว
     </p>
-  </ContentBoxPremium>
-
-  <ContentBoxPremium as="h2" title="ผลทดสอบการใช้งาน TAKDEE999 ตั้งแต่สมัครจนถึงเข้าเล่น">
-    <p class="leading-relaxed">
-      ผลทดสอบเริ่มจากขั้นตอนสมัครที่ใช้ข้อมูลไม่เยอะ หลังยืนยันบัญชีสามารถเข้าเมนูเกมและเลือกค่ายได้ทันที ระหว่างใช้งานหน้าเว็บไซต์โหลดค่อนข้างไว
-      การเปิดเกมและสลับหมวดไม่ค่อยสะดุด ความรู้สึกโดยรวมคือระบบทำงานต่อเนื่องดี แต่ความเร็วจริงยังขึ้นอยู่กับอุปกรณ์ อินเทอร์เน็ต และช่วงเวลาที่เข้าใช้งานด้วย
-    </p>
-    <FeatureHighlights items={testSteps} />
-  </ContentBoxPremium>
-
-  <GameRankingBoard />
-
-  <ContentBoxSevenThreePremium titleright="TAKDEE999 แตกบ่อยจริงไหม เมื่อพิจารณาจากค่ายเกมที่ให้บริการ">
-    <div slot="left" class="flex h-full flex-col justify-center">
-      <Picture
-        src={imgProviders}
-        loading="lazy"
-        fetchpriority="low"
-        widths={[200, 400, 600, 800]}
-        sizes="(max-width: 768px) 100vw, 30vw"
-        decoding="async"
-        formats={["avif", "webp"]}
-        fallbackFormat="webp"
-        quality={80}
-        alt="TAKDEE999 วิเคราะห์ค่ายเกม RTP ความผันผวน และฟีเจอร์ เพื่อดูว่าแตกบ่อยจริงไหม"
-        class="mx-auto h-auto w-full rounded-2xl border-2 border-red-400/30 shadow-[0_10px_30px_rgba(220,38,38,0.3)]"
-      />
-    </div>
-    <div slot="right">
-      <p class="leading-relaxed">
-        คำว่าแตกบ่อยไม่ได้ขึ้นอยู่กับชื่อเว็บไซต์เพียงอย่างเดียว แต่สัมพันธ์กับ RTP ความผันผวน และฟีเจอร์ของแต่ละเกม
-        TAKDEE999 มีทั้งเกมโบนัสเข้าไว เกมตัวคูณสูง และสล็อตที่เน้นจ่ายรางวัลย่อยบ่อย จึงทำให้ผู้เล่นรู้สึกว่ามีจังหวะลุ้นต่อเนื่องมากขึ้น
-        อย่างไรก็ตาม ไม่มีเกมใดรับประกันผลได้ทุกตา ควรเลือกเกมตามทุนและตั้งงบก่อนเล่นเสมอ
-      </p>
-    </div>
-  </ContentBoxSevenThreePremium>
+  </ContentBox>
 
   <ProviderGrid />
-  <LoginRtpSection />
+  <GameRankingBoard />
 
-  <ContentBoxPremium as="h2" title="วิธีเลือก ทางเข้า TAKDEE999 ให้ปลอดภัยและน่าเชื่อถือ">
+  <ContentBoxSevenThreeNeumorphism titleright="ระบบออโต้ช่วยให้การใช้งาน CHOKDEE1688 สะดวกขึ้นอย่างไร">
+    <div slot="left" class="flex h-full flex-col justify-center">
+      <Picture
+        src={imgAuto}
+        loading="lazy"
+        fetchpriority="low"
+        widths={[200, 400, 600, 800]}
+        sizes="(max-width: 768px) 100vw, 30vw"
+        decoding="async"
+        formats={["avif", "webp"]}
+        fallbackFormat="webp"
+        quality={80}
+        alt="CHOKDEE1688 ระบบออโต้จัดการสมัครสมาชิก เข้าสู่ระบบ และทำธุรกรรมได้จากบัญชีเดียว"
+        class="mx-auto h-auto w-full rounded-2xl border-2 border-emerald-400/20 shadow-[0_10px_30px_rgba(16,185,129,0.25)]"
+      />
+    </div>
+    <div slot="right">
+      <p class="leading-relaxed">
+        ระบบออโต้ช่วยลดขั้นตอนการใช้งานตั้งแต่สมัครสมาชิก เข้าสู่ระบบ ไปจนถึงการจัดการธุรกรรม ผู้ใช้งานสามารถตรวจสอบข้อมูลและทำรายการต่าง ๆ ได้จากบัญชีเดียว ช่วยให้การใช้งานรวดเร็วและต่อเนื่องมากขึ้น
+      </p>
+    </div>
+  </ContentBoxSevenThreeNeumorphism>
+
+  <ContentBox as="h2" title="ทางเข้าล่าสุด CHOKDEE1688 ควรตรวจสอบอะไรบ้างก่อนเข้าใช้งาน">
     <p class="leading-relaxed">
-      ทางเข้า TAKDEE999 ควรเป็นลิงก์ที่เปิดผ่าน HTTPS มีสัญลักษณ์แม่กุญแจ และชื่อโดเมนไม่สะกดผิดหรือเพิ่มตัวอักษรแปลก ๆ
-      ก่อนกรอกข้อมูลควรตรวจสอบหน้าเข้าสู่ระบบ ช่องทางติดต่อ และรายละเอียดเว็บไซต์ให้ครบ หลีกเลี่ยงลิงก์ที่ส่งต่อจากแหล่งไม่ชัดเจน
-      เพราะเว็บปลอมมักใช้หน้าตาคล้ายของจริงเพื่อหลอกเอาข้อมูลบัญชีและข้อมูลการเงิน
+      ก่อนเข้าใช้งาน ควรตรวจสอบว่ากำลังใช้ทางเข้าล่าสุดของ CHOKDEE1688 พร้อมสังเกตชื่อโดเมนและการเชื่อมต่อ HTTPS เพื่อให้เข้าถึงระบบได้ครบทุกฟังก์ชัน และลดโอกาสเข้าสู่ลิงก์ที่ไม่ถูกต้อง
     </p>
+    <FeatureHighlights items={entryChecks} />
+  </ContentBox>
+
+  <ContentBox as="h2" title="วิธีสมัครสมาชิก CHOKDEE1688 และเริ่มใช้งานระบบออโต้">
+    <p class="leading-relaxed">
+      เริ่มต้นด้วยการสมัครสมาชิก กรอกข้อมูลตามขั้นตอน และเข้าสู่ระบบ จากนั้นสามารถใช้งานเกมสล็อต ระบบออโต้ และบริการต่าง ๆ ได้ทันทีผ่านบัญชีเดียว ช่วยให้ทุกขั้นตอนสะดวกและจัดการได้ง่ายในที่เดียว
+    </p>
+
+    <Picture
+      src={imgRegister}
+      loading="lazy"
+      fetchpriority="low"
+      widths={[320, 480, 640, 768]}
+      sizes="(max-width: 768px) 100vw, 640px"
+      decoding="async"
+      formats={["avif", "webp"]}
+      fallbackFormat="webp"
+      quality={80}
+      alt="CHOKDEE1688 ขั้นตอนสมัครสมาชิก ฝากเงิน และเริ่มใช้งานระบบออโต้"
+      class="mx-auto mt-8 h-auto w-full max-w-2xl rounded-2xl border border-emerald-400/20 shadow-[0_10px_30px_rgba(16,185,129,0.2)]"
+    />
 
     <div class="mt-8 flex flex-wrap justify-center gap-6">
       <a
         href="/login"
-        class="group relative flex items-center justify-center rounded-full border border-red-500/50 bg-[#14040a]/80 px-10 py-3.5 font-black text-amber-300 backdrop-blur-sm transition-all duration-300 hover:scale-105 hover:bg-red-900/60 hover:shadow-[0_0_15px_rgba(220,38,38,0.4)]">
+        class="group relative flex items-center justify-center rounded-full border border-amber-400/50 bg-[#021207]/80 px-10 py-3.5 font-black text-amber-300 backdrop-blur-sm transition-all duration-300 hover:scale-105 hover:bg-emerald-900/60 hover:shadow-[0_0_15px_rgba(251,191,36,0.4)]">
         เข้าสู่ระบบ
       </a>
 
       <a
         href="/register"
-        class="group relative flex items-center justify-center rounded-full bg-gradient-to-r from-red-500 via-red-600 to-red-700 px-10 py-3.5 font-black text-white shadow-[0_5px_20px_rgba(220,38,38,0.4)] transition-all duration-300 hover:-translate-y-1 hover:scale-105 hover:shadow-[0_8px_25px_rgba(220,38,38,0.6)]">
+        class="group relative flex items-center justify-center rounded-full bg-gradient-to-r from-amber-400 via-amber-500 to-yellow-600 px-10 py-3.5 font-black text-emerald-950 shadow-[0_5px_20px_rgba(251,191,36,0.4)] transition-all duration-300 hover:-translate-y-1 hover:scale-105 hover:shadow-[0_8px_25px_rgba(251,191,36,0.6)]">
         สมัครสมาชิก
       </a>
     </div>
-  </ContentBoxPremium>
+  </ContentBox>
 
+  <LoginRtpSection />
   <LatestWinners />
-  <ReviewCardSumo />
-  <SmoothCarousel />
 
   <Navfoot />
 </MainLayout>

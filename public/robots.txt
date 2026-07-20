@@ -13,5 +13,5 @@ Disallow: /
 User-agent: Anthropic-ai
 Disallow: /
 
-Sitemap: https://www.takdee999-guide.com/sitemap-0.xml
+Sitemap: https://www.chokdee1688-brand.com/sitemap-0.xml
 

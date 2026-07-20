@@ -3,8 +3,8 @@ import { Image } from "astro:assets";
 import Bg from "../assets/bg.png";
 import ogImage from "../assets/slide1.png";
 import "../styles/global.css";
-import NavbarStyle7 from "../components/NavbarStyle7.astro";
-import Footer from "../components/FooterPremium.astro";
+import NavbarStyle9 from "../components/NavbarStyle9.astro";
+import Footer from "../components/FooterStyle2.astro";
 
 const bannerImages = import.meta.glob<{ default: ImageMetadata }>("../assets/banner*.{png,webp,jpg,jpeg}", { eager: true });
 const bannerPaths = Object.keys(bannerImages);
@@ -14,8 +14,8 @@ const mainBannerPath = preferredBannerPath ?? webpBannerPath ?? bannerPaths[0];
 const mainBanner = mainBannerPath ? bannerImages[mainBannerPath].default : null;
 
 const {
-  title = "TAKDEE999 รีวิว สล็อตที่แตกบ่อย จริงไหม? ผลทดสอบเว็บไซต์ ทางเข้า",
-  description = "TAKDEE999 รีวิว สล็อตที่แตกบ่อย เจาะลึกทุกองค์ประกอบ มีข้อมูลอะไรที่ควรรู้ ผลทดสอบ ตั้งแต่สมัครจนถึง ทางเข้า เล่น วิธีเลือก ให้ปลอดภัย",
+  title = "CHOKDEE1688 เว็บสล็อตที่นิยม รีวิวตรงๆ ระบบออโต้ ทางเข้าล่าสุด",
+  description = "CHOKDEE1688 เว็บสล็อตที่นิยม รีวิวตรงๆ สำรวจเกมสล็อต จุดเด่นของเว็บไซต์ ระบบออโต้ และข้อมูลทางเข้าล่าสุด เพื่อศึกษาก่อนเข้าใช้งาน",
   robots = "index, follow",
   ImageOg = ogImage.src,
 } = Astro.props;
@@ -23,7 +23,7 @@ const {
 const currentPath = Astro.url.pathname;
 const canonicalURL = new URL(currentPath, Astro.site);
 const ogImageURL = new URL(ImageOg, Astro.site);
-const ogSiteName = "TAKDEE999";
+const ogSiteName = "CHOKDEE1688";
 ---
 
 <html lang="th">
@@ -43,7 +43,7 @@ const ogSiteName = "TAKDEE999";
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
     <link rel="shortcut icon" href="/favicon.ico" />
     <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png" />
-    <meta name="apple-mobile-web-app-title" content="takdee999" />
+    <meta name="apple-mobile-web-app-title" content="chokdee1688" />
     <link rel="manifest" href="/site.webmanifest" />
 
     <meta property="og:type" content="website" />
@@ -92,12 +92,12 @@ const ogSiteName = "TAKDEE999";
       decoding="sync"
     />
 
-    <NavbarStyle7 />
+    <NavbarStyle9 />
 
     <div class="mb-2.5 flex w-full items-center justify-center">
       <Image
         src={mainBanner!}
-        alt="TAKDEE999 banner"
+        alt="CHOKDEE1688 banner"
         loading="eager"
         fetchpriority="high"
         widths={[412, 768, 1900]}
