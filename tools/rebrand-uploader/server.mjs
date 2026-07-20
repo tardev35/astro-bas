@@ -28,12 +28,22 @@ const IMAGE_EXTS = ["png", "webp", "jpg", "jpeg", "avif", "gif", "svg"];
 // screens still stay crisp. Bump this if you serve 4K-native hero art.
 const MAX_SOURCE_WIDTH = 2560;
 
-// Normalize an upload before it is stored: downscale only when wider than the
-// cap (never upscale). Returns a sharp pipeline the caller finishes + writes.
-async function prep(buf, maxWidth = MAX_SOURCE_WIDTH) {
+// Promotion / carousel slides are never rendered wider than 600px
+// (SmoothCarousel uses widths=[200,400,600]), so storing the full-size export
+// is wasted bytes. Fit inside a 600x600 box: keeps aspect ratio, never crops,
+// never upscales a smaller upload.
+const SLIDE_BOX = 600;
+
+// Normalize an upload before it is stored: downscale only when larger than the
+// limit (never upscale). Returns a sharp pipeline the caller finishes + writes.
+async function prep(buf, { maxWidth = MAX_SOURCE_WIDTH, box = null } = {}) {
   const meta = await sharp(buf).metadata();
   let img = sharp(buf);
-  if (meta.width && meta.width > maxWidth) img = img.resize({ width: maxWidth });
+  if (box) {
+    img = img.resize({ width: box, height: box, fit: "inside", withoutEnlargement: true });
+  } else if (meta.width && meta.width > maxWidth) {
+    img = img.resize({ width: maxWidth });
+  }
   return img;
 }
 
@@ -69,17 +79,17 @@ function buildIco(pngBuffer, size) {
   return Buffer.concat([header, entry, pngBuffer]);
 }
 
-async function toPng(buf, dir, base) {
+async function toPng(buf, dir, base, opts) {
   // Lossless PNG optimization: identical pixels, ~80% smaller than sharp's
   // default png() on photographic banners/slides. No banding, safe for hero art.
-  const img = await prep(buf);
+  const img = await prep(buf, opts);
   await img.png({ compressionLevel: 9, effort: 10 }).toFile(join(dir, `${base}.png`));
   await cleanupSiblings(dir, base, "png");
   return `${base}.png`;
 }
 
-async function toWebp(buf, dir, base) {
-  const img = await prep(buf);
+async function toWebp(buf, dir, base, opts) {
+  const img = await prep(buf, opts);
   await img.webp({ quality: 90, effort: 6 }).toFile(join(dir, `${base}.webp`));
   await cleanupSiblings(dir, base, "webp");
   return `${base}.webp`;
@@ -120,7 +130,7 @@ async function handleUpload(slot, index, ext, buf) {
       return [await toPng(buf, ASSETS, `banner${n}`)];
     case "slide":
       if (!(n >= 1 && n <= 4)) throw new Error("slide index must be 1-4");
-      return [await toPng(buf, ASSETS, `slide${n}`)];
+      return [await toPng(buf, ASSETS, `slide${n}`, { box: SLIDE_BOX })];
     case "favicon": {
       const written = [];
       const rasters = [
@@ -197,7 +207,7 @@ const PAGE = /* html */ `<!doctype html>
 <body>
 <header>
   <h1>Rebrand Asset Uploader</h1>
-  <p>เลือกไฟล์แล้วกด "อัพโหลดทั้งหมด" — ระบบจะเซฟลง <code>src/assets</code> และ <code>public</code> ด้วยชื่อ/นามสกุลที่ถูกต้องอัตโนมัติ พร้อม<strong>บีบอัดรูปแบบ lossless</strong> (คมเท่าเดิม ไฟล์เล็กลง) และย่อรูปที่กว้างเกิน ${MAX_SOURCE_WIDTH}px ให้พอดี (แค่ stage ไฟล์ ไม่ได้รัน rebrand)</p>
+  <p>เลือกไฟล์แล้วกด "อัพโหลดทั้งหมด" — ระบบจะเซฟลง <code>src/assets</code> และ <code>public</code> ด้วยชื่อ/นามสกุลที่ถูกต้องอัตโนมัติ พร้อม<strong>บีบอัดรูปแบบ lossless</strong> (คมเท่าเดิม ไฟล์เล็กลง) ย่อรูปที่กว้างเกิน ${MAX_SOURCE_WIDTH}px ให้พอดี และย่อรูป <strong>Promotion/Carousel เหลือ ${SLIDE_BOX}×${SLIDE_BOX}</strong> (ขนาดที่หน้าเว็บใช้จริง) — แค่ stage ไฟล์ ไม่ได้รัน rebrand</p>
 </header>
 <main>
   <section class="card" id="card1">
