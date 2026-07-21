@@ -3,8 +3,8 @@ import { Image } from "astro:assets";
 import Bg from "../assets/bg.png";
 import ogImage from "../assets/slide1.png";
 import "../styles/global.css";
-import NavbarStyle9 from "../components/NavbarStyle9.astro";
-import Footer from "../components/FooterStyle2.astro";
+import NavbarCyber from "../components/NavbarCyber.astro";
+import Footer from "../components/FooterCyber.astro";
 
 const bannerImages = import.meta.glob<{ default: ImageMetadata }>("../assets/banner*.{png,webp,jpg,jpeg}", { eager: true });
 const bannerPaths = Object.keys(bannerImages);
@@ -14,8 +14,8 @@ const mainBannerPath = preferredBannerPath ?? webpBannerPath ?? bannerPaths[0];
 const mainBanner = mainBannerPath ? bannerImages[mainBannerPath].default : null;
 
 const {
-  title = "CHOKDEE1688 เว็บสล็อตที่นิยม รีวิวตรงๆ ระบบออโต้ ทางเข้าล่าสุด",
-  description = "CHOKDEE1688 เว็บสล็อตที่นิยม รีวิวตรงๆ สำรวจเกมสล็อต จุดเด่นของเว็บไซต์ ระบบออโต้ และข้อมูลทางเข้าล่าสุด เพื่อศึกษาก่อนเข้าใช้งาน",
+  title = "MARINA65 เว็บคาสิโนออนไลน์ เกมสล็อต กีฬา เว็บตรงอันดับ 1",
+  description = "รีวิว MARINA65 เว็บคาสิโนออนไลน์ พร้อมข้อมูลเกมสล็อต คาสิโนสด กีฬา และเว็บตรงอันดับ 1 วิเคราะห์จุดเด่น เกมที่ให้บริการ ระบบสมาชิก และการใช้งาน",
   robots = "index, follow",
   ImageOg = ogImage.src,
 } = Astro.props;
@@ -23,7 +23,7 @@ const {
 const currentPath = Astro.url.pathname;
 const canonicalURL = new URL(currentPath, Astro.site);
 const ogImageURL = new URL(ImageOg, Astro.site);
-const ogSiteName = "CHOKDEE1688";
+const ogSiteName = "MARINA65";
 ---
 
 <html lang="th">
@@ -43,7 +43,7 @@ const ogSiteName = "CHOKDEE1688";
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
     <link rel="shortcut icon" href="/favicon.ico" />
     <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png" />
-    <meta name="apple-mobile-web-app-title" content="chokdee1688" />
+    <meta name="apple-mobile-web-app-title" content="marina65" />
     <link rel="manifest" href="/site.webmanifest" />
 
     <meta property="og:type" content="website" />
@@ -92,12 +92,12 @@ const ogSiteName = "CHOKDEE1688";
       decoding="sync"
     />
 
-    <NavbarStyle9 />
+    <NavbarCyber />
 
     <div class="mb-2.5 flex w-full items-center justify-center">
       <Image
         src={mainBanner!}
-        alt="CHOKDEE1688 banner"
+        alt="MARINA65 banner"
         loading="eager"
         fetchpriority="high"
         widths={[412, 768, 1900]}

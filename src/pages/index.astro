@@ -1,15 +1,16 @@
 ---
 import MainLayout from "../layouts/MainLayout.astro";
+import AnnouncementCyber from "../components/AnnouncementCyber.astro";
 import ContentBox from "../components/ContentBox.astro";
-import ContentBoxSpecial from "../components/ContentBoxSpecial.astro";
-import ContentBoxSevenThree from "../components/ContentBoxSevenThree.astro";
-import ContentBoxSevenThreeNeumorphism from "../components/ContentBoxSevenThreeNeumorphism.astro";
+import ContentBoxCyberCut from "../components/ContentBoxCyberCut.astro";
+import ContentBoxPremium from "../components/ContentBoxPremium.astro";
+import ContentBoxSevenThreeCyberCut from "../components/ContentBoxSevenThreeCyberCut.astro";
+import ContentBoxSevenThreePremium from "../components/ContentBoxSevenThreePremium.astro";
 import FeatureHighlights from "../components/FeatureHighlights.astro";
 import LoginRtpSection from "../components/LoginRtpSection.astro";
-import Announcement from "../components/Announcement2.astro";
 import ProviderGrid from "../components/ProviderGrid.astro";
 import GameRankingBoard from "../components/GameRankingBoard.astro";
-import LatestWinners from "../components/LatestWinners4.astro";
+import LatestWinners from "../components/LatestWinnersCyber.astro";
 import SmoothCarousel from "../components/SmoothCarousel.astro";
 import ReviewCardSumo from "../components/ReviewCardSumo2.astro";
 import Navfoot from "../components/Navfoot.astro";
@@ -17,8 +18,8 @@ const currentPath = Astro.url.pathname;
 const homePage = Astro.url.origin;
 const logoUrl = homePage + "/logo.webp";
 
-const pageTitle = "CHOKDEE1688 เว็บสล็อตที่นิยม รีวิวตรงๆ ระบบออโต้ ทางเข้าล่าสุด";
-const pageDescription = "CHOKDEE1688 เว็บสล็อตที่นิยม รีวิวตรงๆ สำรวจเกมสล็อต จุดเด่นของเว็บไซต์ ระบบออโต้ และข้อมูลทางเข้าล่าสุด เพื่อศึกษาก่อนเข้าใช้งาน";
+const pageTitle = "รีวิว MARINA65 เว็บคาสิโนออนไลน์ เกมสล็อต กีฬา เว็บตรงอันดับ 1";
+const pageDescription = "รีวิว MARINA65 เว็บคาสิโนออนไลน์ พร้อมข้อมูลเกมสล็อต คาสิโนสด กีฬา และเว็บตรงอันดับ 1 วิเคราะห์จุดเด่น เกมที่ให้บริการ ระบบสมาชิก และการใช้งาน";
 
 const webPageSchema = {
   "@context": "https://schema.org",
@@ -30,71 +31,90 @@ const webPageSchema = {
 const webSiteSchema = {
   "@context": "https://schema.org",
   "@type": "WebSite",
-  name: "CHOKDEE1688",
-  alternateName: ["CHOKDEE1688", "CHOKDEE1688 เว็บสล็อตที่นิยม รีวิวตรงๆ"],
-  url: "https://www.chokdee1688-brand.com/",
+  name: "MARINA65",
+  alternateName: ["MARINA65", "รีวิว MARINA65 เว็บคาสิโนออนไลน์ เว็บตรงอันดับ 1"],
+  url: "https://www.marina65-review.com/",
 };
 const orgSchema = {
   "@context": "https://schema.org",
   "@type": "Organization",
-  name: "CHOKDEE1688",
+  name: "MARINA65",
   logo: logoUrl,
   url: homePage,
 };
 const allSchemas = [webPageSchema, orgSchema, webSiteSchema];
 
-const entryChecks = [
+const webDirectStrengths = [
   {
-    icon: "🔒",
-    title: "HTTPS ปลอดภัย",
-    description: "ตรวจสอบว่าลิงก์ทางเข้าเปิดผ่าน HTTPS และมีสัญลักษณ์แม่กุญแจ เพื่อการเชื่อมต่อที่เข้ารหัสและปลอดภัยตลอดการใช้งาน",
+    icon: "🧩",
+    title: "บริการครบในเว็บเดียว",
+    description: "รวมสล็อต คาสิโนสด และกีฬาไว้ในบัญชีเดียว ไม่ต้องสมัครหลายเว็บหรือแยกกระเป๋าเงินให้ยุ่งยาก",
     accent: "gold" as const,
   },
   {
-    icon: "🛡️",
-    title: "SSL เข้ารหัสข้อมูล",
-    description: "เว็บไซต์เข้ารหัสข้อมูลด้วย SSL ช่วยปกป้องข้อมูลบัญชีและการทำรายการต่าง ๆ ระหว่างที่ใช้งานระบบออโต้",
+    icon: "⚡",
+    title: "หน้าเว็บตอบสนองเร็ว",
+    description: "เมนูและหน้าเกมโหลดต่อเนื่อง เข้าถึงหมวดเกมและบริการสำคัญได้รวดเร็วโดยไม่สะดุด",
     accent: "blue" as const,
   },
   {
-    icon: "🔗",
-    title: "ลิงก์ทางการล่าสุด",
-    description: "เลือกใช้ทางเข้าล่าสุดจากลิงก์ทางการของ CHOKDEE1688 เท่านั้น เพื่อเข้าถึงระบบได้ครบทุกฟังก์ชันและลดโอกาสเข้าสู่ลิงก์ที่ไม่ถูกต้อง",
+    icon: "👤",
+    title: "ระบบสมาชิกจัดการง่าย",
+    description: "ตรวจสอบยอดเงิน ประวัติรายการ และข้อมูลบัญชีได้ครบจากหน้าเดียว จัดการทุกความเคลื่อนไหวได้สะดวก",
+    accent: "gold" as const,
+  },
+  {
+    icon: "📱",
+    title: "เข้าเล่นได้ทั้งมือถือและคอม",
+    description: "รองรับการใช้งานทั้งบนสมาร์ทโฟนและคอมพิวเตอร์ เล่นต่อเนื่องได้จากทุกอุปกรณ์",
+    accent: "blue" as const,
+  },
+  {
+    icon: "🔄",
+    title: "ฝากถอนอัตโนมัติ",
+    description: "ระบบฝากถอนอัตโนมัติช่วยลดขั้นตอนตั้งแต่สมัครสมาชิกจนถึงเริ่มใช้งาน ทำรายการได้รวดเร็ว",
     accent: "gold" as const,
   },
 ];
 
 import { Picture } from "astro:assets";
-import imgReview from "../assets/slide2.png";
-import imgAuto from "../assets/slide1.png";
+import imgSlot from "../assets/slide1.png";
+import imgSport from "../assets/slide2.png";
 import imgRegister from "../assets/banner2.png";
 ---
 
 <MainLayout title={pageTitle} description={pageDescription}>
   <script type="application/ld+json" set:html={JSON.stringify(allSchemas)} />
 
-  <Announcement message="📢 CHOKDEE1688 เว็บสล็อตที่นิยม รีวิวตรงๆ ระบบออโต้ พร้อมข้อมูลทางเข้าล่าสุด อัปเดตใหม่ทุกวันที่ chokdee1688-brand.com" />
+  <AnnouncementCyber message="📢 MARINA65 เว็บคาสิโนออนไลน์ รวมสล็อต คาสิโนสด และกีฬา เว็บตรงอันดับ 1 พร้อมระบบฝากถอนอัตโนมัติ อัปเดตทางเข้าล่าสุดที่ marina65-review.com" />
 
-  <ContentBoxSpecial as="h1" title="CHOKDEE1688 เว็บสล็อตที่นิยม รีวิวตรงๆ ระบบออโต้ ทางเข้าล่าสุด">
+  <ContentBoxCyberCut as="h1" title="รีวิว MARINA65 เว็บคาสิโนออนไลน์ เกมสล็อต กีฬา เว็บตรงอันดับ 1">
     <p class="mx-auto max-w-4xl text-center leading-relaxed">
-      CHOKDEE1688 เป็นเว็บสล็อตที่นิยมซึ่งรวบรวมเกมสล็อตจากหลายผู้ให้บริการไว้ภายในเว็บไซต์เดียว พร้อมระบบออโต้ที่ช่วยจัดการขั้นตอนการใช้งานตั้งแต่สมัครสมาชิก ฝากเงิน ไปจนถึงการทำรายการต่าง ๆ
-      ได้สะดวกยิ่งขึ้น จากการสำรวจองค์ประกอบของเว็บไซต์ ทั้งในด้านเกมสล็อต ระบบการใช้งาน จุดเด่นของแพลตฟอร์ม และข้อมูลเกี่ยวกับทางเข้าล่าสุด เพื่อให้เห็นภาพรวมของ CHOKDEE1688 ก่อนเข้าใช้งาน
+      MARINA65 เป็นเว็บคาสิโนออนไลน์ที่รวมเกมสล็อต คาสิโนออนไลน์ และการเดิมพันกีฬาไว้ในบัญชีเดียว จุดเด่นอยู่ที่หน้าเว็บใช้งานง่าย เกมแบ่งหมวดชัด
+      และมีระบบสมาชิกช่วยจัดการยอดเงินกับรายการฝากถอนได้สะดวก ภาพรวมจึงตอบโจทย์คนที่ต้องการเว็บตรงอันดับ 1 ในด้านความครบ ความรวดเร็ว และการเข้าเล่นได้จากทุกอุปกรณ์
     </p>
-  </ContentBoxSpecial>
+  </ContentBoxCyberCut>
 
   <SmoothCarousel />
 
-  <ContentBox as="h2" title="CHOKDEE1688 เว็บสล็อตที่นิยม มีจุดเด่นอะไรบ้าง">
+  <ContentBox as="h2" title="รีวิว MARINA65 คาสิโนออนไลน์ มีจุดเด่นอะไร">
     <p class="leading-relaxed">
-      CHOKDEE1688 รวบรวมเกมสล็อตจากหลายค่ายไว้ในเว็บไซต์เดียว พร้อมระบบออโต้ที่ช่วยจัดการขั้นตอนการใช้งานได้สะดวก เมนูแบ่งหมวดหมู่ชัดเจน ค้นหาเกมง่าย รองรับทั้งคอมพิวเตอร์และมือถือ
-      ทำให้เข้าถึงเกมและบริการต่าง ๆ ได้รวดเร็ว จึงเป็นอีกเหตุผลที่ทำให้เว็บไซต์ได้รับความนิยมจากผู้ใช้งานจำนวนมาก
+      MARINA65 เด่นเรื่องการรวมเกมหลายประเภทไว้ในระบบเดียว ทั้งสล็อต โต๊ะคาสิโนสด และกีฬา เมนูไม่ซับซ้อน สามารถค้นหาเกม เช็กโปรโมชั่น และจัดการบัญชีได้จากหน้าเดียว
+      เหมาะกับคนที่ไม่ต้องการสมัครหลายเว็บหรือโอนเงินแยกหลายกระเป๋า
     </p>
   </ContentBox>
 
-  <ContentBoxSevenThree titleright="รีวิวตรงๆ หลังทดลองเล่นเกมสล็อตของ CHOKDEE1688">
+  <ContentBoxPremium as="h2" title="เว็บคาสิโนตรง ส่งผลดีต่อผู้เล่น ใช้งานง่ายแค่ไหน">
+    <p class="leading-relaxed">
+      หน้าแรกจัดหมวดเกมและบริการสำคัญไว้ชัดเจน ผู้เล่นจึงเข้าถึงสล็อต คาสิโน กีฬา ฝากถอน และโปรโมชั่นได้โดยไม่ต้องกดผ่านหลายขั้นตอน ส่วนระบบสมาชิกแสดงยอดเงิน ประวัติรายการ และข้อมูลบัญชีครบ
+      ทำให้ตรวจสอบทุกความเคลื่อนไหวได้สะดวก
+    </p>
+  </ContentBoxPremium>
+
+  <ContentBoxSevenThreeCyberCut titleright="สล็อตออนไลน์และคาสิโนบน MARINA65 มีอะไรน่าเล่น">
     <div slot="left" class="flex h-full flex-col justify-center">
       <Picture
-        src={imgReview}
+        src={imgSlot}
         loading="lazy"
         fetchpriority="low"
         widths={[200, 400, 600, 800]}
@@ -103,34 +123,25 @@ import imgRegister from "../assets/banner2.png";
         formats={["avif", "webp"]}
         fallbackFormat="webp"
         quality={80}
-        alt="CHOKDEE1688 ทดลองเล่นเกมสล็อตจากหลายค่าย เปรียบเทียบเกมได้ในระบบเดียว"
-        class="mx-auto h-auto w-full rounded-2xl border-2 border-emerald-400/30 shadow-[0_10px_30px_rgba(16,185,129,0.3)]"
+        alt="MARINA65 รวมเกมสล็อตออนไลน์และคาสิโนสดหลายค่ายไว้ในบัญชีเดียว"
+        class="mx-auto h-auto w-full rounded-2xl border-2 border-red-400/30 shadow-[0_10px_30px_rgba(220,38,38,0.3)]"
       />
     </div>
     <div slot="right">
       <p class="leading-relaxed">
-        หลังทดลองใช้งาน พบว่าหน้าเกมและเมนูต่าง ๆ ทำงานต่อเนื่อง การเลือกเกมไม่ซับซ้อน และแบ่งค่ายเกมไว้อย่างเป็นระเบียบ ผู้เล่นสามารถเปรียบเทียบเกมสล็อตจากหลายผู้ให้บริการได้ในระบบเดียว
-        ช่วยให้เลือกเกมที่ตรงกับความชอบได้ง่ายขึ้น
+        หมวดเกมสล็อตมีให้เลือกหลายแนว ทั้งเกมโบนัส เกมตัวคูณ และเกมที่มีระดับความผันผวนต่างกัน ขณะที่คาสิโนสดรองรับเกมโต๊ะยอดนิยม พร้อมภาพถ่ายทอดแบบเรียลไทม์
+        ผู้เล่นจึงเลือกได้ทั้งการหมุนสล็อตแบบรวดเร็วและการเล่นคาสิโนที่เน้นจังหวะตัดสินใจ
       </p>
     </div>
-  </ContentBoxSevenThree>
-
-  <ReviewCardSumo />
-
-  <ContentBox as="h2" title="ค่ายเกมสล็อตของ CHOKDEE1688 มีอะไรให้เลือกบ้าง">
-    <p class="leading-relaxed">
-      CHOKDEE1688 รวมเกมสล็อตจากค่ายยอดนิยม เช่น PG Soft, Pragmatic Play, JILI และ Habanero พร้อมอัปเดตเกมใหม่อย่างต่อเนื่อง แต่ละค่ายมีรูปแบบและฟีเจอร์แตกต่างกัน
-      ทำให้ผู้เล่นเลือกเกมได้หลากหลายภายในบัญชีเดียว
-    </p>
-  </ContentBox>
+  </ContentBoxSevenThreeCyberCut>
 
   <ProviderGrid />
   <GameRankingBoard />
 
-  <ContentBoxSevenThreeNeumorphism titleright="ระบบออโต้ช่วยให้การใช้งาน CHOKDEE1688 สะดวกขึ้นอย่างไร">
+  <ContentBoxSevenThreePremium titleright="เดิมพันกีฬากับ MARINA65 มีประเภทกีฬาให้เลือกมากแค่ไหน">
     <div slot="left" class="flex h-full flex-col justify-center">
       <Picture
-        src={imgAuto}
+        src={imgSport}
         loading="lazy"
         fetchpriority="low"
         widths={[200, 400, 600, 800]}
@@ -139,27 +150,30 @@ import imgRegister from "../assets/banner2.png";
         formats={["avif", "webp"]}
         fallbackFormat="webp"
         quality={80}
-        alt="CHOKDEE1688 ระบบออโต้จัดการสมัครสมาชิก เข้าสู่ระบบ และทำธุรกรรมได้จากบัญชีเดียว"
-        class="mx-auto h-auto w-full rounded-2xl border-2 border-emerald-400/20 shadow-[0_10px_30px_rgba(16,185,129,0.25)]"
+        alt="MARINA65 เดิมพันกีฬา ฟุตบอล มวย บาส และ E sport ภายในบัญชีเดียว"
+        class="mx-auto h-auto w-full rounded-2xl border-2 border-red-400/20 shadow-[0_10px_30px_rgba(220,38,38,0.25)]"
       />
     </div>
     <div slot="right">
       <p class="leading-relaxed">
-        ระบบออโต้ช่วยลดขั้นตอนการใช้งานตั้งแต่สมัครสมาชิก เข้าสู่ระบบ ไปจนถึงการจัดการธุรกรรม ผู้ใช้งานสามารถตรวจสอบข้อมูลและทำรายการต่าง ๆ ได้จากบัญชีเดียว ช่วยให้การใช้งานรวดเร็วและต่อเนื่องมากขึ้น
+        หมวดกีฬารองรับการแข่งขันหลายประเภท ฟุตบอล มวย บาส หรือเกมประเภท E sport โดยเฉพาะฟุตบอล MARINA65 เปิดโต๊ะแทงบอลที่มีทั้งราคาก่อนแข่งและระหว่างแข่ง
+        การวางข้อมูลราคาและคู่แข่งขันเป็นหมวดช่วยให้เลือกดูรายการได้ง่าย เหมาะกับคนที่ต้องการสลับจากคาสิโนหรือสล็อตมาลุ้นเกมกีฬาภายในบัญชีเดิม
       </p>
     </div>
-  </ContentBoxSevenThreeNeumorphism>
+  </ContentBoxSevenThreePremium>
 
-  <ContentBox as="h2" title="ทางเข้าล่าสุด CHOKDEE1688 ควรตรวจสอบอะไรบ้างก่อนเข้าใช้งาน">
+  <ContentBox as="h2" title="ทำไม MARINA65 จึงมีภาพลักษณ์เป็น เว็บตรงอันดับ 1">
     <p class="leading-relaxed">
-      ก่อนเข้าใช้งาน ควรตรวจสอบว่ากำลังใช้ทางเข้าล่าสุดของ CHOKDEE1688 พร้อมสังเกตชื่อโดเมนและการเชื่อมต่อ HTTPS เพื่อให้เข้าถึงระบบได้ครบทุกฟังก์ชัน และลดโอกาสเข้าสู่ลิงก์ที่ไม่ถูกต้อง
+      จุดที่ทำให้ MARINA65 มีภาพลักษณ์ของเว็บตรงอันดับ 1 คือบริการที่ครบในเว็บเดียว หน้าเว็บตอบสนองเร็ว ระบบสมาชิกจัดการง่าย และสามารถเข้าเล่นได้ทั้งมือถือกับคอมพิวเตอร์ เมื่อรวมกับระบบฝากถอนอัตโนมัติ
+      จึงช่วยลดขั้นตอนตั้งแต่สมัครสมาชิกจนถึงเริ่มใช้งาน
     </p>
-    <FeatureHighlights items={entryChecks} />
+    <FeatureHighlights items={webDirectStrengths} />
   </ContentBox>
 
-  <ContentBox as="h2" title="วิธีสมัครสมาชิก CHOKDEE1688 และเริ่มใช้งานระบบออโต้">
+  <ContentBox as="h2" title="สมัครสมาชิก MARINA65 และชวนเพื่อนรับเครดิต">
     <p class="leading-relaxed">
-      เริ่มต้นด้วยการสมัครสมาชิก กรอกข้อมูลตามขั้นตอน และเข้าสู่ระบบ จากนั้นสามารถใช้งานเกมสล็อต ระบบออโต้ และบริการต่าง ๆ ได้ทันทีผ่านบัญชีเดียว ช่วยให้ทุกขั้นตอนสะดวกและจัดการได้ง่ายในที่เดียว
+      การสมัครสมาชิกผ่านระบบออนไลน์ ใช้เวลาเพียงไม่กี่ขั้นตอนก็เริ่มใช้งานได้ ระบบสมาชิก MARINA65 มีระบบแนะนำเพื่อน (Referral)
+      สำหรับสมาชิกที่ต้องการแบ่งปันลิงก์ให้ผู้อื่นสมัครผ่านรหัสหรือบัญชีที่กำหนด โดยผู้ที่เข้าร่วมควรตรวจสอบเงื่อนไขการรับเครดิต อัตราผลตอบแทน และข้อกำหนดของแต่ละกิจกรรมก่อนใช้งานทุกครั้ง
     </p>
 
     <Picture
@@ -172,26 +186,35 @@ import imgRegister from "../assets/banner2.png";
       formats={["avif", "webp"]}
       fallbackFormat="webp"
       quality={80}
-      alt="CHOKDEE1688 ขั้นตอนสมัครสมาชิก ฝากเงิน และเริ่มใช้งานระบบออโต้"
-      class="mx-auto mt-8 h-auto w-full max-w-2xl rounded-2xl border border-emerald-400/20 shadow-[0_10px_30px_rgba(16,185,129,0.2)]"
+      alt="MARINA65 สมัครสมาชิกและชวนเพื่อนรับเครดิตผ่านระบบแนะนำเพื่อน"
+      class="mx-auto mt-8 h-auto w-full max-w-5xl rounded-2xl border border-red-400/20 shadow-[0_10px_30px_rgba(220,38,38,0.2)]"
     />
 
     <div class="mt-8 flex flex-wrap justify-center gap-6">
       <a
         href="/login"
-        class="group relative flex items-center justify-center rounded-full border border-amber-400/50 bg-[#021207]/80 px-10 py-3.5 font-black text-amber-300 backdrop-blur-sm transition-all duration-300 hover:scale-105 hover:bg-emerald-900/60 hover:shadow-[0_0_15px_rgba(251,191,36,0.4)]">
+        class="group relative flex items-center justify-center rounded-full border border-amber-400/50 bg-[#14040a]/80 px-10 py-3.5 font-black text-amber-300 backdrop-blur-sm transition-all duration-300 hover:scale-105 hover:bg-red-900/60 hover:shadow-[0_0_15px_rgba(251,191,36,0.4)]">
         เข้าสู่ระบบ
       </a>
 
       <a
         href="/register"
-        class="group relative flex items-center justify-center rounded-full bg-gradient-to-r from-amber-400 via-amber-500 to-yellow-600 px-10 py-3.5 font-black text-emerald-950 shadow-[0_5px_20px_rgba(251,191,36,0.4)] transition-all duration-300 hover:-translate-y-1 hover:scale-105 hover:shadow-[0_8px_25px_rgba(251,191,36,0.6)]">
+        class="group relative flex items-center justify-center rounded-full bg-gradient-to-r from-amber-400 via-amber-500 to-yellow-600 px-10 py-3.5 font-black text-red-950 shadow-[0_5px_20px_rgba(251,191,36,0.4)] transition-all duration-300 hover:-translate-y-1 hover:scale-105 hover:shadow-[0_8px_25px_rgba(251,191,36,0.6)]">
         สมัครสมาชิก
       </a>
     </div>
   </ContentBox>
 
   <LoginRtpSection />
+
+  <ContentBox as="h2" title="สรุปผลรีวิว MARINA65 เว็บเดิมพัน เกมคาสิโน ออนไลน์">
+    <p class="leading-relaxed">
+      MARINA65 เหมาะกับคนที่ต้องการสล็อตออนไลน์ คาสิโนออนไลน์ และกีฬาในระบบเดียว จุดแข็งคือการจัดหมวดเกมชัด ใช้งานไม่ยุ่งยาก และบริหารบัญชีได้สะดวก ภาพรวมจึงเป็นเว็บตรงที่เน้นความครบ ความเร็ว
+      และการใช้งานต่อเนื่องมากกว่าการมีเกมจำนวนมากเพียงอย่างเดียว
+    </p>
+  </ContentBox>
+
+  <ReviewCardSumo />
   <LatestWinners />
 
   <Navfoot />

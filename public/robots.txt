@@ -13,5 +13,5 @@ Disallow: /
 User-agent: Anthropic-ai
 Disallow: /
 
-Sitemap: https://www.chokdee1688-brand.com/sitemap-0.xml
+Sitemap: https://www.marina65-review.com/sitemap-0.xml
 
