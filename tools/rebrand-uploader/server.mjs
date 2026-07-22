@@ -230,10 +230,17 @@ async function handleConfig({ aff, line }) {
       written.push(`src/pages/${p}  → aff ${url}`);
     }
   }
-  if (line != null && String(line).trim() !== "") {
-    const url = toLineUrl(line);
-    await replaceInFile(CONFIG_FILE, LINE_RE, `$1${url}$2`, "/line redirect");
-    written.push(`astro.config.mjs  → /line ${url}`);
+  // LINE@: a blank field means "keep whatever astro.config already has" — we
+  // fall back to the current /line value instead of blanking it, and skip the
+  // write entirely when the resolved value already matches (no needless diff).
+  const lineStr = line == null ? "" : String(line).trim();
+  const currentLine = (await readCurrentLinks()).line;
+  const targetLine = lineStr === "" ? currentLine : toLineUrl(lineStr);
+  if (targetLine && targetLine !== currentLine) {
+    await replaceInFile(CONFIG_FILE, LINE_RE, `$1${targetLine}$2`, "/line redirect");
+    written.push(`astro.config.mjs  → /line ${targetLine}`);
+  } else if (lineStr !== "") {
+    written.push(`astro.config.mjs  → /line คงค่าเดิม (${currentLine || "ไม่มีค่า"})`);
   }
   if (!written.length) throw new Error("ไม่มีค่าให้บันทึก (กรอกอย่างน้อย 1 ช่อง)");
   return written;
@@ -360,7 +367,7 @@ function renderPage({ aff = "", line = "" } = {}) {
   </section>
 
   <section class="card" id="card3">
-    <h2>ส่วนที่ 3 — ลิงก์ (ไม่ใช่ไฟล์)</h2>
+    <h2>ส่วนที่ 3 — ลิงก์ </h2>
     <p class="sub">แก้ลิงก์ Affiliate ในหน้า login/register และ LINE@ ของปุ่มติดต่อ (/line) — เว้นว่างไว้ถ้าไม่ต้องการเปลี่ยน</p>
     <div class="field">
       <div class="row"><label>Affiliate link</label><span class="target">src/pages/login.astro + register.astro</span></div>
@@ -369,8 +376,8 @@ function renderPage({ aff = "", line = "" } = {}) {
     </div>
     <div class="field">
       <div class="row"><label>LINE@</label><span class="target">astro.config.mjs → redirect /line</span></div>
-      <input type="text" id="lineInput" placeholder="${line ? "ปัจจุบัน: " + esc(line) : "@yourline หรือ https://lin.ee/xxxx"}" />
-      <span class="status" id="lineStatus">${line ? "ปัจจุบัน: " + esc(line) : "ใส่ @ไอดี หรือวางลิงก์ https:// เต็ม"}</span>
+      <input type="text" id="lineInput" value="${esc(line)}" data-orig="${esc(line)}" placeholder="@yourline หรือ https://lin.ee/xxxx" />
+      <span class="status" id="lineStatus">${line ? "ค่าเดิมจาก astro.config: " + esc(line) + " — ไม่แก้ก็คงค่านี้ไว้" : "ยังไม่มีค่าใน astro.config — ใส่ @ไอดี หรือลิงก์ https:// เต็ม"}</span>
     </div>
   </section>
 </main>
@@ -417,25 +424,30 @@ function renderPage({ aff = "", line = "" } = {}) {
       }
     }
 
-    // Link fields (aff + LINE@) — text, not files. Only sent when filled in.
+    // Link fields (aff + LINE@) — text, not files.
+    // aff: only sent when typed. LINE@ is pre-filled with astro.config's current
+    // value, so we only send it when the user actually CHANGED it — leaving it as
+    // the existing value keeps astro.config untouched ("อ้างตามค่าเดิม").
     const aff = document.getElementById('affInput').value.trim();
-    const line = document.getElementById('lineInput').value.trim();
-    if (aff || line) {
+    const lineEl = document.getElementById('lineInput');
+    const lineChanged = lineEl.value.trim() !== (lineEl.dataset.orig || '').trim();
+    const line = lineChanged ? lineEl.value.trim() : '';
+    if (aff || lineChanged) {
       any = true;
       const affS = document.getElementById('affStatus');
       const lineS = document.getElementById('lineStatus');
       if (aff) affS.textContent = '⏳ กำลังบันทึก...';
-      if (line) lineS.textContent = '⏳ กำลังบันทึก...';
+      if (lineChanged) lineS.textContent = '⏳ กำลังบันทึก...';
       try {
         const res = await fetch('/config', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ aff, line }) });
         const j = await res.json();
         if (!res.ok || !j.ok) throw new Error(j.error || ('HTTP ' + res.status));
         if (aff) affS.textContent = '✅ บันทึกแล้ว';
-        if (line) lineS.textContent = '✅ บันทึกแล้ว';
+        if (lineChanged) { lineS.textContent = '✅ บันทึกแล้ว'; lineEl.dataset.orig = lineEl.value.trim(); }
         j.written.forEach((w) => addLog(w, true));
       } catch (e) {
         if (aff) affS.textContent = '❌ ' + e.message;
-        if (line) lineS.textContent = '❌ ' + e.message;
+        if (lineChanged) lineS.textContent = '❌ ' + e.message;
         addLog('link: ' + e.message, false);
       }
     }
