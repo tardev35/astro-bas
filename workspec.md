@@ -1003,3 +1003,44 @@ NavbarStyle family, Footer family** โดย:
 **การทดสอบ (Phase 5 — build เดียว):** `npm run build` ผ่านสะอาด 9 หน้า; grep dist ทุกหน้า: brand เก่า (chokdee1688/funbeyond/takdee999/999lord/mafia168 ฯลฯ)=**0**; emerald/purple/cyan/blue ใน class attr=**0 ทุกหน้า**; `<!--` ใน index=0; undefined/NaN=7 (ทั้งหมดเป็น `Number.isNaN()` ใน swiper JS — benign); index h1=1, h2=11 (7 docx เรียงถูก + 4 widget: Provider/Ranking/Winners/Review), h3=5 (FeatureHighlights เท่านั้น); heading ลำดับ docx ครบตรง checklist; hero=banner1; og:image=marina65-review.com/_astro/slide1
 **Out of scope / คงไว้:** inventory variants เดิม (NavbarStyle9, FooterStyle2, Announcement2, LatestWinners4, ContentBoxSpecial/Neumorphism ฯลฯ) = สี/ชื่อ CHOKDEE1688 = expected drift ไม่ลบ; หน้าหวย (แนวทาง/ตรวจหวย) คงธีมแดง/ทอง + AnnouncementHuay โดยตั้งใจ; banner3.png ไฟล์ค้างไม่ลบ; affiliate URL ใน login/register ไม่แตะ; google-site-verification token คงเดิม (drift ไม่ใช่ brand identity)
 **หมายเหตุ 2-agent:** รอบนี้ Agent B (sub-pages) เสร็จปกติ **ไม่ติด** safety false-positive; Agent A (landing) เสร็จปกติ; ไม่มี file collision
+
+---
+
+## 2026-07-22 — รีแบรนด์ MARINA65 → OHO21 (2-agent parallel)
+
+**เป้าหมาย:** รีแบรนด์ template จาก MARINA65 (crimson-red + gold, all-Cyber) → **OHO21** theme **น้ำเงินไฟฟ้า + ส้ม บนพื้นกรมท่า** (mood tech/premium; โลโก้ OHO น้ำเงิน + 21 ส้ม + มงกุฎทอง, hero banner1 ฉาก tech น้ำเงิน, bg gradient น้ำเงิน→ส้ม). Real URL ที่ผู้ใช้ให้: **https://www.oho21-brand.com**
+
+**docx inventory (H1 + 6 flat H2, ไม่มี H3):**
+1. H1: OHO21 สล็อตที่แตกง่าย โบนัส ฝากถอนออโต้ รีวิวเว็บตรง รองรับวอเลท
+2. H2: OHO21 สล็อตที่แตกง่าย ติดโบนัสไว ลุ้นกำไรได้ทุกเทิร์น
+3. H2: แจกโบนัสจัดเต็ม OHO21 เติมครั้งเดียว รับสิทธิ์ได้เต็มอัตรา
+4. H2: ฝากถอนออโต้ของ ไวทุกธุรกรรม พร้อมลุยทุกเกม
+5. H2: รีวิวเว็บตรง OHO21 จากระบบจริง สปินไหลลื่น ลุ้นแตกได้ทุกตา
+6. H2: รองรับวอเลทเต็ม ฝากง่าย ถอนเร็ว จบครบในบัญชีเดียว
+7. H2: ทางเข้า OHO21 อัปเดตตรงถึงเว็บจริง ล็อกเป้าความสนุกได้ในคลิกเดียว
+
+**Variant rotation (before→after — ออกจาก all-Cyber ของ MARINA65 ทุก family):**
+- Navbar: `NavbarCyber` → **NavbarPremium**
+- Footer: `FooterCyber` → **FooterPremium**
+- Announcement: `AnnouncementCyber` → **Announcement3** (green→blue/orange retheme; ตั้ง default message OHO21)
+- LatestWinners: `LatestWinnersCyber` → **LatestWinnersPremium** (retheme + แก้ hardcode TAKDEE999→OHO21)
+- ContentBox mix: `CyberCut+Premium-heavy` → **Neumorphism(H1) + plain ContentBox + Special + FloatingBadge; SevenThree = plain SevenThree + SevenThreeNeumorphism** (เลี่ยง CyberCut/Premium/SevenThreeCyberCut/SevenThreePremium ที่ MARINA65 ใช้)
+
+**URL (ผู้ใช้ให้จริง → อัปเดตครบ 3 จุด):** astro.config.mjs `site:` → `https://www.oho21-brand.com`; robots.txt Sitemap → `.../sitemap-0.xml`; index.astro webSiteSchema `url:` literal → `https://www.oho21-brand.com/`
+
+**ไฟล์ที่แก้ — Orchestrator P1 (shared chrome, 7 ไฟล์):** MainLayout (repoint Navbar/Footer→Premium, default title/desc/ogSiteName/banner-alt/apple-title → OHO21), NavbarPremium (red/amber→blue/orange, TAKDEE999→OHO21), FooterPremium (เหมือนกัน, คง LINE green + สีธนาคารจริง), Navfoot, ContentBox (shared — hue only), Announcement3 (green/lime→blue/orange + default OHO21), AnnouncementHuay (แก้แค่ brand name ในdefault, คงธีมหวย)
+**ไฟล์ที่แก้ — Agent A (Landing, 14 ไฟล์):** index.astro เขียนใหม่ (map docx 7 หัวข้อเรียงถูก, schema×3→OHO21, url literal, Announcement→Announcement3+message); retheme SmoothCarousel/LoginRtpSection/ContentBoxTwo/ProviderGrid/GameRankingBoard/ReviewCardSumo2/FeatureHighlights/LatestWinnersPremium + ContentBox variants (Neumorphism/Special/FloatingBadge/SevenThree/SevenThreeNeumorphism); FloatingBadge bump `pt-24`→`pt-28` + badge red→orange (ไม่มี whitespace-nowrap อยู่แล้ว)
+**ไฟล์ที่แก้ — Agent B (Sub-pages, 6 ไฟล์):** contact-us/promotion/ทดลองเล่น/ทางเข้า (repoint AnnouncementCyber→Announcement3 bare + brand + hue swap; promotion slide1-4.png ครบ), login/register (standalone raw-hex ใน `<style>`: `--dark-bg #14040a`→`#030a1a`, `--brand-gold #f59e0b`→`#f97316`, `--brand-red #dc2626`→`#2563eb`, rgba glow ทุกจุด; **ไม่แตะ** affiliate `targetUrl=yoalink.com/22hs`), แนวทาง/ตรวจหวย (คงธีมหวยแดง/ทอง + AnnouncementHuay แก้แค่ brand name)
+
+**ภาพ:** hero=banner1 (glob เลือกถูก, banner3 stale ไม่โผล่ใน dist), SevenThree=slide1(§2 แตกง่าย)+slide3(§4 ฝากถอน) พอดี 2 ครั้ง, banner2(รูปโปรมาสคอตส้ม)=inline ใน §3 (max-w-2xl); **ไม่ใช้ใน SevenThree:** slide2/slide4 (อยู่ใน SmoothCarousel); og:image=slide1 (hashed, oho21-brand.com)
+
+**การทดสอบ (Phase 5 — build เดียว):** `npm run build` ผ่านสะอาด 9 หน้า; `grep -rli marina65 dist/`=**0**; old hue (red/rose/amber/yellow/lime) ใน class attr = **0 ทุกหน้า casino** (index/promotion/contact-us/login/register/ทางเข้า/ทดลองเล่น); `<!--` ใน index=0; undefined/NaN/[object Object]=0; index h1=1, docx H2 6 หัวข้อ + §7 FloatingBadge เรียงครบตรง checklist, h3=5 (FeatureHighlights เท่านั้น); paragraph body ทั้ง 6 present verbatim; hero=banner1; og:image=hashed slide1; หน้าหวยคงแดง/ทอง (red-500/yellow-500/#2a0408) + chrome น้ำเงิน/ส้ม inherited; login/register ไม่มี hex crimson เก่าค้าง
+
+**Out of scope / คงไว้:** inventory variants ที่ไม่ได้ render (AnnouncementCyber/NavbarCyber/FooterCyber ยังมีชื่อ MARINA65 = expected drift ไม่ลบ); หน้าหวยคงธีมแดง/ทอง + AnnouncementHuay โดยตั้งใจ (ข้อยกเว้น Huay); banner3.png ไฟล์ค้างไม่ลบ; google-site-verification token คงเดิม
+
+**⚠️ ประเด็นที่ต้องให้ผู้ใช้ตัดสิน — affiliate redirect ค้าง:** `/login` และ `/register` เป็นหน้า interstitial "Authenticating…" ที่ redirect (meta-refresh + JS) ไป `https://yoalink.com/22hs` — link นี้มีอยู่ใน HEAD ก่อนแล้ว (git-confirmed) เป็น pattern เดิมของ template ทุกแบรนด์ **Agent B ไม่ได้ใส่เพิ่ม** (diff = แค่ brand+hue). แต่ `yoalink.com/22hs` เป็นของแบรนด์เก่า (stale) — OHO21 อาจต้องเปลี่ยนเป็น affiliate/signup link จริงของ OHO21 → **รอผู้ใช้ยืนยัน URL ปลายทาง** (ไม่เดา per [[feedback_rebrand_url_scope]]). Security monitor แจ้ง flag เรื่องนี้แต่เป็น mis-attribution (โค้ดมีอยู่เดิม ไม่ได้ถูก inject รอบนี้)
+
+**หมายเหตุ 2-agent:** รอบนี้ทั้ง Agent A และ Agent B เสร็จปกติ ไม่มี file collision; Agent B **ไม่ติด** safety false-positive ระดับ subagent (แต่ orchestrator ตรวจ security flag ของ harness เรื่อง yoalink แล้วยืนยันว่า pre-existing)
+
+### 2026-07-22 (fix) — ContentBoxSevenThreeNeumorphism ความกว้าง
+ผู้ใช้แจ้ง `ContentBoxSevenThreeNeumorphism` กว้างไม่เท่ากล่องอื่น — ต้นเหตุ: ใช้ `max-w-7xl` (1280px) ขณะที่กล่องอื่นบน index (ContentBox/Neumorphism/Special/FloatingBadge/SevenThree) ใช้ `max-w-[1400px]`. แก้เป็น `max-w-[1400px]` → กล่องเนื้อหาทั้งหน้ากว้างเท่ากัน. rebuild ผ่าน 9 หน้า; `max-w-7xl` ไม่เหลือใน element (เหลือแค่นิยาม utility class ใน CSS bundle)

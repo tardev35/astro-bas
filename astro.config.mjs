@@ -19,6 +19,6 @@ export default defineConfig({
     "/line": "https://tinyurl.com/suhng",
   },
 
-  site: "https://www.marina65-review.com",
+  site: "https://www.oho21-brand.com",
   integrations: [sitemap()],
 });

@@ -1,16 +1,17 @@
 ---
 import MainLayout from "../layouts/MainLayout.astro";
-import AnnouncementCyber from "../components/AnnouncementCyber.astro";
+import Announcement3 from "../components/Announcement3.astro";
+import ContentBoxNeumorphism from "../components/ContentBoxNeumorphism.astro";
 import ContentBox from "../components/ContentBox.astro";
-import ContentBoxCyberCut from "../components/ContentBoxCyberCut.astro";
-import ContentBoxPremium from "../components/ContentBoxPremium.astro";
-import ContentBoxSevenThreeCyberCut from "../components/ContentBoxSevenThreeCyberCut.astro";
-import ContentBoxSevenThreePremium from "../components/ContentBoxSevenThreePremium.astro";
+import ContentBoxSevenThree from "../components/ContentBoxSevenThree.astro";
+import ContentBoxSevenThreeNeumorphism from "../components/ContentBoxSevenThreeNeumorphism.astro";
+import ContentBoxSpecial from "../components/ContentBoxSpecial.astro";
+import ContentBoxFloatingBadge from "../components/ContentBoxFloatingBadge.astro";
 import FeatureHighlights from "../components/FeatureHighlights.astro";
 import LoginRtpSection from "../components/LoginRtpSection.astro";
 import ProviderGrid from "../components/ProviderGrid.astro";
 import GameRankingBoard from "../components/GameRankingBoard.astro";
-import LatestWinners from "../components/LatestWinnersCyber.astro";
+import LatestWinners from "../components/LatestWinnersPremium.astro";
 import SmoothCarousel from "../components/SmoothCarousel.astro";
 import ReviewCardSumo from "../components/ReviewCardSumo2.astro";
 import Navfoot from "../components/Navfoot.astro";
@@ -18,166 +19,104 @@ const currentPath = Astro.url.pathname;
 const homePage = Astro.url.origin;
 const logoUrl = homePage + "/logo.webp";
 
-const pageTitle = "รีวิว MARINA65 เว็บคาสิโนออนไลน์ เกมสล็อต กีฬา เว็บตรงอันดับ 1";
-const pageDescription = "รีวิว MARINA65 เว็บคาสิโนออนไลน์ พร้อมข้อมูลเกมสล็อต คาสิโนสด กีฬา และเว็บตรงอันดับ 1 วิเคราะห์จุดเด่น เกมที่ให้บริการ ระบบสมาชิก และการใช้งาน";
+const pageTitle = "OHO21 สล็อตที่แตกง่าย โบนัส ฝากถอนออโต้ รีวิวเว็บตรง รองรับวอเลท";
+const pageDescription = "OHO21 สล็อตที่แตกง่าย โบนัส ฝากถอนออโต้ รีวิวเว็บตรง รองรับวอเลท ติดโบนัสไว แจกโบนัสจัดเต็ม สปินไหลลื่น ฝากง่าย ถอนเร็ว พร้อมทางเข้า OHO21 เว็บจริง";
 
 const webPageSchema = {
   "@context": "https://schema.org",
   "@type": "WebPage",
-  name: pageTitle,
+  name: "OHO21",
   description: pageDescription,
   url: currentPath,
 };
 const webSiteSchema = {
   "@context": "https://schema.org",
   "@type": "WebSite",
-  name: "MARINA65",
-  alternateName: ["MARINA65", "รีวิว MARINA65 เว็บคาสิโนออนไลน์ เว็บตรงอันดับ 1"],
-  url: "https://www.marina65-review.com/",
+  name: "OHO21",
+  alternateName: ["OHO21", "OHO21 สล็อตที่แตกง่าย โบนัส ฝากถอนออโต้ รีวิวเว็บตรง รองรับวอเลท"],
+  url: "https://www.oho21-brand.com/",
 };
 const orgSchema = {
   "@context": "https://schema.org",
   "@type": "Organization",
-  name: "MARINA65",
+  name: "OHO21",
   logo: logoUrl,
   url: homePage,
 };
 const allSchemas = [webPageSchema, orgSchema, webSiteSchema];
 
-const webDirectStrengths = [
+const breakEasyFeatures = [
   {
-    icon: "🧩",
-    title: "บริการครบในเว็บเดียว",
-    description: "รวมสล็อต คาสิโนสด และกีฬาไว้ในบัญชีเดียว ไม่ต้องสมัครหลายเว็บหรือแยกกระเป๋าเงินให้ยุ่งยาก",
-    accent: "gold" as const,
-  },
-  {
-    icon: "⚡",
-    title: "หน้าเว็บตอบสนองเร็ว",
-    description: "เมนูและหน้าเกมโหลดต่อเนื่อง เข้าถึงหมวดเกมและบริการสำคัญได้รวดเร็วโดยไม่สะดุด",
+    icon: "🎯",
+    title: "รางวัลย่อย",
+    description: "จังหวะลุ้นรางวัลย่อยเข้าถี่ ช่วยให้แต่ละเทิร์นมีลุ้นต่อเนื่อง ไม่จำเจในระหว่างการหมุน",
     accent: "blue" as const,
   },
   {
-    icon: "👤",
-    title: "ระบบสมาชิกจัดการง่าย",
-    description: "ตรวจสอบยอดเงิน ประวัติรายการ และข้อมูลบัญชีได้ครบจากหน้าเดียว จัดการทุกความเคลื่อนไหวได้สะดวก",
+    icon: "🌀",
+    title: "ฟรีสปิน",
+    description: "ฟีเจอร์ฟรีสปินเปิดโอกาสหมุนเพิ่มโดยไม่เสียเครดิต ช่วยต่อยอดรอบทำเงินให้ยาวขึ้น",
     accent: "gold" as const,
   },
   {
-    icon: "📱",
-    title: "เข้าเล่นได้ทั้งมือถือและคอม",
-    description: "รองรับการใช้งานทั้งบนสมาร์ทโฟนและคอมพิวเตอร์ เล่นต่อเนื่องได้จากทุกอุปกรณ์",
+    icon: "✨",
+    title: "สัญลักษณ์พิเศษ",
+    description: "สัญลักษณ์พิเศษในเกมช่วยเพิ่มโอกาสเข้าสู่รอบโบนัสและฟีเจอร์ทำเงินได้มากขึ้น",
     accent: "blue" as const,
   },
   {
-    icon: "🔄",
-    title: "ฝากถอนอัตโนมัติ",
-    description: "ระบบฝากถอนอัตโนมัติช่วยลดขั้นตอนตั้งแต่สมัครสมาชิกจนถึงเริ่มใช้งาน ทำรายการได้รวดเร็ว",
+    icon: "✖️",
+    title: "ตัวคูณ",
+    description: "ตัวคูณรางวัลยกระดับยอดที่ได้รับในจังหวะสำคัญ เพิ่มความสนุกในแต่ละเทิร์น",
     accent: "gold" as const,
+  },
+  {
+    icon: "📊",
+    title: "RTP และความผันผวน",
+    description: "เลือกเกมตามค่า RTP และระดับความผันผวนให้เหมาะกับงบและสไตล์การเล่นของตัวเอง",
+    accent: "blue" as const,
   },
 ];
 
 import { Picture } from "astro:assets";
-import imgSlot from "../assets/slide1.png";
-import imgSport from "../assets/slide2.png";
-import imgRegister from "../assets/banner2.png";
+import imgBreakEasy from "../assets/slide1.png";
+import imgAutoWallet from "../assets/slide3.png";
+import imgBonus from "../assets/banner2.png";
 ---
 
 <MainLayout title={pageTitle} description={pageDescription}>
   <script type="application/ld+json" set:html={JSON.stringify(allSchemas)} />
 
-  <AnnouncementCyber message="📢 MARINA65 เว็บคาสิโนออนไลน์ รวมสล็อต คาสิโนสด และกีฬา เว็บตรงอันดับ 1 พร้อมระบบฝากถอนอัตโนมัติ อัปเดตทางเข้าล่าสุดที่ marina65-review.com" />
+  <Announcement3 message="📢 OHO21 สล็อตเว็บตรงแตกง่าย โบนัสจัดเต็ม ฝากถอนออโต้ รองรับวอเลท ฝากง่ายถอนเร็ว อัปเดตทางเข้าล่าสุดที่ www.oho21-brand.com" />
 
-  <ContentBoxCyberCut as="h1" title="รีวิว MARINA65 เว็บคาสิโนออนไลน์ เกมสล็อต กีฬา เว็บตรงอันดับ 1">
-    <p class="mx-auto max-w-4xl text-center leading-relaxed">
-      MARINA65 เป็นเว็บคาสิโนออนไลน์ที่รวมเกมสล็อต คาสิโนออนไลน์ และการเดิมพันกีฬาไว้ในบัญชีเดียว จุดเด่นอยู่ที่หน้าเว็บใช้งานง่าย เกมแบ่งหมวดชัด
-      และมีระบบสมาชิกช่วยจัดการยอดเงินกับรายการฝากถอนได้สะดวก ภาพรวมจึงตอบโจทย์คนที่ต้องการเว็บตรงอันดับ 1 ในด้านความครบ ความรวดเร็ว และการเข้าเล่นได้จากทุกอุปกรณ์
+  <ContentBoxNeumorphism as="h1" title="OHO21 สล็อตที่แตกง่าย โบนัส ฝากถอนออโต้ รีวิวเว็บตรง รองรับวอเลท">
+    <p class="mx-auto max-w-4xl leading-relaxed">
+      OHO21 รวมเกมสล็อตหลายรูปแบบไว้บนระบบเดียว ทั้งเกมที่เน้นรอบโบนัส ฟรีสปิน ตัวคูณ และฟีเจอร์พิเศษสำหรับสายลุ้นรางวัล โดยมีระบบฝากถอนออโต้ช่วยจัดการเครดิตได้รวดเร็ว
+      พร้อมช่องทางวอเลทที่ลดขั้นตอนการทำรายการ ภายในเว็บจัดหมวดเกมและค่ายผู้ให้บริการไว้อย่างชัดเจน เข้าเล่นผ่านมือถือได้สะดวก เนื้อหานี้จะพาไปดูตั้งแต่สล็อตที่แตกง่าย เงื่อนไขโบนัส ประสิทธิภาพของระบบ
+      ไปจนถึงวิธีตรวจสอบทางเข้าเว็บจริงก่อนเริ่มใช้งาน
     </p>
-  </ContentBoxCyberCut>
+  </ContentBoxNeumorphism>
 
   <SmoothCarousel />
 
-  <ContentBox as="h2" title="รีวิว MARINA65 คาสิโนออนไลน์ มีจุดเด่นอะไร">
+  <ContentBox as="h2" title="OHO21 สล็อตที่แตกง่าย ติดโบนัสไว ลุ้นกำไรได้ทุกเทิร์น">
     <p class="leading-relaxed">
-      MARINA65 เด่นเรื่องการรวมเกมหลายประเภทไว้ในระบบเดียว ทั้งสล็อต โต๊ะคาสิโนสด และกีฬา เมนูไม่ซับซ้อน สามารถค้นหาเกม เช็กโปรโมชั่น และจัดการบัญชีได้จากหน้าเดียว
-      เหมาะกับคนที่ไม่ต้องการสมัครหลายเว็บหรือโอนเงินแยกหลายกระเป๋า
+      สล็อตที่แตกง่ายของ OHO21 ไม่ได้หมายถึงเกมที่รับประกันผลรางวัล แต่เป็นกลุ่มเกมที่ออกแบบให้มีจังหวะลุ้นถี่ ทั้งรางวัลย่อย ฟรีสปิน สัญลักษณ์พิเศษ และตัวคูณที่ช่วยเพิ่มความสนุกในแต่ละเทิร์น
+      ผู้เล่นสามารถเลือกเกมตามค่า RTP ระดับความผันผวน และรูปแบบโบนัสที่ตรงกับสไตล์ของตัวเอง เกมความผันผวนต่ำเหมาะกับการเล่นต่อเนื่อง ส่วนเกมความผันผวนสูงจะเน้นลุ้นยอดรางวัลก้อนใหญ่
+      การตั้งงบและเลือกเดิมพันให้สัมพันธ์กับทุนจึงสำคัญกว่าการไล่ตามกระแสว่าเกมใดกำลังแตก
     </p>
+    <FeatureHighlights items={breakEasyFeatures} />
   </ContentBox>
 
-  <ContentBoxPremium as="h2" title="เว็บคาสิโนตรง ส่งผลดีต่อผู้เล่น ใช้งานง่ายแค่ไหน">
+  <ContentBox as="h2" title="แจกโบนัสจัดเต็ม OHO21 เติมครั้งเดียว รับสิทธิ์ได้เต็มอัตรา">
     <p class="leading-relaxed">
-      หน้าแรกจัดหมวดเกมและบริการสำคัญไว้ชัดเจน ผู้เล่นจึงเข้าถึงสล็อต คาสิโน กีฬา ฝากถอน และโปรโมชั่นได้โดยไม่ต้องกดผ่านหลายขั้นตอน ส่วนระบบสมาชิกแสดงยอดเงิน ประวัติรายการ และข้อมูลบัญชีครบ
-      ทำให้ตรวจสอบทุกความเคลื่อนไหวได้สะดวก
-    </p>
-  </ContentBoxPremium>
-
-  <ContentBoxSevenThreeCyberCut titleright="สล็อตออนไลน์และคาสิโนบน MARINA65 มีอะไรน่าเล่น">
-    <div slot="left" class="flex h-full flex-col justify-center">
-      <Picture
-        src={imgSlot}
-        loading="lazy"
-        fetchpriority="low"
-        widths={[200, 400, 600, 800]}
-        sizes="(max-width: 768px) 100vw, 30vw"
-        decoding="async"
-        formats={["avif", "webp"]}
-        fallbackFormat="webp"
-        quality={80}
-        alt="MARINA65 รวมเกมสล็อตออนไลน์และคาสิโนสดหลายค่ายไว้ในบัญชีเดียว"
-        class="mx-auto h-auto w-full rounded-2xl border-2 border-red-400/30 shadow-[0_10px_30px_rgba(220,38,38,0.3)]"
-      />
-    </div>
-    <div slot="right">
-      <p class="leading-relaxed">
-        หมวดเกมสล็อตมีให้เลือกหลายแนว ทั้งเกมโบนัส เกมตัวคูณ และเกมที่มีระดับความผันผวนต่างกัน ขณะที่คาสิโนสดรองรับเกมโต๊ะยอดนิยม พร้อมภาพถ่ายทอดแบบเรียลไทม์
-        ผู้เล่นจึงเลือกได้ทั้งการหมุนสล็อตแบบรวดเร็วและการเล่นคาสิโนที่เน้นจังหวะตัดสินใจ
-      </p>
-    </div>
-  </ContentBoxSevenThreeCyberCut>
-
-  <ProviderGrid />
-  <GameRankingBoard />
-
-  <ContentBoxSevenThreePremium titleright="เดิมพันกีฬากับ MARINA65 มีประเภทกีฬาให้เลือกมากแค่ไหน">
-    <div slot="left" class="flex h-full flex-col justify-center">
-      <Picture
-        src={imgSport}
-        loading="lazy"
-        fetchpriority="low"
-        widths={[200, 400, 600, 800]}
-        sizes="(max-width: 768px) 100vw, 30vw"
-        decoding="async"
-        formats={["avif", "webp"]}
-        fallbackFormat="webp"
-        quality={80}
-        alt="MARINA65 เดิมพันกีฬา ฟุตบอล มวย บาส และ E sport ภายในบัญชีเดียว"
-        class="mx-auto h-auto w-full rounded-2xl border-2 border-red-400/20 shadow-[0_10px_30px_rgba(220,38,38,0.25)]"
-      />
-    </div>
-    <div slot="right">
-      <p class="leading-relaxed">
-        หมวดกีฬารองรับการแข่งขันหลายประเภท ฟุตบอล มวย บาส หรือเกมประเภท E sport โดยเฉพาะฟุตบอล MARINA65 เปิดโต๊ะแทงบอลที่มีทั้งราคาก่อนแข่งและระหว่างแข่ง
-        การวางข้อมูลราคาและคู่แข่งขันเป็นหมวดช่วยให้เลือกดูรายการได้ง่าย เหมาะกับคนที่ต้องการสลับจากคาสิโนหรือสล็อตมาลุ้นเกมกีฬาภายในบัญชีเดิม
-      </p>
-    </div>
-  </ContentBoxSevenThreePremium>
-
-  <ContentBox as="h2" title="ทำไม MARINA65 จึงมีภาพลักษณ์เป็น เว็บตรงอันดับ 1">
-    <p class="leading-relaxed">
-      จุดที่ทำให้ MARINA65 มีภาพลักษณ์ของเว็บตรงอันดับ 1 คือบริการที่ครบในเว็บเดียว หน้าเว็บตอบสนองเร็ว ระบบสมาชิกจัดการง่าย และสามารถเข้าเล่นได้ทั้งมือถือกับคอมพิวเตอร์ เมื่อรวมกับระบบฝากถอนอัตโนมัติ
-      จึงช่วยลดขั้นตอนตั้งแต่สมัครสมาชิกจนถึงเริ่มใช้งาน
-    </p>
-    <FeatureHighlights items={webDirectStrengths} />
-  </ContentBox>
-
-  <ContentBox as="h2" title="สมัครสมาชิก MARINA65 และชวนเพื่อนรับเครดิต">
-    <p class="leading-relaxed">
-      การสมัครสมาชิกผ่านระบบออนไลน์ ใช้เวลาเพียงไม่กี่ขั้นตอนก็เริ่มใช้งานได้ ระบบสมาชิก MARINA65 มีระบบแนะนำเพื่อน (Referral)
-      สำหรับสมาชิกที่ต้องการแบ่งปันลิงก์ให้ผู้อื่นสมัครผ่านรหัสหรือบัญชีที่กำหนด โดยผู้ที่เข้าร่วมควรตรวจสอบเงื่อนไขการรับเครดิต อัตราผลตอบแทน และข้อกำหนดของแต่ละกิจกรรมก่อนใช้งานทุกครั้ง
+      โบนัสของที่นี่ มีไว้เพิ่มความคุ้มค่าให้สมาชิกตั้งแต่เริ่มต้น ไม่ว่าจะเป็นสิทธิ์ต้อนรับสมาชิกใหม่ โบนัสตามยอดเติม เครดิตกิจกรรม หรือโปรสำหรับสมาชิก OHO21 ที่กลับมาใช้งานอย่างต่อเนื่อง
+      ก่อนรับสิทธิ์ควรอ่านเงื่อนไขยอดเทิร์น เกมที่เข้าร่วม ระยะเวลาใช้งาน และข้อกำหนดการถอนให้ครบ เพราะแต่ละโปรโมชั่นอาจมีรายละเอียดต่างกัน การเลือกโบนัสที่เหมาะกับงบและเกมที่ต้องการเล่น
+      จะช่วยให้ใช้สิทธิ์ได้คุ้มกว่าการรับทุกโปรโดยไม่ตรวจสอบเงื่อนไข
     </p>
 
     <Picture
-      src={imgRegister}
+      src={imgBonus}
       loading="lazy"
       fetchpriority="low"
       widths={[320, 480, 640, 768]}
@@ -186,33 +125,77 @@ import imgRegister from "../assets/banner2.png";
       formats={["avif", "webp"]}
       fallbackFormat="webp"
       quality={80}
-      alt="MARINA65 สมัครสมาชิกและชวนเพื่อนรับเครดิตผ่านระบบแนะนำเพื่อน"
-      class="mx-auto mt-8 h-auto w-full max-w-5xl rounded-2xl border border-red-400/20 shadow-[0_10px_30px_rgba(220,38,38,0.2)]"
+      alt="OHO21 แจกโบนัสจัดเต็ม สิทธิ์ต้อนรับสมาชิกใหม่และโบนัสตามยอดเติม"
+      class="mx-auto mt-8 h-auto w-full max-w-5xl rounded-2xl border border-orange-400/20 shadow-[0_10px_30px_rgba(249,115,22,0.2)]"
     />
-
-    <div class="mt-8 flex flex-wrap justify-center gap-6">
-      <a
-        href="/login"
-        class="group relative flex items-center justify-center rounded-full border border-amber-400/50 bg-[#14040a]/80 px-10 py-3.5 font-black text-amber-300 backdrop-blur-sm transition-all duration-300 hover:scale-105 hover:bg-red-900/60 hover:shadow-[0_0_15px_rgba(251,191,36,0.4)]">
-        เข้าสู่ระบบ
-      </a>
-
-      <a
-        href="/register"
-        class="group relative flex items-center justify-center rounded-full bg-gradient-to-r from-amber-400 via-amber-500 to-yellow-600 px-10 py-3.5 font-black text-red-950 shadow-[0_5px_20px_rgba(251,191,36,0.4)] transition-all duration-300 hover:-translate-y-1 hover:scale-105 hover:shadow-[0_8px_25px_rgba(251,191,36,0.6)]">
-        สมัครสมาชิก
-      </a>
-    </div>
   </ContentBox>
 
-  <LoginRtpSection />
+  <ContentBoxSevenThreeNeumorphism titleright="ฝากถอนออโต้ของ ไวทุกธุรกรรม พร้อมลุยทุกเกม">
+    <div slot="left" class="flex h-full flex-col justify-center">
+      <Picture
+        src={imgAutoWallet}
+        loading="lazy"
+        fetchpriority="low"
+        widths={[200, 400, 600, 800]}
+        sizes="(max-width: 768px) 100vw, 30vw"
+        decoding="async"
+        formats={["avif", "webp"]}
+        fallbackFormat="webp"
+        quality={80}
+        alt="OHO21 ระบบฝากถอนออโต้ ทำรายการไวทุกธุรกรรม"
+        class="mx-auto h-auto w-full rounded-2xl border-2 border-blue-400/20 shadow-[0_10px_30px_rgba(37,99,235,0.25)]"
+      />
+    </div>
+    <div slot="right">
+      <p class="leading-relaxed">
+        ระบบฝากถอนออโต้ช่วยให้การจัดการเครดิตเป็นเรื่องง่าย โดยไม่ต้องรอเจ้าหน้าที่ตรวจสอบทีละรายการ สมาชิกเลือกช่องทาง ชำระตามข้อมูลที่ระบบแสดง และรอเครดิตอัปเดตเข้าสู่บัญชี เมื่อทำรายการถอน
+        ระบบจะตรวจสอบยอดคงเหลือ เงื่อนไขโบนัส และข้อมูลบัญชีก่อนดำเนินการ ความรวดเร็วจริงอาจขึ้นอยู่กับธนาคาร ช่องทางชำระเงิน และช่วงเวลาที่ใช้งาน จึงควรกรอกข้อมูลให้ตรงกับบัญชีสมาชิกทุกครั้ง
+        เพื่อลดปัญหารายการล่าช้าหรือถูกส่งกลับไปตรวจสอบใหม่
+      </p>
+    </div>
+  </ContentBoxSevenThreeNeumorphism>
 
-  <ContentBox as="h2" title="สรุปผลรีวิว MARINA65 เว็บเดิมพัน เกมคาสิโน ออนไลน์">
+  <ContentBox as="h2" title="รีวิวเว็บตรง OHO21 จากระบบจริง สปินไหลลื่น ลุ้นแตกได้ทุกตา">
     <p class="leading-relaxed">
-      MARINA65 เหมาะกับคนที่ต้องการสล็อตออนไลน์ คาสิโนออนไลน์ และกีฬาในระบบเดียว จุดแข็งคือการจัดหมวดเกมชัด ใช้งานไม่ยุ่งยาก และบริหารบัญชีได้สะดวก ภาพรวมจึงเป็นเว็บตรงที่เน้นความครบ ความเร็ว
-      และการใช้งานต่อเนื่องมากกว่าการมีเกมจำนวนมากเพียงอย่างเดียว
+      จากองค์ประกอบของระบบ OHO21 เน้นการเข้าถึงเกมได้รวดเร็ว เมนูไม่ซับซ้อน และแสดงหมวดเกมแยกตามค่ายอย่างชัดเจน ผู้เล่นสามารถค้นหาเกมโปรด สลับค่าย หรือกลับไปยังเกมที่เล่นล่าสุดได้โดยไม่เสียเวลา
+      หน้าจอเกมปรับตามอุปกรณ์ได้ดี ทำให้สปินผ่านมือถือได้ต่อเนื่อง ส่วนความลื่นไหลขึ้นอยู่กับคุณภาพอินเทอร์เน็ตและเซิร์ฟเวอร์ของค่ายเกมด้วย จุดที่ควรพิจารณาควบคู่กันคือความชัดเจนของเงื่อนไขโบนัส
+      ประวัติธุรกรรม และช่องทางติดต่อเมื่อพบปัญหา ไม่ควรตัดสินจากคำว่าแตกง่ายเพียงอย่างเดียว
     </p>
   </ContentBox>
+
+  <ProviderGrid />
+  <GameRankingBoard />
+
+  <ContentBoxSpecial as="h2" title="รองรับวอเลทเต็ม ฝากง่าย ถอนเร็ว จบครบในบัญชีเดียว">
+    <p class="leading-relaxed">
+      OHO21 รองรับวอเลทเพื่อเพิ่มทางเลือกให้ผู้ที่ต้องการทำรายการผ่านมือถือ โดยไม่ต้องสลับหลายแอปหรือกรอกข้อมูลเดิมซ้ำหลายรอบ หลังเชื่อมข้อมูลกับบัญชีสมาชิกแล้ว สามารถตรวจสอบยอด ฝากเครดิต
+      และส่งคำขอถอนได้จากระบบเดียว จุดสำคัญคือชื่อและหมายเลขวอเลทต้องตรงกับข้อมูลที่ลงทะเบียน รวมถึงควรตรวจสอบยอดขั้นต่ำและสูงสุดของแต่ละรายการก่อนยืนยัน การใช้บัญชีของตนเองและเก็บหลักฐานธุรกรรมไว้
+      จะช่วยให้ตรวจสอบสถานะได้ง่ายหากยอดเงินยังไม่อัปเดตตามเวลาปกติ
+    </p>
+  </ContentBoxSpecial>
+
+  <ContentBoxFloatingBadge as="h2" title="ทางเข้า OHO21 อัปเดตตรงถึงเว็บจริง ล็อกเป้าความสนุกได้ในคลิกเดียว">
+    <p class="mx-auto max-w-4xl leading-relaxed">
+      ทางเข้า OHO21 ควรมาจากช่องทางที่เว็บไซต์ประกาศโดยตรง เพราะโดเมนหรือหน้าล็อกอินอาจมีการเปลี่ยนแปลงตามการดูแลระบบ ก่อนกรอกชื่อผู้ใช้หรือข้อมูลการเงิน ให้ตรวจสอบชื่อโดเมน การเชื่อมต่อ HTTPS
+      รูปแบบหน้าเว็บ และเมนูหลักว่าตรงกับเว็บที่เคยใช้งานหรือไม่ ควรหลีกเลี่ยง ลิงก์จากข้อความSMSสุ่ม โฆษณาที่ไม่ระบุแหล่งที่มา หรือหน้าที่เร่งให้โอนเงินเข้าบัญชีบุคคล
+    </p>
+  </ContentBoxFloatingBadge>
+
+  <div class="mx-auto mb-10 flex flex-wrap justify-center gap-6 px-4">
+    <a
+      href="/login"
+      class="group relative flex items-center justify-center rounded-full border border-orange-400/50 bg-[#030a1a]/80 px-10 py-3.5 font-black text-orange-300 backdrop-blur-sm transition-all duration-300 hover:scale-105 hover:bg-blue-900/60 hover:shadow-[0_0_15px_rgba(249,115,22,0.4)]">
+      เข้าสู่ระบบ
+    </a>
+
+    <a
+      href="/register"
+      class="group relative flex items-center justify-center rounded-full bg-gradient-to-r from-orange-400 via-orange-500 to-orange-600 px-10 py-3.5 font-black text-blue-950 shadow-[0_5px_20px_rgba(249,115,22,0.4)] transition-all duration-300 hover:-translate-y-1 hover:scale-105 hover:shadow-[0_8px_25px_rgba(249,115,22,0.6)]">
+      สมัครสมาชิก
+    </a>
+  </div>
+
+  <LoginRtpSection />
 
   <ReviewCardSumo />
   <LatestWinners />
