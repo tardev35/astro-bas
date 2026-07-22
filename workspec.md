@@ -1044,3 +1044,6 @@ NavbarStyle family, Footer family** โดย:
 
 ### 2026-07-22 (fix) — ContentBoxSevenThreeNeumorphism ความกว้าง
 ผู้ใช้แจ้ง `ContentBoxSevenThreeNeumorphism` กว้างไม่เท่ากล่องอื่น — ต้นเหตุ: ใช้ `max-w-7xl` (1280px) ขณะที่กล่องอื่นบน index (ContentBox/Neumorphism/Special/FloatingBadge/SevenThree) ใช้ `max-w-[1400px]`. แก้เป็น `max-w-[1400px]` → กล่องเนื้อหาทั้งหน้ากว้างเท่ากัน. rebuild ผ่าน 9 หน้า; `max-w-7xl` ไม่เหลือใน element (เหลือแค่นิยาม utility class ใน CSS bundle)
+
+### 2026-07-22 (structure) — ปิดหน้าหวยชั่วคราว (ออกจาก sitemap)
+ช่วงนี้โฟกัสสล็อต ยังไม่ใช้หน้าหวย จึงย้าย `ตรวจหวย.astro` + `แนวทาง.astro` จาก `src/pages/` → `src/pages-disabled/` (ระดับเดียวกับ pages → relative import `../components|../layouts|../assets` ยังใช้ได้ ไม่ต้องแก้โค้ด) ผ่าน `git mv` เก็บ history. ผล: Astro ไม่ route ให้ → หลุดจาก sitemap. build เหลือ 7 หน้า, sitemap เหลือ 7 URL (ไม่มี ตรวจหวย/แนวทาง). ไม่มีลิงก์ live ชี้ไป (มีแค่ FooterHuay inventory). กลับมาใช้ = `git mv src/pages-disabled/*.astro src/pages/` แล้ว build ใหม่. ธีม Huay + component (AnnouncementHuay/ContentBoxHuay/LottoGrid/LatestWinnersHuay) คงไว้เป็น inventory ไม่ลบ
