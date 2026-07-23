@@ -2,6 +2,19 @@
 
 /* global.css */
 
+/* ทำให้ Kanit เป็นฟอนต์ global จริงๆ:
+   - override --font-sans ของ Tailwind เพื่อให้ utility `font-sans` = Kanit
+     (ไม่งั้น class font-sans จะ reset กลับไปเป็น ui-sans-serif ทับค่าที่ inherit มาจาก body)
+   - ตั้ง font-family ที่ html/body เพื่อให้ทุก component ที่ไม่ประกาศเอง inherit ไปได้ */
+@theme {
+  --font-sans: "Kanit", ui-sans-serif, system-ui, sans-serif;
+}
+
+html,
+body {
+  font-family: var(--font-sans);
+}
+
 /* kanit-regular - latin_thai */
 @font-face {
   font-family: 'Kanit';
