@@ -1,367 +1,43 @@
-# คู่มือเริ่มต้นใช้งาน (Onboarding)
+# Astro Starter Kit: Minimal
 
-เว็บ Astro template
-"เปิดตัวแบรนด์ใหม่" = เอาโครงหน้าเดิมมาเปลี่ยนชื่อ สี และเนื้อหาใหม่
-โดยสั่งงานผ่าน **Claude Code** เป็นหลัก และเก็บโค้ดไว้บน **GitLab**
-
-> 📌 เอกสารนี้คือจุดเริ่มต้นสำหรับ **คนใหม่ทุกคน** อ่านให้จบก่อนเริ่มงานจริง
-> ทำหัวข้อ 1–3 ให้ครบก่อน (ตั้งค่าครั้งเดียวจบ) แล้วค่อยเริ่มงานจริงที่หัวข้อ 4 เป็นต้นไป
-
----
-
-## อ่านส่วนไหน?
-
-| คุณคือ | อ่านหัวข้อ |
-|---|---|
-| **สายคอนเทนต์ / การตลาด** | 1 ติดตั้ง → 2 สมัคร GitLab → 3 **Fork + โคลน** → 4 เปิดดูเว็บ → 5 รีแบรนด์ → 6 บันทึกงาน → 7 deploy → 8 ปัญหาบ่อย → 9 กฎเหล็ก |
-| **สาย Dev** | อ่านทั้งหมด + ไฟล์ `CLAUDE.md` และ `.claude/skills/rebrand-site/SKILL.md` |
-
-ทุกคนต้องมี **บัญชี GitLab เป็นของตัวเอง** ไว้บันทึก/แก้ไขหน้าเว็บ (มีสอนในหัวข้อ 2)
-
----
-
-## 1. ติดตั้งโปรแกรม (ทำครั้งแรกครั้งเดียวต่อเครื่อง)
-
-ต้องมี 2 โปรแกรมนี้ก่อน:
-
-1. **Node.js** — ดาวน์โหลดจาก https://nodejs.org (เลือกตัว **LTS**) แล้วกด Next ไปเรื่อย ๆ
-2. **Git** — ดาวน์โหลดจาก https://git-scm.com/download/win แล้วกด Next ไปเรื่อย ๆ ตามค่า default
-
-**เช็กว่าติดตั้งสำเร็จ** — เปิด **PowerShell** (หรือ **Git Bash**) แล้วพิมพ์:
-
-```powershell
-git --version
-node --version
+```sh
+npm create astro@latest -- --template minimal
 ```
 
-ถ้าขึ้นเลขเวอร์ชันทั้งคู่ = พร้อมใช้งาน
+> 🧑‍🚀 **Seasoned astronaut?** Delete this file. Have fun!
 
-> 💡 **ถ้า PowerShell บอกว่า "git ... is not recognized"** ทั้งที่ติดตั้งแล้ว
-> ให้ **ปิด-เปิด PowerShell ใหม่** สักครั้ง (ต้องเปิดใหม่ path ถึงจะอัปเดต)
-> ถ้ายังไม่หาย ให้ใช้ **Git Bash** แทน (ติดตั้งมาพร้อม Git อยู่แล้ว ใช้คำสั่ง git ได้เลย)
+## 🚀 Project Structure
 
----
+Inside of your Astro project, you'll see the following folders and files:
 
-## 2. สมัคร GitLab + ขอเข้าทีม (ทำครั้งเดียว)
-
-โค้ดของเราเก็บไว้บน **GitLab** ในกลุ่ม **`tardev-group`** (เป็น repo แบบ private)
-คนใหม่ต้องทำ 4 ขั้นตอนนี้ให้ครบก่อนถึงจะโคลนโปรเจกต์ได้
-
-### 2.1 สมัครบัญชี GitLab
-1. เข้า **https://gitlab.com/users/sign_up**
-2. สมัครด้วยอีเมล หรือกดปุ่ม **"Sign in with Google"** (ใช้ Gmail — ง่ายสุด)
-3. ยืนยันอีเมลที่ GitLab ส่งไป
-
-### 2.2 แจ้งแอดมินให้เชิญเข้ากลุ่ม
-เพราะ repo เป็น private — **ส่ง username หรืออีเมล GitLab ของคุณให้แอดมิน**
-แอดมินจะเชิญเข้ากลุ่ม `tardev-group` (Members → Invite) แล้วคุณจะเห็นโปรเจกต์
-
-> แอดมินเชิญที่: `https://gitlab.com/groups/tardev-group/-/group_members`
-
-### 2.3 ตั้งชื่อ-อีเมลให้ Git (บอก Git ว่าใครเป็นคนแก้)
-พิมพ์ทีละบรรทัด (เปลี่ยนชื่อกับอีเมลเป็นของคุณ):
-
-```powershell
-git config --global user.name "ชื่อ ของคุณ"
-git config --global user.email "อีเมลที่สมัคร GitLab"
-git config --global push.autoSetupRemote true
+```text
+/
+├── public/
+├── src/
+│   └── pages/
+│       └── index.astro
+└── package.json
 ```
 
-บรรทัดที่ 3 ตั้งครั้งเดียว ช่วยให้ `git push` ทำงานง่ายขึ้น (ไม่ต้องพิมพ์ต่อท้ายยาว ๆ)
+Astro looks for `.astro` or `.md` files in the `src/pages/` directory. Each page is exposed as a route based on its file name.
 
-### 2.4 สร้างกุญแจ SSH + เพิ่มเข้า GitLab (ทำให้ push/pull ไม่ต้องกรอกรหัสทุกครั้ง)
-พิมพ์ใน **Git Bash** (แนะนำ) หรือ PowerShell:
+There's nothing special about `src/components/`, but that's where we like to put any Astro/React/Vue/Svelte/Preact components.
 
-```bash
-ssh-keygen -t ed25519 -C "อีเมลที่สมัคร GitLab"
-```
-- ถามที่เก็บไฟล์ → **กด Enter** (ใช้ค่า default)
-- ถาม passphrase → **กด Enter ผ่าน** 2 ครั้ง (ไม่ต้องตั้งรหัส เพื่อความง่าย)
+Any static assets, like images, can be placed in the `public/` directory.
 
-จากนั้นแสดงกุญแจสาธารณะออกมา (ก๊อปทั้งบรรทัด):
-```bash
-cat ~/.ssh/id_ed25519.pub
-```
-> ได้ข้อความขึ้นต้นด้วย `ssh-ed25519 ...` — **กุญแจนี้เปิดเผยได้ ปลอดภัย ไม่ใช่ความลับ**
+## 🧞 Commands
 
-เอาไปเพิ่มใน GitLab:
-1. เข้า **https://gitlab.com/-/user_settings/ssh_keys**
-2. วางกุญแจในช่อง **Key** → ตั้งชื่อ (เช่น `my-laptop`) → **Add key**
+All commands are run from the root of the project, from a terminal:
 
-### 2.5 ทดสอบการเชื่อมต่อ
-```bash
-ssh -T git@gitlab.com
-```
-ถ้าขึ้น **"Welcome to GitLab, @ชื่อคุณ!"** = เชื่อมสำเร็จ พร้อมโคลนได้เลย
+| Command                   | Action                                           |
+| :------------------------ | :----------------------------------------------- |
+| `npm install`             | Installs dependencies                            |
+| `npm run dev`             | Starts local dev server at `localhost:4321`      |
+| `npm run build`           | Build your production site to `./dist/`          |
+| `npm run preview`         | Preview your build locally, before deploying     |
+| `npm run astro ...`       | Run CLI commands like `astro add`, `astro check` |
+| `npm run astro -- --help` | Get help using the Astro CLI                     |
 
----
+## 👀 Want to learn more?
 
-## 3. สร้าง repo ของตัวเอง (Fork) แล้วดึงลงเครื่อง
-
-> 🚨 **repo `astro-full-schema` คือ "ต้นแบบกลาง" ของแอดมิน — ห้าม push งานแบรนด์ของคุณเข้าไป**
-> ทุกคนต้องมี **repo ของตัวเอง แยก 1 อันต่อ 1 แบรนด์** วิธีที่ง่ายที่สุดคือกดปุ่ม **Fork**
-> (กดปุ่มเดียวจบ ไม่ต้องพิมพ์คำสั่ง git อะไรเลย)
-
-### 3.1 กด Fork (ทำบนเว็บ GitLab — ครั้งเดียวต่อ 1 แบรนด์)
-
-1. **login GitLab** แล้วเข้า **https://gitlab.com/tardev-group/astro-full-schema**
-   (ต้องถูกเชิญเข้ากลุ่มก่อนตามข้อ 2.2 ไม่งั้นจะขึ้น **404**)
-2. กดปุ่ม **Fork** (มุมขวาบน)
-3. **Project name** = ชื่อแบรนด์ที่กำลังทำ เช่น `chokdee1688`
-4. **Project URL** → เลือก namespace เป็น **`tardev-group`** ⚠️ **สำคัญที่สุด**
-5. **Visibility level** = **Private**
-6. กด **Fork project**
-
-รอสักครู่ GitLab จะก๊อปโค้ด + **ประวัติ commit ทั้งหมด** มาเป็น repo ใหม่ที่คุณเป็นเจ้าของที่
-`gitlab.com/tardev-group/ชื่อแบรนด์`
-
-> ⚠️ **ต้องเลือก namespace เป็น `tardev-group` ไม่ใช่ชื่อตัวเอง**
-> เพื่อให้บริษัทเห็นงานทุกแบรนด์ในที่เดียว และงานไม่หายไปถ้าเปลี่ยนคนดูแล
-> ถ้าไม่มีตัวเลือก `tardev-group` ให้เลือก → แจ้งแอดมินขอสิทธิ์ **Developer** ในกลุ่ม
-
-### 3.2 clone fork ของคุณลงเครื่อง
-
-เปิด Git Bash หรือ PowerShell:
-
-```bash
-git clone git@gitlab.com:tardev-group/ชื่อแบรนด์.git
-cd ชื่อแบรนด์
-npm install
-```
-
-⚠️ สังเกต URL ต้องเป็น **ชื่อแบรนด์ของคุณ** ไม่ใช่ `astro-full-schema`
-
-เช็กให้ชัวร์ว่าชี้ถูก repo:
-```bash
-git remote -v
-```
-ต้องขึ้นชื่อ repo **ของคุณ** — ถ้าขึ้น `astro-full-schema` แปลว่า clone ผิดตัว ให้ลบโฟลเดอร์แล้ว clone ใหม่
-
-`npm install` รันครั้งเดียวพอ (นาน 1–2 นาที รอจนขึ้นบรรทัดว่างกลับมา)
-
-> ✅ พอ fork แล้ว `git push` จะเข้า repo ของคุณเองอัตโนมัติ **ไม่มีทางไปทับของแอดมิน**
-> และไม่ต้องตั้งค่า remote อะไรเพิ่มเลย
-
-> โปรเจกต์อื่น ๆ ของทีม (ที่ไม่ใช่ template) โคลนตรงได้เลยไม่ต้อง fork เช่น
-> `git clone git@gitlab.com:tardev-group/yoalink-frontend.git`
-> ดูรายชื่อ repo ทั้งหมดได้ที่ **https://gitlab.com/tardev-group**
-
----
-
-## 4. เปิดหน้าเว็บดูในเครื่อง (dev server)
-
-```powershell
-npm run dev
-```
-
-แล้วเปิดเบราว์เซอร์ไปที่ **http://localhost:8888**
-หน้าเว็บจะอัปเดตทันทีทุกครั้งที่ไฟล์ถูกแก้ (ไม่ต้องรีเฟรชเอง)
-
-หยุด server ด้วยการกด **Ctrl + C** ในหน้าต่างคำสั่ง
-
----
-
-## 5. งานรีแบรนด์ผ่าน Claude Code (หัวใจของงาน)
-
-### 5.1 เตรียมของ 3 อย่าง
-- **ชื่อแบรนด์ใหม่** (เช่น `TAKDEE999`)
-- **ไฟล์เนื้อหา** `.docx` (brief เนื้อหาของแบรนด์)
-- **รูปภาพ** — โลโก้ / แบนเนอร์ / สไลด์
-
-### 5.2 อัปโหลดรูปด้วยเครื่องมือช่วย (กันรูปเพี้ยน)
-เปิดหน้าต่างคำสั่งอีกอันแล้วรัน:
-
-```powershell
-npm run rebrand:upload
-```
-
-เปิดเบราว์เซอร์ไปที่ **http://localhost:4000** แล้วลากรูปเข้าไปตามช่อง
-(เครื่องมือนี้จะตั้งชื่อไฟล์/นามสกุลให้ถูกอัตโนมัติ — **ควรใช้เสมอ** แทนการก๊อปไฟล์เข้า `src/assets` เอง)
-
-หลักการตั้งชื่อรูป:
-- `banner1` = รูปหลัก (hero) บนสุดของเว็บ
-- `banner2`, `banner3`, `banner4` = รูปประกอบบทความ
-- `slide1`–`slide4` = รูปในสไลด์/ส่วนเนื้อหา
-
-### 5.3 สั่ง Claude Code
-พิมพ์สั่งเป็นภาษาไทยได้เลย ตัวอย่าง:
-
-```
-เว็บใหม่ชื่อ TAKDEE999 รีแบรนด์ตาม docx และรูปที่วางไว้ใน src/assets ให้หน่อย
-```
-
-Claude จะทำตามขั้นตอนมาตรฐานในไฟล์ skill ให้เอง (เปลี่ยนชื่อ/สี/เนื้อหา
-ทุกหน้า + ตรวจงาน) — **คุณไม่ต้องจำขั้นตอนเทคนิค** แค่บอกว่าต้องการอะไร
-
-> ⚠️ ถ้ามี **URL จริง** ของแบรนด์ ให้บอก Claude ไปด้วยในประโยคเดียว เช่น
-> `...ชื่อ TAKDEE999 url จริงคือ takdee999-guide.com` — ไม่งั้น Claude จะ
-> **ไม่เดา** โดเมนให้ (ตั้งใจกันพลาด)
-
-### 5.4 ตรวจงาน
-บอก Claude ว่า `ตรวจงานให้หน่อย` หรือดูเองที่ http://localhost:8888
-เช็กว่า: ชื่อแบรนด์ถูก, สีถูก, รูปขึ้นครบ, ไม่มีชื่อแบรนด์เก่าหลงเหลือ
-
----
-
-## 6. บันทึกงานขึ้น GitLab (Git)
-
-> ✅ ถ้าทำข้อ 3 (Fork) มาแล้ว **ไม่ต้องตั้งค่าอะไรเพิ่ม** — `git push` เข้า repo ของคุณเองเลย
-
-ทำ **หลังรีแบรนด์เสร็จ** หรือทุกครั้งที่แก้งานเสร็จ
-พิมพ์ทีละบรรทัด (บรรทัดที่ 2 เปลี่ยนข้อความในเครื่องหมายคำพูดเป็นสิ่งที่ทำ):
-
-```powershell
-git add .
-git commit -m "rebrand CHOKDEE1688"
-git push
-```
-
-- `git add .` = หยิบไฟล์ที่แก้ทั้งหมด
-- `git commit -m "..."` = บันทึกเป็นเวอร์ชัน พร้อมข้อความอธิบายสั้น ๆ
-- `git push` = ส่งขึ้น GitLab
-
-> 💡 **ไม่ต้อง `git pull` ทุกครั้ง** — เพราะ repo นี้เป็นของคุณคนเดียว ไม่มีใครมา push ชน
-> (จะต้อง pull ก็ต่อเมื่อมีคนอื่นทำงานใน repo เดียวกับคุณ หรือคุณแก้จากหลายเครื่อง)
->
-> 💡 **ถ้าขึ้น error `no upstream branch`** (มักเจอครั้งแรกของ branch ใหม่)
-> ใช้ `git push -u origin main` **ครั้งเดียว** จากนั้นพิมพ์ `git push` เฉย ๆ ได้เลย
-> (commit ที่ค้างไม่หาย — แค่ยังไม่ถูกส่งขึ้น)
->
-> 💡 **ถ้าขึ้น error `rejected` / `non-fast-forward`**
-> มีคนอื่น (หรือตัวคุณจากอีกเครื่อง) push ก่อน — สั่ง `git pull` แล้วค่อย `git push` ใหม่
-
-### 6.1 ถ้าเผลอ clone repo ต้นแบบมาแทนที่จะ Fork (วิธีแก้)
-
-เช็กก่อนว่าพลาดจริงไหม:
-```powershell
-git remote -v
-```
-ถ้าขึ้น `astro-full-schema` = ยังชี้ไปที่ต้นแบบของแอดมิน **อย่าเพิ่ง push**
-
-แก้โดยไป Fork ตามข้อ 3.1 ก่อน แล้วเปลี่ยนปลายทางให้ชี้ repo ของคุณ:
-```powershell
-git remote set-url origin git@gitlab.com:tardev-group/ชื่อแบรนด์ของคุณ.git
-git remote -v
-git push -u origin main
-```
-
-> ถ้า **เผลอ push ขึ้นต้นแบบไปแล้ว** → แจ้งแอดมินทันที **อย่า push ซ้ำ** แอดมินจะย้อนคืนให้
-
----
-
-## 7. เอาเว็บขึ้นจริง (Deploy)
-
-เมื่องานพร้อมขึ้น production ใช้คำสั่งเดียว (ใส่โดเมนของแบรนด์นั้น):
-
-```powershell
-.\deploy.ps1 -Domain takdee999-guide.com
-```
-
-สคริปต์จะทำให้อัตโนมัติ: **build → บีบอัด → ยิงขึ้น server → ล้าง cache**
-พอขึ้น `DEPLOYMENT COMPLETE!` = เว็บออนไลน์แล้ว
-
-> 🔑 **ทุกคน deploy เองได้** ระหว่างทางสคริปต์จะถาม **password ของ server**
-> (ขอ password จากทีม/แอดมิน) พิมพ์ password แล้วกด Enter เพื่อไปต่อ — จะถูก
-> ถามทุกครั้งที่ deploy ถือเป็นเรื่องปกติ
->
-> ⚠️ **ระวังพิมพ์ชื่อโดเมนให้ถูก** — ใส่โดเมนของแบรนด์ที่กำลังทำเท่านั้น
-> ถ้าใส่ผิด จะไปทับเว็บของอีกแบรนด์บน server ดูให้ชัวร์ก่อนกด Enter
-
-### 7.1 ตั้ง Cloudflare Cache Rule (ครั้งเดียวต่อโดเมน — แล้วไม่ต้อง purge อีก)
-
-ปกติเวลา deploy เสร็จ เนื้อหาใหม่มักไม่ขึ้นทันทีเพราะ **Cloudflare cache หน้าเก่าไว้** —
-`deploy.ps1` เลยยิง purge cache ให้ทุกครั้ง แต่ถ้าตั้ง **Cache Rule** ครั้งเดียว
-เว็บใหม่จะขึ้นเองภายใน ~2 นาที **โดยไม่ต้อง purge** และ **PageSpeed ดีขึ้น**
-(asset ที่มี hash จะถูก cache ยาว ผ่าน audit "efficient cache policy")
-
-> ℹ️ **restart nginx ไม่ช่วย** — cache อยู่ที่ Cloudflare ไม่ใช่ที่ server;
-> restart nginx ไม่แตะ cache ของ CF เลย ต้องตั้งที่ Cloudflare เท่านั้น
-
-เข้า **dashboard.cloudflare.com → เลือกโดเมน → Caching → Cache Rules → Create rule**
-
-**Rule 1 — asset ที่มี hash (cache ยาว)** — ลากให้อยู่ **บนสุด**
-| ช่อง | ค่า |
-|---|---|
-| Rule name | `Cache hashed assets` |
-| When incoming requests match | **URI Path** · **starts with** · `/_astro/` |
-| Cache eligibility | **Eligible for cache** |
-| Edge TTL | Override origin → **1 year** |
-| Browser TTL | Override origin → **1 year** |
-
-**Rule 2 — HTML / หน้าเพจ (cache สั้น ให้ fresh)**
-| ช่อง | ค่า |
-|---|---|
-| Rule name | `HTML short TTL` |
-| When incoming requests match | **URI Path** · **does not start with** · `/_astro/` |
-| Cache eligibility | **Eligible for cache** |
-| Edge TTL | Override origin → **2 minutes** |
-| Browser TTL | Override origin → **Respect origin** |
-
-> ⚠️ ถ้ามี **Page Rule เก่าแบบ "Cache Everything"** (เมนู Rules → Page Rules) ให้ลบทิ้ง
-> — มันคือตัวที่ทำให้ HTML ถูก cache จนต้อง purge ทุกครั้ง Cache Rules ใหม่ทำหน้าที่แทนแล้ว
-
-หลังตั้งเสร็จ: deploy → ผู้ใช้เห็นเว็บใหม่เองใน ~2 นาที ไม่ต้อง purge / ไม่ต้อง restart nginx
-
----
-
-## 8. เจอปัญหาบ่อย ๆ (Troubleshooting)
-
-| อาการ | วิธีแก้ |
-|---|---|
-| `git ... is not recognized` (PowerShell) | ปิด-เปิด PowerShell ใหม่ หรือใช้ **Git Bash** แทน (ดูข้อ 1) |
-| `git clone` แล้วขึ้น `Permission denied (publickey)` | ยังไม่ได้เพิ่ม SSH key เข้า GitLab (ข้อ 2.4) หรือแอดมินยังไม่เชิญเข้ากลุ่ม (ข้อ 2.2) |
-| `git clone` แล้วขึ้น repository not found / 404 | ยังไม่ได้ถูกเชิญเข้ากลุ่ม `tardev-group` — แจ้งแอดมิน (ข้อ 2.2) |
-| `git push` ขึ้น `no upstream branch` | ใช้ `git push -u origin main` ครั้งเดียว (ดูข้อ 6) |
-| `git push` ขึ้น `rejected` / `non-fast-forward` | มีคน push ก่อน — สั่ง `git pull` แล้วค่อย `git push` ใหม่ |
-| commit แล้วแต่ GitLab ไม่อัปเดต | ยังไม่ได้ `git push` — commit อยู่แค่ในเครื่อง สั่ง push เพิ่ม |
-| `npm run dev` เปิดไม่ขึ้น / error | ปิดหน้าต่างเดิมก่อน แล้วรันใหม่ ถ้ายังไม่หาย รัน `npm install` อีกครั้ง |
-| build ไม่ผ่าน (`deploy` หยุดกลางคัน) | โค้ดมีปัญหา — บอก Claude ว่า `build ไม่ผ่าน ช่วยดูให้หน่อย` |
-| รูปไม่ขึ้น / รูปเป็นของแบรนด์เก่า | อัปโหลดรูปใหม่ผ่าน `npm run rebrand:upload` (ข้อ 5.2) แล้วบอก Claude ให้ตรวจรูปซ้ำ |
-| deploy แล้วเว็บไม่อัปเดต (เห็นของเก่า) | Cloudflare cache หน้าเก่าไว้ — purge cache ที่ CF หรือตั้ง Cache Rule ครั้งเดียว (ข้อ 7.1); **restart nginx ไม่ช่วย** |
-| ไม่แน่ใจว่า push ไปเข้า repo ไหน | รัน `git remote -v` — ต้องขึ้นชื่อ repo **ของคุณ** ถ้ายังเป็น `astro-full-schema` ให้ทำข้อ 6.1 |
-| เผลอ push เข้า repo ต้นแบบของแอดมิน | แจ้งแอดมินทันที **อย่า push ซ้ำ** แล้วทำข้อ 6.1 ให้ถูกก่อนบันทึกงานต่อ |
-
-ปัญหาที่แก้เองไม่ได้ → ถาม Claude Code เป็นภาษาไทยตรง ๆ หรือแจ้งทีม dev
-
----
-
-## 9. กฎเหล็ก (ห้ามทำ)
-
-1. **ห้ามลบ component ที่ไม่ได้ใช้ใน `src/components/`** — พวก `NavbarStyle*`,
-   `ContentBox*`, `Footer*` เวอร์ชันที่ดูเหมือนไม่ได้ใช้ คือ "คลัง" ไว้ทำแบรนด์
-   หน้า ไม่ใช่ขยะ
-2. **ห้ามเดา URL/โดเมนเอง** — ใส่เฉพาะ URL จริงที่ได้รับมาเท่านั้น
-3. **ห้าม push งานแบรนด์ตัวเองเข้า repo ต้นแบบ `astro-full-schema`** — ทุกคน
-   ต้อง **Fork** เป็น repo ของตัวเองก่อนเสมอ (ข้อ 3.1) เช็กด้วย `git remote -v`
-   ว่าชี้ถูกก่อน push ครั้งแรกทุกครั้ง
-4. **ยืนยันงานเสร็จ = build ผ่าน + เปิดดูหน้าเว็บจริงด้วยตา** เสมอ ไม่ใช่แค่
-   Claude บอกว่าเสร็จ
-
----
-
-## คำสั่งที่ใช้บ่อย (สรุป)
-
-```powershell
-# ตั้งค่าครั้งเดียวต่อเครื่อง (ข้อ 2)
-git config --global user.name "ชื่อ"
-git config --global user.email "อีเมล"
-ssh-keygen -t ed25519 -C "อีเมล"     # สร้าง SSH key แล้วเพิ่มใน GitLab
-
-# เริ่มแบรนด์ใหม่ (ครั้งแรกของแต่ละแบรนด์)
-# 1) กด Fork บนเว็บ GitLab ก่อน (ข้อ 3.1) — เลือก namespace = tardev-group
-# 2) แล้วค่อย clone fork ของตัวเองลงเครื่อง:
-git clone git@gitlab.com:tardev-group/ชื่อแบรนด์.git
-cd ชื่อแบรนด์
-git remote -v                   # ต้องขึ้นชื่อ repo ของคุณ ไม่ใช่ astro-full-schema
-
-# ทำงานประจำวัน
-npm install                     # ติดตั้ง (ครั้งแรกครั้งเดียว)
-npm run dev                     # เปิดดูเว็บที่ localhost:8888
-npm run rebrand:upload          # อัปโหลดรูปแบรนด์ที่ localhost:4000
-npm run build                   # build ตรวจว่าโค้ดสมบูรณ์
-git add . ; git commit -m "..." ; git push   # บันทึกขึ้น GitLab
-.\deploy.ps1 -Domain <โดเมน>    # เอาเว็บขึ้นจริง
-```
-
-รายละเอียดเชิงลึกสำหรับ dev อยู่ใน `CLAUDE.md` และ
-`.claude/skills/rebrand-site/SKILL.md`
+Feel free to check [our documentation](https://docs.astro.build) or jump into our [Discord server](https://astro.build/chat).

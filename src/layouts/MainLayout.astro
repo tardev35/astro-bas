@@ -1,29 +1,25 @@
 ---
 import { Image } from "astro:assets";
 import Bg from "../assets/bg.png";
-import ogImage from "../assets/slide1.png";
 import "../styles/global.css";
-import NavbarPremium from "../components/NavbarPremium.astro";
-import Footer from "../components/FooterPremium.astro";
+import NavbarStyle6 from "../components/NavbarStyle11.astro";
+import Footer from "../components/FooterPremiumSumo.astro";
 
 const bannerImages = import.meta.glob<{ default: ImageMetadata }>("../assets/banner*.{png,webp,jpg,jpeg}", { eager: true });
 const bannerPaths = Object.keys(bannerImages);
-const preferredBannerPath = bannerPaths.find((path) => /banner1\.(png|webp|jpg|jpeg)$/.test(path));
-const webpBannerPath = bannerPaths.find((path) => path.endsWith(".webp"));
-const mainBannerPath = preferredBannerPath ?? webpBannerPath ?? bannerPaths[0];
-const mainBanner = mainBannerPath ? bannerImages[mainBannerPath].default : null;
+const mainBanner = bannerPaths.length > 0 ? bannerImages[bannerPaths[0]].default : null;
 
 const {
-  title = "OHO21 สล็อตที่แตกง่าย โบนัส ฝากถอนออโต้ รีวิวเว็บตรง รองรับวอเลท",
-  description = "OHO21 สล็อตที่แตกง่าย โบนัส ฝากถอนออโต้ รีวิวเว็บตรง รองรับวอเลท ติดโบนัสไว แจกโบนัสจัดเต็ม สปินไหลลื่น ฝากง่าย ถอนเร็ว พร้อมทางเข้า OHO21 เว็บจริง",
+  title = "SUMOHENG เว็บหลัก ทางเข้า ซูโม่เฮง เกมสล็อตแท้ ฝากถอนออโต้",
+  description = "SUMOHENG เว็บหลัก ซูโม่เฮง บริการ เกมสล็อตแท้ ทุกค่าย ทางเข้า เดียว เชื่อมต่อทุกฟังก์ชัน ฝากถอนออโต้ ด้วยความแม่นยำ สมัครสมาชิก เพื่อติดตาม โปรโมชั่น",
   robots = "index, follow",
-  ImageOg = ogImage.src,
+  ImageOg = "/slide3.webp",
 } = Astro.props;
 
 const currentPath = Astro.url.pathname;
 const canonicalURL = new URL(currentPath, Astro.site);
 const ogImageURL = new URL(ImageOg, Astro.site);
-const ogSiteName = "OHO21";
+const ogSiteName = "SUMOHENG";
 ---
 
 <html lang="th">
@@ -39,12 +35,10 @@ const ogSiteName = "OHO21";
     <link rel="preload" href="/fonts/kanit-v17-latin_thai-700.woff2" as="font" type="font/woff2" crossorigin />
     <link rel="preload" href="/fonts/kanit-v17-latin_thai-600.woff2" as="font" type="font/woff2" crossorigin="anonymous" />
     <link rel="canonical" href={canonicalURL} />
-    <link rel="icon" type="image/png" href="/favicon-96x96.png" sizes="96x96" />
-    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-    <link rel="shortcut icon" href="/favicon.ico" />
-    <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png" />
-    <meta name="apple-mobile-web-app-title" content="oho21" />
-    <link rel="manifest" href="/site.webmanifest" />
+    <link rel="icon" type="image/x-icon" href="/favicon.ico" />
+    <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png" />
+    <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png" />
+    <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
 
     <meta property="og:type" content="website" />
     <meta property="og:url" content={canonicalURL} />
@@ -61,11 +55,6 @@ const ogSiteName = "OHO21";
     <meta name="twitter:image" content={ogImageURL} />
 
     <style is:global>
-      html,
-      body {
-        overflow-x: hidden;
-        max-width: 100%;
-      }
       body {
         background-size: cover;
         background-position: center;
@@ -75,6 +64,7 @@ const ogSiteName = "OHO21";
         background-color: #ffffff;
         font-weight: 400;
         font-family: "Kanit", sans-serif !important;
+        /* color: white; */
       }
     </style>
   </head>
@@ -92,12 +82,12 @@ const ogSiteName = "OHO21";
       decoding="sync"
     />
 
-    <NavbarPremium />
+    <NavbarStyle6 />
 
     <div class="mb-2.5 flex w-full items-center justify-center">
       <Image
         src={mainBanner!}
-        alt="OHO21 banner"
+        alt="SUMOHENG banner"
         loading="eager"
         fetchpriority="high"
         widths={[412, 768, 1900]}
@@ -110,9 +100,7 @@ const ogSiteName = "OHO21";
     </div>
 
     <main class="w-full flex-1">
-      <article>
-        <slot />
-      </article>
+      <slot />
     </main>
 
     <Footer />

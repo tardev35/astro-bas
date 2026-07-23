@@ -1,204 +1,247 @@
 ---
 import MainLayout from "../layouts/MainLayout.astro";
-import Announcement3 from "../components/Announcement3.astro";
-import ContentBoxNeumorphism from "../components/ContentBoxNeumorphism.astro";
 import ContentBox from "../components/ContentBox.astro";
+import ContentBoxTwo from "../components/ContentBoxTwo.astro";
 import ContentBoxSevenThree from "../components/ContentBoxSevenThree.astro";
-import ContentBoxSevenThreeNeumorphism from "../components/ContentBoxSevenThreeNeumorphism.astro";
+import ContentBoxThreeColums from "../components/ContentBox3Three.astro";
 import ContentBoxSpecial from "../components/ContentBoxSpecial.astro";
-import ContentBoxFloatingBadge from "../components/ContentBoxFloatingBadge.astro";
-import FeatureHighlights from "../components/FeatureHighlights.astro";
-import LoginRtpSection from "../components/LoginRtpSection.astro";
+import Announcement from "../components/Announcement6.astro";
 import ProviderGrid from "../components/ProviderGrid.astro";
-import GameRankingBoard from "../components/GameRankingBoard.astro";
 import LatestWinners from "../components/LatestWinnersPremium.astro";
 import SmoothCarousel from "../components/SmoothCarousel.astro";
 import ReviewCardSumo from "../components/ReviewCardSumo2.astro";
 import Navfoot from "../components/Navfoot.astro";
+import Faq from "../components/FaqHuay.astro";
 const currentPath = Astro.url.pathname;
 const homePage = Astro.url.origin;
 const logoUrl = homePage + "/logo.webp";
 
-const pageTitle = "OHO21 สล็อตที่แตกง่าย โบนัส ฝากถอนออโต้ รีวิวเว็บตรง รองรับวอเลท";
-const pageDescription = "OHO21 สล็อตที่แตกง่าย โบนัส ฝากถอนออโต้ รีวิวเว็บตรง รองรับวอเลท ติดโบนัสไว แจกโบนัสจัดเต็ม สปินไหลลื่น ฝากง่าย ถอนเร็ว พร้อมทางเข้า OHO21 เว็บจริง";
-
 const webPageSchema = {
   "@context": "https://schema.org",
   "@type": "WebPage",
-  name: "OHO21",
-  description: pageDescription,
+  name: "SUMOHENG เว็บหลัก ทางเข้า ซูโม่เฮง เกมสล็อตแท้ ฝากถอนออโต้",
+  description: "SUMOHENG เว็บหลัก ซูโม่เฮง บริการ เกมสล็อตแท้ ทุกค่าย ทางเข้า เดียว เชื่อมต่อทุกฟังก์ชัน ฝากถอนออโต้ ด้วยความแม่นยำ สมัครสมาชิก เพื่อติดตาม โปรโมชั่น",
   url: currentPath,
 };
 const webSiteSchema = {
   "@context": "https://schema.org",
   "@type": "WebSite",
-  name: "OHO21",
-  alternateName: ["OHO21", "OHO21 สล็อตที่แตกง่าย โบนัส ฝากถอนออโต้ รีวิวเว็บตรง รองรับวอเลท"],
-  url: "https://www.oho21-brand.com/",
+  name: "SUMOHENG",
+  alternateName: ["SUMOHENG", "SUMOHENG สล็อตออนไลน์"],
+  url: "https://sumoheng-brand.com/",
 };
 const orgSchema = {
   "@context": "https://schema.org",
   "@type": "Organization",
-  name: "OHO21",
+  name: "SUMOHENG",
   logo: logoUrl,
   url: homePage,
 };
 const allSchemas = [webPageSchema, orgSchema, webSiteSchema];
 
-const breakEasyFeatures = [
-  {
-    icon: "🎯",
-    title: "รางวัลย่อย",
-    description: "จังหวะลุ้นรางวัลย่อยเข้าถี่ ช่วยให้แต่ละเทิร์นมีลุ้นต่อเนื่อง ไม่จำเจในระหว่างการหมุน",
-    accent: "blue" as const,
-  },
-  {
-    icon: "🌀",
-    title: "ฟรีสปิน",
-    description: "ฟีเจอร์ฟรีสปินเปิดโอกาสหมุนเพิ่มโดยไม่เสียเครดิต ช่วยต่อยอดรอบทำเงินให้ยาวขึ้น",
-    accent: "gold" as const,
-  },
-  {
-    icon: "✨",
-    title: "สัญลักษณ์พิเศษ",
-    description: "สัญลักษณ์พิเศษในเกมช่วยเพิ่มโอกาสเข้าสู่รอบโบนัสและฟีเจอร์ทำเงินได้มากขึ้น",
-    accent: "blue" as const,
-  },
-  {
-    icon: "✖️",
-    title: "ตัวคูณ",
-    description: "ตัวคูณรางวัลยกระดับยอดที่ได้รับในจังหวะสำคัญ เพิ่มความสนุกในแต่ละเทิร์น",
-    accent: "gold" as const,
-  },
-  {
-    icon: "📊",
-    title: "RTP และความผันผวน",
-    description: "เลือกเกมตามค่า RTP และระดับความผันผวนให้เหมาะกับงบและสไตล์การเล่นของตัวเอง",
-    accent: "blue" as const,
-  },
-];
-
 import { Picture } from "astro:assets";
-import imgBreakEasy from "../assets/slide1.png";
-import imgAutoWallet from "../assets/slide3.png";
-import imgBonus from "../assets/banner2.png";
+import image1 from "../assets/slide1.png";
+import image2 from "../assets/banner1.webp";
 ---
 
-<MainLayout title={pageTitle} description={pageDescription}>
+<MainLayout
+  title="SUMOHENG เว็บหลัก ทางเข้า ซูโม่เฮง เกมสล็อตแท้ ฝากถอนออโต้"
+  description="SUMOHENG เว็บหลัก ซูโม่เฮง บริการ เกมสล็อตแท้ ทุกค่าย ทางเข้า เดียว เชื่อมต่อทุกฟังก์ชัน ฝากถอนออโต้ ด้วยความแม่นยำ สมัครสมาชิก เพื่อติดตาม โปรโมชั่น">
   <script type="application/ld+json" set:html={JSON.stringify(allSchemas)} />
 
-  <Announcement3 message="📢 OHO21 สล็อตเว็บตรงแตกง่าย โบนัสจัดเต็ม ฝากถอนออโต้ รองรับวอเลท ฝากง่ายถอนเร็ว อัปเดตทางเข้าล่าสุดที่ www.oho21-brand.com" />
-
-  <ContentBoxNeumorphism as="h1" title="OHO21 สล็อตที่แตกง่าย โบนัส ฝากถอนออโต้ รีวิวเว็บตรง รองรับวอเลท">
-    <p class="mx-auto max-w-4xl leading-relaxed">
-      OHO21 รวมเกมสล็อตหลายรูปแบบไว้บนระบบเดียว ทั้งเกมที่เน้นรอบโบนัส ฟรีสปิน ตัวคูณ และฟีเจอร์พิเศษสำหรับสายลุ้นรางวัล โดยมีระบบฝากถอนออโต้ช่วยจัดการเครดิตได้รวดเร็ว
-      พร้อมช่องทางวอเลทที่ลดขั้นตอนการทำรายการ ภายในเว็บจัดหมวดเกมและค่ายผู้ให้บริการไว้อย่างชัดเจน เข้าเล่นผ่านมือถือได้สะดวก เนื้อหานี้จะพาไปดูตั้งแต่สล็อตที่แตกง่าย เงื่อนไขโบนัส ประสิทธิภาพของระบบ
-      ไปจนถึงวิธีตรวจสอบทางเข้าเว็บจริงก่อนเริ่มใช้งาน
+  <Announcement />
+  <div class="mx-auto w-full max-w-5xl px-4 py-8 text-center">
+    <p class="text-4xl leading-tight font-black text-[#470000] drop-shadow-sm md:text-5xl">
+      SUMOHENG <br />
+      <span class="text-[#ffdb0e]">เว็บใหญ่ ใจปล้ำ</span>
     </p>
-  </ContentBoxNeumorphism>
-
-  <SmoothCarousel />
-
-  <ContentBox as="h2" title="OHO21 สล็อตที่แตกง่าย ติดโบนัสไว ลุ้นกำไรได้ทุกเทิร์น">
+  </div>
+  <ContentBox title="SUMOHENG เว็บหลัก ทางเข้า ซูโม่เฮง เกมสล็อตแท้ ฝากถอนออโต้">
     <p class="leading-relaxed">
-      สล็อตที่แตกง่ายของ OHO21 ไม่ได้หมายถึงเกมที่รับประกันผลรางวัล แต่เป็นกลุ่มเกมที่ออกแบบให้มีจังหวะลุ้นถี่ ทั้งรางวัลย่อย ฟรีสปิน สัญลักษณ์พิเศษ และตัวคูณที่ช่วยเพิ่มความสนุกในแต่ละเทิร์น
-      ผู้เล่นสามารถเลือกเกมตามค่า RTP ระดับความผันผวน และรูปแบบโบนัสที่ตรงกับสไตล์ของตัวเอง เกมความผันผวนต่ำเหมาะกับการเล่นต่อเนื่อง ส่วนเกมความผันผวนสูงจะเน้นลุ้นยอดรางวัลก้อนใหญ่
-      การตั้งงบและเลือกเดิมพันให้สัมพันธ์กับทุนจึงสำคัญกว่าการไล่ตามกระแสว่าเกมใดกำลังแตก
+      <strong class="text-amber-400">SUMOHENG</strong> คือเว็บหลักของซูโม่เฮงที่ใช้สำหรับการเข้าใช้งานและเข้าถึงข้อมูลเว็บไซต์อย่างเป็นทางการ ภายในเว็บไซต์เชื่อมต่อเกมสล็อตแท้จากหลายค่ายผ่านระบบเดียว
+      พร้อมระบบฝากถอนออโต้ที่ช่วยจัดการธุรกรรมตามขั้นตอนของระบบ เพื่อให้สมาชิกสามารถใช้งานทุกบริการได้จากบัญชีเดียว
     </p>
-    <FeatureHighlights items={breakEasyFeatures} />
+
+    <div class="mt-8 flex flex-wrap justify-center gap-6">
+      <a
+        href="/login"
+        class="group relative flex items-center justify-center rounded-full border border-red-500/50 bg-[#450a0a]/80 px-10 py-3.5 font-black text-yellow-500 backdrop-blur-sm transition-all duration-300 hover:scale-105 hover:bg-red-900/60 hover:shadow-[0_0_15px_rgba(220,38,38,0.4)]">
+        เข้าระบบเกม
+      </a>
+
+      <a
+        href="/register"
+        class="group relative flex items-center justify-center rounded-full bg-gradient-to-r from-yellow-500 via-yellow-400 to-yellow-500 px-10 py-3.5 font-black text-[#450a0a] shadow-[0_5px_20px_rgba(251,191,36,0.4)] transition-all duration-300 hover:-translate-y-1 hover:scale-105 hover:shadow-[0_8px_25px_rgba(251,191,36,0.6)]">
+        สมัครสมาชิก
+      </a>
+    </div>
   </ContentBox>
 
-  <ContentBox as="h2" title="แจกโบนัสจัดเต็ม OHO21 เติมครั้งเดียว รับสิทธิ์ได้เต็มอัตรา">
+  <ContentBoxTwo titleleft="ทางเข้า SUMOHENG" titleright="JACKPOT แตกพาร์ทเนอร์">
+    <div slot="left" class="flex flex-col gap-4">
+      <div class="rounded-2xl border border-red-500/30 bg-white/5 p-6 shadow-[0_0_20px_rgba(220,38,38,0.1)] backdrop-blur-md">
+        <div class="flex flex-col gap-4">
+          <div class="relative">
+            <span class="absolute top-3.5 left-4 text-red-500">👤</span>
+            <input
+              type="text"
+              placeholder="ยูสเซอร์เนม / เบอร์โทรศัพท์"
+              class="w-full rounded-full border border-red-500/50 bg-black/60 py-3 pr-4 pl-12 text-white transition-all outline-none focus:border-yellow-400 focus:ring-1 focus:ring-yellow-400/50"
+            />
+          </div>
+          <div class="relative">
+            <span class="absolute top-3.5 left-4 text-red-500">🔑</span>
+            <input
+              type="password"
+              placeholder="รหัสผ่าน"
+              class="w-full rounded-full border border-red-500/50 bg-black/60 py-3 pr-4 pl-12 text-white transition-all outline-none focus:border-yellow-400 focus:ring-1 focus:ring-yellow-400/50"
+            />
+          </div>
+          <button
+            class="mt-2 w-full rounded-full border border-red-400/50 bg-gradient-to-r from-red-600 to-red-700 p-3.5 font-black text-white shadow-[0_5px_15px_rgba(220,38,38,0.5)] transition-all hover:scale-[1.02] hover:shadow-[0_8px_25px_rgba(220,38,38,0.7)]">
+            เข้าสู่ระบบ
+          </button>
+          <div class="mt-2 flex items-center justify-between px-2 text-sm">
+            <a href="#" class="text-gray-400 transition-colors hover:text-white">ลืมรหัสผ่าน?</a>
+            <a href="/register" class="animate-pulse font-bold text-yellow-400 transition-colors hover:text-yellow-300">สมัครสมาชิกใหม่</a>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div slot="right">
+      <div class="flex h-full flex-col justify-center rounded-2xl border border-red-500/30 bg-gradient-to-br from-red-900/40 to-black/60 p-5 backdrop-blur-md">
+        <div class="mb-4 text-center">
+          <span class="text-sm font-bold text-gray-300">แจ็คพอตรวม (THB)</span>
+          <div class="bg-gradient-to-r from-yellow-300 via-yellow-400 to-yellow-500 bg-clip-text text-4xl font-black text-transparent drop-shadow-[0_2px_10px_rgba(250,204,21,0.4)]">8,459,230.50</div>
+        </div>
+        <table class="mt-2 w-full text-sm">
+          <thead>
+            <tr class="border-b border-red-500/30 text-red-400">
+              <th class="py-2 pl-2 text-left">ค่ายเกม</th>
+              <th class="py-2 pr-2 text-right">RTP</th>
+            </tr>
+          </thead>
+          <tbody class="text-white">
+            <tr class="border-b border-white/5 transition-colors hover:bg-white/10">
+              <td class="flex items-center gap-2 py-3 pl-2 font-bold"><span class="h-2 w-2 animate-ping rounded-full bg-green-500"></span> PG Soft</td><td
+                class="pr-2 text-right font-black text-green-400">
+                98.5%
+              </td>
+            </tr>
+            <tr class="border-b border-white/5 transition-colors hover:bg-white/10">
+              <td class="flex items-center gap-2 py-3 pl-2 font-bold"><span class="h-2 w-2 rounded-full bg-green-500"></span> Joker Gaming</td><td class="pr-2 text-right font-black text-green-400">
+                97.2%
+              </td>
+            </tr>
+            <tr class="transition-colors hover:bg-white/10">
+              <td class="flex items-center gap-2 py-3 pl-2 font-bold"><span class="h-2 w-2 rounded-full bg-green-500"></span> Pragmatic Play</td><td class="pr-2 text-right font-black text-green-400">
+                96.8%
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </ContentBoxTwo>
+
+  <LatestWinners />
+
+  <ContentBoxThreeColums titleleft="รวมครบจบในที่เดียว" titlecenter="RTP สูง แตกง่าย" titleright="ฝาก-ถอน ระบบออโต้">
+    <div slot="left">สล็อตทุกค่าย คาสิโน กีฬา หวย มีครบจบที่ SUMOHENG เว็บตรงไม่ผ่านเอเย่นต์ มั่นคง ปลอดภัย มาตรฐานระดับสากล</div>
+    <div slot="center">เกมสล็อตคุณภาพ คัดสรรมาอย่างดี อัตราการชนะ (RTP) สูง โบนัสจัดเต็ม โปรแรงแจกหนักทุกวัน แจ็คพอตแตกง่ายสุดๆ</div>
+    <div slot="right">ทำรายการรวดเร็วทันใจด้วยระบบออโต้ 100% รองรับทุกธนาคารและทรูมันนี่วอเลท เงินเข้าไวภายใน 5 วินาที</div>
+  </ContentBoxThreeColums>
+  <ProviderGrid />
+  <ContentBox>
+    <h2 class="mb-4 text-3xl font-black tracking-[0.2em] text-amber-400 uppercase drop-shadow-[0_0_10px_rgba(0,0,0,0.05)]">เกี่ยวกับ SUMOHENG เว็บหลัก ซูโม่เฮง ข้อมูลเว็บไซต์อย่างเป็นทางการ</h2>
     <p class="leading-relaxed">
-      โบนัสของที่นี่ มีไว้เพิ่มความคุ้มค่าให้สมาชิกตั้งแต่เริ่มต้น ไม่ว่าจะเป็นสิทธิ์ต้อนรับสมาชิกใหม่ โบนัสตามยอดเติม เครดิตกิจกรรม หรือโปรสำหรับสมาชิก OHO21 ที่กลับมาใช้งานอย่างต่อเนื่อง
-      ก่อนรับสิทธิ์ควรอ่านเงื่อนไขยอดเทิร์น เกมที่เข้าร่วม ระยะเวลาใช้งาน และข้อกำหนดการถอนให้ครบ เพราะแต่ละโปรโมชั่นอาจมีรายละเอียดต่างกัน การเลือกโบนัสที่เหมาะกับงบและเกมที่ต้องการเล่น
-      จะช่วยให้ใช้สิทธิ์ได้คุ้มกว่าการรับทุกโปรโดยไม่ตรวจสอบเงื่อนไข
+      <strong class="text-yellow-500">SUMOHENG</strong> เป็นเว็บหลักของซูโม่เฮงที่รวบรวมข้อมูลและระบบสำคัญของเว็บไซต์ไว้ในที่เดียว โดยมีเกมสล็อตเป็นหมวดหลัก พร้อมเกมบาคาร่า หวย กีฬา และยิงปลา ผ่านระบบ Super API ที่เชื่อมต่อผู้ให้บริการหลายค่าย
+      สมาชิกสามารถติดตามข่าวสาร ประกาศ ทางเข้าหลัก และสถานะการอัปเดตของเว็บไซต์ รวมถึงใช้งานระบบ Wallet และฝากถอนออโต้ได้ผ่านเว็บไซต์อย่างเป็นทางการ เพื่อให้ทุกส่วนของการใช้งานเชื่อมโยงกันจากเว็บแม่ศูนย์กลางเดียวกัน
     </p>
-
-    <Picture
-      src={imgBonus}
-      loading="lazy"
-      fetchpriority="low"
-      widths={[320, 480, 640, 768]}
-      sizes="(max-width: 768px) 100vw, 640px"
-      decoding="async"
-      formats={["avif", "webp"]}
-      fallbackFormat="webp"
-      quality={80}
-      alt="OHO21 แจกโบนัสจัดเต็ม สิทธิ์ต้อนรับสมาชิกใหม่และโบนัสตามยอดเติม"
-      class="mx-auto mt-8 h-auto w-full max-w-5xl rounded-2xl border border-orange-400/20 shadow-[0_10px_30px_rgba(249,115,22,0.2)]"
-    />
   </ContentBox>
-
-  <ContentBoxSevenThreeNeumorphism titleright="ฝากถอนออโต้ของ ไวทุกธุรกรรม พร้อมลุยทุกเกม">
+  <ContentBoxSevenThree titleleft="" titleright="SUMOHENG บริการ เกมสล็อตแท้ Super API ที่สามารถเล่นผ่านเว็บหลัก">
     <div slot="left" class="flex h-full flex-col justify-center">
       <Picture
-        src={imgAutoWallet}
+        src={image1}
         loading="lazy"
         fetchpriority="low"
         widths={[200, 400, 600, 800]}
-        sizes="(max-width: 768px) 100vw, 30vw"
+        sizes="(max-width: 768px) 100vw, 50vw"
         decoding="async"
         formats={["avif", "webp"]}
         fallbackFormat="webp"
         quality={80}
-        alt="OHO21 ระบบฝากถอนออโต้ ทำรายการไวทุกธุรกรรม"
-        class="mx-auto h-auto w-full rounded-2xl border-2 border-blue-400/20 shadow-[0_10px_30px_rgba(37,99,235,0.25)]"
+        alt="sumoheng VIP Service"
+        class="mx-auto h-auto w-full rounded-2xl border-2 border-yellow-500/30 shadow-[0_10px_30px_rgba(220,38,38,0.3)]"
       />
     </div>
     <div slot="right">
-      <p class="leading-relaxed">
-        ระบบฝากถอนออโต้ช่วยให้การจัดการเครดิตเป็นเรื่องง่าย โดยไม่ต้องรอเจ้าหน้าที่ตรวจสอบทีละรายการ สมาชิกเลือกช่องทาง ชำระตามข้อมูลที่ระบบแสดง และรอเครดิตอัปเดตเข้าสู่บัญชี เมื่อทำรายการถอน
-        ระบบจะตรวจสอบยอดคงเหลือ เงื่อนไขโบนัส และข้อมูลบัญชีก่อนดำเนินการ ความรวดเร็วจริงอาจขึ้นอยู่กับธนาคาร ช่องทางชำระเงิน และช่วงเวลาที่ใช้งาน จึงควรกรอกข้อมูลให้ตรงกับบัญชีสมาชิกทุกครั้ง
-        เพื่อลดปัญหารายการล่าช้าหรือถูกส่งกลับไปตรวจสอบใหม่
+      <p>
+        ระบบ <strong class="text-amber-400">Super API</strong> ของ SUMOHENG ทำหน้าที่เชื่อมต่อเกมสล็อตแท้จากผู้พัฒนาเกมหลายค่ายเข้าสู่เว็บไซต์หลัก เพื่อให้สมาชิกสามารถเลือกเล่นเกมจากค่ายต่าง ๆ ได้ภายในยูสเซอร์เดียว
+        พร้อมเข้าถึงเกมใหม่ เกมยอดนิยม และฟีเจอร์ของแต่ละค่ายผ่านระบบเดียวกัน
       </p>
-    </div>
-  </ContentBoxSevenThreeNeumorphism>
 
-  <ContentBox as="h2" title="รีวิวเว็บตรง OHO21 จากระบบจริง สปินไหลลื่น ลุ้นแตกได้ทุกตา">
+      <a
+        href="/line"
+        class="inline-flex items-center bg-[#00B900] px-8 py-3 font-bold text-white shadow-lg transition-transform hover:scale-105"
+        style="clip-path: polygon(15% 0, 100% 0, 100% 70%, 85% 100%, 0 100%, 0 30%);">
+        <span class="mr-2 text-xl">LINE</span> ติดต่อแอดมิน
+      </a>
+    </div>
+  </ContentBoxSevenThree>
+  <SmoothCarousel />
+  <ContentBox>
+    <h2 class="mb-4 text-3xl font-black tracking-[0.2em] text-yellow-400 uppercase drop-shadow-[0_0_10px_rgba(0,0,0,0.05)]">ทางเข้า ใช้บัญชีสมาชิกเดียว เชื่อมต่อทุกฟังก์ชัน ของ SUMOHENG</h2>
     <p class="leading-relaxed">
-      จากองค์ประกอบของระบบ OHO21 เน้นการเข้าถึงเกมได้รวดเร็ว เมนูไม่ซับซ้อน และแสดงหมวดเกมแยกตามค่ายอย่างชัดเจน ผู้เล่นสามารถค้นหาเกมโปรด สลับค่าย หรือกลับไปยังเกมที่เล่นล่าสุดได้โดยไม่เสียเวลา
-      หน้าจอเกมปรับตามอุปกรณ์ได้ดี ทำให้สปินผ่านมือถือได้ต่อเนื่อง ส่วนความลื่นไหลขึ้นอยู่กับคุณภาพอินเทอร์เน็ตและเซิร์ฟเวอร์ของค่ายเกมด้วย จุดที่ควรพิจารณาควบคู่กันคือความชัดเจนของเงื่อนไขโบนัส
-      ประวัติธุรกรรม และช่องทางติดต่อเมื่อพบปัญหา ไม่ควรตัดสินจากคำว่าแตกง่ายเพียงอย่างเดียว
+      ทางเข้า <strong class="text-yellow-500">SUMOHENG</strong> รองรับการใช้งานผ่านบัญชีสมาชิกเดียว เพื่อเชื่อมต่อทุกฟังก์ชันของเว็บไซต์ภายในระบบเดียว สมาชิกสามารถเข้าถึงเกมสล็อตแท้ ระบบฝากถอนออโต้ ข้อมูลบัญชี ข่าวสาร
+      และโปรโมชั่นได้อย่างต่อเนื่อง โดยทุกส่วนถูกเชื่อมโยงให้ทำงานร่วมกันผ่านเว็บไซต์หลักของ SUMOHENG
     </p>
   </ContentBox>
 
-  <ProviderGrid />
-  <GameRankingBoard />
-
-  <ContentBoxSpecial as="h2" title="รองรับวอเลทเต็ม ฝากง่าย ถอนเร็ว จบครบในบัญชีเดียว">
+  <ContentBox>
+    <Picture
+      src={image2}
+      loading="lazy"
+      fetchpriority="low"
+      widths={[200, 400, 600, 800]}
+      sizes="(max-width: 768px) 100vw, 50vw"
+      decoding="async"
+      formats={["avif", "webp"]}
+      fallbackFormat="webp"
+      quality={80}
+      alt="sumoheng VIP Service"
+      class="mx-auto h-auto w-full max-w-2xl rounded-2xl border-2 border-yellow-500/30 shadow-[0_10px_30px_rgba(220,38,38,0.3)] transition-transform hover:scale-[1.02]"
+    />
+    <h2 class="mb-4 text-2xl font-black tracking-[0.2em] text-yellow-400 uppercase drop-shadow-[0_0_10px_rgba(0,0,0,0.05)]">
+      ฝากถอนออโต้ ดำเนินการอย่างเป็นขั้นเป็นตอน ด้วยความแม่นยำ
+    </h2>
     <p class="leading-relaxed">
-      OHO21 รองรับวอเลทเพื่อเพิ่มทางเลือกให้ผู้ที่ต้องการทำรายการผ่านมือถือ โดยไม่ต้องสลับหลายแอปหรือกรอกข้อมูลเดิมซ้ำหลายรอบ หลังเชื่อมข้อมูลกับบัญชีสมาชิกแล้ว สามารถตรวจสอบยอด ฝากเครดิต
-      และส่งคำขอถอนได้จากระบบเดียว จุดสำคัญคือชื่อและหมายเลขวอเลทต้องตรงกับข้อมูลที่ลงทะเบียน รวมถึงควรตรวจสอบยอดขั้นต่ำและสูงสุดของแต่ละรายการก่อนยืนยัน การใช้บัญชีของตนเองและเก็บหลักฐานธุรกรรมไว้
-      จะช่วยให้ตรวจสอบสถานะได้ง่ายหากยอดเงินยังไม่อัปเดตตามเวลาปกติ
+      การทำรายการฝากและถอนผ่านระบบออโต้ของ <strong class="text-yellow-500">SUMOHENG</strong> จะดำเนินไปตามลำดับตั้งแต่การรับข้อมูล ตรวจสอบยอด ไปจนถึงการยืนยันรายการก่อนประมวลผล ทุกขั้นตอนอ้างอิงข้อมูลจากบัญชีผู้ใช้เพื่อลดความคลาดเคลื่อน
+      และช่วยให้สถานะของแต่ละธุรกรรมตรวจสอบได้ง่ายขึ้น เมื่อข้อมูลครบถ้วน ระบบจะดำเนินการตามรายการที่ส่งเข้ามา ทำให้การฝากถอนมีความเป็นระเบียบ ถูกต้อง และเชื่อมต่อกับการใช้งานส่วนอื่นของเว็บไซต์ได้ทันที
+    </p>
+  </ContentBox>
+
+  <ReviewCardSumo />
+
+  <ContentBoxSpecial>
+    <h2 slot="title-left">สมัครสมาชิก เพื่อติดตามข่าวสารและโปรโมชั่นของ SUMOHENG</h2>
+    <p slot="content-left" class="leading-relaxed">
+      การสมัครสมาชิกช่วยให้ผู้ใช้งานสามารถเข้าถึงฟังก์ชันต่าง ๆ ของเว็บไซต์ได้ครบถ้วน พร้อมติดตามข่าวสาร ประกาศ และโปรโมชั่นของ SUMOHENG ได้จากเว็บไซต์หลัก
+    </p>
+
+    <h2 slot="title-right">รายละเอียด เงื่อนไข และช่วงเวลาของแต่ละโปรโมชั่น ตรวจสอบได้ชัดเจน</h2>
+    <p slot="content-right" class="leading-relaxed">
+      ข้อมูลแต่ละรายการโปรโมชั่นจะแสดงรายละเอียด เงื่อนไข และช่วงเวลาที่เกี่ยวข้องไว้อย่างชัดเจน เพื่อให้สมาชิกสามารถตรวจสอบข้อมูลล่าสุดและติดตามความเคลื่อนไหวของเว็บไซต์ได้อย่างสะดวก
     </p>
   </ContentBoxSpecial>
 
-  <ContentBoxFloatingBadge as="h2" title="ทางเข้า OHO21 อัปเดตตรงถึงเว็บจริง ล็อกเป้าความสนุกได้ในคลิกเดียว">
-    <p class="mx-auto max-w-4xl leading-relaxed">
-      ทางเข้า OHO21 ควรมาจากช่องทางที่เว็บไซต์ประกาศโดยตรง เพราะโดเมนหรือหน้าล็อกอินอาจมีการเปลี่ยนแปลงตามการดูแลระบบ ก่อนกรอกชื่อผู้ใช้หรือข้อมูลการเงิน ให้ตรวจสอบชื่อโดเมน การเชื่อมต่อ HTTPS
-      รูปแบบหน้าเว็บ และเมนูหลักว่าตรงกับเว็บที่เคยใช้งานหรือไม่ ควรหลีกเลี่ยง ลิงก์จากข้อความSMSสุ่ม โฆษณาที่ไม่ระบุแหล่งที่มา หรือหน้าที่เร่งให้โอนเงินเข้าบัญชีบุคคล
-    </p>
-  </ContentBoxFloatingBadge>
-
-  <div class="mx-auto mb-10 flex flex-wrap justify-center gap-6 px-4">
-    <a
-      href="/login"
-      class="group relative flex items-center justify-center rounded-full border border-orange-400/50 bg-[#030a1a]/80 px-10 py-3.5 font-black text-orange-300 backdrop-blur-sm transition-all duration-300 hover:scale-105 hover:bg-blue-900/60 hover:shadow-[0_0_15px_rgba(249,115,22,0.4)]">
-      เข้าสู่ระบบ
-    </a>
-
-    <a
-      href="/register"
-      class="group relative flex items-center justify-center rounded-full bg-gradient-to-r from-orange-400 via-orange-500 to-orange-600 px-10 py-3.5 font-black text-blue-950 shadow-[0_5px_20px_rgba(249,115,22,0.4)] transition-all duration-300 hover:-translate-y-1 hover:scale-105 hover:shadow-[0_8px_25px_rgba(249,115,22,0.6)]">
-      สมัครสมาชิก
-    </a>
-  </div>
-
-  <LoginRtpSection />
-
-  <ReviewCardSumo />
-  <LatestWinners />
-
   <Navfoot />
+
+  <style>
+    :global(.text-yellow-gradient) {
+      background: linear-gradient(to bottom, #e7d800 0%, #ddd44e 100%) !important;
+      -webkit-background-clip: text !important;
+      -webkit-text-fill-color: transparent !important;
+    }
+  </style>
 </MainLayout>

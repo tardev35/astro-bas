@@ -1,24 +1,24 @@
 // @ts-check
-import { defineConfig } from "astro/config";
+import { defineConfig } from 'astro/config';
 
-import tailwindcss from "@tailwindcss/vite";
+import tailwindcss from '@tailwindcss/vite';
 
-import sitemap from "@astrojs/sitemap";
+import sitemap from '@astrojs/sitemap';
 
 // https://astro.build/config
 export default defineConfig({
   vite: {
-    plugins: [tailwindcss()],
+    plugins: [tailwindcss()]
   },
 
   build: {
-    inlineStylesheets: "always",
+    inlineStylesheets: 'always', 
   },
 
   redirects: {
-    "/line": "https://tinyurl.com/suhng",
+    '/line': 'https://tinyurl.com/linepigpg'
   },
 
-  site: "https://www.oho21-brand.com",
-  integrations: [sitemap()],
+  site: 'https://sumoheng.com',
+  integrations: [sitemap()]
 });
