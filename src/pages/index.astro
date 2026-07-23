@@ -1,247 +1,200 @@
 ---
 import MainLayout from "../layouts/MainLayout.astro";
+import AnnouncementPremium from "../components/AnnouncementPremium.astro";
+import ContentBoxCyberCut from "../components/ContentBoxCyberCut.astro";
 import ContentBox from "../components/ContentBox.astro";
-import ContentBoxTwo from "../components/ContentBoxTwo.astro";
 import ContentBoxSevenThree from "../components/ContentBoxSevenThree.astro";
-import ContentBoxThreeColums from "../components/ContentBox3Three.astro";
+import ContentBoxSevenThreeCyberCut from "../components/ContentBoxSevenThreeCyberCut.astro";
 import ContentBoxSpecial from "../components/ContentBoxSpecial.astro";
-import Announcement from "../components/Announcement6.astro";
+import FeatureHighlights from "../components/FeatureHighlights.astro";
+import LoginRtpSection from "../components/LoginRtpSection.astro";
 import ProviderGrid from "../components/ProviderGrid.astro";
-import LatestWinners from "../components/LatestWinnersPremium.astro";
+import GameRankingBoard from "../components/GameRankingBoard.astro";
+import LatestWinners from "../components/LatestWinners3.astro";
 import SmoothCarousel from "../components/SmoothCarousel.astro";
 import ReviewCardSumo from "../components/ReviewCardSumo2.astro";
 import Navfoot from "../components/Navfoot.astro";
-import Faq from "../components/FaqHuay.astro";
 const currentPath = Astro.url.pathname;
 const homePage = Astro.url.origin;
 const logoUrl = homePage + "/logo.webp";
 
+const pageTitle = "BESTCLUB88 รีวิวเว็บเกมสล็อต เว็บตรงเล่นมัน แตกหนัก ฟรีสปินไม่อั้น";
+const pageDescription = "BESTCLUB88 รีวิวเว็บเกมสล็อต เว็บตรงเล่นมัน แตกหนัก ฟรีสปินไม่อั้น รีวิวทางเข้า ทดลองเล่นจริง ฟรีสปิน โปรโมชั่น เกมยอดนิยม และข้อมูลเว็บตรงก่อนสมัคร";
+
 const webPageSchema = {
   "@context": "https://schema.org",
   "@type": "WebPage",
-  name: "SUMOHENG เว็บหลัก ทางเข้า ซูโม่เฮง เกมสล็อตแท้ ฝากถอนออโต้",
-  description: "SUMOHENG เว็บหลัก ซูโม่เฮง บริการ เกมสล็อตแท้ ทุกค่าย ทางเข้า เดียว เชื่อมต่อทุกฟังก์ชัน ฝากถอนออโต้ ด้วยความแม่นยำ สมัครสมาชิก เพื่อติดตาม โปรโมชั่น",
+  name: "BESTCLUB88",
+  description: pageDescription,
   url: currentPath,
 };
 const webSiteSchema = {
   "@context": "https://schema.org",
   "@type": "WebSite",
-  name: "SUMOHENG",
-  alternateName: ["SUMOHENG", "SUMOHENG สล็อตออนไลน์"],
-  url: "https://sumoheng-brand.com/",
+  name: "BESTCLUB88",
+  alternateName: ["BESTCLUB88", "BESTCLUB88 รีวิวเว็บเกมสล็อต เว็บตรงเล่นมัน แตกหนัก ฟรีสปินไม่อั้น"],
+  url: "https://www.bestclub88-homepage.com/",
 };
 const orgSchema = {
   "@context": "https://schema.org",
   "@type": "Organization",
-  name: "SUMOHENG",
+  name: "BESTCLUB88",
   logo: logoUrl,
   url: homePage,
 };
 const allSchemas = [webPageSchema, orgSchema, webSiteSchema];
 
+const scoreHighlights = [
+  {
+    icon: "🎮",
+    title: "ความหลากหลายของเกม 5/5",
+    description: "รวมเกมจากหลายค่ายไว้ในระบบเดียว ทั้งสล็อต เกมยอดนิยม และฟีเจอร์หลากรูปแบบ ให้เลือกเล่นได้ครบตามสไตล์",
+    accent: "gold" as const,
+  },
+  {
+    icon: "⚡",
+    title: "ความลื่นไหลในการเล่น 4/5",
+    description: "สลับเกมแทบไม่ต้องรอโหลด หน้าเว็บตอบสนองไว เข้าเกมต่อเนื่อง แม้ความลื่นจริงจะขึ้นอยู่กับอินเทอร์เน็ตและเซิร์ฟเวอร์ของค่ายเกมด้วย",
+    accent: "red" as const,
+  },
+  {
+    icon: "🛡️",
+    title: "ความเสถียรของระบบ 4/5",
+    description: "ตลอดช่วงที่ทดลองเล่นไม่พบอาการค้างหรือเด้งออกจากระบบ ให้ความรู้สึกว่าเป็นเว็บไซต์ที่ใช้งานง่ายและเสถียรเกินกว่าที่คาดไว้",
+    accent: "red" as const,
+  },
+  {
+    icon: "💥",
+    title: 'ความรู้สึกว่า "แตกหนัก" 3/5',
+    description: "บางรอบได้รับรางวัลใหญ่และเล่นได้สนุก แต่จากการทดลองไม่สามารถสรุปได้ว่าเกมแตกหนักกว่าค่าเฉลี่ยหรือจ่ายสูงกว่าเว็บไซต์อื่น",
+    accent: "gold" as const,
+  },
+];
+
 import { Picture } from "astro:assets";
-import image1 from "../assets/slide1.png";
-import image2 from "../assets/banner1.webp";
+import imgReview from "../assets/slide3.png";
+import imgBreak from "../assets/slide2.png";
+import imgBonus from "../assets/banner2.png";
 ---
 
-<MainLayout
-  title="SUMOHENG เว็บหลัก ทางเข้า ซูโม่เฮง เกมสล็อตแท้ ฝากถอนออโต้"
-  description="SUMOHENG เว็บหลัก ซูโม่เฮง บริการ เกมสล็อตแท้ ทุกค่าย ทางเข้า เดียว เชื่อมต่อทุกฟังก์ชัน ฝากถอนออโต้ ด้วยความแม่นยำ สมัครสมาชิก เพื่อติดตาม โปรโมชั่น">
+<MainLayout title={pageTitle} description={pageDescription}>
   <script type="application/ld+json" set:html={JSON.stringify(allSchemas)} />
 
-  <Announcement />
-  <div class="mx-auto w-full max-w-5xl px-4 py-8 text-center">
-    <p class="text-4xl leading-tight font-black text-[#470000] drop-shadow-sm md:text-5xl">
-      SUMOHENG <br />
-      <span class="text-[#ffdb0e]">เว็บใหญ่ ใจปล้ำ</span>
+  <AnnouncementPremium />
+
+  <ContentBoxCyberCut as="h1" title="BESTCLUB88 รีวิวเว็บเกมสล็อต เล่นมัน แตกหนัก ฟรีสปินไม่อั้น">
+    <p class="mx-auto max-w-4xl leading-relaxed">
+      <strong class="text-yellow-300">รีวิวเว็บเกมสล็อต</strong> <strong class="text-yellow-300">BESTCLUB88</strong> โดยทดลองสมัครสมาชิก เข้าใช้งาน และทดสอบเล่นเกมจากหลายค่าย เพื่อดูว่าระบบมีความลื่นไหลเพียงใด เกมที่ให้บริการมีความสนุกและ เล่นมัน ตามที่หลายคนกล่าวถึงหรือไม่
+      รวมถึงสำรวจว่าเกมใดมีจังหวะ แตกหนัก น่าสนใจ และข้อเสนอ ฟรีสปินไม่อั้น สำหรับสมาชิกใหม่มีรายละเอียดอย่างไร จากข้อมูลที่ได้จะสรุปเป็นประสบการณ์การใช้งานจริง เพื่อช่วยให้ผู้อ่านเห็นภาพรวมของ
+      <strong class="text-yellow-300">BESTCLUB88</strong> ก่อนตัดสินใจเข้าใช้งานหรือสมัครสมาชิก
     </p>
-  </div>
-  <ContentBox title="SUMOHENG เว็บหลัก ทางเข้า ซูโม่เฮง เกมสล็อตแท้ ฝากถอนออโต้">
+  </ContentBoxCyberCut>
+
+  <SmoothCarousel />
+
+  <ContentBox as="h2" title="BESTCLUB88 ทางเข้า เว็บเกมสล็อต รวมค่ายดัง เกมยอดนิยม ในเว็บเดียว">
     <p class="leading-relaxed">
-      <strong class="text-amber-400">SUMOHENG</strong> คือเว็บหลักของซูโม่เฮงที่ใช้สำหรับการเข้าใช้งานและเข้าถึงข้อมูลเว็บไซต์อย่างเป็นทางการ ภายในเว็บไซต์เชื่อมต่อเกมสล็อตแท้จากหลายค่ายผ่านระบบเดียว
-      พร้อมระบบฝากถอนออโต้ที่ช่วยจัดการธุรกรรมตามขั้นตอนของระบบ เพื่อให้สมาชิกสามารถใช้งานทุกบริการได้จากบัญชีเดียว
+      <strong class="text-yellow-300">BESTCLUB88</strong> เป็น <strong class="text-yellow-300">ทางเข้าเว็บเกมสล็อต</strong> ที่รวบรวมเกมจากผู้ให้บริการชั้นนำ ในเว็บเดียว มี รวมค่ายดัง อย่าง PG Soft, Pragmatic Play, JILI และ Habanero พร้อม เกมยอดนิยม เช่น Mahjong Ways, Gates of
+      Olympus, Sweet Bonanza, Fortune Tiger และ Sugar Rush ให้เลือกเล่น หน้าเว็บไซต์แบ่งหมวดหมู่ชัดเจน ค้นหาเกมได้ง่าย รองรับทั้งคอมพิวเตอร์และมือถือ
+      จึงเหมาะสำหรับผู้ที่ต้องการเข้าเล่นเกมสล็อตผ่านระบบเดียวอย่างสะดวกและรวดเร็ว
     </p>
-
-    <div class="mt-8 flex flex-wrap justify-center gap-6">
-      <a
-        href="/login"
-        class="group relative flex items-center justify-center rounded-full border border-red-500/50 bg-[#450a0a]/80 px-10 py-3.5 font-black text-yellow-500 backdrop-blur-sm transition-all duration-300 hover:scale-105 hover:bg-red-900/60 hover:shadow-[0_0_15px_rgba(220,38,38,0.4)]">
-        เข้าระบบเกม
-      </a>
-
-      <a
-        href="/register"
-        class="group relative flex items-center justify-center rounded-full bg-gradient-to-r from-yellow-500 via-yellow-400 to-yellow-500 px-10 py-3.5 font-black text-[#450a0a] shadow-[0_5px_20px_rgba(251,191,36,0.4)] transition-all duration-300 hover:-translate-y-1 hover:scale-105 hover:shadow-[0_8px_25px_rgba(251,191,36,0.6)]">
-        สมัครสมาชิก
-      </a>
-    </div>
   </ContentBox>
 
-  <ContentBoxTwo titleleft="ทางเข้า SUMOHENG" titleright="JACKPOT แตกพาร์ทเนอร์">
-    <div slot="left" class="flex flex-col gap-4">
-      <div class="rounded-2xl border border-red-500/30 bg-white/5 p-6 shadow-[0_0_20px_rgba(220,38,38,0.1)] backdrop-blur-md">
-        <div class="flex flex-col gap-4">
-          <div class="relative">
-            <span class="absolute top-3.5 left-4 text-red-500">👤</span>
-            <input
-              type="text"
-              placeholder="ยูสเซอร์เนม / เบอร์โทรศัพท์"
-              class="w-full rounded-full border border-red-500/50 bg-black/60 py-3 pr-4 pl-12 text-white transition-all outline-none focus:border-yellow-400 focus:ring-1 focus:ring-yellow-400/50"
-            />
-          </div>
-          <div class="relative">
-            <span class="absolute top-3.5 left-4 text-red-500">🔑</span>
-            <input
-              type="password"
-              placeholder="รหัสผ่าน"
-              class="w-full rounded-full border border-red-500/50 bg-black/60 py-3 pr-4 pl-12 text-white transition-all outline-none focus:border-yellow-400 focus:ring-1 focus:ring-yellow-400/50"
-            />
-          </div>
-          <button
-            class="mt-2 w-full rounded-full border border-red-400/50 bg-gradient-to-r from-red-600 to-red-700 p-3.5 font-black text-white shadow-[0_5px_15px_rgba(220,38,38,0.5)] transition-all hover:scale-[1.02] hover:shadow-[0_8px_25px_rgba(220,38,38,0.7)]">
-            เข้าสู่ระบบ
-          </button>
-          <div class="mt-2 flex items-center justify-between px-2 text-sm">
-            <a href="#" class="text-gray-400 transition-colors hover:text-white">ลืมรหัสผ่าน?</a>
-            <a href="/register" class="animate-pulse font-bold text-yellow-400 transition-colors hover:text-yellow-300">สมัครสมาชิกใหม่</a>
-          </div>
-        </div>
-      </div>
-    </div>
-    <div slot="right">
-      <div class="flex h-full flex-col justify-center rounded-2xl border border-red-500/30 bg-gradient-to-br from-red-900/40 to-black/60 p-5 backdrop-blur-md">
-        <div class="mb-4 text-center">
-          <span class="text-sm font-bold text-gray-300">แจ็คพอตรวม (THB)</span>
-          <div class="bg-gradient-to-r from-yellow-300 via-yellow-400 to-yellow-500 bg-clip-text text-4xl font-black text-transparent drop-shadow-[0_2px_10px_rgba(250,204,21,0.4)]">8,459,230.50</div>
-        </div>
-        <table class="mt-2 w-full text-sm">
-          <thead>
-            <tr class="border-b border-red-500/30 text-red-400">
-              <th class="py-2 pl-2 text-left">ค่ายเกม</th>
-              <th class="py-2 pr-2 text-right">RTP</th>
-            </tr>
-          </thead>
-          <tbody class="text-white">
-            <tr class="border-b border-white/5 transition-colors hover:bg-white/10">
-              <td class="flex items-center gap-2 py-3 pl-2 font-bold"><span class="h-2 w-2 animate-ping rounded-full bg-green-500"></span> PG Soft</td><td
-                class="pr-2 text-right font-black text-green-400">
-                98.5%
-              </td>
-            </tr>
-            <tr class="border-b border-white/5 transition-colors hover:bg-white/10">
-              <td class="flex items-center gap-2 py-3 pl-2 font-bold"><span class="h-2 w-2 rounded-full bg-green-500"></span> Joker Gaming</td><td class="pr-2 text-right font-black text-green-400">
-                97.2%
-              </td>
-            </tr>
-            <tr class="transition-colors hover:bg-white/10">
-              <td class="flex items-center gap-2 py-3 pl-2 font-bold"><span class="h-2 w-2 rounded-full bg-green-500"></span> Pragmatic Play</td><td class="pr-2 text-right font-black text-green-400">
-                96.8%
-              </td>
-            </tr>
-          </tbody>
-        </table>
-      </div>
-    </div>
-  </ContentBoxTwo>
-
-  <LatestWinners />
-
-  <ContentBoxThreeColums titleleft="รวมครบจบในที่เดียว" titlecenter="RTP สูง แตกง่าย" titleright="ฝาก-ถอน ระบบออโต้">
-    <div slot="left">สล็อตทุกค่าย คาสิโน กีฬา หวย มีครบจบที่ SUMOHENG เว็บตรงไม่ผ่านเอเย่นต์ มั่นคง ปลอดภัย มาตรฐานระดับสากล</div>
-    <div slot="center">เกมสล็อตคุณภาพ คัดสรรมาอย่างดี อัตราการชนะ (RTP) สูง โบนัสจัดเต็ม โปรแรงแจกหนักทุกวัน แจ็คพอตแตกง่ายสุดๆ</div>
-    <div slot="right">ทำรายการรวดเร็วทันใจด้วยระบบออโต้ 100% รองรับทุกธนาคารและทรูมันนี่วอเลท เงินเข้าไวภายใน 5 วินาที</div>
-  </ContentBoxThreeColums>
   <ProviderGrid />
-  <ContentBox>
-    <h2 class="mb-4 text-3xl font-black tracking-[0.2em] text-amber-400 uppercase drop-shadow-[0_0_10px_rgba(0,0,0,0.05)]">เกี่ยวกับ SUMOHENG เว็บหลัก ซูโม่เฮง ข้อมูลเว็บไซต์อย่างเป็นทางการ</h2>
-    <p class="leading-relaxed">
-      <strong class="text-yellow-500">SUMOHENG</strong> เป็นเว็บหลักของซูโม่เฮงที่รวบรวมข้อมูลและระบบสำคัญของเว็บไซต์ไว้ในที่เดียว โดยมีเกมสล็อตเป็นหมวดหลัก พร้อมเกมบาคาร่า หวย กีฬา และยิงปลา ผ่านระบบ Super API ที่เชื่อมต่อผู้ให้บริการหลายค่าย
-      สมาชิกสามารถติดตามข่าวสาร ประกาศ ทางเข้าหลัก และสถานะการอัปเดตของเว็บไซต์ รวมถึงใช้งานระบบ Wallet และฝากถอนออโต้ได้ผ่านเว็บไซต์อย่างเป็นทางการ เพื่อให้ทุกส่วนของการใช้งานเชื่อมโยงกันจากเว็บแม่ศูนย์กลางเดียวกัน
-    </p>
-  </ContentBox>
-  <ContentBoxSevenThree titleleft="" titleright="SUMOHENG บริการ เกมสล็อตแท้ Super API ที่สามารถเล่นผ่านเว็บหลัก">
+
+  <ContentBoxSevenThree titleright="รีวิว BESTCLUB88 หลังทดลองเล่นเกมสล็อตจริง ความรู้สึกเป็นอย่างไร">
     <div slot="left" class="flex h-full flex-col justify-center">
       <Picture
-        src={image1}
+        src={imgReview}
         loading="lazy"
         fetchpriority="low"
         widths={[200, 400, 600, 800]}
-        sizes="(max-width: 768px) 100vw, 50vw"
+        sizes="(max-width: 768px) 100vw, 30vw"
         decoding="async"
         formats={["avif", "webp"]}
         fallbackFormat="webp"
         quality={80}
-        alt="sumoheng VIP Service"
-        class="mx-auto h-auto w-full rounded-2xl border-2 border-yellow-500/30 shadow-[0_10px_30px_rgba(220,38,38,0.3)]"
+        alt="BESTCLUB88 รีวิวหลังทดลองเล่นเกมสล็อตจริง ระบบลื่นไหลโหลดเร็ว"
+        class="mx-auto h-auto w-full rounded-2xl border-2 border-red-400/20 shadow-[0_10px_30px_rgba(220,38,38,0.25)]"
       />
     </div>
     <div slot="right">
-      <p>
-        ระบบ <strong class="text-amber-400">Super API</strong> ของ SUMOHENG ทำหน้าที่เชื่อมต่อเกมสล็อตแท้จากผู้พัฒนาเกมหลายค่ายเข้าสู่เว็บไซต์หลัก เพื่อให้สมาชิกสามารถเลือกเล่นเกมจากค่ายต่าง ๆ ได้ภายในยูสเซอร์เดียว
-        พร้อมเข้าถึงเกมใหม่ เกมยอดนิยม และฟีเจอร์ของแต่ละค่ายผ่านระบบเดียวกัน
+      <p class="leading-relaxed">
+        หลังจากทดลองสมัครสมาชิกและล็อกอินเข้าใช้งาน <strong class="text-yellow-300">BESTCLUB88</strong> สิ่งแรกที่รู้สึกคือ "เร็วกว่าที่คิด" ขั้นตอนต่าง ๆ ไม่ซับซ้อน สิ่งที่ค่อนข้างประหลาดใจคือ ความลื่นของระบบ ระหว่างสลับเกมแทบไม่ต้องรอโหลด
+        หน้าเว็บตอบสนองไว เข้าเกมต่อเนื่อง ไม่พบอาการค้างหรือเด้งออกจากระบบตลอดช่วงที่ทดลองเล่น โดยรวม <strong class="text-yellow-300">BESTCLUB88</strong> ให้ความรู้สึกว่าเป็นเว็บไซต์ที่ใช้งานง่าย โหลดเร็ว และมีความเสถียรเกินกว่าที่คาดไว้
       </p>
-
-      <a
-        href="/line"
-        class="inline-flex items-center bg-[#00B900] px-8 py-3 font-bold text-white shadow-lg transition-transform hover:scale-105"
-        style="clip-path: polygon(15% 0, 100% 0, 100% 70%, 85% 100%, 0 100%, 0 30%);">
-        <span class="mr-2 text-xl">LINE</span> ติดต่อแอดมิน
-      </a>
     </div>
   </ContentBoxSevenThree>
-  <SmoothCarousel />
-  <ContentBox>
-    <h2 class="mb-4 text-3xl font-black tracking-[0.2em] text-yellow-400 uppercase drop-shadow-[0_0_10px_rgba(0,0,0,0.05)]">ทางเข้า ใช้บัญชีสมาชิกเดียว เชื่อมต่อทุกฟังก์ชัน ของ SUMOHENG</h2>
-    <p class="leading-relaxed">
-      ทางเข้า <strong class="text-yellow-500">SUMOHENG</strong> รองรับการใช้งานผ่านบัญชีสมาชิกเดียว เพื่อเชื่อมต่อทุกฟังก์ชันของเว็บไซต์ภายในระบบเดียว สมาชิกสามารถเข้าถึงเกมสล็อตแท้ ระบบฝากถอนออโต้ ข้อมูลบัญชี ข่าวสาร
-      และโปรโมชั่นได้อย่างต่อเนื่อง โดยทุกส่วนถูกเชื่อมโยงให้ทำงานร่วมกันผ่านเว็บไซต์หลักของ SUMOHENG
-    </p>
-  </ContentBox>
 
-  <ContentBox>
+  <ContentBoxSpecial as="h2" title="เปิดยูสใหม่ แล้วได้ ฟรีสปินไม่อั้น BESTCLUB88 จริงหรือหลอก">
+    <p slot="left" class="leading-relaxed">
+      ได้ฟรีสปินไม่อั้น จริงไหม ต้องบอกว่า "จริง" จากการทดลองสมัครสมาชิกใหม่ สิ่งที่ทำให้ค่อนข้างประหลาดใจคือ ได้รับสิทธิ์ฟรีสปินจริง โดยเป็นการแจกในช่วงเปิดระบบทดสอบ
+      สมาชิกใหม่สามารถนำฟรีสปินไปใช้กับเกมที่ร่วมรายการได้ตามเงื่อนไขที่เว็บไซต์กำหนด ทำให้ทดลองเล่นได้โดยไม่ต้องใช้เครดิตของตนเอง
+    </p>
+    <p slot="right" class="leading-relaxed">
+      อย่างไรก็ตาม เมื่อสิ้นสุดช่วงทดสอบ โปรโมชั่นนี้ไม่ได้แจกตลอดเวลา หากสมัครแล้วไม่ได้รับฟรีสปิน แนะนำให้ติดตามข่าวสารผ่านช่องทางติดต่อหรือหน้าโปรโมชั่นของ <strong class="text-yellow-300">BESTCLUB88</strong>
+      เพราะการแจกสิทธิ์จะขึ้นอยู่กับกิจกรรมในแต่ละช่วงเวลา ไม่ได้เปิดให้รับได้ตลอดตามที่หลายคนเข้าใจ
+    </p>
+  </ContentBoxSpecial>
+
+  <ContentBox as="h2" title="โปรโมชั่นและโบนัส ที่พบจากการใช้งานจริง">
+    <p class="leading-relaxed">
+      จากการทดลองใช้งาน โปรโมชั่นของ <strong class="text-yellow-300">BESTCLUB88</strong> อยู่ในระดับ มาตรฐาน ไม่ได้มีรูปแบบที่แตกต่างจากเว็บไซต์สล็อตทั่วไป โดยส่วนใหญ่จะเป็นโบนัสต้อนรับ โปรโมชั่นฝากแรก และกิจกรรมตามช่วงเวลา
+      ซึ่งพบได้ในหลายเว็บไซต์ที่ให้บริการลักษณะเดียวกัน
+    </p>
+
     <Picture
-      src={image2}
+      src={imgBonus}
       loading="lazy"
       fetchpriority="low"
-      widths={[200, 400, 600, 800]}
-      sizes="(max-width: 768px) 100vw, 50vw"
+      widths={[320, 480, 640]}
+      sizes="(max-width: 768px) 100vw, 640px"
       decoding="async"
       formats={["avif", "webp"]}
       fallbackFormat="webp"
       quality={80}
-      alt="sumoheng VIP Service"
-      class="mx-auto h-auto w-full max-w-2xl rounded-2xl border-2 border-yellow-500/30 shadow-[0_10px_30px_rgba(220,38,38,0.3)] transition-transform hover:scale-[1.02]"
+      alt="BESTCLUB88 โปรโมชั่นและโบนัสต้อนรับ พร้อมกิจกรรมตามช่วงเวลา"
+      class="mx-auto mt-8 h-auto w-full max-w-3xl rounded-2xl border border-yellow-400/20 shadow-[0_10px_30px_rgba(234,179,8,0.2)]"
     />
-    <h2 class="mb-4 text-2xl font-black tracking-[0.2em] text-yellow-400 uppercase drop-shadow-[0_0_10px_rgba(0,0,0,0.05)]">
-      ฝากถอนออโต้ ดำเนินการอย่างเป็นขั้นเป็นตอน ด้วยความแม่นยำ
-    </h2>
-    <p class="leading-relaxed">
-      การทำรายการฝากและถอนผ่านระบบออโต้ของ <strong class="text-yellow-500">SUMOHENG</strong> จะดำเนินไปตามลำดับตั้งแต่การรับข้อมูล ตรวจสอบยอด ไปจนถึงการยืนยันรายการก่อนประมวลผล ทุกขั้นตอนอ้างอิงข้อมูลจากบัญชีผู้ใช้เพื่อลดความคลาดเคลื่อน
-      และช่วยให้สถานะของแต่ละธุรกรรมตรวจสอบได้ง่ายขึ้น เมื่อข้อมูลครบถ้วน ระบบจะดำเนินการตามรายการที่ส่งเข้ามา ทำให้การฝากถอนมีความเป็นระเบียบ ถูกต้อง และเชื่อมต่อกับการใช้งานส่วนอื่นของเว็บไซต์ได้ทันที
-    </p>
   </ContentBox>
 
+  <ContentBox title="เกมไหนเล่นมัน แตกหนัก จากการทดลอง">
+    <p class="leading-relaxed">
+      จากการทดลองเล่นเกมยอดนิยมอย่าง Mahjong Ways 2, Gates of Olympus, Sweet Bonanza, Fortune Tiger และ Sugar Rush พบว่ารูปแบบการจ่ายรางวัลเป็นไปตามมาตรฐานของผู้พัฒนาเกมแต่ละค่าย
+      ไม่พบว่ามีการปรับอัตราการแตกหรือความถี่ของโบนัสให้แตกต่างจากเวอร์ชันปกติของเกม โดยสรุป แม้บางรอบจะได้รับรางวัลใหญ่และเล่นได้สนุก แต่จากการทดลอง
+      ไม่สามารถสรุปได้ว่าเกมแตกหนักกว่าค่าเฉลี่ยหรือมีอัตราการจ่ายสูงกว่าเว็บไซต์อื่น
+    </p>
+    <FeatureHighlights items={scoreHighlights} />
+  </ContentBox>
+
+  <GameRankingBoard />
+
+  <ContentBoxCyberCut as="h2" title="ข้อมูลเกี่ยวกับ เว็บตรง BESTCLUB88 ที่ควรทราบ">
+    <p class="mx-auto max-w-4xl leading-relaxed">
+      สำหรับที่มาของ <strong class="text-yellow-300">BESTCLUB88</strong> หากมองจากชื่อและแนวทางของเว็บไซต์ ก็พอคาดได้ว่าแบรนด์อาจเริ่มต้นจากกลุ่มคนที่ชื่นชอบเกมสล็อตและต้องการรวบรวมเกมจากหลายค่ายมาไว้ในระบบเดียว คำว่า BEST CLUB
+      สื่อถึงแนวคิดของการสร้างศูนย์รวมเกมที่คัดสิ่งที่ดีที่สุด ส่วนเลข 88 มักใช้แทนความโชคดีและความมั่งคั่ง จึงอาจกล่าวได้ว่า <strong class="text-yellow-300">BESTCLUB88</strong> ถูกวางภาพให้เป็น เว็บตรง ที่เน้นความครบถ้วน เล่นง่าย
+      และเข้าถึงเกมยอดนิยมได้สะดวก อย่างไรก็ตาม เรื่องประวัติ ปีที่ก่อตั้ง และผู้ดำเนินงานยังไม่มีหลักฐานยืนยัน
+    </p>
+  </ContentBoxCyberCut>
+
+  <LoginRtpSection />
+
+  <div class="mx-auto mb-10 flex flex-wrap justify-center gap-6 px-4">
+    <a
+      href="/login"
+      class="group relative flex items-center justify-center rounded-full border border-yellow-400/50 bg-[#14040a]/80 px-10 py-3.5 font-black text-yellow-300 backdrop-blur-sm transition-all duration-300 hover:scale-105 hover:bg-red-900/60 hover:shadow-[0_0_15px_rgba(234,179,8,0.4)]">
+      เข้าสู่ระบบ
+    </a>
+
+    <a
+      href="/register"
+      class="group relative flex items-center justify-center rounded-full bg-gradient-to-r from-yellow-400 via-yellow-500 to-yellow-600 px-10 py-3.5 font-black text-[#450a0a] shadow-[0_5px_20px_rgba(234,179,8,0.4)] transition-all duration-300 hover:-translate-y-1 hover:scale-105 hover:shadow-[0_8px_25px_rgba(234,179,8,0.6)]">
+      สมัครสมาชิก
+    </a>
+  </div>
+
   <ReviewCardSumo />
-
-  <ContentBoxSpecial>
-    <h2 slot="title-left">สมัครสมาชิก เพื่อติดตามข่าวสารและโปรโมชั่นของ SUMOHENG</h2>
-    <p slot="content-left" class="leading-relaxed">
-      การสมัครสมาชิกช่วยให้ผู้ใช้งานสามารถเข้าถึงฟังก์ชันต่าง ๆ ของเว็บไซต์ได้ครบถ้วน พร้อมติดตามข่าวสาร ประกาศ และโปรโมชั่นของ SUMOHENG ได้จากเว็บไซต์หลัก
-    </p>
-
-    <h2 slot="title-right">รายละเอียด เงื่อนไข และช่วงเวลาของแต่ละโปรโมชั่น ตรวจสอบได้ชัดเจน</h2>
-    <p slot="content-right" class="leading-relaxed">
-      ข้อมูลแต่ละรายการโปรโมชั่นจะแสดงรายละเอียด เงื่อนไข และช่วงเวลาที่เกี่ยวข้องไว้อย่างชัดเจน เพื่อให้สมาชิกสามารถตรวจสอบข้อมูลล่าสุดและติดตามความเคลื่อนไหวของเว็บไซต์ได้อย่างสะดวก
-    </p>
-  </ContentBoxSpecial>
+  <LatestWinners />
 
   <Navfoot />
-
-  <style>
-    :global(.text-yellow-gradient) {
-      background: linear-gradient(to bottom, #e7d800 0%, #ddd44e 100%) !important;
-      -webkit-background-clip: text !important;
-      -webkit-text-fill-color: transparent !important;
-    }
-  </style>
 </MainLayout>

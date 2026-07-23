@@ -3,6 +3,7 @@ import kbankLogo from "../assets/banks/kbank.png";
 import scbLogo from "../assets/banks/scb.png";
 import krungsriLogo from "../assets/banks/krungsri.png";
 import ktbLogo from "../assets/banks/ktb.png";
+import ttbLogo from "../assets/banks/ttb.png";
 
 const bankPool = [
   { name: "KBank", color: "bg-[#1155cc]", icon: kbankLogo.src },
@@ -13,7 +14,7 @@ const bankPool = [
 ---
 
 <div class="mx-auto w-full max-w-[1000px] p-4 font-sans">
-  <div class="relative overflow-hidden rounded-[30px] border-2 border-cyan-900/50 bg-[#001a33]/90 px-4 py-8 shadow-lg backdrop-blur-md">
+  <div class="relative overflow-hidden rounded-[30px] border-2 border-emerald-900/50 bg-[#022c1a]/90 px-4 py-8 shadow-lg backdrop-blur-md">
     <div class="mb-6 text-center">
       <h2 class="bg-gradient-to-b from-[#fef08a] to-[#eab308] bg-clip-text text-xl font-black text-transparent md:text-2xl">⚡ ถอนเงินแบบเรียลไทม์</h2>
     </div>
@@ -36,7 +37,7 @@ const bankPool = [
 
     return `
       <div class="transform scale-90 opacity-0 transition-all duration-500 ease-out">
-        <div class="flex items-center gap-3 rounded-full border border-cyan-500/30 bg-[#000a14] py-1.5 pl-1.5 pr-4 shadow-[0_0_10px_rgba(6,182,212,0.1)] hover:border-cyan-400">
+        <div class="flex items-center gap-3 rounded-full border border-emerald-500/30 bg-[#01160e] py-1.5 pl-1.5 pr-4 shadow-[0_0_10px_rgba(16,185,129,0.1)] hover:border-emerald-400">
           <div class="flex h-8 w-8 shrink-0 items-center justify-center rounded-full ${bank.color}">
             <img src="${bank.icon}" alt="bank" class="h-4 w-4 object-contain" />
           </div>
