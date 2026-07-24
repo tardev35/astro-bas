@@ -1,6 +1,7 @@
 ---
 import { Image } from "astro:assets";
 import Bg from "../assets/bg.png";
+import bgConfig from "../assets/bg.json";
 import ogImage from "../assets/slide1.png";
 import "../styles/global.css";
 import Navbar from "../components/NavbarStyle4Black.astro";
@@ -19,6 +20,20 @@ const {
   robots = "index, follow",
   ImageOg = ogImage.src,
 } = Astro.props;
+
+// Background source, chosen by the rebrand uploader (src/assets/bg.json):
+//   image    → the optimized <Image> below (the historical default)
+//   color    → a flat CSS colour, no bitmap shipped
+//   gradient → a CSS gradient string, no bitmap shipped
+// Colour/gradient values are hex/clamped-angle-validated at write time, so the
+// string is safe to drop straight into the style attribute.
+const bgMode = (bgConfig as { mode?: string }).mode ?? "image";
+const bgCss =
+  bgMode === "color"
+    ? `background-color:${(bgConfig as { color?: string }).color};`
+    : bgMode === "gradient"
+      ? `background-image:${(bgConfig as { css?: string }).css};`
+      : null;
 
 const currentPath = Astro.url.pathname;
 const canonicalURL = new URL(currentPath, Astro.site);
@@ -80,17 +95,23 @@ const ogSiteName = "BESTCLUB88";
   </head>
 
   <body class="relative flex min-h-screen w-full flex-col">
-    <Image
-      src={Bg}
-      alt="Website Background"
-      loading="eager"
-      widths={[412, 768, 1024, 1900]}
-      sizes="100vw"
-      format="avif"
-      class="fixed inset-0 -z-50 h-full w-full object-cover"
-      quality="low"
-      decoding="sync"
-    />
+    {
+      bgCss ? (
+        <div class="fixed inset-0 -z-50 h-full w-full bg-cover bg-center" style={bgCss} />
+      ) : (
+        <Image
+          src={Bg}
+          alt="Website Background"
+          loading="eager"
+          widths={[412, 768, 1024, 1900]}
+          sizes="100vw"
+          format="avif"
+          class="fixed inset-0 -z-50 h-full w-full object-cover"
+          quality="low"
+          decoding="sync"
+        />
+      )
+    }
 
     <Navbar />
 

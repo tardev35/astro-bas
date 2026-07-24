@@ -34,6 +34,15 @@ const MAX_SOURCE_WIDTH = 2560;
 // never upscales a smaller upload.
 const SLIDE_BOX = 600;
 
+// A solid colour / gradient background is NOT rendered as an image — that would
+// ship a full-screen bitmap for something that is just a CSS declaration. The
+// uploader instead writes src/assets/bg.json, which MainLayout reads to decide:
+//   { "mode": "image" }                          → <Image> the bg.png (default)
+//   { "mode": "color", "color": "#rrggbb" }       → CSS background-color, 0 bytes
+//   { "mode": "gradient", "css": "linear-…" }     → CSS gradient, 0 bytes
+// bg.png is kept on disk either way so image mode always has a source to import.
+const BG_CONFIG = join(ASSETS, "bg.json");
+
 // Normalize an upload before it is stored: downscale only when larger than the
 // limit (never upscale). Returns a sharp pipeline the caller finishes + writes.
 async function prep(buf, { maxWidth = MAX_SOURCE_WIDTH, box = null } = {}) {
@@ -113,18 +122,100 @@ async function rasterToSvg(buf, size = 512) {
   );
 }
 
+// ── Background: image | solid colour | gradient ─────────────────────────────
+// The three are mutually exclusive; handleBackground() below enforces that
+// exactly one of them was supplied and rejects zero or two+.
+
+const HEX_RE = /^#(?:[0-9a-f]{3}|[0-9a-f]{6})$/i;
+
+// Validate + expand to 6-digit lowercase. Every colour that reaches the CSS
+// string / bg.json goes through here, so an operator can never inject arbitrary
+// CSS (e.g. `red;url(...)`) into the value MainLayout drops into a style attr.
+function hexColor(value, label) {
+  const s = String(value ?? "").trim();
+  if (!HEX_RE.test(s)) {
+    throw new Error(`${label} ต้องเป็นรหัสสี hex เช่น #1a2b3c (ได้รับ: ${s || "ว่าง"})`);
+  }
+  const body = s.slice(1).toLowerCase();
+  return "#" + (body.length === 3 ? [...body].map((c) => c + c).join("") : body);
+}
+
+function angleDeg(value) {
+  const n = Number(String(value ?? "").trim() || 180);
+  if (!Number.isFinite(n)) throw new Error(`มุมไล่สีต้องเป็นตัวเลข (ได้รับ: ${value})`);
+  return ((n % 360) + 360) % 360;
+}
+
+// The CSS value MainLayout paints. Built from validated hex + a clamped angle,
+// and it is exactly the string the browser preview shows — no image involved.
+function gradientCss({ type, from, to, angle }) {
+  return type === "radial"
+    ? `radial-gradient(circle at 50% 50%, ${from}, ${to})`
+    : `linear-gradient(${angle}deg, ${from}, ${to})`;
+}
+
+// Persist the chosen background mode for MainLayout. Colour/gradient ship as a
+// CSS string (no bitmap); image mode resets the config so a previously stored
+// colour/gradient can't keep overriding the freshly uploaded bg.png.
+async function writeBgConfig(config) {
+  await writeFile(BG_CONFIG, JSON.stringify(config, null, 2) + "\n");
+  return "bg.json";
+}
+
+async function handleBackground(params, buf) {
+  const color = (params.get("color") || "").trim();
+  const from = (params.get("from") || "").trim();
+  const to = (params.get("to") || "").trim();
+
+  // The 3 conditions — exactly one must be present.
+  const picked = [
+    buf.length > 0 && "image",
+    color !== "" && "color",
+    (from !== "" || to !== "") && "gradient",
+  ].filter(Boolean);
+
+  if (picked.length === 0) {
+    throw new Error("background: ต้องเลือก 1 อย่าง — อัพโหลดรูป / เลือกสีเดียว / ไล่สี (gradient)");
+  }
+  if (picked.length > 1) {
+    throw new Error(`background: เลือกได้อย่างเดียวเท่านั้น แต่ส่งมา ${picked.length} อย่าง (${picked.join(" + ")})`);
+  }
+
+  switch (picked[0]) {
+    case "image": {
+      const png = await toPng(buf, ASSETS, "bg");
+      const cfg = await writeBgConfig({ mode: "image" });
+      return [png, cfg];
+    }
+    case "color":
+      return [await writeBgConfig({ mode: "color", color: hexColor(color, "สีพื้นหลัง") })];
+    case "gradient": {
+      const type = params.get("type") === "radial" ? "radial" : "linear";
+      const css = gradientCss({
+        type,
+        from: hexColor(from, "สีเริ่มต้นของ gradient"),
+        to: hexColor(to, "สีปลายทางของ gradient"),
+        angle: angleDeg(params.get("angle")),
+      });
+      return [await writeBgConfig({ mode: "gradient", css })];
+    }
+  }
+}
+
 async function handleUpload(slot, index, ext, buf) {
   const n = Number(index);
   switch (slot) {
     case "logo":
-      return [await toWebp(buf, ASSETS, "logo")];
-    case "publiclogo":
-      return [await toWebp(buf, PUBLIC, "logo")];
+      // One upload, both destinations: src/assets/logo.webp for the component
+      // imports and public/logo.webp for the absolute og/schema logo URL. They
+      // must stay identical, so there is no separate "public logo" field.
+      return [
+        "src/assets/" + (await toWebp(buf, ASSETS, "logo")),
+        "public/" + (await toWebp(buf, PUBLIC, "logo")),
+      ];
     case "docx":
       await writeFile(join(ASSETS, "content.docx"), buf);
       return ["content.docx"];
-    case "bg":
-      return [await toPng(buf, ASSETS, "bg")];
     case "banner":
       if (!(n >= 1 && n <= 4)) throw new Error("banner index must be 1-4");
       return [await toPng(buf, ASSETS, `banner${n}`)];
@@ -196,6 +287,17 @@ const PAGE = /* html */ `<!doctype html>
   .field .status { font-size: 12px; min-height: 16px; }
   .thumb { width: 44px; height: 44px; object-fit: contain; border-radius: 8px; background: #0f172a; border: 1px solid #334155; display: none; }
   .thumb.show { display: block; }
+  .modes { flex-wrap: wrap; gap: 6px; }
+  .modes label { display: flex; align-items: center; gap: 5px; font-size: 12px; font-weight: 500; cursor: pointer; padding: 5px 10px; border: 1px solid #334155; border-radius: 999px; background: #0f172a; }
+  .modes label:has(input:checked) { border-color: #38bdf8; color: #38bdf8; background: #082f49; }
+  .modes input { accent-color: #38bdf8; margin: 0; }
+  .panel[hidden] { display: none; }
+  .panel { flex-wrap: wrap; gap: 8px; }
+  .panel input[type=color] { width: 38px; height: 30px; padding: 0; border: 1px solid #334155; border-radius: 6px; background: #0f172a; cursor: pointer; }
+  .panel input[type=text] { width: 88px; font-family: ui-monospace, monospace; font-size: 12px; text-transform: lowercase; background: #0f172a; color: #e2e8f0; border: 1px solid #334155; border-radius: 6px; padding: 6px 8px; }
+  .panel select { font-size: 12px; background: #0f172a; color: #e2e8f0; border: 1px solid #334155; border-radius: 6px; padding: 6px 8px; }
+  .panel .hint { font-size: 11px; color: #64748b; }
+  #bgPreview { width: 100%; height: 54px; border-radius: 8px; border: 1px solid #334155; }
   .bar { position: sticky; bottom: 0; background: #111827; border-top: 1px solid #1f2937; padding: 16px 24px; display: flex; align-items: center; gap: 16px; }
   button { background: #2563eb; color: #fff; border: 0; padding: 11px 22px; font-size: 15px; font-weight: 600; border-radius: 10px; cursor: pointer; }
   button:hover { background: #1d4ed8; }
@@ -212,20 +314,53 @@ const PAGE = /* html */ `<!doctype html>
 <main>
   <section class="card" id="card1">
     <h2>ส่วนที่ 1 — src/assets</h2>
-    <p class="sub">โลโก้ / เนื้อหา (docx) / พื้นหลัง / แบนเนอร์ / รูป promotion + carousel</p>
+    <p class="sub">โลโก้ / เนื้อหา (docx) / พื้นหลัง (รูป หรือ สี/ไล่สี) / แบนเนอร์ / รูป promotion + carousel</p>
     <div class="field" data-img>
-      <div class="row"><label>Logo</label><span class="target">logo.webp</span></div>
+      <div class="row"><label>Logo</label><span class="target">src/assets/logo.webp + public/logo.webp</span></div>
       <div class="row"><input type="file" accept="image/*" data-slot="logo" /><img class="thumb" /></div>
-      <span class="status"></span>
+      <span class="status">อัพครั้งเดียว เซฟลงทั้ง src/assets และ public ให้อัตโนมัติ</span>
     </div>
     <div class="field">
       <div class="row"><label>Content brief</label><span class="target">content.docx</span></div>
       <div class="row"><input type="file" accept=".docx" data-slot="docx" /></div>
       <span class="status"></span>
     </div>
-    <div class="field" data-img>
-      <div class="row"><label>Background</label><span class="target">bg.png</span></div>
-      <div class="row"><input type="file" accept="image/*" data-slot="bg" /><img class="thumb" /></div>
+    <div class="field" id="bgField" data-img>
+      <div class="row"><label>Background</label><span class="target">bg.png</span><span class="opt">เลือกอย่างใดอย่างหนึ่ง</span></div>
+      <div class="row modes">
+        <label><input type="radio" name="bgmode" value="image" checked /> รูปภาพ</label>
+        <label><input type="radio" name="bgmode" value="color" /> สีเดียว</label>
+        <label><input type="radio" name="bgmode" value="gradient" /> ไล่สี (gradient)</label>
+      </div>
+      <div class="row panel" data-mode="image">
+        <input type="file" accept="image/*" data-slot="bg" id="bgFile" /><img class="thumb" />
+      </div>
+      <div class="row panel" data-mode="color" hidden>
+        <input type="color" id="bgColor" value="#0f172a" />
+        <input type="text" id="bgColorHex" value="#0f172a" spellcheck="false" />
+        <span class="hint">ใช้เป็น CSS สีเดียว — ไม่โหลดรูป</span>
+      </div>
+      <div class="row panel" data-mode="gradient" hidden>
+        <input type="color" id="bgFrom" value="#0f172a" />
+        <input type="text" id="bgFromHex" value="#0f172a" spellcheck="false" />
+        <input type="color" id="bgTo" value="#1e3a8a" />
+        <input type="text" id="bgToHex" value="#1e3a8a" spellcheck="false" />
+        <select id="bgType">
+          <option value="linear">เส้นตรง</option>
+          <option value="radial">รัศมี (radial)</option>
+        </select>
+        <select id="bgAngle">
+          <option value="180" selected>บน → ล่าง</option>
+          <option value="0">ล่าง → บน</option>
+          <option value="90">ซ้าย → ขวา</option>
+          <option value="270">ขวา → ซ้าย</option>
+          <option value="135">ทแยง ↘</option>
+          <option value="225">ทแยง ↙</option>
+          <option value="45">ทแยง ↗</option>
+          <option value="315">ทแยง ↖</option>
+        </select>
+      </div>
+      <div class="row"><div id="bgPreview" hidden></div></div>
       <span class="status"></span>
     </div>
     <div class="field" data-img>
@@ -272,16 +407,11 @@ const PAGE = /* html */ `<!doctype html>
 
   <section class="card" id="card2">
     <h2>ส่วนที่ 2 — public</h2>
-    <p class="sub">favicon (สร้างชุดไอคอนให้อัตโนมัติ) + โลโก้สำหรับ public</p>
+    <p class="sub">favicon (สร้างชุดไอคอนให้อัตโนมัติ) — โลโก้ public ดึงจาก Logo ในส่วนที่ 1 ให้เอง</p>
     <div class="field" data-img>
       <div class="row"><label>Favicon</label><span class="target">favicon.ico + .png set + .svg</span></div>
       <div class="row"><input type="file" accept="image/*,.svg" data-slot="favicon" /><img class="thumb" /></div>
       <span class="status">สร้างชุด PNG + .ico + .svg ให้อัตโนมัติ (รูป raster จะฝังลงใน favicon.svg; ถ้าอัพโหลด .svg จะใช้ไฟล์นั้นตรงๆ)</span>
-    </div>
-    <div class="field" data-img>
-      <div class="row"><label>Logo (public)</label><span class="target">public/logo.webp</span></div>
-      <div class="row"><input type="file" accept="image/*" data-slot="publiclogo" /><img class="thumb" /></div>
-      <span class="status"></span>
     </div>
   </section>
 </main>
@@ -304,9 +434,92 @@ const PAGE = /* html */ `<!doctype html>
   function addLog(msg, ok) { const d = document.createElement('div'); d.className = ok ? 'ok' : 'err'; d.textContent = (ok ? '✓ ' : '✗ ') + msg; log.prepend(d); }
   function setStatus(inp, txt) { const s = inp.closest('.field').querySelector('.status'); s.textContent = txt; }
 
+  // ── Background: image / solid colour / gradient — pick exactly one ─────────
+  const bgField = document.getElementById('bgField');
+  const bgFile = document.getElementById('bgFile');
+  const bgPreview = document.getElementById('bgPreview');
+  const $ = (id) => document.getElementById(id);
+  const bgMode = () => bgField.querySelector('input[name=bgmode]:checked').value;
+
+  // keep each <input type=color> and its hex textbox in sync, both directions
+  [['bgColor','bgColorHex'], ['bgFrom','bgFromHex'], ['bgTo','bgToHex']].forEach(([pick, text]) => {
+    $(pick).addEventListener('input', () => { $(text).value = $(pick).value; drawPreview(); });
+    $(text).addEventListener('input', () => {
+      const v = $(text).value.trim();
+      if (/^#([0-9a-f]{3}|[0-9a-f]{6})$/i.test(v)) { $(pick).value = v.length === 4 ? '#' + [...v.slice(1)].map(c => c + c).join('') : v; }
+      drawPreview();
+    });
+  });
+  ['bgType','bgAngle'].forEach((id) => $(id).addEventListener('change', drawPreview));
+
+  // The CSS here mirrors the server's SVG geometry, so this swatch is a true
+  // preview of the bg.png that will be written.
+  function drawPreview() {
+    const mode = bgMode();
+    if (mode === 'color') {
+      bgPreview.hidden = false;
+      bgPreview.style.background = $('bgColorHex').value.trim();
+    } else if (mode === 'gradient') {
+      bgPreview.hidden = false;
+      const from = $('bgFromHex').value.trim(), to = $('bgToHex').value.trim();
+      bgPreview.style.background = $('bgType').value === 'radial'
+        ? 'radial-gradient(circle at 50% 50%, ' + from + ', ' + to + ')'
+        : 'linear-gradient(' + $('bgAngle').value + 'deg, ' + from + ', ' + to + ')';
+    } else {
+      bgPreview.hidden = true;
+    }
+    $('bgAngle').hidden = $('bgType').value === 'radial';
+  }
+
+  bgField.querySelectorAll('input[name=bgmode]').forEach((r) => {
+    r.addEventListener('change', () => {
+      bgField.querySelectorAll('.panel').forEach((p) => { p.hidden = p.dataset.mode !== bgMode(); });
+      drawPreview();
+    });
+  });
+  drawPreview();
+
+  // Builds the /upload call for whichever bg mode is active. Returns null when
+  // the image mode is selected but no file was chosen (bg stays untouched).
+  function bgRequest() {
+    const mode = bgMode();
+    if (mode === 'image') {
+      if (!bgFile.files.length) return null;
+      return { q: new URLSearchParams({ slot: 'bg' }), body: bgFile.files[0], label: 'bg (รูปภาพ)' };
+    }
+    if (mode === 'color') {
+      return { q: new URLSearchParams({ slot: 'bg', color: $('bgColorHex').value.trim() }), body: null, label: 'bg (สีเดียว)' };
+    }
+    const q = new URLSearchParams({
+      slot: 'bg',
+      from: $('bgFromHex').value.trim(),
+      to: $('bgToHex').value.trim(),
+      type: $('bgType').value,
+      angle: $('bgAngle').value,
+    });
+    return { q, body: null, label: 'bg (ไล่สี)' };
+  }
+
   document.getElementById('uploadAll').addEventListener('click', async () => {
-    const inputs = [...document.querySelectorAll('input[type=file]')];
+    const inputs = [...document.querySelectorAll('input[type=file]')].filter((i) => i !== bgFile);
     let any = false;
+
+    const bgReq = bgRequest();
+    if (bgReq) {
+      any = true;
+      setStatus(bgFile, '⏳ กำลังอัพโหลด...');
+      try {
+        const res = await fetch('/upload?' + bgReq.q.toString(), { method: 'POST', body: bgReq.body });
+        const j = await res.json();
+        if (!res.ok || !j.ok) throw new Error(j.error || ('HTTP ' + res.status));
+        setStatus(bgFile, '✅ ' + j.written.join(', '));
+        addLog(bgReq.label + ' → ' + j.written.join(', '), true);
+      } catch (e) {
+        setStatus(bgFile, '❌ ' + e.message);
+        addLog(bgReq.label + ': ' + e.message, false);
+      }
+    }
+
     for (const inp of inputs) {
       if (!inp.files.length) continue;
       any = true;
@@ -346,8 +559,14 @@ const server = http.createServer(async (req, res) => {
       const index = url.searchParams.get("index") || "";
       const ext = (url.searchParams.get("ext") || "").toLowerCase();
       const buf = await readBody(req);
-      if (!buf.length) throw new Error("empty upload");
-      const written = await handleUpload(slot, index, ext, buf);
+      let written;
+      if (slot === "bg") {
+        // the one slot that may arrive with no body (colour / gradient mode)
+        written = await handleBackground(url.searchParams, buf);
+      } else {
+        if (!buf.length) throw new Error("empty upload");
+        written = await handleUpload(slot, index, ext, buf);
+      }
       res.writeHead(200, { "Content-Type": "application/json" });
       res.end(JSON.stringify({ ok: true, written }));
     } catch (err) {
