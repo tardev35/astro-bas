@@ -74,7 +74,12 @@ overlap:**
 - **Agent B — Sub-pages.** Owns every *other* `src/pages/*.astro` and the
   components *only* those pages render (e.g. `AnnouncementHuay`,
   `ContentBoxHuay`), MINUS the P1 shared set. Runs Phase 4.5 for those
-  pages (including the `Huay`-theme exception).
+  pages (including the `Huay`-theme exception). **Any preset page the
+  uploader scaffolded (e.g. `บทความ.astro`, `about-us.astro` — spot them by
+  a `TODO(rebrand)` placeholder body) is Agent B's too:** fill its body from
+  the docx and verify its navbar link, per Phase 4.5. Note the active navbar
+  itself lives in the P1 shared set, so if Agent B needs to hand-add a nav
+  link there, flag it for P1/orchestrator rather than editing it directly.
 
 Each subagent's brief MUST state, explicitly: (1) the exact file list it
 owns; (2) a **"do NOT touch"** list = the P1 shared-chrome files + the
@@ -99,6 +104,19 @@ splitting it. Fewer files in the parallel zone is always safer than a
 collision; when in doubt, widen P1 and shrink the fan-out.
 
 ## Phase 1 — Gather brand inputs
+
+**How this rebrand was likely triggered.** The `tools/rebrand-uploader` tool
+(launch by double-clicking `tools/rebrand-uploader/start-uploader.cmd` — no VS
+Code needed — or `npm run rebrand:upload`, opens `localhost:4000`) is where the
+operator stages the brand files first. Its **"ส่วนที่ 6 — สร้างคำสั่ง Rebrand"**
+card generates the very prompt that starts you, in the form
+`rebrand and retheme to "<BRAND>" then real url is "<URL>" ทำแบบ 2-agent ขนานตาม
+playbook`. So when you receive that shape of request: the logo/banner/slide/docx
+are already in `src/assets`, the `2-agent ขนาน`/`playbook` phrase means run the
+default parallel workflow above, and `real url is "<URL>"` is the explicit real
+domain (per the URL-scope rule below) — if that clause is absent, the operator
+left it blank on purpose: **do not change the domain.** Still run every phase in
+full; the prompt is only the trigger, not a shortcut around verification.
 
 1. **Find the brief.** Look for a `.docx` file dropped into `src/assets`
    or `src/components` (past runs named it `<brand>-content.docx`). The
@@ -564,8 +582,34 @@ titles. (The uploader anchors only on the `<MainLayout>` tag and leaves
 `<ContentBox>` titles alone, so re-setting a title here never conflicts
 with what it may have written.)
 
+**The uploader's "ส่วนที่ 5 — สร้างหน้าเพิ่ม (ตัวเลือก)" can scaffold NEW
+pages before you start.** An operator may toggle on one of the preset extra
+pages (currently `บทความ.astro` and `about-us.astro`) in the uploader. When
+they do, the tool creates that `src/pages/*.astro` for real — cloning an
+existing sub-page's frontmatter (so it inherits the brand's current
+`Announcement*`/`ContentBox*` variants) and setting `<MainLayout
+title/description>` from what they typed — but leaves the **body as a blank
+placeholder**: an HTML comment `<!-- TODO(rebrand): … -->` plus a
+"อยู่ระหว่างปรับปรุงเนื้อหา" line. **These pages are in scope for this phase like
+any other `src/pages/*.astro`:** treat each one as a normal sub-page and
+(a) **replace the TODO placeholder body** with real content built from the
+`content.docx` (grep `src/pages` for `TODO(rebrand)` to find them — none may
+exist, that's fine), and (b) run the same brand-name / hue / chrome / stale-
+asset sweep on it. The uploader also tries to add the page's `{ name, path }`
+to the **active navbar's** link arrays (both desktop + mobile) on a
+best-effort basis — but it only understands the inline
+`[ {…path…} ].map(` array shape. If the active navbar variant uses a
+different markup (or the tool logged a `navbar: …` warning), the link won't
+be there: **grep the active navbar for the new page's `path:` and, if
+missing, add `{ name, path }` to both arrays yourself** (same edit you'd make
+when rotating navbar variants in Phase 2/3). A newly created page whose route
+isn't linked in the menu is the failure mode to watch for.
+
 Verify in Phase 5 by grepping **all** of `dist/` (not just
 `dist/index.html`) for the old brand name → must be 0 across every page.
+When a preset page was scaffolded, also confirm **zero** `TODO(rebrand)` /
+"อยู่ระหว่างปรับปรุงเนื้อหา" placeholders survive into `dist/`, and that the new
+page's route appears in the rendered navbar.
 
 **Components can be nested — don't stop at grepping `index.astro`'s own
 JSX.** Some sections get extracted into their own wrapper component
