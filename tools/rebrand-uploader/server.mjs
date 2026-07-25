@@ -482,22 +482,28 @@ async function fileExists(p) {
   try { await readFile(p); return true; } catch { return false; }
 }
 
-// Scaffold (or refresh) an optional preset page. If the file already exists we
-// only refresh its Title/Meta and NEVER overwrite the body (idempotent + safe to
-// re-run). If it's new, clone the canonical sub-page's frontmatter so the new
-// page inherits the brand's current component variants, then drop in a blank
-// TODO body for Claude to fill from the docx during the rebrand.
+// Scaffold (or refresh) an optional preset page. Title/Meta are OPTIONAL: blank
+// is fine — the tool has no AI to "write" copy, so a blank new page gets safe
+// default Title/Meta (just enough to build with non-empty SEO) and a ContentBox
+// body holding a 1-paragraph placeholder. Claude writes the real Title/Meta AND
+// the real ~1-paragraph article at rebrand time (SKILL.md Phase 4.5). If the
+// file already exists we NEVER overwrite the body, and only refresh Title/Meta
+// when BOTH were supplied (blank = leave the existing page untouched).
 async function createPage(key, title, desc) {
   const cfg = PRESET_PAGES[key];
   if (!cfg) throw new Error(`ไม่รู้จักหน้า preset: ${key}`);
   const label = `${cfg.navLabel} (${cfg.file})`;
   const file = join(PAGES, cfg.file);
+  const hasTitle = !!(title && title.trim());
+  const hasDesc = !!(desc && desc.trim());
   if (await fileExists(file)) {
-    await setMainLayoutMeta(file, title, desc, label);
+    if (hasTitle && hasDesc) await setMainLayoutMeta(file, title, desc, label);
     return { written: [`src/pages/${cfg.file}`], created: false };
   }
-  const t = validateText(title, `Title ${label}`);
-  const d = validateText(desc, `Meta ${label}`);
+  // new page: blank Title/Meta fall back to safe defaults (Claude rewrites both
+  // + the article body when the rebrand runs).
+  const t = hasTitle ? validateText(title, `Title ${label}`) : cfg.boxTitle;
+  const d = hasDesc ? validateText(desc, `Meta ${label}`) : `หน้า${cfg.navLabel} (อยู่ระหว่างจัดทำเนื้อหา)`;
   const canonical = await readFile(join(PAGES, CANONICAL_PAGE), "utf8");
   const fm = canonical.match(/^---\r?\n([\s\S]*?)\r?\n---/);
   if (!fm) throw new Error(`ไม่พบ frontmatter ใน ${CANONICAL_PAGE} (ต้นแบบหน้าย่อย)`);
@@ -506,7 +512,7 @@ async function createPage(key, title, desc) {
     `<MainLayout title="${t}" description="${d}">\n` +
     `  <Announcement />\n\n` +
     `  <ContentBox title="${cfg.boxTitle}">\n` +
-    `    <!-- TODO(rebrand): แทนที่ด้วยเนื้อหา ${cfg.navLabel} จาก content.docx ตอนรีแบรนด์ -->\n` +
+    `    <!-- TODO(rebrand): เขียนบทความจริงของ "${cfg.navLabel}" ~1 ย่อหน้าใน <ContentBox> นี้ + ตั้ง title/description บน <MainLayout> จาก content.docx ตอนรีแบรนด์ -->\n` +
     `    <p class="py-6 text-center text-white/70">อยู่ระหว่างปรับปรุงเนื้อหา</p>\n` +
     `  </ContentBox>\n\n` +
     `  <Navfoot />\n` +
@@ -944,13 +950,11 @@ const PAGE = /* html */ `<!doctype html>
     <div class="field" data-img>
       <div class="row"><label>Favicon</label><span class="target">favicon.ico + .png set + .svg</span></div>
       <div class="row"><input type="file" accept="image/*,.svg" data-slot="favicon" /><img class="thumb" /></div>
-      <span class="status">สร้างชุด PNG + .ico + .svg ให้อัตโนมัติ (รูป raster จะฝังลงใน favicon.svg; ถ้าอัพโหลด .svg จะใช้ไฟล์นั้นตรงๆ)</span>
     </div>
   </section>
 
   <section class="card" id="card3">
     <h2>ลิงก์ · aff / ไลน์</h2>
-    <p class="sub">ลิงก์ aff (หน้า login/register) และลิงก์ไลน์ (redirect /line) — เว้นว่างไว้ถ้าไม่ต้องการแก้</p>
     <div class="field" id="affField">
       <div class="row"><label>ลิงก์ aff</label><span class="target">src/pages/login.astro + register.astro</span></div>
       <div class="row"><input type="url" class="linkinput" id="affInput" placeholder="https://..." spellcheck="false" /></div>
@@ -997,7 +1001,6 @@ const PAGE = /* html */ `<!doctype html>
 
   <section class="card" id="card5">
     <h2>สร้างหน้าเพิ่ม</h2>
-  
     <div class="field newpage" data-newpage="article">
       <div class="row">
         <label class="switch"><input type="checkbox" class="np-toggle" /><span class="slider"></span></label>
@@ -1006,8 +1009,8 @@ const PAGE = /* html */ `<!doctype html>
         <span class="badge np-badge"></span>
       </div>
       <div class="np-body" hidden>
-        <input type="text" class="metatitle" data-k="title" placeholder="Title" spellcheck="false" />
-        <textarea class="metadesc" data-k="desc" rows="2" placeholder="Meta description" spellcheck="false"></textarea>
+        <input type="text" class="metatitle" data-k="title" placeholder="Title (เว้นว่างได้ — Claude เขียนให้)" spellcheck="false" />
+        <textarea class="metadesc" data-k="desc" rows="2" placeholder="Meta description (เว้นว่างได้ — Claude เขียนให้)" spellcheck="false"></textarea>
       </div>
       <span class="status"></span>
     </div>
@@ -1019,8 +1022,8 @@ const PAGE = /* html */ `<!doctype html>
         <span class="badge np-badge"></span>
       </div>
       <div class="np-body" hidden>
-        <input type="text" class="metatitle" data-k="title" placeholder="Title" spellcheck="false" />
-        <textarea class="metadesc" data-k="desc" rows="2" placeholder="Meta description" spellcheck="false"></textarea>
+        <input type="text" class="metatitle" data-k="title" placeholder="Title (เว้นว่างได้ — Claude เขียนให้)" spellcheck="false" />
+        <textarea class="metadesc" data-k="desc" rows="2" placeholder="Meta description (เว้นว่างได้ — Claude เขียนให้)" spellcheck="false"></textarea>
       </div>
       <span class="status"></span>
     </div>
@@ -1028,7 +1031,6 @@ const PAGE = /* html */ `<!doctype html>
 
   <section class="card" id="card6">
     <h2>สร้างคำสั่ง Rebrand (สำหรับ Claude Code)</h2>
-    <p class="sub">กรอกชื่อแบรนด์ + URL จริง แล้วกด Copy คำสั่ง → วางในหน้า Claude Code เพื่อสั่งรีแบรนด์ · ระบบนี้ <strong>ไม่รันเอง</strong> แค่ช่วยประกอบคำสั่งให้ครบ กัน typo/ลืม URL</p>
     <div class="field">
       <div class="row"><label>ชื่อแบรนด์</label></div>
       <input type="text" class="linkinput" id="rbBrand" placeholder="เช่น PABLO666" spellcheck="false" />
@@ -1269,13 +1271,14 @@ const PAGE = /* html */ `<!doctype html>
   }).catch(() => {});
 
   // POST one preset page if its toggle is on. Off = do nothing (never deletes).
+  // Title/Meta are optional — blank is fine, the page is scaffolded with default
+  // meta + a placeholder article for Claude to write at rebrand time.
   async function sendNewPage(f) {
     const { toggle, title, desc, status } = npEls(f);
     if (!toggle.checked) return false;
     const t = title.value.trim(), d = desc.value.trim();
-    if (!t || !d) { status.textContent = '⚠️ ต้องกรอกทั้ง Title และ Meta'; return false; }
     const q = new URLSearchParams({ slot: 'newpage', page: f.dataset.newpage, title: t, desc: d });
-    status.textContent = '⏳ กำลังสร้าง...';
+    status.textContent = (!t && !d) ? '⏳ กำลังสร้าง (Claude เขียนเนื้อหาให้ตอนรีแบรนด์)...' : '⏳ กำลังสร้าง...';
     try {
       const res = await fetch('/upload?' + q.toString(), { method: 'POST' });
       const j = await res.json();

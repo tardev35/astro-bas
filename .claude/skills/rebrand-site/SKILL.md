@@ -587,15 +587,27 @@ pages before you start.** An operator may toggle on one of the preset extra
 pages (currently `บทความ.astro` and `about-us.astro`) in the uploader. When
 they do, the tool creates that `src/pages/*.astro` for real — cloning an
 existing sub-page's frontmatter (so it inherits the brand's current
-`Announcement*`/`ContentBox*` variants) and setting `<MainLayout
-title/description>` from what they typed — but leaves the **body as a blank
-placeholder**: an HTML comment `<!-- TODO(rebrand): … -->` plus a
-"อยู่ระหว่างปรับปรุงเนื้อหา" line. **These pages are in scope for this phase like
-any other `src/pages/*.astro`:** treat each one as a normal sub-page and
-(a) **replace the TODO placeholder body** with real content built from the
-`content.docx` (grep `src/pages` for `TODO(rebrand)` to find them — none may
-exist, that's fine), and (b) run the same brand-name / hue / chrome / stale-
-asset sweep on it. The uploader also tries to add the page's `{ name, path }`
+`Announcement*`/`ContentBox*` variants) — but leaves the **body as a blank
+placeholder**: a `<ContentBox>` holding an HTML comment
+`<!-- TODO(rebrand): … -->` plus a "อยู่ระหว่างปรับปรุงเนื้อหา" line.
+**Title/Meta are optional in the tool**, so when the operator left them blank
+the page ships with a throwaway default title (the page label) and a
+`(อยู่ระหว่างจัดทำเนื้อหา)` description — those are placeholders for you, not
+final copy. **These pages are in scope for this phase like any other
+`src/pages/*.astro`, and writing their content is YOUR job, not the tool's**
+(the uploader has no AI — it only scaffolds). For each (grep `src/pages` for
+`TODO(rebrand)` to find them — none may exist, that's fine):
+1. **Write a real ~1-paragraph article** for that page inside its `<ContentBox>`
+   (keep using `ContentBox`/the brand's box variant), built from the
+   `content.docx` — replacing the TODO comment + the "อยู่ระหว่างปรับปรุงเนื้อหา"
+   placeholder entirely. A `บทความ` page especially should read as genuine copy,
+   not a stub.
+2. **Set real `<MainLayout title/description>`** with the brand name (overwrite
+   the tool's default label/`(อยู่ระหว่างจัดทำเนื้อหา)` placeholder), same as
+   item 1 of this phase.
+3. Run the same brand-name / hue / chrome / stale-asset sweep on it.
+
+The uploader also tries to add the page's `{ name, path }`
 to the **active navbar's** link arrays (both desktop + mobile) on a
 best-effort basis — but it only understands the inline
 `[ {…path…} ].map(` array shape. If the active navbar variant uses a
@@ -608,8 +620,9 @@ isn't linked in the menu is the failure mode to watch for.
 Verify in Phase 5 by grepping **all** of `dist/` (not just
 `dist/index.html`) for the old brand name → must be 0 across every page.
 When a preset page was scaffolded, also confirm **zero** `TODO(rebrand)` /
-"อยู่ระหว่างปรับปรุงเนื้อหา" placeholders survive into `dist/`, and that the new
-page's route appears in the rendered navbar.
+"อยู่ระหว่างปรับปรุงเนื้อหา" / "อยู่ระหว่างจัดทำเนื้อหา" placeholders survive into
+`dist/`, that the page now carries a real article + brand-name title, and that
+the new page's route appears in the rendered navbar.
 
 **Components can be nested — don't stop at grepping `index.astro`'s own
 JSX.** Some sections get extracted into their own wrapper component
