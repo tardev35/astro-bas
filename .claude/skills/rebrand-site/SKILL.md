@@ -168,6 +168,13 @@ full; the prompt is only the trigger, not a shortcut around verification.
      older brand — a `banner3.png` dated before the new `banner1/2`
      drop is old inventory, skip it). It's fine to leave a `banner2+`
      unused if no section fits; don't force it or turn it into a hero.
+   - **`slide*` (promotion/carousel) images are the exact opposite of
+     `banner2/3/4`: they go ONLY inside a `ContentBoxSevenThree*`
+     image+text block — never a plain `ContentBox`, a standalone `<img>`,
+     a full-width strip, or a card grid (see the Phase 2 HARD RULE).** So
+     the whole front-page image split is: **`banner1` = hero, `banner2/3/4`
+     = single-column `ContentBox` illustrations (if present), `slide*` =
+     `ContentBoxSevenThree*` only.**
 3. Confirm the new brand name and check `astro.config.mjs` `site:` —
    it's often already been updated to the new domain before you're
    asked to do the content work.
@@ -392,6 +399,15 @@ SevenThree. Hard limit: **2 `ContentBoxSevenThree*` blocks per rebrand**
 sections, use it **once**. Every other docx section should lean on
 **single-column `ContentBox*` and two-column `ContentBoxTwo*`** instead
 — those carry the bulk of the page.
+
+**HARD RULE — `slide*` / promotion images may appear ONLY inside a
+`ContentBoxSevenThree*` block, nowhere else.** That image+text layout is the
+only place a slide/promotion image looks right, so **never** drop a slide
+into a plain `ContentBox`, a bare/full-width `<img>` or strip, a card grid,
+or any other component. Because SevenThree is capped at 2 per rebrand (rule
+above), at most **2 slides are ever used** — if a slide has no SevenThree
+home, or you've already used your 2 SevenThree blocks, **leave that slide
+unused**; do not relocate it into another box just to place it.
 
 **Pick exactly the 2 (or 1) `slide*` images that best illustrate their
 sections for those SevenThree blocks; the rest of the slides can go
