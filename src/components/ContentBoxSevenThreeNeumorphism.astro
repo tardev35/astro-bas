@@ -4,20 +4,16 @@ const { titleleft, titleright } = Astro.props;
 
 <section class="mx-auto mb-8 w-full max-w-[1400px] px-4 font-sans">
   <div
-    class="w-full rounded-[25px] bg-[#0d1420] p-8 shadow-[10px_10px_20px_#05080f,-10px_-10px_20px_#141c2e] transition-all duration-300 hover:shadow-[15px_15px_30px_#040810,-15px_-15px_30px_#1a2438]">
+    class="w-full rounded-[25px] bg-[#150406] p-8 shadow-[10px_10px_20px_#070102,-10px_-10px_20px_#25080c] transition-all duration-300 hover:shadow-[15px_15px_30px_#050101,-15px_-15px_30px_#2e0a10]">
     <div class="grid grid-cols-1 gap-8 md:grid-cols-[3fr_7fr]">
-      <article class="flex flex-col gap-4">
-        {titleleft && <h2 class="text-2xl font-black text-white/90">{titleleft}</h2>}
-        <div class="text-sm leading-relaxed text-gray-400">
-          <slot name="left" />
-        </div>
+      <article class="flex flex-col gap-4 text-left text-base leading-relaxed text-red-100/70">
+        {titleleft && <h2 class="text-2xl leading-normal font-black text-white/90">{titleleft}</h2>}
+        <slot name="left" />
       </article>
 
-      <article class="flex flex-col gap-4 md:border-l md:border-blue-400/10 md:pl-8">
-        {titleright && <h2 class="text-2xl font-black text-white/90">{titleright}</h2>}
-        <div class="text-sm leading-relaxed text-gray-400">
-          <slot name="right" />
-        </div>
+      <article class="flex flex-col gap-4 text-left text-base leading-relaxed text-red-100/70 md:border-l md:border-amber-400/15 md:pl-8">
+        {titleright && <h2 class="text-2xl leading-normal font-black text-white/90">{titleright}</h2>}
+        <slot name="right" />
       </article>
     </div>
   </div>

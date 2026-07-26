@@ -1145,3 +1145,139 @@ NavbarStyle family, Footer family** โดย:
 **Verify (build เดียว Phase 5):** `npm run build` ผ่าน 7 หน้า 0 fail. grep `dist/` ทั้งหมด: GROW268/grow268 = 0, MARINA65/marina65 = 0, grow268-brand.com/marina65-review.com = 0; undefined/NaN/[object Object] = 0; HTML comment ทุกหน้า = 0; off-brand hue ใน `class="..."` = 0; `<h1>` = 1, heading order ตรง docx เป๊ะ (H1 + 6×H2), `<h3>` = 5 (FeatureHighlights, sanctioned); og:image = hashed slide1 ✓; hero = banner1 avif hashed (ไม่โดน glob trap, banner2 หาย) ✓; ทุกหน้า title = PABLO666 ✓; 4 หน้า shared-chrome ใช้ AnnouncementCyber ✓; aff redirect yoalink คงอยู่ทั้ง login/register ✓. `#14040a` โผล่ 10 ครั้งใน dist/index.html = **นิยาม CSS ที่ไม่ถูกใช้** (inlined จาก inventory comps ที่ Tailwind สแกน, ไม่มี element ใช้จริง) = noise ตาม playbook ไม่ใช่บั๊ก. `ring/ring-1/ring-2` ใน login/register = **custom class ใน `<style>` ของหน้าเอง** (ไม่ใช่ Tailwind util) linter false-positive → ไม่แตะ.
 
 **Out of scope / ไม่แตะ:** inventory variants ที่ไม่ได้ใช้ (NavbarPremium/FooterPremium/Announcement3/LatestWinnersPremium/ContentBoxPremium/SevenThreePremium + Style*/Cyber/Huay อื่น) = เก็บเป็น inventory แบรนด์หน้า; banner2/banner3/banner.png/bg.png = ไม่ import/uploader-managed ไม่แตะ; redirect /line → yoalink อยู่ใน FooterCyber (intentional, คงไว้).
+
+---
+
+# 2026-07-26 — รีแบรนด์ CASHOT123 (จาก PABLO666) — 2-agent ขนาน
+
+**เป้าหมาย:** รีแบรนด์ + retheme template จาก PABLO666 → **CASHOT123**, URL จริง `https://www.cashot123-brand.com`. รันแบบ 2-agent ขนานตาม playbook (P0 brand-spec + P1 shared chrome ทำเอง แล้ว fan out Agent A = Landing / Agent B = Sub-pages).
+
+**อินพุตแบรนด์:** `content.docx` — **1×H1 + 6×H2 + 7×H3** (docx ชุดนี้มี H3 ซ้อนใต้ §3 และ §4 จริง ไม่ใช่ flat แบบแบรนด์ก่อนๆ). โลโก้/hero = ตัว C ทองบนเหรียญ + พื้นดำ + เส้นแดง/circuit + shield HTTPS/SSL. **Palette = แดง crimson (หลัก) + ทอง/amber (accent) + ดำ** — พลิกจาก PABLO666 ที่เป็นทองหลัก/แดง accent.
+
+**สะกดชื่อแบรนด์ (ต้องระวัง):** อาร์ตเวิร์ก (logo.webp/banner1/slides) เขียนว่า **"Cashout123"** แต่ prompt ผู้ใช้ + docx เขียนว่า **"CASHOT123"** → ใช้ `CASHOT123` ในทุกข้อความ (title/prose/schema/alt/copyright) และไม่แตะรูป. แจ้งผู้ใช้แล้ว รอยืนยันถ้าอาร์ตเวิร์กคือตัวสะกดที่ถูก.
+
+**Assets:** ใช้ `banner1.png` (hero) + `slide1-4.png` + `logo.webp` + `bg.png` (drop 2026-07-26 01:26) เท่านั้น. **`banner.png`/`banner2.png`/`banner3.png` = STALE** (mtime 07-23/07-24 = ก่อน drop นี้) → ไม่ใช้, **ไม่มี banner2+ inline illustration รอบนี้**. แมป slide: **slide2 → §5 (ฝากถอนอัตโนมัติ, SevenThreePremium)**, **slide1 → §6 (มาตรฐานความปลอดภัย, SevenThreeNeumorphism)**. **slide3/slide4 = ไม่ใช้เป็นภาพ section** (SevenThree เต็มโควตา 2 บล็อกพอดี) — ยังโผล่ใน SmoothCarousel ตามหน้าที่เดิมของ component.
+
+**Variant rotation (PABLO666 → CASHOT123)** — PABLO666 เป็น all-Cyber จึงเลี่ยงทั้งชุด:
+- Navbar: **NavbarCyber → NavbarStyle7** (inventory แดง/amber บน `#14040a` อยู่แล้ว; แก้ alt→CASHOT123, เพิ่ม logo fallback `<span>`, ลบ HTML comment 4 จุด, ขอบ amber→red, sheet accent red) [P1]
+- Footer: **FooterCyber → FooterStyle2** (inventory ธีม CHOKDEE1688 **เขียว** → swap emerald `#10b981`/`#34d399`/`#047857`/`#021207` → red `#dc2626`/`#f87171`/`#991b1b`/`#0d0304`; brand CHOKDEE1688→CASHOT123; หมวดเกมเปลี่ยนเป็น สล็อต/คาสิโนสด/กีฬา/หวย ตาม docx; LINE @CASHOT123; badge "100% SECURE"→"SSL/TLS 256-BIT") [P1]
+- Announcement: **AnnouncementCyber → Announcement5** (inventory แดง/amber อยู่แล้ว; ตั้ง default `message` = CASHOT123 + URL ใหม่; sub-pages ทุกหน้า repoint import มาที่ตัวนี้แบบ bare) [P1 retheme; แต่ละหน้า repoint เอง]
+- LatestWinners: **LatestWinnersCyber → LatestWinners4** (inventory emerald → swap เป็นแดง; เติมชื่อแบรนด์ "CASHOT123 ถอนเงินแบบเรียลไทม์"; คงสีแบงก์จริงใน bankPool) [Agent A]
+- ContentBox mix: (PABLO666 = **CyberCut-led** + plain + Special) → **CASHOT123 = Premium + Neumorphism + plain**: `ContentBoxPremium`(H1 §1 + §4) + `ContentBoxNeumorphism`(§2 + §7) + plain `ContentBox`(§3) + `ContentBox3ThreePremium`(H3 ×3 ของ §4) + `ContentBoxSevenThreePremium`(§5/slide2) + `ContentBoxSevenThreeNeumorphism`(§6/slide1) + `FeatureHighlights`(H3 ×4 ของ §3) — **เลิกใช้ CyberCut/Special shape ทั้งหมด** [Agent A]
+
+**P1 — shared chrome (orchestrator ทำเอง ก่อน fan out):** คำนวณ shared set ใหม่ทุกรอบ = `MainLayout.astro` + navbar/footer ที่ active + `Navfoot.astro` + component ที่ถูก import จาก ≥2 หน้าใน `src/pages/` → รอบนี้ได้ `Announcement5.astro` (5 หน้า), `ContentBox.astro` (ทดลองเล่น+ทางเข้า+index), `ContentBoxHuay.astro` (contact-us+promotion). แก้: `MainLayout.astro` (repoint Navbar→NavbarStyle7 / Footer→FooterStyle2 + title/desc/ogSiteName/apple-title/banner alt), `NavbarStyle7.astro`, `FooterStyle2.astro`, `Navfoot.astro` (พลิกเป็นแดงนำ: register = red gradient, login = gold outline), `Announcement5.astro`, `ContentBox.astro` (amber frame→red frame + gold accent), `ContentBoxHuay.astro` (casino sub-pages ใช้ตัวนี้ จึงเป็นแดง/ทอง ไม่ใช่ huay-exception). URL 2 จุด: `astro.config.mjs` site:, `public/robots.txt` Sitemap: (จุดที่ 3 = webSiteSchema.url ใน index.astro → Agent A ตั้ง).
+
+**Agent A — Landing:** เขียน `index.astro` ใหม่ทั้งหน้าตามลำดับ docx (§1→§7 เรียงตรง, widgets ทั้งหมด — SmoothCarousel/LoginRtpSection/CTA pair/LatestWinners4/Navfoot — ต่อท้ายหลัง section สุดท้าย ไม่คั่นกลาง; ProviderGrid + GameRankingBoard วางต่อจาก §2 เพราะรองรับเนื้อหา §2 โดยตรง). retheme 12 component: ContentBoxPremium, ContentBoxNeumorphism, ContentBox3ThreePremium, ContentBoxSevenThreePremium, ContentBoxSevenThreeNeumorphism, FeatureHighlights, LoginRtpSection, ContentBoxTwo (nested ใต้ LoginRtpSection), ProviderGrid, GameRankingBoard, LatestWinners4, SmoothCarousel. **normalize heading ที่ไม่ใช่หัวข้อ docx → `<p>` 5 จุด**: ProviderGrid section title, GameRankingBoard title, ContentBoxTwo titleleft+titleright, LatestWinners4 title. ทำ column flattening (hoist slot wrapper `<div>` + เติม `leading-normal` ที่ heading) เฉพาะ 2 ตัว multi-column ที่ถือครอง — ContentBox3ThreePremium, ContentBoxSevenThreeNeumorphism — **ไม่แตะ** single-slot variants (`relative z-10` เป็น load-bearing เหนือ aura layer).
+
+**Agent B — Sub-pages:** 6 หน้า (promotion, contact-us, ทดลองเล่น, ทางเข้า, login, register). ทุกหน้า repoint `AnnouncementCyber → Announcement5` (bare, ใช้ default CASHOT123). ตั้ง title/desc รายหน้าจาก docx (docx นี้**ไม่มี** section `SUB-PAGES (Title & Meta Description)` → infer เองตาม playbook). promotion: alt รูป 4 ใบเดิมเป็นโปรของแบรนด์เก่า → เขียนใหม่ให้ตรงกับ slide1-4 จริง. ทางเข้า: เดิมมีแต่ปุ่ม ไม่มีเนื้อหา → ใส่ย่อหน้า docx §7 จริง. login/register = standalone custom HTML (ไม่ใช้ MainLayout) → retheme ใน `<style>` ด้วย raw hex/rgba. **affiliate redirect `yoalink.com/22hs` = คงไว้ ไม่แตะ** (ตาม policy).
+
+**บั๊กที่เจอ + แก้:**
+1. **`min-h-screen: 100vh;` ใน `<style>` ของ login.astro + register.astro** — เป็นชื่อ Tailwind class ที่หลุดมาอยู่ใน CSS ดิบ ไม่ใช่ CSS property จริง เบราว์เซอร์ทิ้งทั้งบรรทัด → การจัดกึ่งกลางแนวตั้งไม่ทำงานมาตลอด. แก้เป็น `min-height: 100vh` แล้ว.
+2. **CSS var ชื่อโกหก** ใน login/register: `--brand-red: #fbbf24` (ค่าจริงเป็นทอง) → ตั้งเป็น `#ef4444` ให้ตรงชื่อ, และ `--brand-pink` (ประกาศแต่ไม่มีใครใช้) → rename เป็น `--brand-gold` + เอาไปใช้จริง. `@keyframes pulse` มี `rgba(...,1.3)` (alpha เกิน 1 = ค่าไม่ถูกต้อง) → แก้เป็น `1`.
+3. **ข้อความสถานะ login.astro เขียนผิด** ว่า "กำลังพาไปหน้าสมัครสมาชิก" (คัดลอกมาจาก register) → แก้เป็น "กำลังพาไปหน้าเข้าสู่ระบบ CASHOT123".
+4. **glob trap ไม่กลับมา** — `MainLayout.astro` เลือก hero ด้วย `preferredBannerPath` ที่ match `banner1.` อยู่แล้ว (ไม่ได้ hardcode เลขอื่น) → hero = banner1 ถูกต้อง ทั้งที่ banner2/banner3 เก่ายังค้างอยู่ใน `src/assets`.
+
+**Verify (build เดียว Phase 5):** `npm run build` ผ่าน **7 หน้า 0 fail**. grep `dist/` ทั้งหมด: `PABLO666`/`pablo666` = **0 ไฟล์**; `pablo666-brand.com` = 0; `undefined`/`NaN`/`[object Object]` = 0; HTML comment ใน index = **0**; off-brand hue (emerald/purple/violet/cyan/teal/indigo) ใน `class="..."` = **0 ทั้ง 8 หน้า** (เหลือ `orange-400/500` ×1 = badge TrueWallet สีแบรนด์จริง = semantic); heading index = **h1 ×1, h2 ×6, h3 ×7, h4 ×0** ตรงกับ docx เป๊ะ **ทั้งจำนวน ข้อความ และลำดับ** (ตรวจด้วย regex ดึง heading จาก dist แล้ว diff กับ checklist); og:image = hashed `/_astro/slide1.*.png` (ไม่ใช่ path `public/`); hero = `banner1.*.avif` hashed; ไม่มี ref ไปยัง `slideN.png`/`bannerN.png` ดิบ; canonical + sitemap + `webSiteSchema.url` = `https://www.cashot123-brand.com` ครบ 3 จุด; ทุกหน้ามี `<h1>` = 1 และ title เป็น CASHOT123; `TODO(rebrand)`/placeholder = 0; route `/ตรวจหวย` `/แนวทาง` **ไม่ถูก build** (ถูกต้องสำหรับแบรนด์คาสิโน).
+
+**หวย (เว็บหวย trigger):** prompt **ไม่มี** คำว่า `เว็บหวย` และ CASHOT123 เป็นแบรนด์คาสิโน → `ตรวจหวย.astro` + `แนวทาง.astro` **คงอยู่ใน `src/pages-disabled/` (ปิด)** และ **ไม่เพิ่มลิงก์เมนู** ใน NavbarStyle7.
+
+**Out of scope / ไม่แตะ:** inventory variants ที่ไม่ได้ใช้ (NavbarCyber/FooterCyber/AnnouncementCyber/LatestWinnersCyber/ContentBoxCyberCut/SevenThreeCyberCut/ContentBoxSpecial + Style*/Premium/Huay/FloatingBadge อื่นๆ — ยังมีชื่อ PABLO666 ค้างอยู่บางตัว = expected drift) = เก็บเป็น inventory แบรนด์หน้า; `banner.png`/`banner2.png`/`banner3.png` = stale ไม่ import ไม่ลบ; `bg.png`/`bg.json` = uploader-managed ไม่แตะ; redirect `/line` → tinyurl ใน `astro.config.mjs` (intentional); affiliate redirect `yoalink.com/22hs` ใน login/register (intentional); `tinyurl.com/linepigpg` ใน schema ของ contact-us; `:global(.text-purple-gradient)` ใน promotion.astro = CSS ตายค้างจาก template (ไม่มี component ใช้) → เปลี่ยนสีให้เข้าธีมแต่ไม่ลบ; `ttbLogo` ที่ import แต่ไม่ใช้ใน LatestWinners4 = pre-existing ไม่เกี่ยวกับ hue; warning `bg-gradient-to-*` → `bg-linear-to-*` ของ Tailwind 4 = สไตล์เดิมทั้ง repo ไม่แก้เฉพาะไฟล์ตัวเอง.
+
+## 2026-07-26 — แก้ alignment: paragraph ชิดซ้าย (CASHOT123, follow-up)
+
+**คำขอ:** heading อยู่ตรงกลางได้ แต่ **paragraph ต้องชิดซ้าย** (ผู้ใช้ส่ง screenshot กล่อง §1 ContentBoxPremium + §2 ContentBoxNeumorphism)
+
+**เจอ 2 สาเหตุคนละแบบ:**
+1. **`ContentBoxNeumorphism.astro`** — มี `text-center` อยู่บน card `<div>` ตัวนอก → **inherit ลงไปทั้ง heading และ slot** ทำให้ย่อหน้าอยู่กึ่งกลาง. แก้: ย้าย `text-center` ออกจาก card ไปไว้บน `<header>` อย่างเดียว → heading ยังกึ่งกลาง แต่ slot กลับเป็นชิดซ้าย
+2. **`index.astro`** — ย่อหน้า 3 จุดใส่ `mx-auto max-w-4xl` / `mx-auto max-w-5xl` → บล็อกถูกบีบให้แคบแล้ววางกึ่งกลาง ข้อความจึง**ไม่ตรงแนวกับหัวข้อ** (ดูเหมือนย่อหน้าลอยเข้ามาข้างใน). แก้: ตัด `mx-auto max-w-*` ออก เหลือ `leading-relaxed`
+
+**ล็อกเจตนาไว้กันพลาดรอบหน้า:** เติม `text-left` ให้ slot wrapper ของ `ContentBox.astro`, `ContentBoxPremium.astro`, `ContentBoxNeumorphism.astro` เพื่อไม่ให้ `text-center` จาก parent ตัวไหน inherit เข้ามาได้อีก
+
+**ไม่ใช่บั๊ก (ตั้งใจให้กึ่งกลาง):** `<p>` ที่ยัง `text-center` ใน `ProviderGrid.astro` + `GameRankingBoard.astro` = **section header** (ตัวที่ normalize จาก `<h2>`→`<p>` ตอนรีแบรนด์) ไม่ใช่ย่อหน้าเนื้อหา → ผู้ใช้บอกว่า heading กึ่งกลางได้ จึงคงไว้
+
+**ยังไม่ได้แก้ (นอกสโคปที่ผู้ใช้ระบุ):** `ContentBoxHuay.astro` มี `text-center` บน `<section>` แบบเดียวกัน ใช้บน `contact-us` + `promotion` → ย่อหน้า 2 หน้านั้นยังกึ่งกลางอยู่ **แจ้งผู้ใช้แล้ว รอไฟเขียว**
+
+**Verify:** `npm run build` ผ่าน 7 หน้า 0 fail. grep `dist/index.html`: ไม่เหลือ `<p>` ที่มี `mx-auto`/`max-w-4xl`/`max-w-5xl`; card ของ Neumorphism ไม่มี `text-center` แล้ว แต่ `<header>` ยังมี (×2 = 2 กล่อง); slot wrapper = `relative z-10 text-left …` ทั้ง ContentBox และ ContentBoxPremium. Regression: heading h1×1/h2×6/h3×7 เท่าเดิม, PABLO666 = 0, HTML comment = 0.
+
+## 2026-07-26 — paragraph ชิดซ้าย + font base + ลดความลึก DOM (CASHOT123, follow-up #2)
+
+**คำขอ:** (1) แก้ alignment ให้เหมือนกันทุกหน้า + ทุก content component และปรับ font ใต้ `<p>` เป็น `text-base` (2) ตรวจว่าลดความลึก DOM ได้อีกไหม (จาก devtools เห็น `div > p`)
+
+### (1) alignment + font — ครบทุก content component ที่ render จริง 8 ตัว
+`ContentBox`, `ContentBoxPremium`, `ContentBoxNeumorphism`, `ContentBoxHuay`, `ContentBox3ThreePremium`, `ContentBoxSevenThreePremium`, `ContentBoxSevenThreeNeumorphism`, `ContentBoxTwo` — ทุกตัวได้ `text-left` + `text-base` บนตัวที่ถือ slot. `ContentBoxHuay` ตัด `text-center` ออกจาก `<section>` (header เป็น flex row มีแท่งสีอยู่แล้ว = ชิดซ้ายโดยธรรมชาติ) → แก้ให้ contact-us + promotion ด้วย. `ContentBoxNeumorphism` header ยังคง `text-center` (heading กึ่งกลางได้ตามที่ผู้ใช้อนุญาต). `promotion.astro` ย่อหน้าเปิดหน้ามี `mx-auto max-w-4xl px-4` → ตัดออก.
+
+### (2) ลดความลึก DOM — ตัด wrapper `<div>` ออกได้จริง 1 ระดับใน 4 ตัว single-slot
+เดิม: `section > div.card > div.relative.z-10.text-… > p` → ใหม่: `section > div.card > p` (slot เป็นลูกตรงของ card)
+
+wrapper ตัวนั้นทำ 2 หน้าที่ จึงต้องแก้ทีละอย่างก่อนลบ:
+- **หน้าที่ 1 = แบก inheritable text class** (`text-base`/`leading-relaxed`/สีตัวอักษร) → hoist ขึ้น card. ระวัง: card เดิมมี `text-white/90` อยู่ ถ้าใส่สีใหม่เพิ่มจะชนกันแบบ specificity เท่ากัน (แพ้/ชนะขึ้นกับลำดับใน CSS ที่ generate ออกมา = เปราะ) → จึง **แทนที่** `text-white/90` ด้วยสีของ slot ไปเลย ไม่ใช่ใส่เพิ่ม. และ `leading-relaxed` จะรั่วลง `<h1>/<h2>` (heading ไม่ได้ตั้ง line-height เอง) → เติม `leading-normal` ที่ heading ทุกตัวเพื่อ neutralize (= 1.5 ค่าเดิม, no-op จริง)
+- **หน้าที่ 2 = `relative z-10` ยกข้อความให้ลอยเหนือ aura `absolute` 2 ชั้นใน card** ← อันนี้คือเหตุผลที่ SKILL ห้าม flatten ตัว single-slot. แก้ที่ต้นเหตุแทน: ให้ aura เป็น **`-z-10`** (paint ใต้ in-flow content แต่ยังทับพื้นหลัง card) แล้ว wrapper ก็ไม่จำเป็นอีก. เงื่อนไขคือ card ต้องเป็น **stacking context** ไม่งั้น `-z-10` จะหลุดไปอยู่หลัง card ทั้งใบ — card มี `backdrop-blur-xl` ซึ่งสร้าง stacking context อยู่แล้ว แต่**ไม่ผูกความถูกต้องไว้กับ backdrop-filter** (ถ้าอนาคตมีคนถอด blur ออกจะพังเงียบ) จึงเติม **`isolate`** (`isolation:isolate`) ที่ card ให้เป็น stacking context แบบชัดเจน ไม่ขึ้นกับ blur
+
+**ตัวที่ flatten:** `ContentBox`, `ContentBoxPremium`, `ContentBoxHuay` (3 ตัวนี้มี aura + backdrop-blur → ใช้สูตร isolate + `-z-10`), `ContentBoxNeumorphism` (ไม่มี aura ไม่มี blur → wrapper เป็นตัวแบก text class ล้วน ลบได้ตรงๆ)
+
+**ตัวที่ตั้งใจไม่ flatten:**
+- `ContentBoxTwo` — wrapper มี `h-full` ซึ่งมีผลต่อ layout จริง (ไม่ใช่ text class ล้วน) + consumer (`LoginRtpSection`) ยัด element หลายตัวเข้า slot ถ้าลบ `gap-4` ของ `<article>` จะมาคั่นระหว่างลูกทุกตัว → spacing เพี้ยน. ใส่แค่ `text-left`
+- multi-column (`3ThreePremium`, `SevenThreePremium`, `SevenThreeNeumorphism`) — Agent A flatten ไปแล้วรอบรีแบรนด์ (slot เป็นลูกตรงของ `<article>`)
+- **ที่พิจารณาแล้วไม่ทำ:** ยุบ `<section>` (flex centering + `px-4` gutter) รวมกับ `div.card` (`max-w-[1400px]` + `p-8`) — ทำได้ทางทฤษฎีด้วย `mx-auto` แต่ gutter `px-4` กับ padding ในการ์ด `p-8` เป็นคนละชั้นกัน ต้องไปคำนวณ `max-w-[calc(...)]` ชดเชย = แลกความซับซ้อนกับ 1 ระดับ ไม่คุ้ม
+
+**ไม่ใช่บั๊ก (คงกึ่งกลางไว้):** `<p>` 12 ตัวใน `ProviderGrid` = ป้ายชื่อ/คำบรรยายในการ์ดค่ายเกม (UI label ไม่ใช่ย่อหน้าเนื้อหา); section header ของ `ProviderGrid`/`GameRankingBoard` (ตัวที่ normalize `<h2>`→`<p>` ตอนรีแบรนด์); `titleleft` ของ `SevenThreePremium` ที่เป็น `text-center md:text-left` (responsive heading)
+
+**Verify:** build ผ่าน 7 หน้า 0 fail. `dist/`: wrapper `relative z-10 text-left` = **0 ทุกหน้า**; `isolate` = 3 การ์ด/หน้า index + 2/หน้าย่อย; aura `-z-10` = 6 บน index; card class = `p-8 text-left text-base …` (ไม่มี `text-lg` เหลือในกล่องเนื้อหา); DOM จริงจาก dist = `section > div.card > (div.aura ×2, header, p)` ✅ ไม่มี wrapper คั่น. Regression: h1×1/h2×6/h3×7, PABLO666 = 0, HTML comment = 0, undefined/NaN = 0, og:image = hashed slide1, hero = banner1.
+
+## Redesign: ReviewCardSumo2 — 2026-07-26 (CASHOT123, follow-up #3)
+
+**คำขอ:** นำ component รีวิวเข้ามาใช้ในหน้าแรก และแต่งให้สวย
+
+**สถานะก่อนหน้า:** `ReviewCardSumo2.astro` เป็น **inventory ล้วน** — ไม่มีหน้าไหน import เลย (grep ทั้ง `src/pages` + `src/components` = 0) เนื้อหาข้างในยังเป็นของ PABLO666 + ธีมทอง/ดำ และหัวข้อ section เป็น `<h2>`
+
+**เปลี่ยนทรง (ไม่ใช่แค่เปลี่ยนสี):** เดิม = **spotlight 3 คอลัมน์ + ลิสต์เล็ก 2 คอลัมน์** (grid 5 ช่อง) → ใหม่ = **การ์ดเท่ากัน 3 ใบ + แถบ accent ด้านซ้าย** (`md:grid-cols-3`) พร้อมเพิ่ม **แถบสรุปคะแนนเฉลี่ย** (ตัวเลขใหญ่ + ดาว + จำนวนด้านที่ทดสอบ) คั่นระหว่างหัวข้อกับการ์ด
+
+**ดีเทลงานออกแบบ:**
+- แถบ accent ซ้ายของการ์ด = `bg-gradient-to-b from-red-500 via-amber-400 to-red-700` (แดง→ทอง→แดงเข้ม) opacity 70% → 100% ตอน hover
+- hover = ยกการ์ดขึ้น (`-translate-y-1`) + ขอบเปลี่ยนเป็นทอง + เงาแดงเข้มขึ้น + avatar ขยาย
+- ใช้สูตรเดียวกับที่เพิ่ง refactor: การ์ดเป็น `isolate`, แถบ accent + aura เป็น `-z-10` → ไม่ต้องมี wrapper `relative z-10` ครอบเนื้อหา (ความลึก DOM เท่าที่จำเป็น)
+- badge หมวดต่อการ์ด (`ระบบออโต้` / `UX / UI` / `ความปลอดภัย`) + จุดกะพริบทอง
+
+**เนื้อหารีวิว — เขียนใหม่ทั้งหมดให้อิงตัวเลขจาก docx จริง** แทน copy เดิมของแบรนด์เก่าที่เป็นคำโฆษณาลอยๆ ("สล็อตแตกง่าย/ฟรีสปินเข้าบ่อย/จ่ายจริงทุกบิล"):
+1. **ระบบออโต้** — 2–5 วินาที (ยืนยันรายการ), 10–60 วินาที (เครดิตเข้า), 30 วินาที–5 นาที (ถอน) ← docx §5
+2. **UX/UI** — Windows 11 / Android 14, สมัคร 1–2 นาที, สล็อต 12 เกม / คาสิโนสด 3 ห้อง / กีฬา 5 ลีก ← docx §4
+3. **ความปลอดภัย** — HTTPS + SSL/TLS 256-bit, ไม่พบคำเตือน Not Secure จาก Chrome ← docx §6/§7
+
+คะแนนเฉลี่ยคำนวณจาก array จริง (5+5+4)/3 = **4.7** ไม่ได้ hardcode
+
+**ตำแหน่งบนหน้า:** วางต่อจากกลุ่ม docx §4 (`ContentBox3ThreePremium` ที่ถือ H3 ×3 ของหัวข้อรีวิว) ก่อน §5 — ตามกฎ playbook ที่ว่า supporting component วางต่อท้าย section ที่มันรองรับโดยตรง ไม่ใช่แทรกมั่ว. ยืนยันตำแหน่งจาก byte offset ใน `dist/index.html`: §4 H3 (296618) → REVIEW (298431) → §5 H2 (310198) ✅
+
+**heading:** หัวข้อ section ใช้ `<p>` (ไม่ใช่ `<h2>`) และชื่อผู้รีวิวใช้ `<span>` — เพื่อไม่ให้ heading count หลุดจาก docx. ยืนยันหลัง build: **h1×1 / h2×6 / h3×7 เท่าเดิมเป๊ะ**
+
+**Verify:** build ผ่าน 7 หน้า 0 fail. `dist/index.html`: การ์ด 3 ใบ render ครบ (spine ×3), แถบคะแนนเฉลี่ย ×1, ชื่อผู้รีวิวใหม่ ×3, copy เก่า (`หมีขาว`) = 0, `PABLO666` = 0, HTML comment = 0, undefined/NaN = 0, body รีวิวใช้ `text-base` + `text-left` ตามคอนเวนชันใหม่ ×3.
+หมายเหตุ: คำว่า "แตกง่าย" ที่ยัง grep เจอใน `dist/index.html` มาจาก `ProviderGrid` (คำบรรยายไทล์ค่าย PG Soft = `"สล็อตภาพสวย แตกง่าย"`) ซึ่งมีอยู่เดิม ไม่ใช่ของ component รีวิว. `ReviewCardSumo.astro` (ตัวที่ 1) ยังเป็น inventory ธีม SUMOHENG ไม่ได้แตะ.
+
+## 2026-07-26 — กวาด ContentBox ทั้งตระกูล 25 ตัว (CASHOT123, follow-up #4)
+
+**คำขอ:** ContentBox มีเยอะมาก เช็คหมดหรือยังว่าแก้เรื่อง deep DOM + font base สำหรับแท็ก `<p>`
+
+**คำตอบตอนถูกถาม: ยังไม่หมด** — รอบก่อนทำแค่ **8 ตัวที่ render จริง** อีก **17 ตัวเป็น inventory** ยังไม่ได้แตะ
+
+**เหตุผลที่ตัดสินใจทำ inventory ด้วย (ต่างจาก default ของ playbook):** กฎ "ห้ามแตะ inventory" ใน CLAUDE.md/SKILL หมายถึง **สี + ชื่อแบรนด์** ที่ตั้งใจให้ drift — ส่วน DOM depth กับ font base เป็น **มาตรฐานโครงสร้างของ component library** ถ้าไม่ทำตอนนี้ พอรีแบรนด์หน้าหมุน variant ไปใช้ตัวอื่น (ซึ่งเป็นกฎบังคับ) ปัญหาจะกลับมาทันทีทุกครั้ง → **แก้เฉพาะโครงสร้าง/ฟอนต์ ไม่แตะ hue/brand string ของ inventory เลย**
+
+### สรุปสถานะ render (นับให้ถูก)
+`ContentBoxTwo` เกือบถูกนับผิดเป็น inventory เพราะ `LoginRtpSection` import แบบ `./ContentBoxTwo.astro` (ไม่ใช่ `components/…`) → **rendered จริง 8 ตัว**: ContentBox, ContentBoxPremium, ContentBoxNeumorphism, ContentBoxHuay, ContentBox3ThreePremium, ContentBoxSevenThreePremium, ContentBoxSevenThreeNeumorphism, ContentBoxTwo
+
+### สิ่งที่ทำกับทั้ง 25 ตัว
+- ตัด wrapper `<div>` ที่ทำหน้าที่แค่แบก inheritable text class → hoist ขึ้น `<article>`/card แล้วให้ slot เป็นลูกตรง
+- `text-sm` / `text-lg` ของ body → **`text-base`** ทุกตัว
+- body ที่เป็น `text-center` → **`text-left`** (heading คงการจัดวางเดิม)
+- เติม `leading-normal` ให้ heading ทุกตัวที่ตอนนี้ inherit `leading-relaxed` ลงมา (no-op = 1.5 ค่าเดิม แต่กันรั่ว)
+- ตัวที่ wrapper เคยมี `relative z-10` คุม decoration `absolute` → เปลี่ยนเป็น card `isolate` + decoration `-z-10` (สูตรเดียวกับ follow-up #2)
+
+### ตัวที่ตั้งใจ "ไม่" flatten (เหลือ wrapper 3 จุด — เป็น layout element จริง ไม่ใช่ตัวแบก text class)
+- **`ContentBoxSpecial` ×2** — wrapper เป็น flex sibling ของกล่องไอคอน ถ้าลบ `<p>` แต่ละอันจะกลายเป็น flex item เรียงข้างไอคอน layout พัง
+- **`ContentBoxTwoCyberCut` ×1** — wrapper ของ intro slot ถือ `mb-8` (margin จริง) และอยู่ในการ์ดคู่กับ grid จึง hoist ขึ้น card ไม่ได้
+
+### เคสที่กลับคำตัดสินจากรอบก่อน
+รอบ follow-up #2 ผมไม่ flatten `ContentBoxTwo` เพราะกลัวว่า consumer ยัดหลาย element เข้า slot แล้ว `gap-4` จะมาคั่น. รอบนี้ไปเช็ค `LoginRtpSection` จริง — **ทั้ง 2 slot ส่งมา element เดียว** (`<div slot="left" class="flex h-full flex-col gap-4">` และ `<div slot="right" class="h-full">`) และตัว consumer ถือ `h-full` เองอยู่แล้ว → ลบ wrapper ได้ปลอดภัย ผลลัพธ์ตำแหน่ง/ความสูงเหมือนเดิมเป๊ะ **จึง flatten เพิ่ม**
+
+### คอนเวนชันที่ตั้งไว้สำหรับรีแบรนด์รอบหน้า
+consumer ต้องส่ง **1 element ต่อ 1 slot** (ทุกหน้าปัจจุบันทำแบบนี้อยู่แล้ว) — ถ้าจำเป็นต้องส่งหลาย element ให้ห่อเองใน `<div>`/`<Fragment>` ไม่ใช่ปล่อยเข้า flex column ตรงๆ เพราะ `gap-N` จะมาคั่นระหว่างลูกทุกตัว
+
+**Verify:** build ผ่าน 7 หน้า 0 fail. audit ทั้ง 25 ไฟล์: `slotWrapperDiv` = 0 ทุกตัว (ยกเว้น 3 จุดที่ตั้งใจ), `bodyFontNotBase` = 0 ทุกตัว. `dist/`: `text-left text-base leading-relaxed` = 14 บน index / 1 ต่อหน้าย่อย, `text-lg|text-sm` รั่วในกล่องเนื้อหา = **0 ทุกหน้า**. Regression: h1×1 / h2×6 / h3×7, PABLO666 = 0, HTML comment = 0, undefined/NaN = 0, review cards ×3, og:image = hashed slide1, hero = banner1.

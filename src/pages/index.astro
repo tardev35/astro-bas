@@ -1,207 +1,211 @@
 ---
 import MainLayout from "../layouts/MainLayout.astro";
-import AnnouncementCyber from "../components/AnnouncementCyber.astro";
-import ContentBoxCyberCut from "../components/ContentBoxCyberCut.astro";
-import ContentBoxSevenThreeCyberCut from "../components/ContentBoxSevenThreeCyberCut.astro";
-import ContentBoxSevenThree from "../components/ContentBoxSevenThree.astro";
-import ContentBoxSpecial from "../components/ContentBoxSpecial.astro";
+import Announcement5 from "../components/Announcement5.astro";
+import ContentBox from "../components/ContentBox.astro";
+import ContentBoxPremium from "../components/ContentBoxPremium.astro";
+import ContentBoxNeumorphism from "../components/ContentBoxNeumorphism.astro";
+import ContentBox3ThreePremium from "../components/ContentBox3ThreePremium.astro";
+import ContentBoxSevenThreePremium from "../components/ContentBoxSevenThreePremium.astro";
+import ContentBoxSevenThreeNeumorphism from "../components/ContentBoxSevenThreeNeumorphism.astro";
 import FeatureHighlights from "../components/FeatureHighlights.astro";
 import LoginRtpSection from "../components/LoginRtpSection.astro";
 import ProviderGrid from "../components/ProviderGrid.astro";
 import GameRankingBoard from "../components/GameRankingBoard.astro";
-import LatestWinnersCyber from "../components/LatestWinnersCyber.astro";
+import ReviewCardSumo2 from "../components/ReviewCardSumo2.astro";
+import LatestWinners4 from "../components/LatestWinners4.astro";
 import SmoothCarousel from "../components/SmoothCarousel.astro";
 import Navfoot from "../components/Navfoot.astro";
 const currentPath = Astro.url.pathname;
 const homePage = Astro.url.origin;
 const logoUrl = homePage + "/logo.webp";
 
-const pageTitle = "PABLO666 รีวิวเว็บตรง สล็อต1บาท ก็ฝากได้ ทดลองเล่นจริง ระบบออโต้";
-const pageDescription = "PABLO666 รีวิวเว็บตรง ไม่ได้มีดีแค่เรื่องเกมสล็อต ทดลองเล่นสล็อต1บาท ก็ฝากได้ เหมาะกับใครที่ไม่อยากเริ่มด้วยทุนสูง ระบบออโต้หลังบ้านอัจริยะ ทางเข้า ปลอดภัย";
+const pageTitle = "CASHOT123 | เว็บออนไลน์คาสิโน รีวิวเว็บตรงครบวงจร ฝากถอนอัตโนมัติ";
+const pageDescription =
+  "CASHOT123 เว็บออนไลน์คาสิโน เว็บตรงครบวงจร มีรีวิวทดสอบจริง ระบบ ฝากถอนอัตโนมัติ ปลอดภัย และ ทางเข้า CASHOT123 ลิงก์ถูกต้อง เพื่อการใช้งานที่มั่นใจ";
 
 const webPageSchema = {
   "@context": "https://schema.org",
   "@type": "WebPage",
-  name: "PABLO666",
+  name: "CASHOT123",
   description: pageDescription,
   url: currentPath,
 };
 const webSiteSchema = {
   "@context": "https://schema.org",
   "@type": "WebSite",
-  name: "PABLO666",
-  alternateName: ["PABLO666", "PABLO666 รีวิวเว็บตรง สล็อต1บาท ก็ฝากได้ ทดลองเล่นจริง ระบบออโต้"],
-  url: "https://www.pablo666-brand.com/",
+  name: "CASHOT123",
+  alternateName: ["CASHOT123", "CASHOT123 เว็บออนไลน์คาสิโน รีวิวเว็บตรงครบวงจร ฝากถอนอัตโนมัติ"],
+  url: "https://www.cashot123-brand.com/",
 };
 const orgSchema = {
   "@context": "https://schema.org",
   "@type": "Organization",
-  name: "PABLO666",
+  name: "CASHOT123",
   logo: logoUrl,
   url: homePage,
 };
 const allSchemas = [webPageSchema, orgSchema, webSiteSchema];
 
-const gameCategories = [
+// docx section 3 sub-points 3a-3d — FeatureHighlights renders each title at heading level 3
+const playerFitPoints = [
   {
     icon: "🎰",
-    title: "สล็อต",
-    description: "รวมเกมสล็อตจากหลายค่ายไว้ในที่เดียว เลือกเล่นได้ตามสไตล์ที่ชอบ เริ่มต้นด้วยงบเพียงเล็กน้อย",
+    title: "ความหลากหลายของเกมคาสิโน สล็อตที่รองรับทุกสไตล์",
+    description:
+      "CASHOT123 รวบรวมเกมสล็อต คาสิโนสด กีฬา หวย และเกมออนไลน์จากหลายผู้ให้บริการไว้ภายในเว็บไซต์เดียว ทำให้สมาชิกสามารถเลือกเล่นได้ตามความสนใจ โดยไม่จำกัดอยู่เพียงเกมประเภทใดประเภทหนึ่ง",
     accent: "gold" as const,
   },
   {
-    icon: "🎴",
-    title: "คาสิโนสด",
-    description: "ถ่ายทอดสดคาสิโนแบบเรียลไทม์ ทั้งบาคาร่า รูเล็ต และเกมยอดนิยม เล่นได้เหมือนอยู่ในบ่อนจริง",
+    icon: "📱",
+    title: "ระบบที่ออกแบบ UX/UI ให้ใช้งานได้ง่าย",
+    description:
+      "เว็บไซต์จัดวางเมนูและฟังก์ชันต่าง ๆ ให้ค้นหาได้สะดวก รองรับการใช้งานทั้งบนมือถือและคอมพิวเตอร์ พร้อมระบบสมาชิกที่ช่วยให้เข้าถึงบริการต่าง ๆ ได้อย่างต่อเนื่องจากบัญชีเดียว",
     accent: "blue" as const,
   },
   {
-    icon: "🎲",
-    title: "เกมโต๊ะ",
-    description: "เกมโต๊ะครบทุกรูปแบบ กติกาเข้าใจง่าย เหมาะกับผู้เล่นทุกระดับตั้งแต่มือใหม่จนถึงขาประจำ",
+    icon: "🎁",
+    title: "สิทธิประโยชน์ โปรโมชั่น ที่ตอบโจทย์สมาชิกทุกบุคคล",
+    description:
+      "สมาชิกสามารถติดตามโปรโมชั่น กิจกรรม และสิทธิประโยชน์ที่เว็บไซต์จัดเตรียมไว้ในแต่ละช่วงเวลา เพื่อเลือกใช้งานให้เหมาะกับรูปแบบการเล่นและความสนใจของตนเอง",
     accent: "gold" as const,
   },
   {
-    icon: "⚽",
-    title: "กีฬา",
-    description: "เดิมพันกีฬาหลากหลายลีก ดูราคาและติดตามผลการแข่งขันได้ครบภายในบัญชีเดียว",
+    icon: "🛎️",
+    title: "การดูแลและบริการที่ช่วยให้ใช้งานได้ต่อเนื่อง",
+    description:
+      "นอกจากบริการด้านเกมแล้ว CASHOT123 ยังมีช่องทางติดต่อทีมงาน ข่าวสาร และข้อมูลอัปเดตของเว็บไซต์ เพื่อช่วยให้สมาชิกติดตามความเคลื่อนไหวและขอความช่วยเหลือได้เมื่อจำเป็น",
     accent: "blue" as const,
-  },
-  {
-    icon: "👤",
-    title: "ระบบสมาชิก",
-    description: "จัดการข้อมูล ฝากถอน และตรวจสอบประวัติทุกรายการผ่านบัญชีเดียวที่เชื่อมต่อทุกบริการเข้าด้วยกัน",
-    accent: "gold" as const,
   },
 ];
 
 import { Picture } from "astro:assets";
-import imgCategories from "../assets/slide3.png";
-import imgTestDay from "../assets/slide2.png";
-import imgOneBaht from "../assets/slide4.png";
-import imgEntrance from "../assets/slide1.png";
+import imgAutoWallet from "../assets/slide2.png";
+import imgSecurity from "../assets/slide1.png";
 ---
 
 <MainLayout title={pageTitle} description={pageDescription}>
   <script type="application/ld+json" set:html={JSON.stringify(allSchemas)} />
 
-  <AnnouncementCyber />
+  <Announcement5 />
 
-  <ContentBoxCyberCut as="h1" title="PABLO666 รีวิวเว็บตรง สล็อต1บาท ก็ฝากได้ ทดลองเล่นจริง ระบบออโต้">
-    <p class="mx-auto max-w-4xl leading-relaxed">
-      <strong class="text-yellow-300">PABLO666</strong> เป็นเว็บไซต์ที่ให้บริการเกมสล็อตออนไลน์ผ่านระบบเว็บตรง โดยรองรับการสมัครสมาชิก ฝากถอน และเข้าเล่นผ่านระบบอัตโนมัติแบบครบวงจร จุดที่หลายคนให้ความสนใจคือการเริ่มต้นเล่นด้วยงบไม่สูง
-      เนื่องจากรองรับการฝากขั้นต่ำเพียง 1 บาท ทำให้ผู้เล่นสามารถทดลองใช้งานระบบจริงก่อนตัดสินใจเล่นต่อได้
-    </p>
-  </ContentBoxCyberCut>
-
-  <SmoothCarousel />
-
-  <ContentBoxCyberCut as="h2" title="PABLO666 รีวิวเว็บตรง ไม่ได้มีดีแค่เรื่องเกมสล็อต">
+  <ContentBoxPremium as="h1" title="CASHOT123 เว็บออนไลน์คาสิโน รีวิวเว็บตรงครบวงจร ฝากถอนอัตโนมัติ">
     <p class="leading-relaxed">
-      แม้หลายคนจะรู้จัก <strong class="text-yellow-300">PABLO666</strong> ในฐานะเว็บไซต์สล็อต แต่เมื่อทดลองสำรวจโครงสร้างเว็บไซต์จะพบว่า จุดเด่นไม่ได้มีเพียงจำนวนเกมเท่านั้น ภายในเว็บไซต์ยังแบ่งหมวดหมู่บริการไว้อย่างชัดเจน
-      ทั้งเกมสล็อต คาสิโนสด เกมโต๊ะ กีฬา และระบบสมาชิกที่เชื่อมต่ออยู่บนบัญชีเดียว
+      <strong class="text-amber-300">CASHOT123</strong> เว็บออนไลน์คาสิโน ที่รวบรวมเกมและบริการที่ที่จะสร้างความประทับใจแด่ผู้เล่นไม่มาก็น้อย หลายประเภทไว้ภายในแพลตฟอร์มเดียว ไม่ว่าจะเป็นสล็อต คาสิโนสด กีฬา
+      หรือหมวดเกมอื่นๆ ไปจนถึงระบบสมาชิกและธุรกรรม ภายใต้โครงสร้างแบบ เว็บตรงครบวงจร ที่เชื่อมทุกฟังก์ชันเข้าด้วยกัน พร้อม ระบบฝากถอนอัตโนมัติ ซึ่งเป็นหนึ่งในองค์ประกอบสำคัญที่ช่วยให้การใช้งานภายในเว็บไซต์เป็นไปด้วยความราบลื่นแบบ
+      Ultra Smooth ตั้งแต่เริ่มต้นจนจบ
     </p>
-  </ContentBoxCyberCut>
+  </ContentBoxPremium>
 
-  <div class="mx-auto mb-10 w-full max-w-[1400px] px-4">
-    <FeatureHighlights items={gameCategories} />
-  </div>
+  <ContentBoxNeumorphism as="h2" title="CASHOT123 แพลตฟอร์มคาสิโนออนไลน์ที่รวมทุกบริการไว้ในที่เดียว">
+    <p class="leading-relaxed">
+      <strong class="text-amber-300">CASHOT123</strong> รวมบริการไว้ครบในแพลตฟอร์มเดียว ทั้งเกมสล็อต คาสิโนสด กีฬา หวย และเกมจากค่ายชั้นนำ พร้อมระบบสมาชิก โปรโมชั่น ฝากถอนอัตโนมัติ และทีมงานดูแลตลอดการใช้งาน
+      นอกจากนี้ยังมีหมวดข่าวสาร กิจกรรม และคอนเทนต์ความบันเทิงสำหรับสมาชิกในช่วงที่ไม่ได้เข้าเล่น ทำให้ CASHOT123 ไม่ได้เป็นเพียงพื้นที่สำหรับเกม แต่เป็นศูนย์รวมบริการและความบันเทิงที่เข้าถึงได้แค่สมัครยูสเซอร์เดียว
+    </p>
+  </ContentBoxNeumorphism>
 
   <ProviderGrid />
 
-  <ContentBoxSevenThreeCyberCut titleright="เราใช้เวลา 1 วันทดลองเล่น PABLO666 เจออะไรบ้าง">
-    <div slot="left" class="flex h-full flex-col justify-center">
-      <Picture
-        src={imgTestDay}
-        loading="lazy"
-        fetchpriority="low"
-        widths={[200, 400, 600, 800]}
-        sizes="(max-width: 768px) 100vw, 30vw"
-        decoding="async"
-        formats={["avif", "webp"]}
-        fallbackFormat="webp"
-        quality={80}
-        alt="PABLO666 ทดลองเล่น 1 วัน ตั้งแต่สมัคร เข้าสู่ระบบ ฝากเงิน เลือกเกม จนตรวจสอบผล"
-        class="mx-auto h-auto w-full rounded-2xl border-2 border-yellow-400/20 shadow-[0_10px_30px_rgba(234,179,8,0.25)]"
-      />
-    </div>
-    <p slot="right" class="leading-relaxed">
-      การทดลองใช้งานเริ่มตั้งแต่ขั้นตอนสมัครสมาชิก ซึ่งใช้เวลาไม่นาน หลังจากยืนยันข้อมูลแล้วสามารถเข้าสู่ระบบได้ทันที จากนั้นทดลองฝากเงิน เข้าเลือกเกม ทดลองเล่น และตรวจสอบการทำงานของเมนูต่าง ๆ
-      ภายในเว็บไซต์ ระหว่างการใช้งานพบว่าการเปลี่ยนหน้าเว็บไซต์ทำได้ต่อเนื่อง เมนูตอบสนองได้รวดเร็ว และการสลับไปยังหมวดเกมต่าง ๆ ไม่พบอาการโหลดซ้ำบ่อยครั้ง
-      ส่วนการใช้งานผ่านโทรศัพท์มือถือก็สามารถแสดงผลได้ครบทั้งแนวตั้งและแนวนอน
-    </p>
-  </ContentBoxSevenThreeCyberCut>
-
-  <ContentBoxSevenThree titleright="สล็อต 1 บาท ก็ฝากได้ อีกหนึ่งตัวเลือกสำหรับคนที่ไม่อยากเริ่มด้วยทุนสูง">
-    <div slot="left" class="flex h-full flex-col justify-center">
-      <Picture
-        src={imgOneBaht}
-        loading="lazy"
-        fetchpriority="low"
-        widths={[200, 400, 600, 800]}
-        sizes="(max-width: 768px) 100vw, 30vw"
-        decoding="async"
-        formats={["avif", "webp"]}
-        fallbackFormat="webp"
-        quality={80}
-        alt="PABLO666 สล็อต 1 บาท ก็ฝากได้ รองรับฝากขั้นต่ำ 1 บาทผ่านธนาคารชั้นนำ"
-        class="mx-auto h-auto w-full rounded-2xl border-2 border-amber-400/20 shadow-[0_10px_30px_rgba(234,179,8,0.25)]"
-      />
-    </div>
-    <p slot="right" class="leading-relaxed">
-      หนึ่งในรายละเอียดที่หลายคนสนใจคือการเริ่มต้นใช้งานด้วยเงินจำนวนไม่มาก รองรับการฝากขั้นต่ำเพียง 1 บาท ทำให้ผู้เล่นสามารถทดลองระบบจริงได้ก่อน โดยไม่จำเป็นต้องใช้เงินทุนสูงเหมือนบางเว็บไซต์
-      แนวทางนี้เหมาะกับผู้ที่ต้องการทดลองความเสถียรของเว็บไซต์ ทดลองเลือกเกม หรือศึกษารูปแบบการให้บริการก่อนวางแผนการเล่นในระยะยาว
-    </p>
-  </ContentBoxSevenThree>
-
-  <ContentBoxCyberCut as="h2" title="ระบบออโต้หลังบ้านอัจริยะ PABLO666 ช่วยให้ทุกขั้นตอนใช้งานง่ายขึ้นมากๆ">
-    <p class="leading-relaxed">
-      ในส่วนของการฝากและถอน ระบบรองรับช่องทางการทำรายการหลายรูปแบบ ผู้ใช้งานสามารถเลือกวิธีที่สะดวกได้ตามต้องการ พร้อมมีหน้าตรวจสอบสถานะรายการและประวัติธุรกรรมภายในบัญชีสมาชิก โดยภาพรวม ระบบออโต้ของ <strong
-        class="text-yellow-300">
-        PABLO666
-      </strong> ไม่ได้ช่วยเฉพาะเรื่องการฝากถอนเท่านั้น แต่ยังเชื่อมโยงการจัดการสมาชิก การตรวจสอบรายการ และการติดต่อฝ่ายบริการให้อยู่ในลำดับเดียวกัน ส่งผลให้การใช้งานตั้งแต่เริ่มต้นจนจบเป็นไปอย่างต่อเนื่องและสะดวกมากขึ้น
-    </p>
-  </ContentBoxCyberCut>
-
-  <LoginRtpSection />
-
   <GameRankingBoard />
 
-  <ContentBoxCyberCut as="h2" title="วิธีเลือกทางเข้า PABLO666 ให้เป็นเว็บไซต์จริงและปลอดภัย">
+  <ContentBox as="h2" title="ทำไม CASHOT123 เว็บออนไลน์คาสิโน จึงตอบโจทย์ผู้เล่นได้หลายกลุ่ม">
     <p class="leading-relaxed">
-      ปัจจุบันมีเว็บไซต์จำนวนไม่น้อยที่ใช้ชื่อคล้ายกับ <strong class="text-yellow-300">PABLO666</strong> จึงควรตรวจสอบชื่อโดเมนและความถูกต้องของหน้าเว็บไซต์ทุกครั้งก่อนเข้าสู่ระบบ โดยสังเกตการเชื่อมต่อผ่าน
-      HTTPS รูปแบบหน้าเว็บไซต์ และเมนูต่าง ๆ ว่าครบถ้วนหรือไม่ หากไม่แน่ใจว่าควรใช้ลิงก์ใดเพื่อเข้าสู่เว็บไซต์จริง ภายในหน้านี้เราได้จัดเตรียมลิงก์สำหรับ "ทางเข้า PABLO666" และ "สมัครสมาชิก PABLO666 เว็บแท้"
-      ไว้เรียบร้อยแล้ว ผู้ใช้งานสามารถกดผ่านลิงก์ดังกล่าวเพื่อเข้าสู่เว็บไซต์ได้โดยตรง
+      สมาชิกแต่ละคนมีรูปแบบการใช้งานและความสนใจที่แตกต่างกัน บางคนให้ความสำคัญกับความหลากหลายของเกมสล็อต บางคนมองหาระบบเว็บ UX UI ที่ใช้งานง่าย ขณะที่อีกหลายคนเลือกเว็บไซต์จากความสะดวกของบริการและการดูแลหลังการสมัคร <strong
+        class="text-amber-300">
+        CASHOT123
+      </strong> จึงพัฒนาองค์ประกอบต่าง ๆ ให้รองรับความต้องการที่หลากหลาย เพื่อให้สมาชิกแต่ละกลุ่มสามารถเลือกใช้งานในแบบที่เหมาะกับตัวเองได้มากที่สุด
     </p>
-  </ContentBoxCyberCut>
+  </ContentBox>
 
-  <ContentBoxSpecial as="h2" title="สรุปหลังรีวิว PABLO666 เหมาะกับใคร">
-    <p slot="left" class="leading-relaxed">
-      หลังจากทดลองใช้งาน <strong class="text-yellow-300">PABLO666</strong> พบว่าเว็บไซต์นี้เหมาะกับผู้เล่นที่ให้ความสำคัญกับ ความสะดวก ความเสถียร และการบริการ มากกว่าคำโฆษณาว่าเกมแตกหนักหรือแตกบ่อย
+  <div class="mx-auto mb-10 w-full max-w-[1400px] px-4">
+    <FeatureHighlights items={playerFitPoints} />
+  </div>
+
+  <ContentBoxPremium as="h2" title="รีวิว ประสบการณ์ใช้งาน CASHOT123 เว็บตรงครบวงจร">
+    <p class="leading-relaxed">
+      เพื่อให้เห็นภาพการใช้งานจริง เราได้ทดลองใช้งาน <strong class="text-amber-300">CASHOT123</strong> ตั้งแต่การเข้าสู่เว็บไซต์ สมัครสมาชิก เลือกเกม ไปจนถึงการใช้งานระบบต่าง ๆ ภายในแพลตฟอร์ม โดยประเมินทั้งความสะดวก
+      ความเสถียร และประสบการณ์โดยรวมของเว็บไซต์ เพื่อดูว่า CASHOT123 สามารถตอบโจทย์การเป็นเว็บตรงครบวงจรได้มากน้อยเพียงใด
     </p>
+  </ContentBoxPremium>
+
+  <ContentBox3ThreePremium titleleft="หน้าเว็บไซต์และเมนูการใช้งาน" titlecenter="ขั้นตอนสมัครสมาชิกและเริ่มต้นใช้งาน" titleright="ความเสถียรระหว่างการทดลองเล่น">
+    <p slot="left">ทดลองใช้งานผ่าน Windows 11 และ Android 14 พบว่าหน้าเว็บไซต์แบ่งหมวดเกมชัดเจน เมนูหลักค้นหาได้ง่าย และสลับหน้าได้ต่อเนื่อง</p>
+    <p slot="center">ทดลองสมัครสมาชิกตั้งแต่กรอกข้อมูลจนเข้าสู่ระบบ ใช้เวลาประมาณ 1–2 นาที ขั้นตอนไม่ซับซ้อน และเริ่มใช้งานได้ทันที</p>
+    <p slot="right">ทดลองเล่น สล็อต 12 เกม คาสิโนสด 3 ห้อง และกีฬา 5 ลีก พบว่าการโหลดเกมและเปลี่ยนหน้าเป็นไปอย่างต่อเนื่อง ไม่พบอาการค้างระหว่างการทดสอบ</p>
+  </ContentBox3ThreePremium>
+
+  <ReviewCardSumo2 />
+
+  <ContentBoxSevenThreePremium titleright="ทำไมระบบฝากถอนอัตโนมัติจึงกลายเป็นจุดเด่นของ CASHOT123">
+    <div slot="left" class="flex h-full flex-col justify-center">
+      <Picture
+        src={imgAutoWallet}
+        loading="lazy"
+        fetchpriority="low"
+        widths={[200, 400, 600, 800]}
+        sizes="(max-width: 768px) 100vw, 30vw"
+        decoding="async"
+        formats={["avif", "webp"]}
+        fallbackFormat="webp"
+        quality={80}
+        alt="CASHOT123 ระบบฝากถอนอัตโนมัติ ทำรายการได้ด้วยตนเองตลอด 24 ชั่วโมง"
+        class="mx-auto h-auto w-full rounded-2xl border-2 border-red-500/30 shadow-[0_10px_30px_rgba(220,38,38,0.35)]"
+      />
+    </div>
     <p slot="right" class="leading-relaxed">
-      หากเปรียบเทียบง่าย ๆ ก็เหมือนการเลือกรถ หลายคนไม่ได้เลือกคันที่แรงที่สุด แต่เลือกคันที่ ขับสบาย ใช้งานคุ้ม แอร์เย็น และมีศูนย์บริการที่ไว้ใจได้ ซึ่งให้ความสบายใจในการใช้งานทุกวัน เช่นเดียวกับ <strong
-        class="text-yellow-300">
-        PABLO666
-      </strong>
+      ระบบฝากถอนอัตโนมัติของ CASHOT123 ช่วยลดขั้นตอนการทำธุรกรรมให้สมาชิกสามารถดำเนินการได้ด้วยตนเองตลอด 24 ชั่วโมง จากการใช้งานทั่วไป การเข้าสู่หน้าเติมเงินและยืนยันรายการใช้เวลาประมาณ 2–5 วินาที
+      ขณะที่การอัปเดตยอดเครดิตหลังฝากสำเร็จมักอยู่ในช่วง 10–60 วินาที ส่วนการถอนเงิน ระบบจะส่งคำขอเข้าสู่ขั้นตอนประมวลผลทันที โดยระยะเวลาที่เงินเข้าบัญชีส่วนใหญ่อยู่ที่ประมาณ 30 วินาที–5 นาที ทั้งนี้ความเร็วอาจแตกต่างกันตามธนาคารที่ใช้งาน
+      ความหนาแน่นของระบบในช่วงเวลานั้น และคุณภาพของเครือข่ายอินเทอร์เน็ตของผู้ใช้งาน
     </p>
-  </ContentBoxSpecial>
+  </ContentBoxSevenThreePremium>
+
+  <ContentBoxSevenThreeNeumorphism titleright="มาตรฐานความปลอดภัยที่ช่วยให้ใช้งานเว็บตรงได้อย่างมั่นใจ">
+    <div slot="left" class="flex h-full flex-col justify-center">
+      <Picture
+        src={imgSecurity}
+        loading="lazy"
+        fetchpriority="low"
+        widths={[200, 400, 600, 800]}
+        sizes="(max-width: 768px) 100vw, 30vw"
+        decoding="async"
+        formats={["avif", "webp"]}
+        fallbackFormat="webp"
+        quality={80}
+        alt="CASHOT123 มาตรฐานความปลอดภัย HTTPS พร้อมการเข้ารหัส SSL/TLS 256-bit"
+        class="mx-auto h-auto w-full rounded-2xl border-2 border-red-500/30 shadow-[0_10px_30px_rgba(220,38,38,0.35)]"
+      />
+    </div>
+    <p slot="right" class="leading-relaxed">
+      CASHOT123 ใช้งานผ่าน HTTPS พร้อมการเข้ารหัส SSL/TLS 256-bit เพื่อปกป้องข้อมูลระหว่างผู้ใช้งานกับเว็บไซต์ ระหว่างการตรวจสอบไม่พบคำเตือน "Not Secure" จาก Google Chrome และใบรับรองความปลอดภัยของเว็บไซต์สามารถตรวจสอบได้ผ่านไอคอนรูปแม่กุญแจบนแถบที่อยู่ของเบราว์เซอร์
+    </p>
+  </ContentBoxSevenThreeNeumorphism>
+
+  <ContentBoxNeumorphism as="h2" title="ทางเข้า CASHOT123 เลือกลิงก์ให้ถูกต้อง เพื่อการใช้งานที่มั่นใจในระยะยาว">
+    <p class="leading-relaxed">
+      การเลือก ทางเข้า <strong class="text-amber-300">CASHOT123</strong> ที่ถูกต้องเป็นสิ่งสำคัญ เพราะหากเข้าใช้งานผ่านเว็บไซต์ปลอมหรือโดเมนที่ไม่ได้รับการอัปเดต ข้อมูลบัญชีและธุรกรรมอาจตกอยู่ในความเสี่ยง
+      รวมถึงผลการเล่นหรือยอดเงินที่ได้รับอาจไม่ได้รับการบันทึกในระบบของเว็บไซต์จริง แม้ว่าจะทำกำไรหรือได้รับรางวัลจากการเล่น ก็อาจไม่สามารถรับเครดิตหรือถอนเงินได้ ดังนั้นควร เลือกลิงก์ให้ถูกต้อง เพื่อการใช้งานที่มั่นใจในระยะยาว
+      และเพื่อให้สิทธิ์ของสมาชิก หากท่านไม่รู้ว่าลิ้งก์ ทางเข้า สมัครไหนคือสิ่งที่ถูกต้องของแท้ เราได้ทิ้งลิ้ง สมัครไว้ให้ท่านแล้ว ที่ปุ่ม สมัครและทางเขา
+    </p>
+  </ContentBoxNeumorphism>
+
+  <SmoothCarousel />
+
+  <LoginRtpSection />
 
   <div class="mx-auto mb-10 flex flex-nowrap justify-center gap-3 px-4 sm:gap-6">
     <a
       href="/login"
-      class="group relative flex flex-1 items-center justify-center rounded-full border border-red-500/50 bg-[#0a0806]/80 px-4 py-3 text-sm font-black whitespace-nowrap text-red-300 backdrop-blur-sm transition-all duration-300 hover:scale-105 hover:bg-red-950/60 hover:shadow-[0_0_15px_rgba(220,38,38,0.4)] sm:flex-none sm:px-10 sm:py-3.5 sm:text-base">
+      class="group relative flex flex-1 items-center justify-center rounded-full bg-gradient-to-r from-red-500 via-red-600 to-red-700 px-4 py-3 text-sm font-black whitespace-nowrap text-white shadow-[0_5px_20px_rgba(220,38,38,0.45)] transition-all duration-300 hover:-translate-y-1 hover:scale-105 hover:shadow-[0_8px_25px_rgba(220,38,38,0.65)] sm:flex-none sm:px-10 sm:py-3.5 sm:text-base">
       เข้าสู่ระบบ
     </a>
 
     <a
       href="/register"
-      class="group relative flex flex-1 items-center justify-center rounded-full bg-gradient-to-r from-yellow-400 via-yellow-500 to-yellow-600 px-4 py-3 text-sm font-black whitespace-nowrap text-[#1a1206] shadow-[0_5px_20px_rgba(234,179,8,0.4)] transition-all duration-300 hover:-translate-y-1 hover:scale-105 hover:shadow-[0_8px_25px_rgba(234,179,8,0.6)] sm:flex-none sm:px-10 sm:py-3.5 sm:text-base">
+      class="group relative flex flex-1 items-center justify-center rounded-full border border-amber-400/60 bg-[#14040a]/80 px-4 py-3 text-sm font-black whitespace-nowrap text-amber-300 backdrop-blur-sm transition-all duration-300 hover:scale-105 hover:border-amber-300 hover:bg-[#1c060c] hover:shadow-[0_0_15px_rgba(245,158,11,0.45)] sm:flex-none sm:px-10 sm:py-3.5 sm:text-base">
       สมัครสมาชิก
     </a>
   </div>
 
-  <LatestWinnersCyber />
+  <LatestWinners4 />
 
   <Navfoot />
 </MainLayout>
