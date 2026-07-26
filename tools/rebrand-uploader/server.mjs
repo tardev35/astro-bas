@@ -1247,38 +1247,44 @@ const PAGE = /* html */ `<!doctype html>
   /* ── layout: full-width grid, cards flow 1→5 left→right, wrap on overflow ─ */
   /* auto-fill (not auto-fit) keeps column tracks fixed, so a lone card on the
      last row stays one column wide instead of stretching across the full width. */
+  /* Card 1 carries twelve fields and is several times taller than any other
+     card. On a uniform grid that is fatal to the layout: a grid row is as tall
+     as its tallest member, so every short card left a hole beneath itself and
+     the Rebrand card — the one pressed last, and the one that matters — was
+     stranded far below the fold.
+
+     So card 1 gets its own column and stops setting the pace for anything else,
+     while cards 2-6 pack vertically in a multi-column flow, where a short card
+     is simply followed by the next one with no gap. */
   main {
-    counter-reset: card;
     display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+    grid-template-columns: minmax(300px, 380px) minmax(0, 1fr);
     align-items: start;
     gap: 22px; padding: 26px 30px 40px; margin: 0;
   }
+  .rest {
+    /* up to 2 columns, each at least 340px — drops to 1 on its own when narrow */
+    columns: 340px 2;
+    column-gap: 22px;
+  }
+  .rest .card { break-inside: avoid; margin-bottom: 22px; }
+  /* column-span breaks the flow exactly where the card sits, which is why card 6
+     is third in the DOM: it lands right below the two short cards instead of
+     after everything. */
+  #card6 { column-span: all; }
 
-  /* Card 1 holds twelve fields and is far taller than the rest. With plain
-     auto-placement every short card sits in row 1 and leaves dead space beneath
-     itself, which pushed the Rebrand card below the fold — the operator had to
-     scroll past all of card 1 to reach the button they press last.
-
-     Letting card 1 span two row tracks fills that space: the short cards take
-     row 1 beside it, and the Rebrand card (spanning two columns) lands in row 2
-     directly under cards 2 and 3, on screen without scrolling. Both spans are
-     dropped below 900px, where there aren't enough columns for either to mean
-     anything. */
-  #card1 { grid-row: span 2; }
-  #card6 { grid-column: span 2; }
-  @media (max-width: 900px) {
-    #card1 { grid-row: auto; }
-    #card6 { grid-column: auto; }
+  @media (max-width: 1100px) {
+    main { grid-template-columns: 1fr; }
+    .rest { columns: 340px 2; }
   }
   @media (max-width: 640px) {
-    main { grid-template-columns: 1fr; padding: 20px 16px 40px; }
+    .rest { columns: 1; }
+    main { padding: 20px 16px 40px; }
     header { padding: 16px; }
   }
 
   /* ── card ───────────────────────────────────────────── */
   .card {
-    counter-increment: card;
     position: relative; isolation: isolate;
     background: linear-gradient(180deg, var(--card-a), var(--card-b));
     border: 1px solid var(--line); border-radius: var(--radius);
@@ -1297,7 +1303,10 @@ const PAGE = /* html */ `<!doctype html>
     display: flex; align-items: center; gap: 11px;
   }
   .card h2::before {
-    content: counter(card); flex: none;
+    /* number comes from data-n on the <h2>, not a CSS counter: the Rebrand
+       card sits third in the DOM for layout reasons, and a counter would have
+       renumbered it to 4 and broken every reference to "ส่วนที่ 6" */
+    content: attr(data-n); flex: none;
     width: 27px; height: 27px; border-radius: 9px;
     display: grid; place-items: center;
     background: var(--grad); color: #05101f; font-weight: 800; font-size: 13px;
@@ -1523,7 +1532,7 @@ const PAGE = /* html */ `<!doctype html>
 </header>
 <main>
   <section class="card" id="card1">
-    <h2>ไฟล์แบรนด์ · src/assets</h2>
+    <h2 data-n="1">ไฟล์แบรนด์ · src/assets</h2>
     <p class="sub">โลโก้ / เนื้อหา (docx) / พื้นหลัง (รูป หรือ สี/ไล่สี) / แบนเนอร์ / รูป promotion + carousel</p>
     <div class="field" data-img>
       <div class="row"><label>Logo</label><span class="target">src/assets/logo.webp + public/logo.webp</span></div>
@@ -1615,138 +1624,140 @@ const PAGE = /* html */ `<!doctype html>
     </div>
   </section>
 
-  <section class="card" id="card2">
-    <h2>ไอคอนเว็บ · public</h2>
-    <p class="sub">favicon (สร้างชุดไอคอนให้อัตโนมัติ) — โลโก้ public ดึงจาก Logo ในส่วนที่ 1 ให้เอง</p>
-    <div class="field" data-img>
-      <div class="row"><label>Favicon</label><span class="target">favicon.ico + .png set + .svg</span></div>
-      <div class="row"><input type="file" accept="image/*,.svg" data-slot="favicon" /><img class="thumb" /></div>
-      <span class="status"></span>
-    </div>
-  </section>
-
-  <section class="card" id="card3">
-    <h2>ลิงก์ · aff / ไลน์</h2>
-    <div class="field" id="affField">
-      <div class="row"><label>ลิงก์ aff</label><span class="target">src/pages/login.astro + register.astro</span></div>
-      <div class="row"><input type="url" class="linkinput" id="affInput" placeholder="https://..." spellcheck="false" /></div>
-      <span class="status">แก้ค่า <code>targetUrl</code> ในทั้งหน้า login และ register พร้อมกัน</span>
-    </div>
-    <div class="field" id="lineField">
-      <div class="row"><label>ลิงก์ไลน์</label><span class="target">astro.config.mjs → redirects "/line"</span></div>
-      <div class="row"><input type="url" class="linkinput" id="lineInput" placeholder="https://..." spellcheck="false" /></div>
-      <span class="status">แก้ปลายทางของ redirect <code>/line</code></span>
-    </div>
-  </section>
-
-  <section class="card" id="card4">
-    <h2>SEO · Title / Meta หน้าย่อย</h2>
-    <div class="pull-row">
-      <button type="button" id="pullDocx" class="ghost">📄 ดึงจาก content.docx</button>
-      <span class="pull-hint">อัพ Content brief (docx) ในส่วนที่ 1 ก่อน แล้วค่อยกดปุ่มนี้</span>
-    </div>
-    <div class="field" data-page="promotion">
-      <div class="row"><label>โปรโมชั่น</label><span class="target">src/pages/promotion.astro</span></div>
-      <input type="text" class="metatitle" data-k="title" placeholder="Title" spellcheck="false" />
-      <textarea class="metadesc" data-k="desc" rows="2" placeholder="Meta description" spellcheck="false"></textarea>
-      <span class="status"></span>
-    </div>
-    <div class="field" data-page="contactus">
-      <div class="row"><label>ติดต่อเรา</label><span class="target">src/pages/contact-us.astro</span></div>
-      <input type="text" class="metatitle" data-k="title" placeholder="Title" spellcheck="false" />
-      <textarea class="metadesc" data-k="desc" rows="2" placeholder="Meta description" spellcheck="false"></textarea>
-      <span class="status"></span>
-    </div>
-    <div class="field" data-page="demo">
-      <div class="row"><label>ทดลองเล่น</label><span class="target">src/pages/ทดลองเล่น.astro</span></div>
-      <input type="text" class="metatitle" data-k="title" placeholder="Title" spellcheck="false" />
-      <textarea class="metadesc" data-k="desc" rows="2" placeholder="Meta description" spellcheck="false"></textarea>
-      <span class="status"></span>
-    </div>
-    <div class="field" data-page="entrance">
-      <div class="row"><label>ทางเข้า</label><span class="target">src/pages/ทางเข้า.astro</span></div>
-      <input type="text" class="metatitle" data-k="title" placeholder="Title" spellcheck="false" />
-      <textarea class="metadesc" data-k="desc" rows="2" placeholder="Meta description" spellcheck="false"></textarea>
-      <span class="status"></span>
-    </div>
-  </section>
-
-  <section class="card" id="card5">
-    <h2>สร้างหน้าเพิ่ม</h2>
-    <div class="field newpage" data-newpage="article">
-      <div class="row">
-        <label class="switch"><input type="checkbox" class="np-toggle" /><span class="slider"></span></label>
-        <label>บทความ</label>
-        <span class="target">src/pages/บทความ.astro</span>
-        <span class="badge np-badge"></span>
+  <!-- Cards 2-6 pack vertically (CSS multi-column) so a short card never
+       leaves a hole under itself. Card 6 is placed third in DOM on purpose:
+       column-span makes it break the flow where it sits, so putting it after
+       the two short cards lands it high on screen instead of at the bottom. -->
+  <div class="rest">
+    <section class="card" id="card2">
+      <h2 data-n="2">ไอคอนเว็บ · public</h2>
+      <p class="sub">favicon (สร้างชุดไอคอนให้อัตโนมัติ) — โลโก้ public ดึงจาก Logo ในส่วนที่ 1 ให้เอง</p>
+      <div class="field" data-img>
+        <div class="row"><label>Favicon</label><span class="target">favicon.ico + .png set + .svg</span></div>
+        <div class="row"><input type="file" accept="image/*,.svg" data-slot="favicon" /><img class="thumb" /></div>
+        <span class="status"></span>
       </div>
-      <div class="np-body" hidden>
-        <input type="text" class="metatitle" data-k="title" placeholder="Title (เว้นว่างได้ — Claude เขียนให้)" spellcheck="false" />
-        <textarea class="metadesc" data-k="desc" rows="2" placeholder="Meta description (เว้นว่างได้ — Claude เขียนให้)" spellcheck="false"></textarea>
+    </section>
+    <section class="card" id="card3">
+      <h2 data-n="3">ลิงก์ · aff / ไลน์</h2>
+      <div class="field" id="affField">
+        <div class="row"><label>ลิงก์ aff</label><span class="target">src/pages/login.astro + register.astro</span></div>
+        <div class="row"><input type="url" class="linkinput" id="affInput" placeholder="https://..." spellcheck="false" /></div>
+        <span class="status">แก้ค่า <code>targetUrl</code> ในทั้งหน้า login และ register พร้อมกัน</span>
       </div>
-      <span class="status"></span>
-    </div>
-    <div class="field newpage" data-newpage="aboutus">
-      <div class="row">
-        <label class="switch"><input type="checkbox" class="np-toggle" /><span class="slider"></span></label>
-        <label>เกี่ยวกับเรา</label>
-        <span class="target">src/pages/about-us.astro</span>
-        <span class="badge np-badge"></span>
+      <div class="field" id="lineField">
+        <div class="row"><label>ลิงก์ไลน์</label><span class="target">astro.config.mjs → redirects "/line"</span></div>
+        <div class="row"><input type="url" class="linkinput" id="lineInput" placeholder="https://..." spellcheck="false" /></div>
+        <span class="status">แก้ปลายทางของ redirect <code>/line</code></span>
       </div>
-      <div class="np-body" hidden>
-        <input type="text" class="metatitle" data-k="title" placeholder="Title (เว้นว่างได้ — Claude เขียนให้)" spellcheck="false" />
-        <textarea class="metadesc" data-k="desc" rows="2" placeholder="Meta description (เว้นว่างได้ — Claude เขียนให้)" spellcheck="false"></textarea>
+    </section>
+    <section class="card" id="card6">
+      <h2 data-n="6">สร้างคำสั่ง Rebrand (สำหรับ Claude Code)</h2>
+      <div class="field">
+        <div class="row"><label>ชื่อแบรนด์</label></div>
+        <input type="text" class="linkinput" id="rbBrand" placeholder="เช่น PABLO666" spellcheck="false" />
       </div>
-      <span class="status"></span>
-    </div>
-  </section>
-
-  <section class="card" id="card6">
-    <h2>สร้างคำสั่ง Rebrand (สำหรับ Claude Code)</h2>
-    <div class="field">
-      <div class="row"><label>ชื่อแบรนด์</label></div>
-      <input type="text" class="linkinput" id="rbBrand" placeholder="เช่น PABLO666" spellcheck="false" />
-    </div>
-    <div class="field">
-      <div class="row"><label>URL production จริง</label><span class="opt">optional</span></div>
-      <input type="url" class="linkinput" id="rbUrl" placeholder="เช่น https://www.pablo666-brand.com" spellcheck="false" />
-      <span class="status">ใส่เมื่อรู้โดเมนจริง — เว้นว่างได้ คำสั่งจะสั่งห้ามเปลี่ยนโดเมนเดิม</span>
-    </div>
-    <div class="field">
-      <div class="row"><label>หมายเหตุ / variant hints</label><span class="opt">optional</span></div>
-      <textarea class="metadesc" id="rbNotes" rows="2" placeholder="เช่น โทนทอง-ดำ, ใช้ NavbarPremium, เน้นหน้าโปรโมชั่น" spellcheck="false"></textarea>
-    </div>
-    <div class="field">
-      <div class="row"><label>คำสั่งที่จะรัน</label><button type="button" id="rbCopy" class="ghost">📋 Copy คำสั่ง</button></div>
-      <textarea class="metadesc" id="rbPrompt" rows="3" readonly spellcheck="false"></textarea>
-      <span class="status" id="rbHint">Copy ไว้วางเองใน Claude Code ก็ได้ หรือกด "เริ่ม Rebrand" ให้ระบบยิงให้เลย</span>
-    </div>
-    <div class="field">
-      <div class="row">
-        <button type="button" id="uploadAll" class="fire alt">⬆ อัพโหลดทั้งหมด</button>
-        <button type="button" id="rbFire" class="fire" disabled>▶ เริ่ม Rebrand</button>
-        <button type="button" id="rbStop" class="ghost danger" disabled>■ หยุด</button>
-        <button type="button" id="rbDry" class="ghost" title="ยิง prompt สั้นๆ เพื่อเช็กว่าต่อ Claude ได้จริง ใช้เวลาไม่กี่วินาที ไม่แตะไฟล์">🧪 ทดสอบท่อ</button>
-        <span class="pill" id="rbPill">พร้อม</span>
-        <span class="rb-timer" id="rbTimer"></span>
+      <div class="field">
+        <div class="row"><label>URL production จริง</label><span class="opt">optional</span></div>
+        <input type="url" class="linkinput" id="rbUrl" placeholder="เช่น https://www.pablo666-brand.com" spellcheck="false" />
+        <span class="status">ใส่เมื่อรู้โดเมนจริง — เว้นว่างได้ คำสั่งจะสั่งห้ามเปลี่ยนโดเมนเดิม</span>
       </div>
-      <span class="status" id="rbFireHint">อัพโหลดไฟล์ให้เสร็จก่อน แล้วปุ่ม Rebrand จะกดได้ · งานจริงกินเวลาหลายสิบนาที · <strong>ห้ามปิดหน้าต่างดำ (cmd)</strong> ระหว่างรัน (ปิดแท็บเบราว์เซอร์ได้ ไม่กระทบ)</span>
-    </div>
-    <div class="field" id="rbRunBox" hidden>
-      <div class="row">
-        <span class="rb-stat">tools <b id="rbTools">0</b></span>
-        <span class="rb-stat" id="rbErrWrap" hidden>ข้อผิดพลาด <b id="rbErrs">0</b></span>
-        <span class="rb-stat">ไฟล์ที่แก้ <b id="rbFiles">0</b></span>
-        <span class="rb-stat" id="rbMeta"></span>
+      <div class="field">
+        <div class="row"><label>หมายเหตุ / variant hints</label><span class="opt">optional</span></div>
+        <textarea class="metadesc" id="rbNotes" rows="2" placeholder="เช่น โทนทอง-ดำ, ใช้ NavbarPremium, เน้นหน้าโปรโมชั่น" spellcheck="false"></textarea>
       </div>
-      <pre id="rbLog"></pre>
-      <details id="rbFileBox" hidden>
-        <summary>ไฟล์ที่ถูกแก้</summary>
-        <div id="rbFileList"></div>
-      </details>
-      <span class="status" id="rbDone"></span>
-    </div>
-  </section>
+      <div class="field">
+        <div class="row"><label>คำสั่งที่จะรัน</label><button type="button" id="rbCopy" class="ghost">📋 Copy คำสั่ง</button></div>
+        <textarea class="metadesc" id="rbPrompt" rows="3" readonly spellcheck="false"></textarea>
+        <span class="status" id="rbHint">Copy ไว้วางเองใน Claude Code ก็ได้ หรือกด "เริ่ม Rebrand" ให้ระบบยิงให้เลย</span>
+      </div>
+      <div class="field">
+        <div class="row">
+          <button type="button" id="uploadAll" class="fire alt">⬆ อัพโหลดทั้งหมด</button>
+          <button type="button" id="rbFire" class="fire" disabled>▶ เริ่ม Rebrand</button>
+          <button type="button" id="rbStop" class="ghost danger" disabled>■ หยุด</button>
+          <button type="button" id="rbDry" class="ghost" title="ยิง prompt สั้นๆ เพื่อเช็กว่าต่อ Claude ได้จริง ใช้เวลาไม่กี่วินาที ไม่แตะไฟล์">🧪 ทดสอบท่อ</button>
+          <span class="pill" id="rbPill">พร้อม</span>
+          <span class="rb-timer" id="rbTimer"></span>
+        </div>
+        <span class="status" id="rbFireHint">อัพโหลดไฟล์ให้เสร็จก่อน แล้วปุ่ม Rebrand จะกดได้ · งานจริงกินเวลาหลายสิบนาที · <strong>ห้ามปิดหน้าต่างดำ (cmd)</strong> ระหว่างรัน (ปิดแท็บเบราว์เซอร์ได้ ไม่กระทบ)</span>
+      </div>
+      <div class="field" id="rbRunBox" hidden>
+        <div class="row">
+          <span class="rb-stat">tools <b id="rbTools">0</b></span>
+          <span class="rb-stat" id="rbErrWrap" hidden>ข้อผิดพลาด <b id="rbErrs">0</b></span>
+          <span class="rb-stat">ไฟล์ที่แก้ <b id="rbFiles">0</b></span>
+          <span class="rb-stat" id="rbMeta"></span>
+        </div>
+        <pre id="rbLog"></pre>
+        <details id="rbFileBox" hidden>
+          <summary>ไฟล์ที่ถูกแก้</summary>
+          <div id="rbFileList"></div>
+        </details>
+        <span class="status" id="rbDone"></span>
+      </div>
+    </section>
+    <section class="card" id="card4">
+      <h2 data-n="4">SEO · Title / Meta หน้าย่อย</h2>
+      <div class="pull-row">
+        <button type="button" id="pullDocx" class="ghost">📄 ดึงจาก content.docx</button>
+        <span class="pull-hint">อัพ Content brief (docx) ในส่วนที่ 1 ก่อน แล้วค่อยกดปุ่มนี้</span>
+      </div>
+      <div class="field" data-page="promotion">
+        <div class="row"><label>โปรโมชั่น</label><span class="target">src/pages/promotion.astro</span></div>
+        <input type="text" class="metatitle" data-k="title" placeholder="Title" spellcheck="false" />
+        <textarea class="metadesc" data-k="desc" rows="2" placeholder="Meta description" spellcheck="false"></textarea>
+        <span class="status"></span>
+      </div>
+      <div class="field" data-page="contactus">
+        <div class="row"><label>ติดต่อเรา</label><span class="target">src/pages/contact-us.astro</span></div>
+        <input type="text" class="metatitle" data-k="title" placeholder="Title" spellcheck="false" />
+        <textarea class="metadesc" data-k="desc" rows="2" placeholder="Meta description" spellcheck="false"></textarea>
+        <span class="status"></span>
+      </div>
+      <div class="field" data-page="demo">
+        <div class="row"><label>ทดลองเล่น</label><span class="target">src/pages/ทดลองเล่น.astro</span></div>
+        <input type="text" class="metatitle" data-k="title" placeholder="Title" spellcheck="false" />
+        <textarea class="metadesc" data-k="desc" rows="2" placeholder="Meta description" spellcheck="false"></textarea>
+        <span class="status"></span>
+      </div>
+      <div class="field" data-page="entrance">
+        <div class="row"><label>ทางเข้า</label><span class="target">src/pages/ทางเข้า.astro</span></div>
+        <input type="text" class="metatitle" data-k="title" placeholder="Title" spellcheck="false" />
+        <textarea class="metadesc" data-k="desc" rows="2" placeholder="Meta description" spellcheck="false"></textarea>
+        <span class="status"></span>
+      </div>
+    </section>
+    <section class="card" id="card5">
+      <h2 data-n="5">สร้างหน้าเพิ่ม</h2>
+      <div class="field newpage" data-newpage="article">
+        <div class="row">
+          <label class="switch"><input type="checkbox" class="np-toggle" /><span class="slider"></span></label>
+          <label>บทความ</label>
+          <span class="target">src/pages/บทความ.astro</span>
+          <span class="badge np-badge"></span>
+        </div>
+        <div class="np-body" hidden>
+          <input type="text" class="metatitle" data-k="title" placeholder="Title (เว้นว่างได้ — Claude เขียนให้)" spellcheck="false" />
+          <textarea class="metadesc" data-k="desc" rows="2" placeholder="Meta description (เว้นว่างได้ — Claude เขียนให้)" spellcheck="false"></textarea>
+        </div>
+        <span class="status"></span>
+      </div>
+      <div class="field newpage" data-newpage="aboutus">
+        <div class="row">
+          <label class="switch"><input type="checkbox" class="np-toggle" /><span class="slider"></span></label>
+          <label>เกี่ยวกับเรา</label>
+          <span class="target">src/pages/about-us.astro</span>
+          <span class="badge np-badge"></span>
+        </div>
+        <div class="np-body" hidden>
+          <input type="text" class="metatitle" data-k="title" placeholder="Title (เว้นว่างได้ — Claude เขียนให้)" spellcheck="false" />
+          <textarea class="metadesc" data-k="desc" rows="2" placeholder="Meta description (เว้นว่างได้ — Claude เขียนให้)" spellcheck="false"></textarea>
+        </div>
+        <span class="status"></span>
+      </div>
+    </section>
+  </div>
 </main>
 <dialog id="confirmDlg">
   <div class="cf-top"></div>
