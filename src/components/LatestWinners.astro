@@ -14,11 +14,11 @@ const bankPool = [
 ---
 
 <div class="mx-auto w-full max-w-[1300px] p-4 font-sans">
-  <div class="relative overflow-hidden rounded-[20px] border border-[#10b981]/40 bg-[#062b15]/80 px-4 py-8 shadow-[0_10px_30px_rgba(16,185,129,0.15)] backdrop-blur-md md:p-10">
+  <div class="relative overflow-hidden rounded-[20px] border border-red-500/40 bg-[#140202]/80 px-4 py-8 shadow-[0_10px_30px_rgba(220,38,38,0.15)] backdrop-blur-md md:p-10">
     <div class="relative z-10 mb-8 flex items-center justify-center gap-3">
-      <span class="text-2xl drop-shadow-[0_0_8px_rgba(234,179,8,0.6)]">🏆</span>
-      <h2 class="bg-gradient-to-b from-[#fef08a] to-[#ca8a04] bg-clip-text text-xl font-black tracking-wide text-transparent drop-shadow-sm md:text-3xl">รายการถอนเงินล่าสุด</h2>
-      <span class="text-2xl drop-shadow-[0_0_8px_rgba(234,179,8,0.6)]">🏆</span>
+      <span class="text-2xl drop-shadow-[0_0_8px_rgba(220,38,38,0.6)]">🏆</span>
+      <p class="bg-gradient-to-b from-white to-red-500 bg-clip-text text-xl font-black tracking-wide text-transparent drop-shadow-sm md:text-3xl">รายการถอนเงินล่าสุดของสมาชิก UFAYES</p>
+      <span class="text-2xl drop-shadow-[0_0_8px_rgba(220,38,38,0.6)]">🏆</span>
     </div>
 
     <div id="feed-standard" class="relative z-10 flex flex-col"></div>
@@ -48,21 +48,21 @@ const bankPool = [
     return `
       <div class="winner-row grid grid-rows-[0fr] opacity-0 transition-all duration-700 ease-in-out -translate-y-4">
         <div class="overflow-hidden">
-          <div class="mb-3 flex items-center justify-between rounded-xl border border-[#10b981]/20 bg-[#021207]/60 p-4 shadow-sm transition-all hover:bg-[#062b15] hover:border-[#10b981]/50 backdrop-blur-md">
+          <div class="mb-3 flex items-center justify-between rounded-xl border border-red-500/20 bg-[#0a0101]/60 p-4 shadow-sm transition-all hover:bg-[#240404] hover:border-red-500/50 backdrop-blur-md">
             <div class="flex items-center gap-4">
-              <div class="relative flex h-11 w-11 shrink-0 items-center justify-center rounded-full bg-white/5 shadow-sm border border-[#10b981]/30">
+              <div class="relative flex h-11 w-11 shrink-0 items-center justify-center rounded-full bg-white/5 shadow-sm border border-red-500/30">
                 <div class="flex h-9 w-9 items-center justify-center overflow-hidden rounded-full ${bank.color}">
                   <img src="${bank.icon}" alt="bank" class="h-6 w-6 object-contain" />
                 </div>
               </div>
               <div class="flex flex-col justify-center">
-                <div class="text-sm font-bold text-white md:text-base">User: <span class="text-[#34d399] tracking-wider">${user}</span></div>
-                <div class="mt-0.5 text-[10px] text-green-100/50 md:text-xs">REF#${getRandomStr(8, "0123456789")} • ${getNowTime()}</div>
+                <div class="text-sm font-bold text-white md:text-base">User: <span class="text-red-300 tracking-wider">${user}</span></div>
+                <div class="mt-0.5 text-[10px] text-red-100/50 md:text-xs">REF#${getRandomStr(8, "0123456789")} • ${getNowTime()}</div>
               </div>
             </div>
             <div class="flex flex-col items-end justify-center gap-1.5">
-              <div class="text-lg font-black tracking-tight text-yellow-400 md:text-2xl drop-shadow-[0_0_5px_rgba(234,179,8,0.3)]">
-                ${getAmount()} <span class="text-[10px] font-medium text-yellow-600 md:text-xs">THB</span>
+              <div class="text-lg font-black tracking-tight text-red-400 md:text-2xl drop-shadow-[0_0_5px_rgba(220,38,38,0.3)]">
+                ${getAmount()} <span class="text-[10px] font-medium text-red-600 md:text-xs">THB</span>
               </div>
               <div class="rounded-full px-3 py-1 text-[9px] font-medium md:text-[10px] ${statusClass}">${statusText}</div>
             </div>

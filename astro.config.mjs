@@ -19,6 +19,6 @@ export default defineConfig({
     "/line": "https://tinyurl.com/suhng",
   },
 
-  site: "https://gsybet-guideline.com",
+  site: "https://ufayes-brand.com",
   integrations: [sitemap()],
 });

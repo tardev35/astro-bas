@@ -1584,3 +1584,139 @@ uploader แกะข้อความครบทุกย่อหน้า�
 จากการ encode ซ้ำตอนเทส (lossless เท่าเดิม เล็กลง 1.4KB) ผู้ใช้เลือกเก็บตัวใหม่ ·
 `MainLayout.astro` ถูกแก้นอกเซสชัน (คอมเมนต์หาย + จัดรูปแบบใหม่ ไม่ใช่ผลของ prettier)
 ผู้ใช้เลือกคงไว้ตามนั้น กฎห้ามจัด head ใหม่ยังอยู่ครบใน SKILL.md
+
+## 2026-07-27 — รีแบรนด์ GSYBET → UFAYES (3-agent ขนาน)
+
+**เป้าหมาย:** รีแบรนด์จาก GSYBET (ทองอร่าม + ดำอมน้ำตาล) → **UFAYES** (แดง crimson + โครเมียม/เงิน
+บนดำอมแดง) ตาม `src/assets/content.txt` + ชุดภาพใหม่ (drop 27 ก.ค. 00:20) และ **URL จริงที่ผู้ใช้ระบุ:
+`https://ufayes-brand.com`** (ไม่มี `www.`)
+
+แบรนด์นี้เป็นเว็บตรง UFABET รวม **แทงบอล + คาสิโนสด + สล็อต + หวยออนไลน์** ในบัญชีเดียว
+(โลโก้เป็นลูกฟุตบอลแดง/เงิน + ตัวอักษรโครม "UFA" + แดง "YES")
+
+### เนื้อหาต้นทาง (content.txt) — H1×1 + H2×9 + H3×5 ใช้ครบ ไม่ตก ไม่สลับ
+
+1. H1 UFAYES เว็บตรง UFABET รวมเกมยอดนิยมจากค่ายดัง พร้อมระบบฝากถอนออโต้
+2. H2 เชื่อมต่อระบบ UFABET รองรับการเดิมพันประเภทใดบ้าง
+3. H2 แทงบอล คาสิโน สล็อต และหวย แตกต่างกันอย่างไร
+4. H2 เกมยอดนิยมและค่ายดังที่คัดมาให้สมาชิก
+5. H2 สมัครสมาชิก + ระบบฝากถอนออโต้
+6. H2 โปรโมชั่น ต้องตรวจสอบเงื่อนไขอะไรบ้าง ← **ใน docx ไม่มี prefix `H2:`** (บรรทัด 16)
+   แต่โครงสร้างเป็นหัวข้อชัดเจน จึงตีความเป็น H2
+7. H2 ติดต่อทีมงาน (Line Official + Telegram)
+8. H2 ทางเข้าเว็บจริง / หลีกเลี่ยงเว็บเลียนแบบ
+9. H2 สรุปภาพรวมก่อนเริ่มใช้งาน
+10. H2 คำถามที่พบบ่อย + **H3×5** (คำถาม FAQ) ← docx มีลำดับชั้นจริง จึงเป็น h3 ชุดเดียวที่ถูกต้องทั้งไซต์
+
+### Variant rotation (before → after) — ไม่ซ้ำของ GSYBET สักตระกูล
+
+- Navbar: **`NavbarStyle10` → `NavbarStyle5`** (inventory ธีม HYDRA888 แดงอยู่แล้ว → ปรับเป็น crimson
+  UFAYES) **ได้ shape ใหม่: แถบดำเต็มความกว้าง + เมนู fullscreen overlay** แทน pill ลอยมน +
+  drawer เลื่อนข้างของ Style10; logo fallback เป็น `<span>` chrome gradient (ไม่ใช่ heading) [P1]
+- Footer: **`FooterPremiumSumo` → `Footer.astro`** (inventory ธีม SUMOHENG แดง → UFAYES;
+  copyright → UFAYES-BRAND.COM; badge → "HTTPS / SSL" + "UFABET DIRECT"; ลิงก์ `/slot` ที่ไม่มีหน้าจริง
+  → `/ทดลองเล่น` + `/ทางเข้า`; คงสีแบงก์จริง + LINE เขียว) [P1]
+- Announcement: **`Announcement6` → `Announcement2`** (inventory ธีม CHOKDEE1688 เขียว → crimson)
+  **shape ต่าง: แถบเหลี่ยม + badge "HOT" ตัดเฉียง `clip-path`** แทน pill มนของ Announcement6;
+  ตั้ง default `message` = UFAYES + `ufayes-brand.com` → หน้าย่อยเรียก `<Announcement />` เปล่าได้ [P1]
+- LatestWinners: **`LatestWinners2` → `LatestWinners.astro`** (ตัว plain ไม่ได้ใช้มา 6+ แบรนด์;
+  retheme เขียว emerald → crimson + ใส่ชื่อแบรนด์ที่ hardcode ใน JSX) [Agent A]
+- ContentBox mix: (GSYBET = **FloatingBadge + CyberCut + Special**) → **UFAYES = Neumorphism +
+  Premium + plain + Two**: `ContentBoxNeumorphism`(§1 H1 + §6) + `ContentBoxPremium`(§2) +
+  `ContentBoxSevenThreeNeumorphism`(§3/slide4) + plain `ContentBox`(§4 + §9) +
+  `ContentBoxSevenThreePremium`(§5/slide3) + `ContentBoxTwoPremium`(§7+§8 คู่กัน) + `Faq3`(§10)
+  — **เลิกใช้ FloatingBadge / CyberCut / Special ทั้งหมด** (ถอด import ออกจาก index
+  แต่ไฟล์ยังอยู่ครบเป็น inventory) [Agent A]
+
+หมายเหตุ: รอบนี้ **ไม่ใช้ `ContentBox3Three*` / `ContentBoxSpecial` / `FeatureHighlights`**
+เพราะไม่มีหัวข้อไหนใน docx ที่รูปทรง 3 คอลัมน์ / 2 ครึ่ง / sub-points ลงตัวโดยไม่ต้องตัดหรือรวมย่อหน้า
+(และ `FeatureHighlights` จะทำให้ H3 เกินโควตา 5 ตัวของ FAQ)
+
+### แบ่งงาน 3 agent ขนาน (เพิ่มจาก 2 เป็น 3 — แตก sub-pages เป็น B/C)
+
+- **P0/P1 (orchestrator):** อ่าน `content.txt` + `palette.json` + ภาพทุกไฟล์, เลือก variant,
+  เขียน brand spec 1 ไฟล์ให้ทั้ง 3 agent อ่านร่วมกัน แล้ว retheme **shared chrome** เองก่อน fan-out
+  9 ไฟล์: `astro.config.mjs`, `public/site.webmanifest`, `MainLayout.astro`, `NavbarStyle5`,
+  `Footer`, `Navfoot`, `ContentBox` (ใช้ 3 หน้า), `ContentBoxHuay` (ใช้ 2 หน้า), `Announcement2` (ใช้ทุกหน้า)
+- **Agent A (Landing):** `index.astro` + 13 component ที่เฉพาะหน้าแรก render
+- **Agent B (หน้าย่อย auth+entry):** `login`, `register`, `ทางเข้า`
+- **Agent C (หน้าย่อย promo+contact+demo):** `promotion`, `contact-us`, `ทดลองเล่น`
+- ไม่มีไฟล์ทับกันแม้แต่ไฟล์เดียว; agent ทั้ง 3 **ไม่ได้ build** — orchestrator build ครั้งเดียวตอนจบ
+- **URL 2 จุด:** `astro.config.mjs` (P1) + `webSiteSchema.url` ใน index (Agent A)
+  — `robots.txt` gen จาก `site:` ผ่าน `robots.txt.ts` แล้ว ไม่มี `public/robots.txt` ให้แก้อีกต่อไป
+
+### บั๊ก/ปัญหาที่เจอและแก้
+
+1. **`Announcement2` อ้างไฟล์พื้นหลังที่ไม่มีอยู่จริง** — `bg-[url('/assets/noise.png')]`
+   แต่ `public/assets/` ไม่มีอยู่เลย (404 เงียบๆ) → ถอด class ออก
+2. **`Announcement2` เส้น accent ล่างวางผิดบรรพบุรุษ** — `<div class="absolute bottom-0 ...">`
+   อยู่ในกล่องนอกที่**ไม่มี `relative`** → เส้นไปอิง ancestor ตัวอื่น แก้โดยเติม `relative` ให้กล่องนอก
+3. **`Footer.astro` หัวคอลัมน์เป็น `<h3>` ×2** — รอบนี้ docx มี h3 ที่ถูกต้องแค่ 5 ตัว (คำถาม FAQ)
+   ถ้าปล่อยไว้จะบวก h3 ปลอมให้**ทุกหน้า**ทั้งไซต์ → เปลี่ยนเป็น `<p>` สไตล์เดิม (เป็น UI label ไม่ใช่หัวข้อเอกสาร)
+4. **`LatestWinners` หัวข้อ "รายการถอนเงินล่าสุด" เป็น `<h2>`** → `<p>` ด้วยเหตุผลเดียวกัน
+5. **`public/site.webmanifest` ยังเป็น GSYBET** + `theme_color: #fbbf24` → UFAYES + `#dc2626`
+6. **`login`/`register` ตั้งชื่อ CSS var ตามสีเก่าตรงๆ** — `--brand-amber: #fbbf24`,
+   `--brand-gold: #f59e0b` (grep คลาส Tailwind จับไม่เจอ) → `--brand-red: #f87171` /
+   `--brand-crimson: #ef4444` + สลับ radial/glow/ring ทั้งชุดเป็น crimson;
+   `.brand-identity` เปลี่ยนจากทองทึบ → **chrome gradient** ให้ตรงตัวอักษรโครมของโลโก้
+7. **`index.astro` ไม่มี `Faq` ต่ออยู่เลย** ทั้งที่ docx มีหัวข้อ FAQ ชัดเจน (§10 + H3×5)
+   → ต่อ `Faq3` เข้าไป; ตัวมันเดิม **hardcode FAQ ของแบรนด์เก่าและไม่รับ props**
+   → เพิ่ม props `title`/`faqs` (default `[]` กัน FAQ แบรนด์เก่าหลุด) + `aria-expanded`
+8. **`promotion.astro` มี `<style>` ที่ตายแล้ว** — `:global(.text-purple-gradient)` ไม่มีใครใช้ทั้ง `src/`
+   แต่ยังฝัง gradient ทองเก่า (`#fef08a` → `#f59e0b`) ไว้ → ลบทิ้ง
+9. **`ทางเข้า.astro` ส่ง 2 element เข้า slot เดียว** (`<p>` + `<div>`) ผิดกฎ 1 element/slot
+   ของ flex `gap-*` → ห่อรวมเป็น `<div>` เดียว
+
+### ภาพที่ใช้ / ไม่ใช้
+
+- `banner1.png` = hero (glob ใน MainLayout ชี้ `banner1` แบบตรงชื่ออยู่แล้ว ไม่ต้องแก้)
+- `banner2.png` = ภาพประกอบใน **plain `ContentBox` คอลัมน์เดียว** ของ §9 (`max-w-3xl` ไม่เต็มขอบ)
+- `slide4.png` → SevenThree #1 (§3 แทงบอล/คาสิโน — ภาพนักฟุตบอล) ·
+  `slide3.png` → SevenThree #2 (§5 สมัคร+ฝากถอนออโต้ — ภาพโบนัสสมาชิกใหม่)
+- `slide1.png` = OG/Twitter image (`ImageOg` ใน MainLayout) — **ไม่ใช้ในเนื้อหา** ·
+  `slide2.png` **ไม่ใช้** — ครบโควตา SevenThree 2 บล็อกแล้ว ตามกฎ (ทั้งคู่ยังโผล่ใน `SmoothCarousel`
+  ซึ่งเป็น import เดิมของตัวมันเอง)
+- **`banner3.png` (23 ก.ค.) + `banner.png` (23 ก.ค.) = ของค้างจาก BESTCLUB88** ระบุใน brand spec
+  ให้ทุก agent ห้ามแตะ — ตรวจ `dist/` แล้วไม่มีการอ้างถึงเลย
+- รอบนี้ภาพ **เป็น `.png` ล้วน ไม่มี `.webp` drop** → ไม่มี stale extension ให้แก้ในหน้าไหนเลย
+
+### หวย = ปิด
+
+prompt ไม่มีคำว่า `เว็บหวย` และ UFAYES เป็นแบรนด์คาสิโน/กีฬาที่มีหวยเป็นแค่ 1 ใน 4 หมวด
+→ `ตรวจหวย.astro` / `แนวทาง.astro` **คงอยู่ใน `src/pages-disabled/`** และ **ไม่เพิ่มลิงก์เมนู**
+`ContentBoxHuay.astro` รอบนี้ **ไม่ใช่กล่องธีมหวย** — เป็นกล่องที่ `promotion` + `contact-us` ใช้อยู่
+จึง retheme เป็น crimson ปกติ
+
+### Verify (build ครั้งเดียวตอนจบ)
+
+- `npm run build` → **7 หน้า สำเร็จ 0 fail** (15.91s)
+- grep `dist/` ทั้งโฟลเดอร์: ชื่อแบรนด์เก่าทุกตัว (GSYBET/SUMOHENG/HYDRA888/CHOKDEE1688/…) = **0 hit** ·
+  `gsybet-guideline` = **0 hit** · `amber-|yellow-|orange-` ใน `class="…"` = **0 hit** ·
+  `undefined|NaN|[object Object]` = **0 hit** · `<!--` ใน `index.html` = **0**
+- **โครง heading:** `index.html` = **h1×1 / h2×9 / h3×5 / h4×0** ตรงสเปกเป๊ะ และ
+  ดึงหัวข้อออกมาเทียบลำดับกับ checklist docx แล้ว **ครบ 10 หัวข้อ เรียงตรงกันทุกตัว** ·
+  หน้าย่อยทุกหน้า h1×1 และ **h3×0**
+- `og:image` = `https://ufayes-brand.com/_astro/slide1.CerqQWZY.png` (asset ที่ hash แล้ว
+  ไม่ใช่ `/slide*.webp` ใน `public/`) · `canonical` + `og:site_name` = UFAYES
+- hero `<img>` = `banner1.*` จริง · ไม่มีการอ้าง `banner3` / `banner.png` ที่ไหนเลยใน `dist/`
+- `robots.txt` gen จากโดเมนใหม่ถูกต้อง · `sitemap-0.xml` สร้างครบ
+- redirect affiliate `yoalink.com/22hs` ใน `login`/`register` **ยังอยู่ครบ 2 จุดต่อหน้า** (ไม่แตะ)
+- **head block order รอบนี้ = `canonical → manifest → twitter → og → icons`** ต่างจาก GSYBET
+  (มาจาก hash ของโดเมนใหม่ผ่าน `brandProfile.ts` อัตโนมัติ — ไม่ได้จัดมือ)
+
+**noise ที่ยอมรับได้ (ไม่ใช่บั๊ก):** hex ทองเก่า (`#eab308`, `#1a1204`, `#fbbf24`, …) ยังโผล่ใน
+`dist/` ~250 จุด แต่ **อยู่ใน `<style>` ที่ inline ทั้งหมด 100%** — เป็น utility definition ที่ Tailwind
+gen จากการสแกน component inventory ที่ไม่ได้ render (`.to-[#eab308]{…}`)
+ตรวจแล้ว **ไม่มีสักตัวที่อยู่ใน `class="…"` ของ element จริง** → ไม่มีอะไรทาสีทองออกมาบนหน้าเว็บ
+
+### นอกสโคป / ไม่ได้แตะ
+
+- component inventory ที่ไม่ได้ใช้ทั้งหมด (Navbar/Footer/Announcement/LatestWinners/ContentBox
+  variant อื่นๆ) — ยังเป็นเนื้อหา/สีของแบรนด์เก่าตามปกติ **ไม่ได้ลบไฟล์ไหนเลย**
+- `src/assets/banner3.png`, `banner.png` — ไฟล์ตายจากรีแบรนด์ก่อน ยังเก็บไว้ตามกฎ CLAUDE.md
+- **`ทดลองเล่น.astro` บรรทัด ~52: `<script type="application/ld+json">` ยิง `gameList` เป็น array ดิบ
+  ของ `{name, image}` ไม่มี `@context`/`@type`** → เป็น JSON-LD ที่ไม่ valid **มาตั้งแต่ก่อนรีแบรนด์**
+  ไม่มีชื่อแบรนด์เก่าปนและไม่เกี่ยวกับงานรีแบรนด์ จึงปล่อยไว้ ถ้าจะเก็บ SEO ควรห่อเป็น `ItemList`
+- **ไม่มีปุ่ม/ลิงก์ Telegram** ในหน้า `contact-us` ทั้งที่ docx พูดถึง — เพราะโค้ดเบสไม่มี URL Telegram จริง
+  จึงกล่าวถึงเฉพาะในเนื้อความ/meta ไม่แต่ง URL ขึ้นเอง
+- **ไม่ deploy และไม่ `git push`** ตามที่ผู้ใช้สั่ง — หยุดที่ build + verify
