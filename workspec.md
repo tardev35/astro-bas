@@ -1281,3 +1281,155 @@ wrapper ตัวนั้นทำ 2 หน้าที่ จึงต้อ�
 consumer ต้องส่ง **1 element ต่อ 1 slot** (ทุกหน้าปัจจุบันทำแบบนี้อยู่แล้ว) — ถ้าจำเป็นต้องส่งหลาย element ให้ห่อเองใน `<div>`/`<Fragment>` ไม่ใช่ปล่อยเข้า flex column ตรงๆ เพราะ `gap-N` จะมาคั่นระหว่างลูกทุกตัว
 
 **Verify:** build ผ่าน 7 หน้า 0 fail. audit ทั้ง 25 ไฟล์: `slotWrapperDiv` = 0 ทุกตัว (ยกเว้น 3 จุดที่ตั้งใจ), `bodyFontNotBase` = 0 ทุกตัว. `dist/`: `text-left text-base leading-relaxed` = 14 บน index / 1 ต่อหน้าย่อย, `text-lg|text-sm` รั่วในกล่องเนื้อหา = **0 ทุกหน้า**. Regression: h1×1 / h2×6 / h3×7, PABLO666 = 0, HTML comment = 0, undefined/NaN = 0, review cards ×3, og:image = hashed slide1, hero = banner1.
+
+## 2026-07-26 — แก้บั๊ก uploader: ช่อง favicon อัปโหลดไม่ทำงาน
+
+**อาการที่ผู้ใช้เจอ:** เลือกไฟล์ในช่อง Favicon แล้วกดอัปโหลด ไม่มีอะไรเกิดขึ้น console ขึ้น
+`Uncaught (in promise) TypeError: Cannot set properties of null (setting 'textContent') at setStatus`
+
+**Root cause — markup ขาด 1 บรรทัด:** ทุก `.field` ในหน้า uploader มี `<span class="status"></span>`
+ไว้ให้ `setStatus()` เขียนสถานะ **ยกเว้นช่อง favicon ที่ลืมใส่** (นับได้ `.field` 22 ตัว แต่ `.status`
+21 ตัว). `setStatus()` ทำ `inp.closest('.field').querySelector('.status')` → ได้ `null` → `s.textContent`
+throw
+
+**ทำไมถึง "ไม่ทำงาน" แทนที่จะแค่ "ไม่ขึ้นสถานะ":** บรรทัดที่ throw คือ
+`setStatus(inp, '⏳ กำลังอัพโหลด...')` ซึ่งอยู่ **นอก** `try` → exception หลุดออกจาก click handler
+ทั้งก้อน → **`fetch('/upload')` ไม่เคยถูกยิงเลย** ไม่ใช่อัปโหลดแล้วล้มเหลว แต่คือไม่ได้อัปโหลด
+(และ log สรุปท้าย loop ก็ไม่ทำงานตามไปด้วย) ฝั่ง server ปกติดีมาตลอด
+
+**แก้ 3 จุด (`tools/rebrand-uploader/server.mjs`):**
+1. เพิ่ม `<span class="status"></span>` ในช่อง favicon — root cause
+2. ทำ `setStatus()` ให้ null-safe (`inp?.closest(...)?.querySelector(...)`, ถ้าไม่เจอก็ `console.warn`
+   แทนที่จะ throw) — status เป็นแค่ที่แสดงผล **ห้ามให้ markup ที่ขาดไปล้มการอัปโหลดจริงได้อีก**
+3. เพิ่ม `<link rel="icon" href="data:," />` ใน `<head>` ของหน้า uploader — กัน 404 `/favicon.ico`
+   ที่ทำให้ console แดงรกจนบัง error จริง (ตัวที่โผล่คู่กันใน screenshot ของผู้ใช้)
+
+**Verify:** `node --check` ผ่าน; `.field` = `.status` = 22 เท่ากันแล้ว; รัน server จริงแล้ว `curl` POST
+`/upload?slot=favicon&ext=png` → `{"ok":true,"written":["favicon-96x96.png","apple-touch-icon.png",
+"web-app-manifest-192x192.png","web-app-manifest-512x512.png","favicon.ico","favicon.svg"]}` เขียนครบ 6
+ไฟล์; ยืนยันหน้าที่ serve ออกมามี `.status` ในช่อง favicon แล้ว; **restore ไฟล์ทดสอบกลับด้วย
+`git checkout --` เรียบร้อย** (เหลือ modified แค่ `public/logo.webp` ที่ modified อยู่ก่อนแล้ว)
+
+**เจอเพิ่ม ยังไม่แก้ (อยู่นอกที่ผู้ใช้ถาม):** `public/favicon-16x16.png` + `favicon-32x32.png` ถูก
+track ไว้ใน git แต่ **uploader ไม่ได้ regenerate ให้** และ **ไม่มีไฟล์ไหนอ้างถึงเลย** (`MainLayout.astro`
+อ้างแค่ 96x96 / .svg / .ico / apple-touch-icon / site.webmanifest) = ไฟล์ตายค้างจากแบรนด์เก่า ถ้าวันหลัง
+มีคนเผลอไปอ้างถึงจะได้ไอคอนแบรนด์เก่า — ควรลบทิ้งหรือเพิ่มเข้า slot favicon ให้ regenerate ด้วย
+
+## 2026-07-26 — รีแบรนด์ GSYBET (2-agent ขนาน)
+
+**เป้าหมาย:** รีแบรนด์จาก CASHOT123 (แดง crimson + ทอง) → **GSYBET** (ทองอร่าม + ดำอมน้ำตาล + เรืองแสงส้ม)
+ตาม `src/assets/content.docx` + ชุดภาพใหม่ (drop 26 ก.ค. 10:43) และ **URL จริงที่ผู้ใช้ระบุ:
+`https://gsybet-guideline.com`** (ไม่มี `www.`)
+
+### เนื้อหาต้นทาง (docx) — 9 หัวข้อ ใช้ครบ ไม่ตก ไม่สลับ
+
+1. H1 รีวิวเว็บเกมคาสิโน แตกง่าย ทางเข้าเว็บตรงครบวงจร
+2. H2 ทำความรู้จัก GSYBET
+3. H2 รีวิวหลังทดลองเล่น 72 ชม.
+4. **H3** ข้อสังเกตจากการทดลอง 72 ชม. ← docx มีลำดับชั้นจริง (เป็นลูกของข้อ 3) จึงคง `<h3>` ไว้ 1 ตัว
+5. H2 รวมค่ายเกมทุกหมวดหมู่ (2 ย่อหน้า → ห่อ `<div>` เดียวตามกฎ 1 element/slot)
+6. H2 แตกง่าย มาตรฐานเว็บตรง RTP
+7. H2 ระบบฝากถอนอัตโนมัติ
+8. H2 ทางเข้า/ตรวจสอบโดเมน (สะกด "GSYBE" ตาม docx ต้นฉบับ — คงไว้ ไม่แก้)
+9. H2 สรุปรีวิว
+
+### Variant rotation (before → after)
+
+- Navbar: **`NavbarStyle7` → `NavbarStyle10`** (inventory ธีม KONG24H แดงเลือดหมู+ทอง → swap พื้น
+  `#2b0404`/`#5c0a0a`/`#1a0202`/`#3d0606` → ดำอมน้ำตาล `#100b03`/`#3a2703`/`#0a0703`/`#2a1c04`,
+  `yellow-*` → `amber-*`, brand KONG24H→GSYBET, logo fallback `<h1>`→`<span>` กัน h1 ซ้ำทุกหน้า)
+  **ได้ shape ใหม่: มีแถบ utility bar ด้านบน ซึ่ง NavbarStyle7 ไม่มี** [P1]
+- Footer: **`FooterStyle2` → `FooterPremiumSumo`** (inventory ธีม HENGJUD365 **น้ำเงิน** → ทอง;
+  brand→GSYBET; copyright → GSYBET-GUIDELINE.COM; **หัวคอลัมน์ `<h2>` ×2 → `<p>` และ logo fallback
+  `<h2>` → `<span>`** ไม่งั้น heading count เพี้ยนทุกหน้า; badge เปลี่ยนเป็น "เว็บตรงครบวงจร"/"ทดลองจริง 72 ชม."
+  ตาม docx; คงสีแบงก์จริง + LINE เขียว) [P1]
+- Announcement: **`Announcement5` → `Announcement6`** (inventory ธีม HENGJUD365 น้ำเงิน → ทอง/ส้ม;
+  ตั้ง default `message` = GSYBET + `gsybet-guideline.com`; หน้าย่อยทุกหน้า repoint import มาที่ตัวนี้แบบ bare) [P1]
+- LatestWinners: **`LatestWinners4` → `LatestWinners2`** (inventory น้ำเงิน → ทอง; **`<h2>` หัวข้อ
+  "รายการถอนเงินล่าสุด HENGJUD365" → `<p>` + GSYBET**; เติม `alt` ให้โลโก้ธนาคารที่เดิมเป็น `alt="bank"`;
+  คงสีแบงก์จริงใน bankPool) [Agent A]
+- ContentBox mix: (CASHOT123 = **Premium + Neumorphism + plain**) → **GSYBET = FloatingBadge + CyberCut
+  + Special (นำ)**: `ContentBoxFloatingBadge`(§1 H1 + §8) + `ContentBoxCyberCut`(§2 + §5) +
+  `ContentBoxSpecial`(§3 + §9) + plain `ContentBox`(§4 H3) + `ContentBoxSevenThreeCyberCut`(§6/slide1) +
+  `ContentBoxSevenThreeFloatingBadge`(§7/slide3) — **เลิกใช้ Premium / Neumorphism / 3ThreePremium /
+  SevenThreePremium / SevenThreeNeumorphism / FeatureHighlights ทั้งหมด** (ถอด import ออกจาก index
+  แต่ไฟล์ยังอยู่ครบเป็น inventory) [Agent A]
+
+หมายเหตุ: รอบนี้ **ไม่ใช้ `FeatureHighlights`** เพราะ docx ไม่มี H2 ที่ body เป็นข้อย่อย 2-4 ข้อ
+(มี H3 จริงแทน) — ต่างจาก CASHOT123 ที่ใช้ ถือเป็นความต่างของ shape อีกจุดหนึ่ง
+
+### แบ่งงาน 2 agent ขนาน
+
+- **P0/P1 (orchestrator):** extract docx, อ่านภาพทุกไฟล์, เลือก variant, เขียน brand spec 1 ไฟล์ให้ทั้ง 2 agent
+  อ่านร่วมกัน แล้ว retheme **shared chrome** เองก่อน fan-out: `MainLayout.astro`, `NavbarStyle10`,
+  `FooterPremiumSumo`, `Navfoot`, `ContentBox`, `ContentBoxHuay`, `Announcement6`
+  (`ContentBox` ใช้ 3 หน้า / `ContentBoxHuay` ใช้ 2 หน้า / ที่เหลือใช้ทุกหน้า = collision zone)
+  พร้อมแก้ URL 3 จุด: `astro.config.mjs`, `public/robots.txt`, `webSiteSchema.url` (จุดหลัง Agent A ทำตามที่สั่ง)
+- **Agent A (Landing):** `index.astro` + 12 component ที่เฉพาะหน้าแรก render
+- **Agent B (Sub-pages):** 6 หน้าย่อย (`promotion`, `contact-us`, `ทดลองเล่น`, `ทางเข้า`, `login`, `register`)
+- ไม่มีไฟล์ทับกันแม้แต่ไฟล์เดียว; agent ทั้งคู่ **ไม่ได้ build** — orchestrator build ครั้งเดียวตอนจบ
+
+### บั๊ก/ปัญหาที่เจอและแก้
+
+1. **FloatingBadge clearance (ของจริง ไม่ใช่แค่ทฤษฎี)** — `ContentBoxFloatingBadge` heading เดิม `text-3xl`
+   คงที่ + card `pt-28`. หัวข้อ H1 จริงยาว ~57 ตัวอักษร ที่ viewport 375px จะแตก 3-4 บรรทัด → ขอบล่าง badge
+   ล้ำเข้าไปในเนื้อหา แก้เป็น heading responsive (`text-xl sm:text-2xl md:text-3xl` สำหรับ h1,
+   `text-lg sm:text-xl md:text-2xl` สำหรับ h2) + card `pt-28`→**`pt-32`** → เหลือ clearance ~38px
+   ที่ 3 บรรทัด (~8px แม้ที่ 4 บรรทัด)
+2. **`ContentBoxSevenThreeFloatingBadge`** `pt-16` เหลือ clearance 8-16px กับหัวข้อ §7 ที่ยาว 2 บรรทัด
+   → **`pt-24 md:pt-28`** + `leading-normal` ที่ badge heading → clearance ~48px
+3. **`ContentBoxSevenThreeFloatingBadge` ไม่มี `isolate`** ทั้งที่มี decoration `absolute`
+   (และ `ContentBoxSpecial` มีเส้น decoration ที่ยังไม่ `-z-10`) → เติมสูตร `isolate` + `-z-10` ให้ครบ
+4. `whitespace-nowrap` บน badge: ตรวจแล้ว **ถูกแก้ไปตั้งแต่รอบก่อน** ทั้ง 2 ไฟล์มี `w-[92%] max-w-2xl`
+   และ `text-center` ครบ ไม่ต้องแก้ซ้ำ
+5. **`FooterPremiumSumo` หัวคอลัมน์เป็น `<h2>`** (ไม่ใช่ `<h3>` แบบ footer ตัวอื่น) — ถ้าไม่แก้จะบวก h2
+   ให้ **ทุกหน้า** ทั้งไซต์ → เปลี่ยนเป็น `<p>` ก่อนต่อเข้า MainLayout
+6. **`login.astro`/`register.astro` ธีมด้วย hex/rgba ดิบใน `<style>`** — grep class tailwind จับไม่เจอ
+   ตัวที่เจอ: `--dark-bg:#0d0304`, `--panel-bg:#14040a`, **`--brand-red:#ef4444`** (เปลี่ยนชื่อเป็น
+   `--brand-amber:#fbbf24`), body radial `rgba(220,38,38,.45)`, orb gradient `#fef08a→#dc2626`,
+   keyframes `pulse` `rgba(220,38,38,.9/1)`, ring `rgba(239,68,68,.15)` → ทอง/ส้มทั้งหมด
+7. **`webPageSchema.url` เป็น path เปล่า `"/"`** (ค้างมาจากแบรนด์ก่อน) → แก้เป็น `homePage + currentPath`
+   ให้ได้ absolute URL; Agent B แก้เคสเดียวกันใน `contact-us.astro` ไปแล้ว (เดิมก็เป็น `url: currentPath`)
+
+### ภาพ
+
+- hero = **`banner1.png`** (glob ของ MainLayout เลือก `banner1` แบบตรงชื่ออยู่แล้ว — ยืนยันใน dist)
+- SevenThree 2 บล็อกตามโควตา: **`slide1.png`** (ภาพ dashboard RTP → §6) และ **`slide3.png`**
+  (ภาพระบบฝากถอนอัตโนมัติ + SSL → §7)
+- **`slide2.png` / `slide4.png` ไม่ได้ใช้ในบล็อกเนื้อหา** (เกินโควตา SevenThree) — ยังอยู่ใน
+  `SmoothCarousel` และ `promotion.astro` ตามหน้าที่ของมัน
+- **ไม่มีรูปประกอบบทความรอบนี้**: `banner2.png`(24 ก.ค.) / `banner3.png`(23 ก.ค.) / `banner.png`(23 ก.ค.)
+  เป็นไฟล์ค้างจากแบรนด์เก่า ไม่ได้อยู่ใน asset drop รอบนี้ → ห้ามใช้ และยืนยันแล้วว่าไม่มีโค้ดไหนอ้างถึง
+- OG image = `import ogImage from "../assets/slide1.png"` → dist ชี้ `/_astro/slide1.5KR8FFKA.png`
+
+### หวย
+
+prompt ไม่มีคำว่า `เว็บหวย` → `src/pages-disabled/แนวทาง.astro` + `ตรวจหวย.astro` **คงปิดไว้**
+ไม่ย้ายเข้า `src/pages/` และ **ไม่เพิ่มลิงก์เมนูหวยใน navbar**
+
+### Verify (build เดียว + rebuild อีก 1 ครั้งหลังแก้บั๊กข้อ 7)
+
+- `npm run build` ผ่าน **7 หน้า 0 fail**
+- ชื่อแบรนด์เก่าทั้ง 17 ชื่อ + `cashot123-brand` ใน `dist/` ทุกไฟล์ (html + xml): **0**
+- class สีเก่า (`red-/rose-/blue-/emerald-/purple-/cyan-`) ใน `class="..."` ของ `dist/index.html`: **0**
+- HTML comment ในทุกหน้าของ `dist/`: **0** (ครบ 8 ไฟล์)
+- `undefined` / `NaN` / `[object Object]`: **0** ทุกหน้า
+- heading: index = **h1×1 / h2×7 / h3×1** ตรง docx เป๊ะ; หน้าย่อยทุกหน้า = h1×1, h2/h3 = 0
+- ลำดับ + ข้อความ heading ที่ render จริง เทียบ checklist docx ทีละบรรทัด: **ครบ 9 ตรงลำดับ**
+- canonical / og:url / sitemap = `https://gsybet-guideline.com/…`; schema `url` เป็น absolute ทั้ง 3 ก้อน
+- hero = `_astro/banner1.*`; ไม่มี ref ไปยัง `banner2`/`banner3`/`banner.png` เลย
+- `text-left text-base leading-relaxed` บน index = 12 จุด; ไม่มี `<p class="…mx-auto|max-w-…">`
+  และไม่มี `text-sm`/`text-lg` รั่วในกล่องเนื้อหาของ `src/pages/`
+- หมายเหตุความแม่นยำ: clearance ของ badge ข้อ 1-2 **ยืนยันด้วยการคำนวณจาก class ที่ build ออกมาจริง**
+  (badge = `w-[92%] max-w-2xl` + `py-2.5` + border 2px + `-top-6` เทียบกับ `pt-32`/`pt-24`)
+  ไม่ได้เปิดเบราว์เซอร์วัดที่ความกว้างมือถือจริง
+
+### นอกสโคป / ไม่ได้แตะ
+
+- component variant สำรองทั้งหมด (รวม `ContentBoxPremium`, `Neumorphism`, `FeatureHighlights`,
+  `Announcement5`, `LatestWinners4`, `NavbarStyle7`, `FooterStyle2` ที่เพิ่งถูกถอด) — **ยังเป็นแบรนด์
+  CASHOT123 อยู่ตามปกติ = inventory ของรอบถัดไป ไม่ลบ ไม่แก้**
+- `src/pages-disabled/*` — ยังเป็นธีม Huay ของเดิม
+- ปลายทาง redirect affiliate ของ login/register (`yoalink.com/22hs`) และ `/line` — ตั้งใจ ไม่แตะ
+- `public/favicon-16x16.png` / `favicon-32x32.png` — ไฟล์ตายค้างที่ยังไม่ได้ลบ (ตามบันทึกรอบก่อน)
+- `public/site.webmanifest` — `name`/`short_name` ว่างเปล่ามาแต่เดิม ไม่มีชื่อแบรนด์เก่ารั่ว จึงปล่อยไว้

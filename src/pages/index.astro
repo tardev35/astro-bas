@@ -1,141 +1,132 @@
 ---
 import MainLayout from "../layouts/MainLayout.astro";
-import Announcement5 from "../components/Announcement5.astro";
+import Announcement6 from "../components/Announcement6.astro";
 import ContentBox from "../components/ContentBox.astro";
-import ContentBoxPremium from "../components/ContentBoxPremium.astro";
-import ContentBoxNeumorphism from "../components/ContentBoxNeumorphism.astro";
-import ContentBox3ThreePremium from "../components/ContentBox3ThreePremium.astro";
-import ContentBoxSevenThreePremium from "../components/ContentBoxSevenThreePremium.astro";
-import ContentBoxSevenThreeNeumorphism from "../components/ContentBoxSevenThreeNeumorphism.astro";
-import FeatureHighlights from "../components/FeatureHighlights.astro";
+import ContentBoxFloatingBadge from "../components/ContentBoxFloatingBadge.astro";
+import ContentBoxCyberCut from "../components/ContentBoxCyberCut.astro";
+import ContentBoxSpecial from "../components/ContentBoxSpecial.astro";
+import ContentBoxSevenThreeCyberCut from "../components/ContentBoxSevenThreeCyberCut.astro";
+import ContentBoxSevenThreeFloatingBadge from "../components/ContentBoxSevenThreeFloatingBadge.astro";
 import LoginRtpSection from "../components/LoginRtpSection.astro";
 import ProviderGrid from "../components/ProviderGrid.astro";
 import GameRankingBoard from "../components/GameRankingBoard.astro";
 import ReviewCardSumo2 from "../components/ReviewCardSumo2.astro";
-import LatestWinners4 from "../components/LatestWinners4.astro";
+import LatestWinners2 from "../components/LatestWinners2.astro";
 import SmoothCarousel from "../components/SmoothCarousel.astro";
 import Navfoot from "../components/Navfoot.astro";
+
+import { Picture } from "astro:assets";
+import imgRtp from "../assets/slide1.png";
+import imgAutoWallet from "../assets/slide3.png";
+
 const currentPath = Astro.url.pathname;
 const homePage = Astro.url.origin;
 const logoUrl = homePage + "/logo.webp";
 
-const pageTitle = "CASHOT123 | เว็บออนไลน์คาสิโน รีวิวเว็บตรงครบวงจร ฝากถอนอัตโนมัติ";
+const pageTitle = "GSYBET รีวิวเว็บเกมคาสิโน แตกง่าย ทางเข้าเว็บตรงครบวงจร";
 const pageDescription =
-  "CASHOT123 เว็บออนไลน์คาสิโน เว็บตรงครบวงจร มีรีวิวทดสอบจริง ระบบ ฝากถอนอัตโนมัติ ปลอดภัย และ ทางเข้า CASHOT123 ลิงก์ถูกต้อง เพื่อการใช้งานที่มั่นใจ";
+  "GSYBET รีวิวเว็บไซต์เกมคาสิโนออนไลน์ ทดลองใช้งานจริง 72 ชั่วโมง รวมสล็อต คาสิโนสด บาคาร่า กีฬา แตกงาย ระบบฝากถอนอัตโนมัติ ทางเข้าเว็บตรง";
 
 const webPageSchema = {
   "@context": "https://schema.org",
   "@type": "WebPage",
-  name: "CASHOT123",
+  name: "GSYBET",
   description: pageDescription,
-  url: currentPath,
+  url: homePage + currentPath,
 };
 const webSiteSchema = {
   "@context": "https://schema.org",
   "@type": "WebSite",
-  name: "CASHOT123",
-  alternateName: ["CASHOT123", "CASHOT123 เว็บออนไลน์คาสิโน รีวิวเว็บตรงครบวงจร ฝากถอนอัตโนมัติ"],
-  url: "https://www.cashot123-brand.com/",
+  name: "GSYBET",
+  alternateName: ["GSYBET", "GSYBET รีวิวเว็บเกมคาสิโน แตกง่าย ทางเข้าเว็บตรงครบวงจร"],
+  url: "https://gsybet-guideline.com/",
 };
 const orgSchema = {
   "@context": "https://schema.org",
   "@type": "Organization",
-  name: "CASHOT123",
+  name: "GSYBET",
   logo: logoUrl,
   url: homePage,
 };
 const allSchemas = [webPageSchema, orgSchema, webSiteSchema];
-
-// docx section 3 sub-points 3a-3d — FeatureHighlights renders each title at heading level 3
-const playerFitPoints = [
-  {
-    icon: "🎰",
-    title: "ความหลากหลายของเกมคาสิโน สล็อตที่รองรับทุกสไตล์",
-    description:
-      "CASHOT123 รวบรวมเกมสล็อต คาสิโนสด กีฬา หวย และเกมออนไลน์จากหลายผู้ให้บริการไว้ภายในเว็บไซต์เดียว ทำให้สมาชิกสามารถเลือกเล่นได้ตามความสนใจ โดยไม่จำกัดอยู่เพียงเกมประเภทใดประเภทหนึ่ง",
-    accent: "gold" as const,
-  },
-  {
-    icon: "📱",
-    title: "ระบบที่ออกแบบ UX/UI ให้ใช้งานได้ง่าย",
-    description:
-      "เว็บไซต์จัดวางเมนูและฟังก์ชันต่าง ๆ ให้ค้นหาได้สะดวก รองรับการใช้งานทั้งบนมือถือและคอมพิวเตอร์ พร้อมระบบสมาชิกที่ช่วยให้เข้าถึงบริการต่าง ๆ ได้อย่างต่อเนื่องจากบัญชีเดียว",
-    accent: "blue" as const,
-  },
-  {
-    icon: "🎁",
-    title: "สิทธิประโยชน์ โปรโมชั่น ที่ตอบโจทย์สมาชิกทุกบุคคล",
-    description:
-      "สมาชิกสามารถติดตามโปรโมชั่น กิจกรรม และสิทธิประโยชน์ที่เว็บไซต์จัดเตรียมไว้ในแต่ละช่วงเวลา เพื่อเลือกใช้งานให้เหมาะกับรูปแบบการเล่นและความสนใจของตนเอง",
-    accent: "gold" as const,
-  },
-  {
-    icon: "🛎️",
-    title: "การดูแลและบริการที่ช่วยให้ใช้งานได้ต่อเนื่อง",
-    description:
-      "นอกจากบริการด้านเกมแล้ว CASHOT123 ยังมีช่องทางติดต่อทีมงาน ข่าวสาร และข้อมูลอัปเดตของเว็บไซต์ เพื่อช่วยให้สมาชิกติดตามความเคลื่อนไหวและขอความช่วยเหลือได้เมื่อจำเป็น",
-    accent: "blue" as const,
-  },
-];
-
-import { Picture } from "astro:assets";
-import imgAutoWallet from "../assets/slide2.png";
-import imgSecurity from "../assets/slide1.png";
 ---
 
 <MainLayout title={pageTitle} description={pageDescription}>
   <script type="application/ld+json" set:html={JSON.stringify(allSchemas)} />
 
-  <Announcement5 />
+  <Announcement6 />
 
-  <ContentBoxPremium as="h1" title="CASHOT123 เว็บออนไลน์คาสิโน รีวิวเว็บตรงครบวงจร ฝากถอนอัตโนมัติ">
-    <p class="leading-relaxed">
-      <strong class="text-amber-300">CASHOT123</strong> เว็บออนไลน์คาสิโน ที่รวบรวมเกมและบริการที่ที่จะสร้างความประทับใจแด่ผู้เล่นไม่มาก็น้อย หลายประเภทไว้ภายในแพลตฟอร์มเดียว ไม่ว่าจะเป็นสล็อต คาสิโนสด กีฬา
-      หรือหมวดเกมอื่นๆ ไปจนถึงระบบสมาชิกและธุรกรรม ภายใต้โครงสร้างแบบ เว็บตรงครบวงจร ที่เชื่อมทุกฟังก์ชันเข้าด้วยกัน พร้อม ระบบฝากถอนอัตโนมัติ ซึ่งเป็นหนึ่งในองค์ประกอบสำคัญที่ช่วยให้การใช้งานภายในเว็บไซต์เป็นไปด้วยความราบลื่นแบบ
-      Ultra Smooth ตั้งแต่เริ่มต้นจนจบ
+  <ContentBoxFloatingBadge as="h1" title="GSYBET รีวิวเว็บเกมคาสิโน แตกง่าย ทางเข้าเว็บตรงครบวงจร">
+    <p>
+      <strong class="text-amber-300">GSYBET</strong> เป็นเว็บไซต์เกมคาสิโนออนไลน์ที่เปิดให้บริการในปี 2025 โดยรวบรวมเกมสล็อต คาสิโนสด บาคาร่า กีฬา และเกมออนไลน์จากผู้ให้บริการหลายค่ายไว้ภายในระบบเดียว
+      ทีมงานใช้เวลา 72 ชั่วโมง ในการทดลองใช้งานจริง ทั้งบน Windows, Android และ iPhone เพื่อประเมินประสิทธิภาพของเว็บไซต์ ความเร็วในการโหลด ระบบสมาชิก การรองรับอุปกรณ์ และการทำงานของระบบฝากถอนอัตโนมัติ
     </p>
-  </ContentBoxPremium>
+  </ContentBoxFloatingBadge>
 
-  <ContentBoxNeumorphism as="h2" title="CASHOT123 แพลตฟอร์มคาสิโนออนไลน์ที่รวมทุกบริการไว้ในที่เดียว">
-    <p class="leading-relaxed">
-      <strong class="text-amber-300">CASHOT123</strong> รวมบริการไว้ครบในแพลตฟอร์มเดียว ทั้งเกมสล็อต คาสิโนสด กีฬา หวย และเกมจากค่ายชั้นนำ พร้อมระบบสมาชิก โปรโมชั่น ฝากถอนอัตโนมัติ และทีมงานดูแลตลอดการใช้งาน
-      นอกจากนี้ยังมีหมวดข่าวสาร กิจกรรม และคอนเทนต์ความบันเทิงสำหรับสมาชิกในช่วงที่ไม่ได้เข้าเล่น ทำให้ CASHOT123 ไม่ได้เป็นเพียงพื้นที่สำหรับเกม แต่เป็นศูนย์รวมบริการและความบันเทิงที่เข้าถึงได้แค่สมัครยูสเซอร์เดียว
+  <ContentBoxCyberCut as="h2" title="ทำความรู้จัก GSYBET เว็บเกมคาสิโน ออนไลน์ที่ให้บริการครบวงจร">
+    <p>
+      <strong class="text-amber-300">GSYBET</strong> เปิดให้บริการตั้งแต่ปี 2025 โดยมีแนวคิดในการรวมบริการเกมออนไลน์หลายประเภทไว้ในเว็บไซต์เดียว เพื่อลดขั้นตอนการสลับแพลตฟอร์มของสมาชิก
+      ภายในเว็บไซต์ประกอบด้วยเกมสล็อตจากผู้ให้บริการหลายค่าย คาสิโนสด บาคาร่า กีฬา และเกมออนไลน์ประเภทอื่น โดยสามารถใช้งานผ่านบัญชีสมาชิกเพียงบัญชีเดียว เว็บไซต์รองรับการใช้งานผ่าน HTTPS พร้อมระบบ SSL
+      เพื่อเข้ารหัสข้อมูลระหว่างผู้ใช้งานกับเซิร์ฟเวอร์ และสามารถเข้าใช้งานได้ทั้งบนคอมพิวเตอร์ แท็บเล็ต และสมาร์ตโฟน
     </p>
-  </ContentBoxNeumorphism>
+  </ContentBoxCyberCut>
+
+  <ContentBoxSpecial as="h2" title="รีวิว GSYBET หลังทดลองเล่น เว็บเกมคาสิโน ที่ดีที่ของยุคนี้">
+    <p slot="left">
+      ทีมงานใช้เวลาทดสอบเว็บไซต์ต่อเนื่อง 72 ชั่วโมง โดยแบ่งการทดลองใช้งานบน Windows, Android, iPhone และทดสอบเพิ่มเติมบน Samsung Galaxy A17 ซึ่งเป็นสมาร์ตโฟนระดับเริ่มต้น
+      เพื่อดูว่าประสิทธิภาพของเว็บไซต์ขึ้นอยู่กับสเปกเครื่องหรือไม่
+    </p>
+    <p slot="right">ผลการทดสอบพบว่าสามารถเข้าสู่ระบบ เปิดหน้าเกม และสลับหมวดหมู่ต่าง ๆ ได้ตามปกติ แม้ใช้อุปกรณ์ที่ไม่ได้มีประสิทธิภาพสูง</p>
+  </ContentBoxSpecial>
+
+  <ContentBox as="h3" title="ข้อสังเกตจากการ ทดลอง 72 ชม.">
+    <p>
+      การทดสอบดำเนินการผ่าน Google Chrome โดยวัดความเร็วในการโหลดหน้าเว็บไซต์เฉลี่ยประมาณ 2.2 วินาที ภายใต้การเชื่อมต่ออินเทอร์เน็ตผ่าน Wi-Fi และเครือข่ายมือถือ ทำให้การเข้าใช้งาน การค้นหาเกม
+      และการสลับหน้าเว็บไซต์ทำได้ค่อนข้างต่อเนื่องโดยไม่พบปัญหาการแสดงผลที่ผิดปกติในการทดสอบ
+    </p>
+  </ContentBox>
+
+  <ReviewCardSumo2 />
+
+  <ContentBoxCyberCut as="h2" title="รวมค่ายเกม ทุกหมวดหมู่ สล็อต คาสิโนสด บาคาร่าิและกีฬา">
+    <div>
+      <p>
+        จากการสำรวจภายในเว็บไซต์ พบว่ามีการรวบรวมเกมจากผู้ให้บริการหลายค่าย ครอบคลุมทั้งเกมสล็อต คาสิโนสด บาคาร่า กีฬา และเกมออนไลน์ประเภทอื่น
+        ผู้เล่นสามารถเลือกเปลี่ยนหมวดเกมได้จากเมนูหลักโดยไม่ต้องสมัครสมาชิกใหม่หลายบัญชี
+      </p>
+      <p class="mt-4">ในส่วนของคาสิโนสด มีการถ่ายทอดเกมแบบ Live พร้อมดีลเลอร์จริง ส่วนหมวดสล็อตมีเกมจากผู้ให้บริการหลายราย เช่น PG SLOT, XOSLOT เป็นต้น</p>
+    </div>
+  </ContentBoxCyberCut>
 
   <ProviderGrid />
 
   <GameRankingBoard />
 
-  <ContentBox as="h2" title="ทำไม CASHOT123 เว็บออนไลน์คาสิโน จึงตอบโจทย์ผู้เล่นได้หลายกลุ่ม">
-    <p class="leading-relaxed">
-      สมาชิกแต่ละคนมีรูปแบบการใช้งานและความสนใจที่แตกต่างกัน บางคนให้ความสำคัญกับความหลากหลายของเกมสล็อต บางคนมองหาระบบเว็บ UX UI ที่ใช้งานง่าย ขณะที่อีกหลายคนเลือกเว็บไซต์จากความสะดวกของบริการและการดูแลหลังการสมัคร <strong
-        class="text-amber-300">
-        CASHOT123
-      </strong> จึงพัฒนาองค์ประกอบต่าง ๆ ให้รองรับความต้องการที่หลากหลาย เพื่อให้สมาชิกแต่ละกลุ่มสามารถเลือกใช้งานในแบบที่เหมาะกับตัวเองได้มากที่สุด
+  <ContentBoxSevenThreeCyberCut titleright="GSYBET แตกง่าย มาตรฐานของเว็บตรงเกี่ยวข้องกับ RTP เกมแต่ละประเภท">
+    <div slot="left" class="flex h-full flex-col justify-center">
+      <Picture
+        src={imgRtp}
+        loading="lazy"
+        fetchpriority="low"
+        widths={[200, 400, 600, 800]}
+        sizes="(max-width: 768px) 100vw, 30vw"
+        decoding="async"
+        formats={["avif", "webp"]}
+        fallbackFormat="webp"
+        quality={80}
+        alt="GSYBET แตกง่าย วิเคราะห์ค่า RTP และความผันผวนของเกมแต่ละค่าย"
+        class="mx-auto h-auto w-full rounded-2xl border-2 border-amber-500/30 shadow-[0_10px_30px_rgba(234,179,8,0.35)]"
+      />
+    </div>
+    <p slot="right">
+      จากการทดลองพบว่าเว็บไซต์รวบรวมเกมจากหลายผู้ให้บริการ ทำให้แต่ละเกมมี RTP และระดับ Volatility แตกต่างกัน ผู้เล่นจึงควรศึกษารายละเอียดของเกมก่อนเลือกเล่น แต่ รูปแบบเกม ความผันผวน (Volatility) และค่า RTP
+      แตกต่างกันตามมาตรฐานของแต่ละค่าย การมีเกมให้เลือกจำนวนมากถือเป็นข้อได้เปรียบ เพราะสามารถเลือกเกมที่มีลักษณะการจ่ายรางวัลและรูปแบบโบนัสตรงกับความต้องการของแต่ละคนได้ โดยไม่จำกัดอยู่เพียงค่ายเดียว
     </p>
-  </ContentBox>
+  </ContentBoxSevenThreeCyberCut>
 
-  <div class="mx-auto mb-10 w-full max-w-[1400px] px-4">
-    <FeatureHighlights items={playerFitPoints} />
-  </div>
+  <LoginRtpSection />
 
-  <ContentBoxPremium as="h2" title="รีวิว ประสบการณ์ใช้งาน CASHOT123 เว็บตรงครบวงจร">
-    <p class="leading-relaxed">
-      เพื่อให้เห็นภาพการใช้งานจริง เราได้ทดลองใช้งาน <strong class="text-amber-300">CASHOT123</strong> ตั้งแต่การเข้าสู่เว็บไซต์ สมัครสมาชิก เลือกเกม ไปจนถึงการใช้งานระบบต่าง ๆ ภายในแพลตฟอร์ม โดยประเมินทั้งความสะดวก
-      ความเสถียร และประสบการณ์โดยรวมของเว็บไซต์ เพื่อดูว่า CASHOT123 สามารถตอบโจทย์การเป็นเว็บตรงครบวงจรได้มากน้อยเพียงใด
-    </p>
-  </ContentBoxPremium>
-
-  <ContentBox3ThreePremium titleleft="หน้าเว็บไซต์และเมนูการใช้งาน" titlecenter="ขั้นตอนสมัครสมาชิกและเริ่มต้นใช้งาน" titleright="ความเสถียรระหว่างการทดลองเล่น">
-    <p slot="left">ทดลองใช้งานผ่าน Windows 11 และ Android 14 พบว่าหน้าเว็บไซต์แบ่งหมวดเกมชัดเจน เมนูหลักค้นหาได้ง่าย และสลับหน้าได้ต่อเนื่อง</p>
-    <p slot="center">ทดลองสมัครสมาชิกตั้งแต่กรอกข้อมูลจนเข้าสู่ระบบ ใช้เวลาประมาณ 1–2 นาที ขั้นตอนไม่ซับซ้อน และเริ่มใช้งานได้ทันที</p>
-    <p slot="right">ทดลองเล่น สล็อต 12 เกม คาสิโนสด 3 ห้อง และกีฬา 5 ลีก พบว่าการโหลดเกมและเปลี่ยนหน้าเป็นไปอย่างต่อเนื่อง ไม่พบอาการค้างระหว่างการทดสอบ</p>
-  </ContentBox3ThreePremium>
-
-  <ReviewCardSumo2 />
-
-  <ContentBoxSevenThreePremium titleright="ทำไมระบบฝากถอนอัตโนมัติจึงกลายเป็นจุดเด่นของ CASHOT123">
+  <ContentBoxSevenThreeFloatingBadge title="ระบบฝากถอนอัตโนมัติของ GSYBET ครอบคุมการใช้งานหลากหลาย">
     <div slot="left" class="flex h-full flex-col justify-center">
       <Picture
         src={imgAutoWallet}
@@ -147,65 +138,50 @@ import imgSecurity from "../assets/slide1.png";
         formats={["avif", "webp"]}
         fallbackFormat="webp"
         quality={80}
-        alt="CASHOT123 ระบบฝากถอนอัตโนมัติ ทำรายการได้ด้วยตนเองตลอด 24 ชั่วโมง"
-        class="mx-auto h-auto w-full rounded-2xl border-2 border-red-500/30 shadow-[0_10px_30px_rgba(220,38,38,0.35)]"
+        alt="GSYBET ระบบฝากถอนอัตโนมัติ รองรับบัญชีธนาคาร Wallet และ P2P"
+        class="mx-auto h-auto w-full rounded-2xl border-2 border-amber-500/30 shadow-[0_10px_30px_rgba(234,179,8,0.35)]"
       />
     </div>
-    <p slot="right" class="leading-relaxed">
-      ระบบฝากถอนอัตโนมัติของ CASHOT123 ช่วยลดขั้นตอนการทำธุรกรรมให้สมาชิกสามารถดำเนินการได้ด้วยตนเองตลอด 24 ชั่วโมง จากการใช้งานทั่วไป การเข้าสู่หน้าเติมเงินและยืนยันรายการใช้เวลาประมาณ 2–5 วินาที
-      ขณะที่การอัปเดตยอดเครดิตหลังฝากสำเร็จมักอยู่ในช่วง 10–60 วินาที ส่วนการถอนเงิน ระบบจะส่งคำขอเข้าสู่ขั้นตอนประมวลผลทันที โดยระยะเวลาที่เงินเข้าบัญชีส่วนใหญ่อยู่ที่ประมาณ 30 วินาที–5 นาที ทั้งนี้ความเร็วอาจแตกต่างกันตามธนาคารที่ใช้งาน
-      ความหนาแน่นของระบบในช่วงเวลานั้น และคุณภาพของเครือข่ายอินเทอร์เน็ตของผู้ใช้งาน
+    <p slot="right">
+      จากการทดลองใช้งาน ระบบสมาชิกรองรับการทำธุรกรรมผ่านหลายช่องทาง ทั้ง บัญชีธนาคาร, Wallet และ P2P ภายในระบบเดียว ช่วยให้สมาชิกเลือกวิธีการทำธุรกรรมได้ตามความสะดวก ขั้นตอนสมัครสมาชิก ฝากเงิน
+      และถอนเงินถูกออกแบบให้ดำเนินการผ่านระบบอัตโนมัติ ลดขั้นตอนการติดต่อเจ้าหน้าที่ในกรณีธุรกรรมทั่วไป นอกจากนี้เว็บไซต์ยังรองรับการเข้าใช้งานผ่าน HTTPS และ SSL
     </p>
-  </ContentBoxSevenThreePremium>
+  </ContentBoxSevenThreeFloatingBadge>
 
-  <ContentBoxSevenThreeNeumorphism titleright="มาตรฐานความปลอดภัยที่ช่วยให้ใช้งานเว็บตรงได้อย่างมั่นใจ">
-    <div slot="left" class="flex h-full flex-col justify-center">
-      <Picture
-        src={imgSecurity}
-        loading="lazy"
-        fetchpriority="low"
-        widths={[200, 400, 600, 800]}
-        sizes="(max-width: 768px) 100vw, 30vw"
-        decoding="async"
-        formats={["avif", "webp"]}
-        fallbackFormat="webp"
-        quality={80}
-        alt="CASHOT123 มาตรฐานความปลอดภัย HTTPS พร้อมการเข้ารหัส SSL/TLS 256-bit"
-        class="mx-auto h-auto w-full rounded-2xl border-2 border-red-500/30 shadow-[0_10px_30px_rgba(220,38,38,0.35)]"
-      />
-    </div>
-    <p slot="right" class="leading-relaxed">
-      CASHOT123 ใช้งานผ่าน HTTPS พร้อมการเข้ารหัส SSL/TLS 256-bit เพื่อปกป้องข้อมูลระหว่างผู้ใช้งานกับเว็บไซต์ ระหว่างการตรวจสอบไม่พบคำเตือน "Not Secure" จาก Google Chrome และใบรับรองความปลอดภัยของเว็บไซต์สามารถตรวจสอบได้ผ่านไอคอนรูปแม่กุญแจบนแถบที่อยู่ของเบราว์เซอร์
+  <ContentBoxFloatingBadge as="h2" title="ทางเข้า GSYBE เว็บตรงครบวงจร ควรตรวจสอบโดเมน GSYBET ทุกครั้ง">
+    <p>
+      ก่อนเข้าสู่ระบบ ควรตรวจสอบชื่อโดเมนให้ตรงกับเว็บไซต์ที่ต้องการใช้งานทุกครั้ง เพื่อหลีกเลี่ยงเว็บไซต์ที่ใช้ชื่อใกล้เคียงหรือมีการเลียนแบบ นอกจากนี้ควรสังเกตว่าเว็บไซต์ใช้ HTTPS
+      และมีสัญลักษณ์รูปกุญแจบนเบราว์เซอร์ รวมถึงตรวจสอบว่าหน้าเข้าสู่ระบบและเมนูต่าง ๆ แสดงผลได้ครบถ้วนทั้งบนคอมพิวเตอร์และสมาร์ตโฟน เพื่อให้มั่นใจว่าเข้าใช้งานผ่านเว็บไซต์ที่ถูกต้อง
     </p>
-  </ContentBoxSevenThreeNeumorphism>
-
-  <ContentBoxNeumorphism as="h2" title="ทางเข้า CASHOT123 เลือกลิงก์ให้ถูกต้อง เพื่อการใช้งานที่มั่นใจในระยะยาว">
-    <p class="leading-relaxed">
-      การเลือก ทางเข้า <strong class="text-amber-300">CASHOT123</strong> ที่ถูกต้องเป็นสิ่งสำคัญ เพราะหากเข้าใช้งานผ่านเว็บไซต์ปลอมหรือโดเมนที่ไม่ได้รับการอัปเดต ข้อมูลบัญชีและธุรกรรมอาจตกอยู่ในความเสี่ยง
-      รวมถึงผลการเล่นหรือยอดเงินที่ได้รับอาจไม่ได้รับการบันทึกในระบบของเว็บไซต์จริง แม้ว่าจะทำกำไรหรือได้รับรางวัลจากการเล่น ก็อาจไม่สามารถรับเครดิตหรือถอนเงินได้ ดังนั้นควร เลือกลิงก์ให้ถูกต้อง เพื่อการใช้งานที่มั่นใจในระยะยาว
-      และเพื่อให้สิทธิ์ของสมาชิก หากท่านไม่รู้ว่าลิ้งก์ ทางเข้า สมัครไหนคือสิ่งที่ถูกต้องของแท้ เราได้ทิ้งลิ้ง สมัครไว้ให้ท่านแล้ว ที่ปุ่ม สมัครและทางเขา
-    </p>
-  </ContentBoxNeumorphism>
+  </ContentBoxFloatingBadge>
 
   <SmoothCarousel />
-
-  <LoginRtpSection />
 
   <div class="mx-auto mb-10 flex flex-nowrap justify-center gap-3 px-4 sm:gap-6">
     <a
       href="/login"
-      class="group relative flex flex-1 items-center justify-center rounded-full bg-gradient-to-r from-red-500 via-red-600 to-red-700 px-4 py-3 text-sm font-black whitespace-nowrap text-white shadow-[0_5px_20px_rgba(220,38,38,0.45)] transition-all duration-300 hover:-translate-y-1 hover:scale-105 hover:shadow-[0_8px_25px_rgba(220,38,38,0.65)] sm:flex-none sm:px-10 sm:py-3.5 sm:text-base">
+      class="group relative flex flex-1 items-center justify-center rounded-full bg-gradient-to-r from-amber-400 via-amber-500 to-amber-600 px-4 py-3 text-sm font-black whitespace-nowrap text-[#1a1204] shadow-[0_5px_20px_rgba(234,179,8,0.45)] transition-all duration-300 hover:-translate-y-1 hover:scale-105 hover:shadow-[0_8px_25px_rgba(234,179,8,0.65)] sm:flex-none sm:px-10 sm:py-3.5 sm:text-base">
       เข้าสู่ระบบ
     </a>
 
     <a
       href="/register"
-      class="group relative flex flex-1 items-center justify-center rounded-full border border-amber-400/60 bg-[#14040a]/80 px-4 py-3 text-sm font-black whitespace-nowrap text-amber-300 backdrop-blur-sm transition-all duration-300 hover:scale-105 hover:border-amber-300 hover:bg-[#1c060c] hover:shadow-[0_0_15px_rgba(245,158,11,0.45)] sm:flex-none sm:px-10 sm:py-3.5 sm:text-base">
+      class="group relative flex flex-1 items-center justify-center rounded-full border border-amber-400/60 bg-[#1a1204]/80 px-4 py-3 text-sm font-black whitespace-nowrap text-amber-300 backdrop-blur-sm transition-all duration-300 hover:scale-105 hover:border-amber-300 hover:bg-[#241803] hover:shadow-[0_0_15px_rgba(245,158,11,0.45)] sm:flex-none sm:px-10 sm:py-3.5 sm:text-base">
       สมัครสมาชิก
     </a>
   </div>
 
-  <LatestWinners4 />
+  <ContentBoxSpecial as="h2" title="สรุปรีวิว GSYBET เหมาะกับผู้เล่นแบบใด">
+    <p slot="left">
+      จากการทดลองใช้งานตลอด 72 ชั่วโมง <strong class="text-amber-300">GSYBET</strong> เหมาะสำหรับผู้ที่ต้องการเว็บไซต์ที่รวบรวมเกมสล็อต คาสิโนสด บาคาร่า กีฬา และเกมออนไลน์หลายประเภทไว้ในระบบเดียว
+      รองรับการใช้งานผ่าน Windows, Android และ iPhone
+    </p>
+    <p slot="right">
+      โดยจากการทดสอบบน Samsung Galaxy A17 ซึ่งเป็นสมาร์ตโฟนระดับเริ่มต้น เว็บไซต์ยังสามารถเข้าใช้งานและเล่นเกมได้ตามปกติ แสดงให้เห็นว่าการใช้งานไม่ได้จำเป็นต้องอาศัยอุปกรณ์ประสิทธิภาพสูงเสมอไป
+    </p>
+  </ContentBoxSpecial>
+
+  <LatestWinners2 />
 
   <Navfoot />
 </MainLayout>

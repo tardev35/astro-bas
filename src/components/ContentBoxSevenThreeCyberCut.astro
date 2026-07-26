@@ -4,19 +4,19 @@ const { titleleft, titleright } = Astro.props;
 
 <section class="mx-auto mb-6 w-full max-w-7xl px-4 font-sans">
   <div
-    class="relative isolate w-full border border-yellow-500/40 bg-[#0d0305]/90 p-8 text-white/90 shadow-[0_0_25px_rgba(234,179,8,0.15)] backdrop-blur-md transition-all duration-300 hover:border-yellow-400 hover:shadow-[0_0_40px_rgba(234,179,8,0.3)]"
+    class="relative isolate w-full border border-yellow-500/40 bg-[#100b03]/90 p-8 text-white/90 shadow-[0_0_25px_rgba(234,179,8,0.15)] backdrop-blur-md transition-all duration-300 hover:border-yellow-400 hover:shadow-[0_0_40px_rgba(234,179,8,0.3)]"
     style="clip-path: polygon(30px 0, 100% 0, 100% calc(100% - 30px), calc(100% - 30px) 100%, 0 100%, 0 30px);">
     <div class="absolute top-0 left-0 -z-10 h-[2px] w-24 bg-gradient-to-r from-yellow-400 to-transparent"></div>
-    <div class="absolute right-0 bottom-0 -z-10 h-[2px] w-24 bg-gradient-to-l from-red-500 to-transparent"></div>
+    <div class="absolute right-0 bottom-0 -z-10 h-[2px] w-24 bg-gradient-to-l from-orange-500 to-transparent"></div>
     <div class="absolute top-0 left-0 -z-10 h-16 w-[2px] bg-gradient-to-b from-yellow-400 to-transparent"></div>
-    <div class="absolute right-0 bottom-0 -z-10 h-16 w-[2px] bg-gradient-to-t from-red-500 to-transparent"></div>
+    <div class="absolute right-0 bottom-0 -z-10 h-16 w-[2px] bg-gradient-to-t from-orange-500 to-transparent"></div>
 
     <div class="grid grid-cols-1 gap-8 md:grid-cols-[3fr_7fr] md:items-center">
       <article class="flex flex-col gap-4 text-left text-base leading-relaxed text-amber-100/80">
         {
           titleleft && (
             <h2 class="border-b border-yellow-500/30 pb-2 text-xl leading-normal font-black tracking-widest text-yellow-400 uppercase">
-              <span class="font-mono text-red-500">&gt;_</span> {titleleft}
+              <span class="font-mono text-orange-400">&gt;_</span> {titleleft}
             </h2>
           )
         }
@@ -27,7 +27,7 @@ const { titleleft, titleright } = Astro.props;
         {
           titleright && (
             <h2 class="border-b border-yellow-500/30 pb-2 text-xl leading-normal font-black tracking-widest text-yellow-400 uppercase">
-              <span class="font-mono text-red-500">&gt;_</span> {titleright}
+              <span class="font-mono text-orange-400">&gt;_</span> {titleright}
             </h2>
           )
         }

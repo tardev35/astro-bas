@@ -2,7 +2,7 @@
 import MainLayout from "../layouts/MainLayout.astro";
 import ContentBox from "../components/ContentBox.astro";
 import Navfoot from "../components/Navfoot.astro";
-import Announcement from "../components/Announcement5.astro";
+import Announcement from "../components/Announcement6.astro";
 
 import { Picture } from "astro:assets";
 import image1 from "../assets/gamedemo7.webp";
@@ -51,14 +51,14 @@ const gameList = [
 
 <script type="application/ld+json" set:html={JSON.stringify(gameList)} />
 <MainLayout
-  title="ทดลองเล่น CASHOT123 เว็บออนไลน์คาสิโน รวมเกมจากค่ายชั้นนำครบวงจร"
-  description="ทดลองเล่นเกมสล็อตและคาสิโนของ CASHOT123 เว็บตรงครบวงจร รวมเกมจากหลายผู้ให้บริการไว้ในเว็บไซต์เดียว โหลดเกมต่อเนื่อง ไม่พบอาการค้างระหว่างการทดสอบ">
+  title="ทดลองเล่น GSYBET เว็บเกมคาสิโน รวมเกมจากค่ายชั้นนำครบวงจร"
+  description="ทดลองเล่นเกมสล็อตและคาสิโนของ GSYBET ทางเข้าเว็บตรงครบวงจร รวมเกมจากหลายผู้ให้บริการไว้ในเว็บไซต์เดียว โหลดเกมต่อเนื่อง ไม่พบปัญหาการแสดงผลระหว่างการทดสอบ">
   <Announcement />
 
-  <ContentBox title="ทดลองเล่น CASHOT123 รวมเกมสล็อตและคาสิโนจากค่ายชั้นนำ">
-    <p class="mb-8 text-red-50/80">
-      <strong class="text-amber-300">CASHOT123</strong> รวบรวมเกมสล็อต คาสิโนสด กีฬา หวย และเกมออนไลน์จากหลายผู้ให้บริการไว้ภายในเว็บไซต์เดียว ทำให้สมาชิกสามารถเลือกเล่นได้ตามความสนใจ โดยไม่จำกัดอยู่เพียงเกมประเภทใดประเภทหนึ่ง
-      จากการทดลองเล่นสล็อต 12 เกม คาสิโนสด 3 ห้อง และกีฬา 5 ลีก พบว่าการโหลดเกมและเปลี่ยนหน้าเป็นไปอย่างต่อเนื่อง ไม่พบอาการค้างระหว่างการทดสอบ
+  <ContentBox title="ทดลองเล่น GSYBET รวมเกมสล็อตและคาสิโนจากค่ายชั้นนำ">
+    <p class="mb-8 text-left text-base leading-relaxed text-amber-50/80">
+      <strong class="text-amber-300">GSYBET</strong> รวบรวมเกมสล็อต คาสิโนสด บาคาร่า กีฬา และเกมออนไลน์จากผู้ให้บริการหลายค่ายไว้ภายในเว็บไซต์เดียว ทำให้สมาชิกสามารถเลือกเล่นได้ตามความสนใจ โดยใช้บัญชีสมาชิกเพียงบัญชีเดียวและไม่ต้องสลับแพลตฟอร์ม
+      จากการทดลองใช้งานจริงต่อเนื่อง 72 ชั่วโมง ทั้งบน Windows, Android และ iPhone พบว่าการโหลดเกมและการสลับหมวดหมู่เป็นไปอย่างต่อเนื่อง โดยไม่พบปัญหาการแสดงผลที่ผิดปกติในการทดสอบ
     </p>
 
     <div class="mb-5 grid grid-cols-2 gap-5 sm:grid-cols-2 md:grid-cols-4">
@@ -84,7 +84,7 @@ const gameList = [
               rel="noopener noreferrer"
               aria-label={`ทดลองเล่น ${game.alt}`}
               class="absolute inset-0 flex items-center justify-center bg-black/50 opacity-0 transition-opacity duration-300 group-hover:opacity-100">
-              <span class="rounded-full border border-amber-400/60 bg-gradient-to-r from-red-600 to-red-800 px-6 py-2 font-bold text-amber-100 shadow-[0_10px_30px_rgba(220,38,38,0.5)] transition-transform hover:scale-110">เล่นเลย</span>
+              <span class="rounded-full border border-amber-300/60 bg-gradient-to-r from-amber-400 to-amber-600 px-6 py-2 font-bold text-[#1a1204] shadow-[0_10px_30px_rgba(234,179,8,0.5)] transition-transform hover:scale-110">เล่นเลย</span>
             </a>
           </div>
         ))

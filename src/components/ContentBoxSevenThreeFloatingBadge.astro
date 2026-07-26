@@ -3,23 +3,26 @@ const { title, titleleft, titleright } = Astro.props;
 ---
 
 <section class="my-10 flex w-full justify-center px-4 font-sans">
-  <div class="relative w-full max-w-7xl rounded-2xl border-2 border-blue-500/40 bg-gradient-to-b from-[#0b1633] to-[#020617] p-8 pt-16 shadow-[0_10px_40px_rgba(0,0,0,0.5)]">
+  <div
+    class="relative isolate w-full max-w-7xl rounded-2xl border-2 border-amber-500/40 bg-gradient-to-b from-[#1a1204] to-[#080602] p-8 pt-24 shadow-[0_10px_40px_rgba(0,0,0,0.5)] md:pt-28">
+    <div class="pointer-events-none absolute -right-10 -bottom-16 -z-10 h-40 w-40 rounded-full bg-orange-500/10 blur-[60px]"></div>
+
     {
       title && (
-        <div class="absolute -top-6 left-1/2 w-[92%] max-w-2xl -translate-x-1/2 rounded-lg border-2 border-blue-500/50 bg-[#020617] px-4 py-2.5 text-center shadow-[0_5px_15px_rgba(37,99,235,0.3)] sm:px-8">
-          <h2 class="bg-gradient-to-r from-yellow-200 via-yellow-400 to-yellow-600 bg-clip-text text-base font-black tracking-widest text-transparent uppercase sm:text-xl md:text-2xl">{title}</h2>
+        <div class="absolute -top-6 left-1/2 w-[92%] max-w-2xl -translate-x-1/2 rounded-lg border-2 border-amber-500/50 bg-[#080602] px-4 py-2.5 text-center shadow-[0_5px_15px_rgba(234,179,8,0.3)] sm:px-8">
+          <h2 class="bg-gradient-to-r from-yellow-200 via-amber-300 to-amber-500 bg-clip-text text-base leading-normal font-black tracking-widest text-transparent uppercase sm:text-xl md:text-2xl">{title}</h2>
         </div>
       )
     }
 
     <div class="grid grid-cols-1 gap-10 md:grid-cols-[3fr_7fr]">
-      <article class="flex flex-col gap-4 text-left text-base leading-relaxed text-blue-50/80">
-        {titleleft && <h2 class="text-2xl font-bold leading-normal text-blue-300 italic drop-shadow-[0_0_5px_rgba(37,99,235,0.4)]">{titleleft}</h2>}
+      <article class="flex flex-col gap-4 text-left text-base leading-relaxed text-amber-50/80">
+        {titleleft && <h2 class="text-2xl leading-normal font-bold text-amber-300 italic drop-shadow-[0_0_5px_rgba(234,179,8,0.4)]">{titleleft}</h2>}
         <slot name="left" />
       </article>
 
-      <article class="flex flex-col gap-4 text-left text-base leading-relaxed text-blue-50/80 md:border-l md:border-blue-500/30 md:pl-10">
-        {titleright && <h2 class="text-2xl font-bold leading-normal text-blue-300 italic drop-shadow-[0_0_5px_rgba(37,99,235,0.4)]">{titleright}</h2>}
+      <article class="flex flex-col gap-4 text-left text-base leading-relaxed text-amber-50/80 md:border-l md:border-amber-500/30 md:pl-10">
+        {titleright && <h2 class="text-2xl leading-normal font-bold text-amber-300 italic drop-shadow-[0_0_5px_rgba(234,179,8,0.4)]">{titleright}</h2>}
         <slot name="right" />
       </article>
     </div>

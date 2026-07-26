@@ -19,6 +19,6 @@ export default defineConfig({
     "/line": "https://tinyurl.com/suhng",
   },
 
-  site: "https://www.cashot123-brand.com",
+  site: "https://gsybet-guideline.com",
   integrations: [sitemap()],
 });
