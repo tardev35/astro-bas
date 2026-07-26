@@ -437,6 +437,106 @@ function parseDocxBuffer(buf) {
   return parseSubPages(docxToLines(xml));
 }
 
+// ── Pre-chew the brief and the artwork for the rebrand agent ────────────────
+// Both of these exist purely to delete work from the *serial* head of a rebrand
+// (SKILL Phase 1 / step P0). Nothing else can start until the brief is read and
+// the palette is known, so every second saved there is a second off the whole
+// run — unlike the parallel phase, where more agents can absorb the work.
+
+// The uploader already extracts every paragraph of the docx for ส่วนที่ 4; it
+// just used to throw all of it away except the SUB-PAGES section. Writing the
+// full text out means Phase 1 is a single Read instead of an unzip + python
+// round-trip (which also carried a Windows-vs-posix path footgun).
+async function writeContentText(buf) {
+  try {
+    const lines = docxToLines(extractZipEntry(buf, "word/document.xml").toString("utf8"));
+    if (!lines.length) return null;
+    await writeFile(join(ASSETS, "content.txt"), lines.join("\n") + "\n", "utf8");
+    return "content.txt";
+  } catch {
+    // An unparseable docx still stages fine — the agent falls back to unzip.
+    return null;
+  }
+}
+
+// Artwork the palette is read from, in priority order (logo first: it carries
+// the brand's core hue most cleanly, with the least background noise).
+const PALETTE_SOURCES = ["logo.webp", "banner1.png", "slide1.png"];
+
+// Measure an image's most-used colours instead of asking an agent to eyeball
+// them. sharp is already a dependency, and exact hex beats a guess.
+async function topColors(file, count = 5) {
+  const { data, info } = await sharp(file)
+    .resize(64, 64, { fit: "inside" })
+    .ensureAlpha()
+    .raw()
+    .toBuffer({ resolveWithObject: true });
+
+  const bins = new Map();
+  let total = 0;
+  for (let i = 0; i < data.length; i += info.channels) {
+    if (data[i + 3] < 128) continue; // logos are cut-outs; transparent pixels aren't brand colour
+    total++;
+    // 5 bits per channel: coarse enough that a gradient or JPEG noise collapses
+    // into one bucket, fine enough to keep distinct brand hues apart.
+    const key = ((data[i] >> 3) << 10) | ((data[i + 1] >> 3) << 5) | (data[i + 2] >> 3);
+    const cur = bins.get(key);
+    if (cur) {
+      cur.n++; cur.r += data[i]; cur.g += data[i + 1]; cur.b += data[i + 2];
+    } else {
+      bins.set(key, { n: 1, r: data[i], g: data[i + 1], b: data[i + 2] });
+    }
+  }
+  if (!total) return null;
+
+  // average each bucket back out so the hex is a real colour from the image,
+  // not the quantised corner of its bin
+  const swatches = [...bins.values()].map((c) => {
+    const r = Math.round(c.r / c.n), g = Math.round(c.g / c.n), b = Math.round(c.b / c.n);
+    const max = Math.max(r, g, b) / 255, min = Math.min(r, g, b) / 255;
+    const light = (max + min) / 2;
+    const sat = max === min ? 0 : (max - min) / (light > 0.5 ? 2 - max - min : max + min);
+    return {
+      hex: "#" + [r, g, b].map((v) => v.toString(16).padStart(2, "0")).join(""),
+      share: Math.round((c.n / total) * 1000) / 1000,
+      n: c.n, sat, light,
+    };
+  });
+
+  const strip = ({ hex, share }) => ({ hex, share });
+
+  // Two lists, because they answer different questions and the loudest colour
+  // is usually the wrong one to theme with. A banner is mostly dark background,
+  // so `dominant` alone returns five shades of near-black and buries the accent
+  // that the retheme actually needs. `vivid` scores saturation alongside area,
+  // and drops near-black / near-white / grey, so the brand hue surfaces.
+  return {
+    dominant: swatches.sort((a, b) => b.n - a.n).slice(0, count).map(strip),
+    vivid: swatches
+      .filter((c) => c.sat >= 0.15 && c.light >= 0.12 && c.light <= 0.95)
+      .sort((a, b) => b.sat * b.share - a.sat * a.share)
+      .slice(0, count)
+      .map(strip),
+  };
+}
+
+// Recomputed from whatever is currently staged, so it is always in sync with
+// the images on disk no matter what order the operator uploaded them in.
+async function writePalette() {
+  const sources = {};
+  for (const name of PALETTE_SOURCES) {
+    try {
+      const colors = await topColors(join(ASSETS, name));
+      if (colors) sources[name] = colors;
+    } catch {
+      // not staged yet, or not readable — just leave it out
+    }
+  }
+  if (!Object.keys(sources).length) return null;
+  await writeFile(join(ASSETS, "palette.json"), JSON.stringify({ sources }, null, 2) + "\n", "utf8");
+  return "palette.json";
+}
+
 async function readDocxSubPages() {
   let buf;
   try {
@@ -584,23 +684,44 @@ async function readCurrentNewPages() {
 async function handleUpload(slot, index, ext, buf) {
   const n = Number(index);
   switch (slot) {
-    case "logo":
+    case "logo": {
       // One upload, both destinations: src/assets/logo.webp for the component
       // imports and public/logo.webp for the absolute og/schema logo URL. They
       // must stay identical, so there is no separate "public logo" field.
-      return [
+      const written = [
         "src/assets/" + (await toWebp(buf, ASSETS, "logo")),
         "public/" + (await toWebp(buf, PUBLIC, "logo")),
       ];
-    case "docx":
+      const palette = await writePalette();
+      if (palette) written.push(palette);
+      return written;
+    }
+    case "docx": {
       await writeFile(join(ASSETS, "content.docx"), buf);
-      return ["content.docx"];
-    case "banner":
+      const written = ["content.docx"];
+      const text = await writeContentText(buf);
+      if (text) written.push(text);
+      return written;
+    }
+    case "banner": {
       if (!(n >= 1 && n <= 4)) throw new Error("banner index must be 1-4");
-      return [await toPng(buf, ASSETS, `banner${n}`)];
-    case "slide":
+      const written = [await toPng(buf, ASSETS, `banner${n}`)];
+      // only banner1 feeds the palette, so don't re-measure for 2-4
+      if (n === 1) {
+        const palette = await writePalette();
+        if (palette) written.push(palette);
+      }
+      return written;
+    }
+    case "slide": {
       if (!(n >= 1 && n <= 4)) throw new Error("slide index must be 1-4");
-      return [await toPng(buf, ASSETS, `slide${n}`, { box: SLIDE_BOX })];
+      const written = [await toPng(buf, ASSETS, `slide${n}`, { box: SLIDE_BOX })];
+      if (n === 1) {
+        const palette = await writePalette();
+        if (palette) written.push(palette);
+      }
+      return written;
+    }
     case "favicon": {
       const written = [];
       const rasters = [
@@ -628,6 +749,27 @@ async function handleUpload(slot, index, ext, buf) {
     default:
       throw new Error(`unknown slot: ${slot}`);
   }
+}
+
+// sharp surfaces a locked destination as a bare libvips
+// "unable to open for write ... Invalid argument", which tells an operator
+// nothing about what to do. On Windows the cause is almost always the Astro dev
+// server holding a handle on the asset.
+//
+// The trigger is narrower than "dev server is running", which matters because
+// the naive version of this note sends people to stop a server that isn't the
+// problem: `npm run dev` on its own is harmless, and uploads keep working. It
+// only locks an asset once the dev server has actually *served* it — i.e. after
+// someone opens localhost:8888 in a browser and Vite optimises the image. From
+// that point every write to that file fails, reproducibly, until dev is stopped.
+// That is also why this looks intermittent in practice: it depends on whether
+// anyone happened to open the preview tab.
+function friendlyUploadError(err) {
+  const msg = String(err?.message ?? err);
+  if (/unable to open for write|write error/i.test(msg)) {
+    return "เขียนไฟล์ไม่ได้ เพราะมีโปรแกรมอื่นล็อกไฟล์อยู่ — ถ้าเปิด `npm run dev` (localhost:8888) ค้างไว้ ให้กด Ctrl+C ปิดก่อน แล้วอัพโหลดใหม่";
+  }
+  return msg;
 }
 
 function readBody(req) {
@@ -696,7 +838,10 @@ function buildRebrandPrompt({ brand, url, notes }, { unattended = true } = {}) {
   let p = 'rebrand and retheme to "' + b + '"';
   const u = String(url ?? "").trim();
   if (u) p += ' then real url is "' + validateLink(u, "URL production") + '"';
-  p += " ทำแบบ 2-agent ขนานตาม playbook";
+  // "ขนานตาม playbook" (not "2-agent") — the playbook decides how many agents
+  // to fan out from the actual page count; pinning a number here would fight it.
+  // The older "2-agent ขนาน" phrasing still works: SKILL.md reads both.
+  p += " ทำแบบขนานตาม playbook";
   const n = String(notes ?? "").replace(/[\r\n]+/g, " ").trim();
   if (n) p += " — " + validateText(n, "หมายเหตุ");
   if (unattended) p += " — หยุดที่ build + verify เท่านั้น ห้าม deploy และห้าม git push";
@@ -2165,7 +2310,7 @@ const server = http.createServer(async (req, res) => {
       res.end(JSON.stringify({ ok: true, written, ...extra }));
     } catch (err) {
       res.writeHead(400, { "Content-Type": "application/json" });
-      res.end(JSON.stringify({ ok: false, error: err.message }));
+      res.end(JSON.stringify({ ok: false, error: friendlyUploadError(err) }));
     }
     return;
   }

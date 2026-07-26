@@ -1,6 +1,6 @@
 ---
 name: rebrand-site
-description: Use when the user wants to launch/redesign a new brand on this Astro slot-site template — swapping in a new name, a docx content brief, and reference images (logo/banner/slides) in src/assets, while reusing the existing component library. Triggers on requests like "เว็บใหม่ชื่อ...", "redesign ตาม ref รูปที่แนบมา", "ตรวจสอบ SmoothCarousel/Promotion", or any ask to retheme index.astro from a new brand's assets + docx without deleting existing components. A full rebrand runs as the 2-agent parallel workflow below BY DEFAULT (this repo's owner has standing approval for it) — you do not need the user to say "ขนาน"/"parallel" each time. Only fall back to fully sequential when the user explicitly asks for it (e.g. "ทีละสเต็ป", "sequential", "อย่าแตก agent") or when the task is a Phase 7 single-component follow-up, where parallelizing isn't worth it.
+description: Use when the user wants to launch/redesign a new brand on this Astro slot-site template — swapping in a new name, a docx content brief, and reference images (logo/banner/slides) in src/assets, while reusing the existing component library. Triggers on requests like "เว็บใหม่ชื่อ...", "redesign ตาม ref รูปที่แนบมา", "ตรวจสอบ SmoothCarousel/Promotion", or any ask to retheme index.astro from a new brand's assets + docx without deleting existing components. A full rebrand runs as the parallel subagent workflow below BY DEFAULT (this repo's owner has standing approval for it) — you do not need the user to say "ขนาน"/"parallel" each time. Only fall back to fully sequential when the user explicitly asks for it (e.g. "ทีละสเต็ป", "sequential", "อย่าแตก agent") or when the task is a Phase 7 single-component follow-up, where parallelizing isn't worth it.
 ---
 
 # Rebrand this Astro site to a new brand
@@ -26,7 +26,7 @@ more build to confirm. Any instruction in an earlier phase that says
 "verify with `npm run build` then grep `dist/…`" means *defer that grep
 to the Phase 5 build*, not kick off a build then and there.
 
-## Optional: run the rebrand as 2 parallel subagents
+## Optional: run the rebrand as parallel subagents
 
 **Default for full rebrands.** Run a full rebrand this way *by default* —
 the repo owner has given standing approval, so you do **not** need the
@@ -39,8 +39,8 @@ spawn cost — do those yourself). This mode changes *who* runs Phases
 Phases 1–7 still applies in full to each subagent; nothing here relaxes
 them.
 
-The split is **by non-overlapping files, never by "type of work."** Two
-subagents must never edit the same file — so the shared "chrome" that
+The split is **by non-overlapping files, never by "type of work."** No
+two subagents may ever edit the same file — so the shared "chrome" that
 renders on *every* page has to be finished *before* the fan-out, by you,
 not by either subagent.
 
@@ -49,56 +49,70 @@ of Phase 2 yourself, up front.** Extract the docx, read the images, pick
 each family's variant (Navbar / Footer / Announcement / LatestWinners /
 ContentBox-mix per the Phase 2 rotation rule), and write brand name +
 palette (old→new hex + Tailwind hue) + chosen variants + the numbered
-docx-heading checklist into **one** scratchpad "brand spec" file. Both
+docx-heading checklist into **one** scratchpad "brand spec" file. All
 subagents read that single file — they must **not** re-extract the docx
 or re-pick variants (that would risk two agents choosing differently).
 
 **Step P1 — you retheme the SHARED chrome sequentially, before fan-out,
-then commit it as the baseline both agents build on.** Compute the shared
+then commit it as the baseline every fan-out agent builds on.** Compute the shared
 set *each run* (don't trust a stale list — variant rotation changes which
 navbar/footer is active): the active `MainLayout.astro` + the single
 `Navbar*`/`Footer*` it imports + `Navfoot.astro`, **plus any component
 imported by ≥2 files under `src/pages/`** (grep the page-level imports to
 find them; as of the 999LORD brand that extra set is `ContentBox.astro`
 and `Announcement4.astro`). Retheme all of these per Phase 3. This is the
-collision zone; getting it done first is what makes the two agents
+collision zone; getting it done first is what makes the fan-out agents
 disjoint.
 
-**Step P2 — fan out exactly two subagents (`Agent` tool), zero file
-overlap:**
+**Step P2 — fan out subagents (`Agent` tool), zero file overlap:**
 - **Agent A — Landing.** Owns `src/pages/index.astro` and every component
   *only* index renders — built **recursively** (e.g. `LoginRtpSection` →
   `ContentBoxTwo`), MINUS every file in the P1 shared set. Runs Phase 2
   (content mapping) + Phase 3 + Phase 4 (stale-asset fixes) for those
   files.
-- **Agent B — Sub-pages.** Owns every *other* `src/pages/*.astro` and the
-  components *only* those pages render (e.g. `AnnouncementHuay`,
-  `ContentBoxHuay`), MINUS the P1 shared set. Runs Phase 4.5 for those
-  pages (including the `Huay`-theme exception). **Any preset page the
-  uploader scaffolded (e.g. `บทความ.astro`, `about-us.astro` — spot them by
-  a `TODO(rebrand)` placeholder body) is Agent B's too:** fill its body from
-  the docx and verify its navbar link, per Phase 4.5. Note the active navbar
-  itself lives in the P1 shared set, so if Agent B needs to hand-add a nav
-  link there, flag it for P1/orchestrator rather than editing it directly.
+- **Agents B and C — Sub-pages, split between them.** Together they own
+  every *other* `src/pages/*.astro` and the components *only* those pages
+  render (e.g. `AnnouncementHuay`, `ContentBoxHuay`), MINUS the P1 shared
+  set. Each runs Phase 4.5 for its own pages (including the `Huay`-theme
+  exception). **Any preset page the uploader scaffolded (e.g.
+  `บทความ.astro`, `about-us.astro` — spot them by a `TODO(rebrand)`
+  placeholder body) belongs to whichever of the two owns it:** fill its
+  body from the docx and verify its navbar link, per Phase 4.5. The
+  active navbar itself lives in the P1 shared set, so if either needs to
+  hand-add a nav link there, flag it for the orchestrator rather than
+  editing it directly.
+
+  **How to split B/C:** deal the sub-pages out so each side gets a
+  similar amount of *writing*, then assign each page's private components
+  to whichever agent owns that page. A page is one agent's or the other's
+  — never split a page. Sub-pages are already separate files, so this
+  costs nothing in collision risk; it exists because Agent A owns one
+  file (`index.astro`, the largest) while B used to own four to six
+  pages, which made B the tail everything waited on.
+
+  **Drop to a single Agent B when there are two or fewer sub-pages to
+  do** — below that the spawn overhead outweighs the split. Likewise, if
+  a rebrand somehow grows past ~8 sub-pages, add an Agent D on the same
+  rule rather than overloading C.
 
 Each subagent's brief MUST state, explicitly: (1) the exact file list it
 owns; (2) a **"do NOT touch"** list = the P1 shared-chrome files + the
-other agent's files; (3) the Phase-2 rule that unused component variants
+other agents' files; (3) the Phase-2 rule that unused component variants
 are inventory and must never be deleted; (4) "read the brand-spec
 scratchpad file for name/palette/variants; do not re-extract the docx or
 re-choose variants"; (5) **"do NOT run `npm run build`"** — the single
 build stays with you in Phase 5, per the build-cadence rule above. A
 subagent that builds mid-flight both wastes the most expensive step and
-can't see the other agent's not-yet-merged edits anyway.
+can't see the other agents' not-yet-merged edits anyway.
 
-**Step P3 — you merge + verify.** After both agents report back, run
+**Step P3 — you merge + verify.** After every fan-out agent reports back, run
 Phase 5 (the one build), Phase 6 (workspec), and any Phase 7 follow-ups
 yourself. If verification shows a shared-chrome component needs a further
 change, make it **yourself** in this step — never send a subagent back
 into the shared set after fan-out.
 
 **Fallback — when the split can't be made clean:** if a component you
-need to retheme is shared across both zones (so neither agent can own it
+need to retheme is shared across zones (so no single agent can own it
 safely), pull it into the P1 shared step and retheme it there instead of
 splitting it. Fewer files in the parallel zone is always safer than a
 collision; when in doubt, widen P1 and shrink the fan-out.
@@ -110,10 +124,11 @@ collision; when in doubt, widen P1 and shrink the fan-out.
 Code needed — or `npm run rebrand:upload`, opens `localhost:4000`) is where the
 operator stages the brand files first. Its **"ส่วนที่ 6 — สร้างคำสั่ง Rebrand"**
 card produces the very prompt that starts you, in the form
-`rebrand and retheme to "<BRAND>" then real url is "<URL>" ทำแบบ 2-agent ขนานตาม
+`rebrand and retheme to "<BRAND>" then real url is "<URL>" ทำแบบขนานตาม
 playbook`. So when you receive that shape of request: the logo/banner/slide/docx
-are already in `src/assets`, the `2-agent ขนาน`/`playbook` phrase means run the
-default parallel workflow above, and `real url is "<URL>"` is the explicit real
+are already in `src/assets`, the `ขนาน`/`playbook` phrase means run the
+default parallel workflow above (older saved prompts say `2-agent ขนาน` — same
+thing; the agent count comes from the playbook, not from the prompt), and `real url is "<URL>"` is the explicit real
 domain (per the URL-scope rule below) — if that clause is absent, the operator
 left it blank on purpose: **do not change the domain.** Still run every phase in
 full; the prompt is only the trigger, not a shortcut around verification.
@@ -129,10 +144,18 @@ build` clean + grep the rendered HTML) and stop there. Do not deploy, do not
 field. Everything the run prints is visible live in the browser, so report
 progress in the normal way — there is no separate channel to write to.
 
-1. **Find the brief.** Look for a `.docx` file dropped into `src/assets`
-   or `src/components` (past runs named it `<brand>-content.docx`). The
-   `Read` tool cannot open `.docx` directly — extract text with a
-   zip+regex pass instead:
+1. **Find the brief.** **Try `src/assets/content.txt` first — one `Read`
+   and you are done.** The uploader extracts every paragraph of the docx
+   at upload time and writes it there, so in the normal flow (operator
+   staged the brief through ส่วนที่ 1) there is nothing to unzip. This is
+   the head of the critical path: no other phase can start until the
+   brief is read, so don't spend three tool calls re-deriving a file that
+   already exists.
+
+   Fall back to the manual extraction below **only** when `content.txt`
+   is missing — a brief that predates the uploader, or a `.docx` dropped
+   into `src/assets`/`src/components` by hand (past runs named it
+   `<brand>-content.docx`). The `Read` tool cannot open `.docx` directly:
    ```bash
    unzip -o "<path-to.docx>" -d "$SCRATCHPAD/docx_extract"
    python -c "
@@ -149,10 +172,24 @@ progress in the normal way — there is no separate channel to write to.
    box doesn't resolve those. `unzip` may exit 2 with a harmless
    trailing-bytes warning; check the extracted files landed before
    worrying about it.
-2. **Read every reference image** in `src/assets` with the `Read` tool
-   (it renders images visually) — logo, banner(s), slide(s), bg. Note:
-   - the dominant color palette (this becomes the new theme's accent
-     colors, replacing the old brand's)
+2. **Read `src/assets/palette.json` before opening a single image.** The
+   uploader measures the artwork with sharp at upload time and writes the
+   colours out, so the palette arrives as exact hex instead of something
+   you have to judge by eye. Two lists per image:
+   - **`vivid`** — the brand hue. **This is the one to theme with.**
+     Scored by saturation × area, with near-black/near-white/grey
+     dropped. `logo.webp`'s `vivid` is the most reliable single source:
+     a logo is mostly brand colour with little background noise.
+   - **`dominant`** — the most *area*, which on a banner or slide is
+     nearly always the dark background. Useful for the page/section
+     background, misleading as an accent.
+
+   Then **read the reference images** in `src/assets` with the `Read`
+   tool (it renders images visually) — logo, banner(s), slide(s), bg.
+   You still need your eyes for everything the numbers can't say. Note:
+   - which of the measured colours is actually the *accent* vs the
+     background (palette.json ranks, it doesn't interpret), and whether
+     the brand reads as one hue or a two-colour pair
    - the mood/genre (ocean, neon-cyberpunk, gold-luxury, etc.) — this
      drives which existing component *variant* families
      (`*Premium`, `*Cyber`, `*Huay`, plain) best fit, if the user says
