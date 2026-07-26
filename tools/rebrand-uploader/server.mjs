@@ -1252,10 +1252,27 @@ const PAGE = /* html */ `<!doctype html>
     display: grid;
     grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
     align-items: start;
-    gap: 22px; padding: 26px 30px 120px; margin: 0;
+    gap: 22px; padding: 26px 30px 40px; margin: 0;
+  }
+
+  /* Card 1 holds twelve fields and is far taller than the rest. With plain
+     auto-placement every short card sits in row 1 and leaves dead space beneath
+     itself, which pushed the Rebrand card below the fold — the operator had to
+     scroll past all of card 1 to reach the button they press last.
+
+     Letting card 1 span two row tracks fills that space: the short cards take
+     row 1 beside it, and the Rebrand card (spanning two columns) lands in row 2
+     directly under cards 2 and 3, on screen without scrolling. Both spans are
+     dropped below 900px, where there aren't enough columns for either to mean
+     anything. */
+  #card1 { grid-row: span 2; }
+  #card6 { grid-column: span 2; }
+  @media (max-width: 900px) {
+    #card1 { grid-row: auto; }
+    #card6 { grid-column: auto; }
   }
   @media (max-width: 640px) {
-    main { grid-template-columns: 1fr; padding: 20px 16px 120px; }
+    main { grid-template-columns: 1fr; padding: 20px 16px 40px; }
     header { padding: 16px; }
   }
 
@@ -1461,27 +1478,40 @@ const PAGE = /* html */ `<!doctype html>
   dialog#confirmDlg .cf-go:hover { filter: brightness(1.07); }
   dialog#confirmDlg button:focus-visible { outline: none; box-shadow: 0 0 0 3px rgba(56,189,248,0.35); }
 
-  /* ── sticky action bar ──────────────────────────────── */
-  .bar {
-    position: sticky; bottom: 0; z-index: 15;
-    background: rgba(11,17,32,0.82); backdrop-filter: blur(14px);
-    border-top: 1px solid var(--line-soft);
-    box-shadow: 0 -10px 30px -14px rgba(0,0,0,0.7);
-    padding: 15px 30px; display: flex; align-items: center; gap: 18px;
+  /* ── upload progress dialog ─────────────────────────── */
+  /* Shares the confirm dialog's chrome (see dialog#confirmDlg) so the two read
+     as the same component; only the log body differs. */
+  dialog#upDlg {
+    width: min(560px, 92vw); padding: 0; color: var(--ink);
+    background: linear-gradient(180deg, var(--card-a), var(--card-b));
+    border: 1px solid var(--line); border-radius: var(--radius);
+    box-shadow: 0 30px 70px -20px rgba(0,0,0,0.9);
   }
-  #uploadAll {
-    background: var(--grad); color: #05101f; border: 0;
-    padding: 12px 26px; font-size: 15px; font-weight: 800; border-radius: 11px; cursor: pointer;
-    box-shadow: 0 10px 24px -8px rgba(56,189,248,0.55); transition: transform .12s, filter .15s, box-shadow .15s;
-    flex: none; letter-spacing: .01em;
+  dialog#upDlg::backdrop { background: rgba(3,7,18,0.72); backdrop-filter: blur(3px); }
+  dialog#upDlg .cf-body { padding: 22px 24px 20px; }
+  dialog#upDlg h3 { margin: 0 0 4px; font-size: 17px; font-weight: 800; display: flex; align-items: center; gap: 10px; }
+  dialog#upDlg h3 .cf-icon { width: 30px; height: 30px; border-radius: 9px; flex: none; display: grid; place-items: center; background: var(--grad); color: #05101f; font-size: 15px; }
+  dialog#upDlg.bad h3 .cf-icon { background: linear-gradient(135deg, #f87171, #b91c1c); color: #fff; }
+  dialog#upDlg.done h3 .cf-icon { background: linear-gradient(135deg, #4ade80, #16a34a); color: #052e16; }
+  dialog#upDlg .cf-sub { margin: 2px 0 14px 40px; font-size: 12px; color: var(--muted); }
+  dialog#upDlg .cf-actions { display: flex; justify-content: flex-end; padding: 0 24px 20px; }
+  dialog#upDlg .cf-actions button { font: inherit; cursor: pointer; border-radius: 10px; padding: 9px 20px; font-size: 13.5px; font-weight: 700; background: var(--panel); color: var(--muted); border: 1px solid var(--line); }
+  dialog#upDlg .cf-actions button:hover { color: var(--ink); border-color: #34456a; }
+
+  #log {
+    font-size: 11.5px; font-family: ui-monospace, monospace; line-height: 1.85;
+    max-height: 300px; overflow: auto;
+    background: #070d1a; border: 1px solid var(--line); border-radius: 9px; padding: 10px 12px;
   }
-  #uploadAll:hover { filter: brightness(1.06); transform: translateY(-1px); box-shadow: 0 14px 30px -8px rgba(56,189,248,0.6); }
-  #uploadAll:active { transform: translateY(0); }
-  #log { flex: 1; font-size: 11.5px; font-family: ui-monospace, monospace; max-height: 92px; overflow: auto; line-height: 1.7; }
+  #log:empty { display: none; }
   #log div.ok { color: var(--ok); }
   #log div.err { color: var(--err); }
   #log::-webkit-scrollbar { width: 8px; }
   #log::-webkit-scrollbar-thumb { background: var(--line); border-radius: 8px; }
+
+  /* the upload button sits beside Rebrand now — same weight, different hue so
+     the two primary actions stay tellable apart at a glance */
+  button.fire.alt { background: linear-gradient(135deg, #a78bfa, #6366f1); color: #0b1120; box-shadow: 0 8px 20px -8px rgba(129,140,248,0.55); }
 </style>
 </head>
 <body>
@@ -1693,13 +1723,14 @@ const PAGE = /* html */ `<!doctype html>
     </div>
     <div class="field">
       <div class="row">
-        <button type="button" id="rbFire" class="fire">▶ เริ่ม Rebrand</button>
+        <button type="button" id="uploadAll" class="fire alt">⬆ อัพโหลดทั้งหมด</button>
+        <button type="button" id="rbFire" class="fire" disabled>▶ เริ่ม Rebrand</button>
         <button type="button" id="rbStop" class="ghost danger" disabled>■ หยุด</button>
         <button type="button" id="rbDry" class="ghost" title="ยิง prompt สั้นๆ เพื่อเช็กว่าต่อ Claude ได้จริง ใช้เวลาไม่กี่วินาที ไม่แตะไฟล์">🧪 ทดสอบท่อ</button>
         <span class="pill" id="rbPill">พร้อม</span>
         <span class="rb-timer" id="rbTimer"></span>
       </div>
-      <span class="status" id="rbFireHint">ต้องกด "อัพโหลดทั้งหมด" ให้เสร็จก่อน — ปุ่มนี้ไม่อัพโหลดไฟล์ให้ · งานจริงกินเวลาหลายสิบนาที · <strong>ห้ามปิดหน้าต่างดำ (cmd)</strong> ระหว่างรัน (ปิดแท็บเบราว์เซอร์ได้ ไม่กระทบ)</span>
+      <span class="status" id="rbFireHint">อัพโหลดไฟล์ให้เสร็จก่อน แล้วปุ่ม Rebrand จะกดได้ · งานจริงกินเวลาหลายสิบนาที · <strong>ห้ามปิดหน้าต่างดำ (cmd)</strong> ระหว่างรัน (ปิดแท็บเบราว์เซอร์ได้ ไม่กระทบ)</span>
     </div>
     <div class="field" id="rbRunBox" hidden>
       <div class="row">
@@ -1733,10 +1764,17 @@ const PAGE = /* html */ `<!doctype html>
     </div>
   </form>
 </dialog>
-<div class="bar">
-  <button id="uploadAll">อัพโหลดทั้งหมด</button>
-  <div id="log"></div>
-</div>
+<dialog id="upDlg">
+  <div class="cf-top"></div>
+  <div class="cf-body">
+    <h3><span class="cf-icon" id="upIcon">⬆</span><span id="upTitle">กำลังอัพโหลด...</span></h3>
+    <p class="cf-sub" id="upSub">กำลังส่งไฟล์เข้า src/assets และ public</p>
+    <div id="log"></div>
+  </div>
+  <div class="cf-actions" id="upActions" hidden>
+    <button type="button" class="cf-cancel" id="upClose">ปิด</button>
+  </div>
+</dialog>
 <script>
   // live thumbnails
   document.querySelectorAll('.field[data-img] input[type=file]').forEach((inp) => {
@@ -1749,7 +1787,19 @@ const PAGE = /* html */ `<!doctype html>
   });
 
   const log = document.getElementById('log');
-  function addLog(msg, ok) { const d = document.createElement('div'); d.className = ok ? 'ok' : 'err'; d.textContent = (ok ? '✓ ' : '✗ ') + msg; log.prepend(d); }
+  // Declared up here beside addLog, not next to the upload handler, so addLog
+  // can never touch it before initialisation (temporal dead zone).
+  let upFailed = false;
+  function addLog(msg, ok) {
+    if (!ok) upFailed = true;
+    const d = document.createElement('div');
+    d.className = ok ? 'ok' : 'err';
+    d.textContent = (ok ? '✓ ' : '✗ ') + msg;
+    // append, not prepend: the log now reads top-to-bottom in the order things
+    // actually happened, which is what an operator watching a modal expects
+    log.appendChild(d);
+    log.scrollTop = log.scrollHeight;
+  }
   // Never let a missing/renamed .status span abort an upload run: this is a
   // cosmetic sink, so a markup slip must not throw out of the click handler
   // and skip the actual fetch (that shipped once — the favicon field had no
@@ -2050,16 +2100,44 @@ const PAGE = /* html */ `<!doctype html>
 
   function running() { return rbPill.dataset.status === 'running' || rbPill.dataset.status === 'stopping'; }
 
+  // Files chosen in the form but not yet sent. The Rebrand button stays locked
+  // while any exist: firing with a file still sitting in an <input> would run
+  // the whole rebrand against the PREVIOUS brand's assets and look like the
+  // tool ignored what the operator picked.
+  function pendingFiles() {
+    return [...document.querySelectorAll('input[type=file]')].some((i) => i.files.length);
+  }
+
+  let briefStaged = false; // a content.docx exists on disk (checked at load, and after each upload)
+
   function syncButtons() {
     const busy = running();
-    rbFire.disabled = busy || !promptOk;
+    const pending = pendingFiles();
+    rbFire.disabled = busy || !promptOk || pending || !briefStaged;
     rbStop.disabled = !busy;
     document.getElementById('rbDry').disabled = busy;
     // While an agent is reading src/assets, re-staging files underneath it would
     // hand it a half-swapped brand — so uploads are locked for the duration.
     uploadAllBtn.disabled = busy;
-    uploadAllBtn.style.opacity = busy ? '.45' : '';
-    uploadAllBtn.style.cursor = busy ? 'not-allowed' : '';
+
+    // say WHY the button is off, rather than leaving a dead grey button
+    const hint = document.getElementById('rbFireHint');
+    if (busy) hint.innerHTML = 'กำลังรัน — <strong>ห้ามปิดหน้าต่างดำ (cmd)</strong> (ปิดแท็บเบราว์เซอร์ได้ ไม่กระทบ)';
+    else if (pending) hint.innerHTML = '⬆ <strong>ยังมีไฟล์ที่เลือกไว้แต่ยังไม่ได้อัพโหลด</strong> — กด "อัพโหลดทั้งหมด" ก่อน ปุ่ม Rebrand ถึงจะกดได้';
+    else if (!briefStaged) hint.innerHTML = '⚠ <strong>ยังไม่มี content.docx ใน src/assets</strong> — อัพโหลด Content brief ในส่วนที่ 1 ก่อน';
+    else if (!promptOk) hint.innerHTML = 'กรอกชื่อแบรนด์ให้ถูกต้องก่อน ปุ่ม Rebrand ถึงจะกดได้';
+    else hint.innerHTML = 'พร้อมยิงแล้ว · งานจริงกินเวลาหลายสิบนาที · <strong>ห้ามปิดหน้าต่างดำ (cmd)</strong> ระหว่างรัน (ปิดแท็บเบราว์เซอร์ได้)';
+  }
+
+  // keep the gate honest as soon as a file is picked, not only after an upload
+  document.querySelectorAll('input[type=file]').forEach((i) => i.addEventListener('change', syncButtons));
+
+  async function refreshBriefStaged() {
+    try {
+      const st = await (await fetch('/rebrand/status')).json();
+      briefStaged = !!st.docx?.exists;
+    } catch { briefStaged = false; }
+    syncButtons();
   }
 
   const PILL = {
@@ -2255,7 +2333,6 @@ const PAGE = /* html */ `<!doctype html>
         lines: [
           'จะแก้ <b>ไฟล์จริง</b> ใน <code>src/</code> ของโปรเจกต์นี้',
           'กินเวลาหลายสิบนาที — <b>ห้ามปิดหน้าต่าง cmd</b> ระหว่างรัน (ปิดแท็บเบราว์เซอร์ได้)',
-          'ต้องกด &ldquo;อัพโหลดทั้งหมด&rdquo; ให้เสร็จก่อนแล้ว — ปุ่มนี้ไม่อัพไฟล์ให้',
           docxNote,
         ],
         code: rbPrompt.value,
@@ -2330,12 +2407,45 @@ const PAGE = /* html */ `<!doctype html>
   })();
 
   refreshPrompt();
-  syncButtons();
+  refreshBriefStaged();
+
+  // ── upload progress dialog ────────────────────────────────────────────────
+  // The log used to live in a sticky footer bar, which meant the result of the
+  // upload was reported far away from the button that caused it. It is a modal
+  // now: it takes over while files are moving, then gets out of the way by
+  // itself on a clean run. On any failure it stays put and waits — a failed
+  // upload is the one thing here nobody should be allowed to miss.
+  const upDlg = document.getElementById('upDlg');
+  function upOpen() {
+    upFailed = false;
+    log.textContent = '';
+    upDlg.className = '';
+    document.getElementById('upIcon').textContent = '⬆';
+    document.getElementById('upTitle').textContent = 'กำลังอัพโหลด...';
+    document.getElementById('upSub').textContent = 'กำลังส่งไฟล์เข้า src/assets และ public';
+    document.getElementById('upActions').hidden = true;
+    if (!upDlg.open) upDlg.showModal();
+  }
+  function upFinish(count) {
+    const ok = !upFailed;
+    upDlg.className = ok ? 'done' : 'bad';
+    document.getElementById('upIcon').textContent = ok ? '✓' : '✕';
+    document.getElementById('upTitle').textContent = ok ? 'อัพโหลดเสร็จแล้ว' : 'อัพโหลดไม่สำเร็จบางรายการ';
+    document.getElementById('upSub').textContent = ok
+      ? 'ส่งขึ้นไป ' + count + ' รายการ — กำลังปิดหน้าต่างนี้'
+      : 'ดูรายการสีแดงด้านล่าง แก้แล้วกดอัพโหลดใหม่ได้';
+    document.getElementById('upActions').hidden = ok;
+    // close itself only when there is nothing to read
+    if (ok) setTimeout(() => { if (upDlg.open) upDlg.close(); }, 1400);
+  }
+  document.getElementById('upClose').addEventListener('click', () => upDlg.close());
 
   document.getElementById('uploadAll').addEventListener('click', async () => {
-    if (running()) { addLog('มี rebrand กำลังรันอยู่ — อัพโหลดตอนนี้ไม่ได้', false); return; }
+    if (running()) return;
     const inputs = [...document.querySelectorAll('input[type=file]')].filter((i) => i !== bgFile);
     let any = false;
+    let sent = 0;
+    upOpen();
 
     if (await sendLink('aff', affInput, 'affField', 'ลิงก์ aff')) any = true;
     if (await sendLink('line', lineInput, 'lineField', 'ลิงก์ไลน์')) any = true;
@@ -2352,6 +2462,7 @@ const PAGE = /* html */ `<!doctype html>
         if (!res.ok || !j.ok) throw new Error(j.error || ('HTTP ' + res.status));
         setStatus(bgFile, '✅ ' + j.written.join(', '));
         addLog(bgReq.label + ' → ' + j.written.join(', '), true);
+        sent++;
       } catch (e) {
         setStatus(bgFile, '❌ ' + e.message);
         addLog(bgReq.label + ': ' + e.message, false);
@@ -2373,12 +2484,25 @@ const PAGE = /* html */ `<!doctype html>
         if (!res.ok || !j.ok) throw new Error(j.error || ('HTTP ' + res.status));
         setStatus(inp, '✅ ' + j.written.join(', '));
         addLog(slot + (index ? index : '') + ' → ' + j.written.join(', '), true);
+        sent++;
+        inp.value = ''; // clear it: the file is on disk now, so it is no longer "pending"
       } catch (e) {
         setStatus(inp, '❌ ' + e.message);
         addLog(slot + (index ? index : '') + ': ' + e.message, false);
       }
     }
-    if (!any) addLog('ยังไม่ได้เลือกไฟล์ใดๆ', false);
+    if (!any) {
+      addLog('ยังไม่ได้เลือกไฟล์ใดๆ', false);
+      upDlg.className = 'bad';
+      document.getElementById('upIcon').textContent = '!';
+      document.getElementById('upTitle').textContent = 'ไม่มีอะไรให้อัพโหลด';
+      document.getElementById('upSub').textContent = 'ยังไม่ได้เลือกไฟล์ หรือกรอกลิงก์/Title ใดๆ ในส่วนที่ 1-5';
+      document.getElementById('upActions').hidden = false;
+    } else {
+      upFinish(sent);
+    }
+    // a fresh docx may have just landed, and cleared inputs change the gate
+    await refreshBriefStaged();
   });
 </script>
 </body>
