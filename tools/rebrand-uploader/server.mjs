@@ -866,6 +866,7 @@ const runState = {
   numTurns: 0,
   costUsd: null,
   toolCount: 0,
+  errorCount: 0,
   files: new Set(),
   events: [],
   nextSeq: 0,
@@ -916,6 +917,25 @@ function flattenToolResult(content) {
 
 const EDIT_TOOLS = new Set(["Edit", "MultiEdit", "Write", "NotebookEdit"]);
 
+// Tool errors that are the harness working as designed rather than something
+// going wrong: the agent hits a guardrail and recovers on its own next turn.
+//
+// Worth separating because an operator watching this log has no way to tell the
+// two apart, and the first live rebrand proved the cost — a Write to
+// public/site.webmanifest was blocked by the read-before-write rail, the agent
+// Read and re-Wrote it two turns later, and the run was fine, but the red ⚠ was
+// alarming enough to stop and ask about. One routine hit in 112 tool calls. If
+// every red line is routine, people learn to ignore red lines, which is worse
+// than not showing them at all.
+const BENIGN_TOOL_ERRORS = [
+  /File has not been read yet/i, // Write before Read — agent Reads, then retries
+  /String to replace not found/i, // Edit anchor missed — agent re-reads and retries
+  /has been modified since/i, // file changed after Read — agent re-reads
+  /File has already been read/i,
+  /No changes to make/i, // no-op edit
+];
+const isBenignToolError = (text) => BENIGN_TOOL_ERRORS.some((re) => re.test(text));
+
 // Translate one stream-json message from the CLI into the compact events the UI
 // renders. Unknown message types are ignored on purpose — the CLI adds new ones
 // over time and a rebrand must not fall over because of a message we don't know.
@@ -953,7 +973,11 @@ function handleCliMessage(msg) {
     case "user":
       for (const b of msg.message?.content || []) {
         if (b.type === "tool_result" && b.is_error) {
-          pushEvent("tool_error", { text: flattenToolResult(b.content) });
+          const text = flattenToolResult(b.content);
+          const benign = isBenignToolError(text);
+          // the counter the UI surfaces only tracks the ones worth reading
+          if (!benign) runState.errorCount++;
+          pushEvent("tool_error", { text, benign });
         }
       }
       break;
@@ -988,6 +1012,7 @@ function finishRun(code, signal) {
     elapsedMs: runState.endedAt - runState.startedAt,
     files: [...runState.files],
     toolCount: runState.toolCount,
+    errorCount: runState.errorCount,
     numTurns: runState.numTurns,
     costUsd: runState.costUsd,
   });
@@ -1023,6 +1048,7 @@ function startRun({ brand, url, notes, dry }) {
     numTurns: 0,
     costUsd: null,
     toolCount: 0,
+    errorCount: 0,
     files: new Set(),
     events: [],
     nextSeq: 0,
@@ -1135,6 +1161,7 @@ function runSnapshot() {
     numTurns: runState.numTurns,
     costUsd: runState.costUsd,
     toolCount: runState.toolCount,
+    errorCount: runState.errorCount,
     files: [...runState.files],
     nextSeq: runState.nextSeq,
     oldestSeq: runState.events[0]?.i ?? runState.nextSeq,
@@ -1624,6 +1651,7 @@ const PAGE = /* html */ `<!doctype html>
     <div class="field" id="rbRunBox" hidden>
       <div class="row">
         <span class="rb-stat">tools <b id="rbTools">0</b></span>
+        <span class="rb-stat" id="rbErrWrap" hidden>ข้อผิดพลาด <b id="rbErrs">0</b></span>
         <span class="rb-stat">ไฟล์ที่แก้ <b id="rbFiles">0</b></span>
         <span class="rb-stat" id="rbMeta"></span>
       </div>
@@ -1904,6 +1932,8 @@ const PAGE = /* html */ `<!doctype html>
   const rbRunBox = document.getElementById('rbRunBox');
   const rbLog = document.getElementById('rbLog');
   const rbTools = document.getElementById('rbTools');
+  const rbErrs = document.getElementById('rbErrs');
+  const rbErrWrap = document.getElementById('rbErrWrap');
   const rbFilesN = document.getElementById('rbFiles');
   const rbMeta = document.getElementById('rbMeta');
   const rbFileBox = document.getElementById('rbFileBox');
@@ -1920,6 +1950,7 @@ const PAGE = /* html */ `<!doctype html>
   let rbStartedAt = 0;
   let rbFileSet = new Set();
   let rbToolCount = 0;
+  let rbErrCount = 0;
 
   const esc = (s) => String(s).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
 
@@ -2004,6 +2035,9 @@ const PAGE = /* html */ `<!doctype html>
     rbLastIdx = -1;
     rbClosed = false;
     rbTools.textContent = '0';
+    rbErrCount = 0;
+    rbErrs.textContent = '0';
+    rbErrWrap.hidden = true;
     rbFilesN.textContent = '0';
     rbMeta.textContent = '';
     rbDone.textContent = '';
@@ -2041,7 +2075,16 @@ const PAGE = /* html */ `<!doctype html>
         rbLine('tool' + sub, who + '● ' + esc(ev.name) + (ev.text ? ' — ' + esc(ev.text) : ''));
         break;
       case 'tool_error':
-        rbLine('bad', '⚠ tool error: ' + esc(ev.text));
+        // A guardrail the agent routes around on its own is not a failure —
+        // showing it in the same red as a real one trains people to ignore red.
+        if (ev.benign) {
+          rbLine('meta', '↻ ' + esc(ev.text) + ' — agent แก้เองแล้ว');
+        } else {
+          rbErrCount++;
+          rbErrs.textContent = rbErrCount;
+          rbErrWrap.hidden = false;
+          rbLine('bad', '⚠ tool error: ' + esc(ev.text));
+        }
         break;
       case 'stderr':
       case 'raw':
