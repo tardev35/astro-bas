@@ -1408,6 +1408,59 @@ const PAGE = /* html */ `<!doctype html>
   #rbFileBox summary { cursor: pointer; color: var(--accent); }
   #rbFileList { font-family: ui-monospace, monospace; font-size: 11px; line-height: 1.7; padding: 6px 0 0 14px; max-height: 150px; overflow: auto; white-space: pre-wrap; word-break: break-all; }
 
+  /* ── confirm dialog ─────────────────────────────────────
+     Native <dialog> rather than a hand-rolled overlay: showModal() brings the
+     backdrop, focus trap, Esc-to-close and inert-background for free, and a
+     <form method="dialog"> button closes it with its own value — so the whole
+     thing is markup plus a promise wrapper. */
+  dialog#confirmDlg {
+    width: min(600px, 92vw); padding: 0; color: var(--ink);
+    background: linear-gradient(180deg, var(--card-a), var(--card-b));
+    border: 1px solid var(--line); border-radius: var(--radius);
+    box-shadow: 0 30px 70px -20px rgba(0,0,0,0.9);
+  }
+  dialog#confirmDlg::backdrop { background: rgba(3,7,18,0.72); backdrop-filter: blur(3px); }
+  dialog#confirmDlg .cf-top { height: 3px; background: var(--grad-line); border-radius: var(--radius) var(--radius) 0 0; }
+  dialog#confirmDlg .cf-body { padding: 22px 24px 4px; }
+  dialog#confirmDlg h3 {
+    margin: 0 0 4px; font-size: 17px; font-weight: 800; letter-spacing: -0.01em;
+    display: flex; align-items: center; gap: 10px;
+  }
+  dialog#confirmDlg h3 .cf-icon {
+    width: 30px; height: 30px; border-radius: 9px; flex: none; display: grid; place-items: center;
+    background: var(--grad); color: #05101f; font-size: 15px;
+  }
+  dialog#confirmDlg.danger h3 .cf-icon { background: linear-gradient(135deg, #f87171, #b91c1c); color: #fff; }
+  dialog#confirmDlg .cf-sub { margin: 2px 0 14px 40px; font-size: 12px; color: var(--muted); }
+  dialog#confirmDlg ul { margin: 0; padding: 0; list-style: none; display: flex; flex-direction: column; gap: 9px; }
+  dialog#confirmDlg li {
+    font-size: 13px; line-height: 1.65; color: #dbe4f0;
+    padding-left: 24px; position: relative;
+  }
+  dialog#confirmDlg li::before {
+    content: "›"; position: absolute; left: 8px; top: -1px; color: var(--accent); font-weight: 700;
+  }
+  dialog#confirmDlg li b { color: var(--err); font-weight: 700; }
+  dialog#confirmDlg li .cf-ok { color: var(--ok); }
+  dialog#confirmDlg pre {
+    margin: 14px 0 0; padding: 11px 13px; max-height: 150px; overflow: auto;
+    background: #070d1a; border: 1px solid var(--line); border-radius: 9px;
+    font-family: ui-monospace, monospace; font-size: 11.5px; line-height: 1.7;
+    white-space: pre-wrap; word-break: break-word; color: #cbd5e1;
+  }
+  dialog#confirmDlg .cf-label { margin: 16px 0 0; font-size: 10.5px; font-weight: 700; letter-spacing: .06em; text-transform: uppercase; color: var(--faint); }
+  dialog#confirmDlg .cf-actions {
+    display: flex; justify-content: flex-end; gap: 10px;
+    padding: 18px 24px 20px; margin-top: 18px; border-top: 1px solid var(--line-soft);
+  }
+  dialog#confirmDlg .cf-actions button { font: inherit; cursor: pointer; border-radius: 10px; padding: 10px 20px; font-size: 13.5px; font-weight: 700; }
+  dialog#confirmDlg .cf-cancel { background: var(--panel); color: var(--muted); border: 1px solid var(--line); }
+  dialog#confirmDlg .cf-cancel:hover { color: var(--ink); border-color: #34456a; }
+  dialog#confirmDlg .cf-go { background: var(--grad); color: #05101f; border: 0; box-shadow: 0 8px 20px -8px rgba(56,189,248,0.55); }
+  dialog#confirmDlg.danger .cf-go { background: linear-gradient(135deg, #f87171, #b91c1c); color: #fff; box-shadow: 0 8px 20px -8px rgba(248,113,113,0.55); }
+  dialog#confirmDlg .cf-go:hover { filter: brightness(1.07); }
+  dialog#confirmDlg button:focus-visible { outline: none; box-shadow: 0 0 0 3px rgba(56,189,248,0.35); }
+
   /* ── sticky action bar ──────────────────────────────── */
   .bar {
     position: sticky; bottom: 0; z-index: 15;
@@ -1664,6 +1717,22 @@ const PAGE = /* html */ `<!doctype html>
     </div>
   </section>
 </main>
+<dialog id="confirmDlg">
+  <div class="cf-top"></div>
+  <form method="dialog">
+    <div class="cf-body">
+      <h3><span class="cf-icon" id="cfIcon">▶</span><span id="cfTitle"></span></h3>
+      <p class="cf-sub" id="cfSub"></p>
+      <ul id="cfList"></ul>
+      <p class="cf-label" id="cfCodeLabel" hidden>คำสั่งที่จะรัน</p>
+      <pre id="cfCode" hidden></pre>
+    </div>
+    <div class="cf-actions">
+      <button type="submit" value="cancel" class="cf-cancel" id="cfCancel">ยกเลิก</button>
+      <button type="submit" value="ok" class="cf-go" id="cfOk">ตกลง</button>
+    </div>
+  </form>
+</dialog>
 <div class="bar">
   <button id="uploadAll">อัพโหลดทั้งหมด</button>
   <div id="log"></div>
@@ -2143,22 +2212,56 @@ const PAGE = /* html */ `<!doctype html>
     }
   });
 
+  // ── confirm dialog ────────────────────────────────────────────────────────
+  // Replaces window.confirm(), which could not show the one thing that matters
+  // most here — the exact prompt about to be fired — as anything but a wall of
+  // unstyled text, and which browsers label with "localhost:4000 says".
+  const cfDlg = document.getElementById('confirmDlg');
+  function askConfirm({ title, sub = '', lines = [], code = '', ok = 'ตกลง', icon = '▶', danger = false }) {
+    document.getElementById('cfTitle').textContent = title;
+    document.getElementById('cfSub').textContent = sub;
+    document.getElementById('cfIcon').textContent = icon;
+    document.getElementById('cfOk').textContent = ok;
+    cfDlg.classList.toggle('danger', danger);
+    // lines are our own markup (for <b>/<span>); code is user input, so it goes
+    // in via textContent and can never inject anything.
+    document.getElementById('cfList').innerHTML = lines.map((l) => '<li>' + l + '</li>').join('');
+    const codeEl = document.getElementById('cfCode');
+    codeEl.textContent = code;
+    codeEl.hidden = !code;
+    document.getElementById('cfCodeLabel').hidden = !code;
+    return new Promise((resolve) => {
+      cfDlg.addEventListener('close', () => resolve(cfDlg.returnValue === 'ok'), { once: true });
+      cfDlg.returnValue = '';
+      cfDlg.showModal();
+      // focus Cancel, not the go button: Enter should not fire a 30-minute,
+      // repo-rewriting job by accident. Esc closes with returnValue '' = false.
+      document.getElementById('cfCancel').focus();
+    });
+  }
+
   async function fireRun(dry) {
     if (!dry) {
-      let docxNote = 'ไม่พบ content.docx ใน src/assets — ยังไม่ได้อัพ brief!';
+      let docxNote = '<b>ไม่พบ content.docx ใน src/assets — ยังไม่ได้อัพ brief</b>';
       try {
         const st = await (await fetch('/rebrand/status')).json();
-        if (st.docx?.exists) docxNote = 'content.docx ที่ staged ไว้: ' + new Date(st.docx.mtime).toLocaleString('th-TH');
+        if (st.docx?.exists) {
+          docxNote = 'content.docx ที่ staged ไว้: <span class="cf-ok">' + new Date(st.docx.mtime).toLocaleString('th-TH') + '</span>';
+        }
       } catch { /* keep the warning */ }
-      const ok = confirm(
-        'เริ่ม rebrand จริงหรือไม่?\\n\\n' +
-        '• จะแก้ไฟล์จริงใน src/ ของโปรเจกต์นี้\\n' +
-        '• กินเวลาหลายสิบนาที ห้ามปิดหน้าต่าง cmd ระหว่างรัน\\n' +
-        '• ต้องกด "อัพโหลดทั้งหมด" ให้เสร็จก่อนแล้ว (ปุ่มนี้ไม่อัพให้)\\n' +
-        '• ' + docxNote + '\\n\\n' +
-        'คำสั่ง: ' + rbPrompt.value
-      );
-      if (!ok) return;
+      const go = await askConfirm({
+        title: 'เริ่ม rebrand จริงหรือไม่?',
+        sub: 'Claude จะลงมือแก้โปรเจกต์นี้ทันทีเมื่อกดตกลง',
+        lines: [
+          'จะแก้ <b>ไฟล์จริง</b> ใน <code>src/</code> ของโปรเจกต์นี้',
+          'กินเวลาหลายสิบนาที — <b>ห้ามปิดหน้าต่าง cmd</b> ระหว่างรัน (ปิดแท็บเบราว์เซอร์ได้)',
+          'ต้องกด &ldquo;อัพโหลดทั้งหมด&rdquo; ให้เสร็จก่อนแล้ว — ปุ่มนี้ไม่อัพไฟล์ให้',
+          docxNote,
+        ],
+        code: rbPrompt.value,
+        ok: '▶ เริ่ม Rebrand',
+      });
+      if (!go) return;
     }
     rbReset();
     setPill('running');
@@ -2185,7 +2288,18 @@ const PAGE = /* html */ `<!doctype html>
 
   rbFire.addEventListener('click', () => fireRun(false));
   rbStop.addEventListener('click', async () => {
-    if (!confirm('หยุดงาน rebrand ตอนนี้?\\n\\nไฟล์ที่แก้ไปแล้วจะค้างครึ่งทาง ต้องไปตรวจ git status เอง')) return;
+    const stop = await askConfirm({
+      title: 'หยุดงาน rebrand ตอนนี้?',
+      sub: 'งานจะถูกตัดกลางคัน ไม่สามารถสั่งให้ทำต่อจากจุดเดิมได้',
+      icon: '■',
+      danger: true,
+      lines: [
+        'ไฟล์ที่แก้ไปแล้ว <b>จะค้างครึ่งทาง</b> — เว็บอาจอยู่ในสภาพที่ build ไม่ผ่าน',
+        'ตรวจด้วย <code>git status</code> และย้อนกลับด้วย <code>git checkout .</code> ก่อนยิงใหม่',
+      ],
+      ok: '■ หยุดเลย',
+    });
+    if (!stop) return;
     rbStop.disabled = true;
     try {
       const j = await (await fetch('/rebrand/stop', { method: 'POST' })).json();
