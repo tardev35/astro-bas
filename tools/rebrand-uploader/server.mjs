@@ -1247,38 +1247,41 @@ const PAGE = /* html */ `<!doctype html>
   /* ── layout: full-width grid, cards flow 1→5 left→right, wrap on overflow ─ */
   /* auto-fill (not auto-fit) keeps column tracks fixed, so a lone card on the
      last row stays one column wide instead of stretching across the full width. */
-  /* Card 1 carries twelve fields and is several times taller than any other
-     card. On a uniform grid that is fatal to the layout: a grid row is as tall
-     as its tallest member, so every short card left a hole beneath itself and
-     the Rebrand card — the one pressed last, and the one that matters — was
-     stranded far below the fold.
-
-     So card 1 gets its own column and stops setting the pace for anything else,
-     while cards 2-6 pack vertically in a multi-column flow, where a short card
-     is simply followed by the next one with no gap. */
+  /* Form on the left, action panel on the right.
+     Earlier versions tried to tile all six cards into a mosaic, packing them by
+     height. It looked efficient and read terribly: the step numbers are the only
+     navigation this page has, and packing moved them around — 6 landing between
+     3 and 4, cards changing neighbours on resize. Nobody could tell where they
+     were in the process.
+     So the steps are simply a column, in order, always. The one thing that
+     needed to escape the scroll — the pair of buttons — is pinned instead. */
   main {
     display: grid;
-    grid-template-columns: minmax(300px, 380px) minmax(0, 1fr);
+    grid-template-columns: minmax(0, 1fr) 400px;
     align-items: start;
     gap: 22px; padding: 26px 30px 40px; margin: 0;
   }
-  .rest {
-    /* up to 2 columns, each at least 340px — drops to 1 on its own when narrow */
-    columns: 340px 2;
-    column-gap: 22px;
-  }
-  .rest .card { break-inside: avoid; margin-bottom: 22px; }
-  /* column-span breaks the flow exactly where the card sits, which is why card 6
-     is third in the DOM: it lands right below the two short cards instead of
-     after everything. */
-  #card6 { column-span: all; }
+  .steps { display: flex; flex-direction: column; gap: 22px; min-width: 0; }
 
-  @media (max-width: 1100px) {
+  .action { position: sticky; top: 104px; }
+  /* the run log can grow without bound, so the panel scrolls inside itself
+     rather than growing past the viewport and taking the buttons with it */
+  .action .card { max-height: calc(100vh - 128px); overflow: auto; }
+
+  /* Cards 1 and 4 hold most of the fields on the page. Two-up inside the card
+     is what keeps the column from becoming a mile of scrolling — it halves the
+     two tallest cards without moving anything between cards. */
+  .card.two-up .fieldset { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 0 26px; }
+  .card.two-up .fieldset > .field { border-top: 0; padding: 11px 0; }
+
+  @media (max-width: 1180px) {
     main { grid-template-columns: 1fr; }
-    .rest { columns: 340px 2; }
+    /* once it is a single column the panel can't usefully stick — it would
+       cover the form it belongs to */
+    .action { position: static; }
+    .action .card { max-height: none; }
   }
   @media (max-width: 640px) {
-    .rest { columns: 1; }
     main { padding: 20px 16px 40px; }
     header { padding: 16px; }
   }
@@ -1531,10 +1534,15 @@ const PAGE = /* html */ `<!doctype html>
   </div>
 </header>
 <main>
-  <section class="card" id="card1">
+  <!-- Steps run 1-5 top to bottom, in order, always. Nothing reflows into a
+       different position as the window resizes — the numbers are the whole
+       navigation, so they have to stay put. -->
+  <div class="steps">
+    <section class="card two-up" id="card1">
     <h2 data-n="1">ไฟล์แบรนด์ · src/assets</h2>
     <p class="sub">โลโก้ / เนื้อหา (docx) / พื้นหลัง (รูป หรือ สี/ไล่สี) / แบนเนอร์ / รูป promotion + carousel</p>
-    <div class="field" data-img>
+    <div class="fieldset">
+<div class="field" data-img>
       <div class="row"><label>Logo</label><span class="target">src/assets/logo.webp + public/logo.webp</span></div>
       <div class="row"><input type="file" accept="image/*" data-slot="logo" /><img class="thumb" /></div>
       <span class="status">อัพครั้งเดียว เซฟลงทั้ง src/assets และ public ให้อัตโนมัติ</span>
@@ -1622,13 +1630,9 @@ const PAGE = /* html */ `<!doctype html>
       <div class="row"><input type="file" accept="image/*" data-slot="slide" data-index="4" /><img class="thumb" /></div>
       <span class="status"></span>
     </div>
-  </section>
-
-  <!-- Cards 2-6 pack vertically (CSS multi-column) so a short card never
-       leaves a hole under itself. Card 6 is placed third in DOM on purpose:
-       column-span makes it break the flow where it sits, so putting it after
-       the two short cards lands it high on screen instead of at the bottom. -->
-  <div class="rest">
+      </div>
+    
+    </section>
     <section class="card" id="card2">
       <h2 data-n="2">ไอคอนเว็บ · public</h2>
       <p class="sub">favicon (สร้างชุดไอคอนให้อัตโนมัติ) — โลโก้ public ดึงจาก Logo ในส่วนที่ 1 ให้เอง</p>
@@ -1651,6 +1655,75 @@ const PAGE = /* html */ `<!doctype html>
         <span class="status">แก้ปลายทางของ redirect <code>/line</code></span>
       </div>
     </section>
+    <section class="card two-up" id="card4">
+      <h2 data-n="4">SEO · Title / Meta หน้าย่อย</h2>
+      <div class="pull-row">
+        <button type="button" id="pullDocx" class="ghost">📄 ดึงจาก content.docx</button>
+        <span class="pull-hint">อัพ Content brief (docx) ในส่วนที่ 1 ก่อน แล้วค่อยกดปุ่มนี้</span>
+      </div>
+      <div class="fieldset">
+<div class="field" data-page="promotion">
+        <div class="row"><label>โปรโมชั่น</label><span class="target">src/pages/promotion.astro</span></div>
+        <input type="text" class="metatitle" data-k="title" placeholder="Title" spellcheck="false" />
+        <textarea class="metadesc" data-k="desc" rows="2" placeholder="Meta description" spellcheck="false"></textarea>
+        <span class="status"></span>
+      </div>
+      <div class="field" data-page="contactus">
+        <div class="row"><label>ติดต่อเรา</label><span class="target">src/pages/contact-us.astro</span></div>
+        <input type="text" class="metatitle" data-k="title" placeholder="Title" spellcheck="false" />
+        <textarea class="metadesc" data-k="desc" rows="2" placeholder="Meta description" spellcheck="false"></textarea>
+        <span class="status"></span>
+      </div>
+      <div class="field" data-page="demo">
+        <div class="row"><label>ทดลองเล่น</label><span class="target">src/pages/ทดลองเล่น.astro</span></div>
+        <input type="text" class="metatitle" data-k="title" placeholder="Title" spellcheck="false" />
+        <textarea class="metadesc" data-k="desc" rows="2" placeholder="Meta description" spellcheck="false"></textarea>
+        <span class="status"></span>
+      </div>
+      <div class="field" data-page="entrance">
+        <div class="row"><label>ทางเข้า</label><span class="target">src/pages/ทางเข้า.astro</span></div>
+        <input type="text" class="metatitle" data-k="title" placeholder="Title" spellcheck="false" />
+        <textarea class="metadesc" data-k="desc" rows="2" placeholder="Meta description" spellcheck="false"></textarea>
+        <span class="status"></span>
+      </div>
+      </div>
+    
+    </section>
+    <section class="card" id="card5">
+      <h2 data-n="5">สร้างหน้าเพิ่ม</h2>
+      <div class="field newpage" data-newpage="article">
+        <div class="row">
+          <label class="switch"><input type="checkbox" class="np-toggle" /><span class="slider"></span></label>
+          <label>บทความ</label>
+          <span class="target">src/pages/บทความ.astro</span>
+          <span class="badge np-badge"></span>
+        </div>
+        <div class="np-body" hidden>
+          <input type="text" class="metatitle" data-k="title" placeholder="Title (เว้นว่างได้ — Claude เขียนให้)" spellcheck="false" />
+          <textarea class="metadesc" data-k="desc" rows="2" placeholder="Meta description (เว้นว่างได้ — Claude เขียนให้)" spellcheck="false"></textarea>
+        </div>
+        <span class="status"></span>
+      </div>
+      <div class="field newpage" data-newpage="aboutus">
+        <div class="row">
+          <label class="switch"><input type="checkbox" class="np-toggle" /><span class="slider"></span></label>
+          <label>เกี่ยวกับเรา</label>
+          <span class="target">src/pages/about-us.astro</span>
+          <span class="badge np-badge"></span>
+        </div>
+        <div class="np-body" hidden>
+          <input type="text" class="metatitle" data-k="title" placeholder="Title (เว้นว่างได้ — Claude เขียนให้)" spellcheck="false" />
+          <textarea class="metadesc" data-k="desc" rows="2" placeholder="Meta description (เว้นว่างได้ — Claude เขียนให้)" spellcheck="false"></textarea>
+        </div>
+        <span class="status"></span>
+      </div>
+    </section>
+  </div>
+
+  <!-- The Rebrand card is not a sixth step, it is the action panel: it stays
+       stuck beside the form so the two buttons are reachable at any scroll
+       position, which is what the old sticky footer was trying to do. -->
+  <aside class="action">
     <section class="card" id="card6">
       <h2 data-n="6">สร้างคำสั่ง Rebrand (สำหรับ Claude Code)</h2>
       <div class="field">
@@ -1697,67 +1770,7 @@ const PAGE = /* html */ `<!doctype html>
         <span class="status" id="rbDone"></span>
       </div>
     </section>
-    <section class="card" id="card4">
-      <h2 data-n="4">SEO · Title / Meta หน้าย่อย</h2>
-      <div class="pull-row">
-        <button type="button" id="pullDocx" class="ghost">📄 ดึงจาก content.docx</button>
-        <span class="pull-hint">อัพ Content brief (docx) ในส่วนที่ 1 ก่อน แล้วค่อยกดปุ่มนี้</span>
-      </div>
-      <div class="field" data-page="promotion">
-        <div class="row"><label>โปรโมชั่น</label><span class="target">src/pages/promotion.astro</span></div>
-        <input type="text" class="metatitle" data-k="title" placeholder="Title" spellcheck="false" />
-        <textarea class="metadesc" data-k="desc" rows="2" placeholder="Meta description" spellcheck="false"></textarea>
-        <span class="status"></span>
-      </div>
-      <div class="field" data-page="contactus">
-        <div class="row"><label>ติดต่อเรา</label><span class="target">src/pages/contact-us.astro</span></div>
-        <input type="text" class="metatitle" data-k="title" placeholder="Title" spellcheck="false" />
-        <textarea class="metadesc" data-k="desc" rows="2" placeholder="Meta description" spellcheck="false"></textarea>
-        <span class="status"></span>
-      </div>
-      <div class="field" data-page="demo">
-        <div class="row"><label>ทดลองเล่น</label><span class="target">src/pages/ทดลองเล่น.astro</span></div>
-        <input type="text" class="metatitle" data-k="title" placeholder="Title" spellcheck="false" />
-        <textarea class="metadesc" data-k="desc" rows="2" placeholder="Meta description" spellcheck="false"></textarea>
-        <span class="status"></span>
-      </div>
-      <div class="field" data-page="entrance">
-        <div class="row"><label>ทางเข้า</label><span class="target">src/pages/ทางเข้า.astro</span></div>
-        <input type="text" class="metatitle" data-k="title" placeholder="Title" spellcheck="false" />
-        <textarea class="metadesc" data-k="desc" rows="2" placeholder="Meta description" spellcheck="false"></textarea>
-        <span class="status"></span>
-      </div>
-    </section>
-    <section class="card" id="card5">
-      <h2 data-n="5">สร้างหน้าเพิ่ม</h2>
-      <div class="field newpage" data-newpage="article">
-        <div class="row">
-          <label class="switch"><input type="checkbox" class="np-toggle" /><span class="slider"></span></label>
-          <label>บทความ</label>
-          <span class="target">src/pages/บทความ.astro</span>
-          <span class="badge np-badge"></span>
-        </div>
-        <div class="np-body" hidden>
-          <input type="text" class="metatitle" data-k="title" placeholder="Title (เว้นว่างได้ — Claude เขียนให้)" spellcheck="false" />
-          <textarea class="metadesc" data-k="desc" rows="2" placeholder="Meta description (เว้นว่างได้ — Claude เขียนให้)" spellcheck="false"></textarea>
-        </div>
-        <span class="status"></span>
-      </div>
-      <div class="field newpage" data-newpage="aboutus">
-        <div class="row">
-          <label class="switch"><input type="checkbox" class="np-toggle" /><span class="slider"></span></label>
-          <label>เกี่ยวกับเรา</label>
-          <span class="target">src/pages/about-us.astro</span>
-          <span class="badge np-badge"></span>
-        </div>
-        <div class="np-body" hidden>
-          <input type="text" class="metatitle" data-k="title" placeholder="Title (เว้นว่างได้ — Claude เขียนให้)" spellcheck="false" />
-          <textarea class="metadesc" data-k="desc" rows="2" placeholder="Meta description (เว้นว่างได้ — Claude เขียนให้)" spellcheck="false"></textarea>
-        </div>
-        <span class="status"></span>
-      </div>
-    </section>
-  </div>
+  </aside>
 </main>
 <dialog id="confirmDlg">
   <div class="cf-top"></div>
