@@ -8,17 +8,19 @@ const { title, as: HeadingTag = "h1" } = Astro.props;
 
 <section class="my-6 flex w-full justify-center px-4 font-sans">
   <div
-    class="relative isolate w-full max-w-7xl border border-yellow-500/30 bg-[#100b03]/90 p-8 text-left text-base leading-relaxed text-amber-50/80 shadow-[0_0_20px_rgba(234,179,8,0.15)] backdrop-blur-md"
+    class="relative isolate w-full max-w-7xl border border-amber-500/30 bg-[#1a0409]/90 p-8 text-left text-base leading-relaxed text-amber-50/85 shadow-[0_0_20px_rgba(251,191,36,0.15)] backdrop-blur-md"
     style="clip-path: polygon(40px 0, 100% 0, 100% calc(100% - 40px), calc(100% - 40px) 100%, 0 100%, 0 40px);">
-    <div class="absolute top-0 left-0 -z-10 h-1 w-32 bg-gradient-to-r from-yellow-400 to-transparent"></div>
-    <div class="absolute right-0 bottom-0 -z-10 h-1 w-32 bg-gradient-to-l from-orange-500 to-transparent"></div>
-    <div class="absolute top-0 left-0 -z-10 h-32 w-1 bg-gradient-to-b from-yellow-400 to-transparent"></div>
-    <div class="absolute right-0 bottom-0 -z-10 h-32 w-1 bg-gradient-to-t from-orange-500 to-transparent"></div>
+    <div class="absolute top-0 left-0 -z-10 h-1 w-32 bg-gradient-to-r from-amber-300 to-transparent"></div>
+    <div class="absolute right-0 bottom-0 -z-10 h-1 w-32 bg-gradient-to-l from-amber-600 to-transparent"></div>
+    <div class="absolute top-0 left-0 -z-10 h-32 w-1 bg-gradient-to-b from-amber-300 to-transparent"></div>
+    <div class="absolute right-0 bottom-0 -z-10 h-32 w-1 bg-gradient-to-t from-amber-600 to-transparent"></div>
 
     {
       title && (
-        <header class="mb-8 border-l-4 border-yellow-500 pl-6">
-          <HeadingTag class="text-2xl leading-normal font-black tracking-[0.15em] text-yellow-400 uppercase drop-shadow-[0_0_10px_rgba(234,179,8,0.5)] md:text-3xl md:tracking-[0.2em]">{title}</HeadingTag>
+        <header class="mb-8 border-l-4 border-amber-500 pl-6">
+          <HeadingTag class="text-2xl leading-normal font-black tracking-[0.15em] text-amber-300 uppercase drop-shadow-[0_0_10px_rgba(251,191,36,0.5)] md:text-3xl md:tracking-[0.2em]">
+            {title}
+          </HeadingTag>
         </header>
       )
     }

@@ -1488,7 +1488,7 @@ const PAGE = /* html */ `<!doctype html>
 <header>
   <div class="head-inner">
     <h1><span class="mark">📦</span> <span class="grad-text">Rebrand Asset Uploader</span></h1>
-    <p>เลือกไฟล์แล้วกด "อัพโหลดทั้งหมด" — ระบบจะเซฟลง <code>src/assets</code> และ <code>public</code> ด้วยชื่อ/นามสกุลที่ถูกต้องอัตโนมัติ พร้อม<strong>บีบอัดรูปแบบ lossless</strong> (คมเท่าเดิม ไฟล์เล็กลง) ย่อรูปที่กว้างเกิน ${MAX_SOURCE_WIDTH}px ให้พอดี และย่อรูป <strong>Promotion/Carousel เหลือ ${SLIDE_BOX}×${SLIDE_BOX}</strong> (ขนาดที่หน้าเว็บใช้จริง) — จากนั้นกด <strong>"เริ่ม Rebrand"</strong> ใน<strong>ส่วนที่ 6</strong> เพื่อให้ Claude ลงมือรีแบรนด์ให้เลย (หยุดที่ verify ไม่ deploy ให้)</p>
+    
   </div>
 </header>
 <main>

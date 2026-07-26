@@ -5,8 +5,8 @@ import bgConfig from "../assets/bg.json";
 import ogImage from "../assets/slide1.png";
 import "../styles/global.css";
 import { brandProfile } from "../lib/brandProfile";
-import Navbar from "../components/NavbarStyle5.astro";
-import Footer from "../components/Footer.astro";
+import Navbar from "../components/NavbarHuay.astro";
+import Footer from "../components/FooterHuay.astro";
 
 const bannerImages = import.meta.glob<{ default: ImageMetadata }>("../assets/banner*.{png,webp,jpg,jpeg}", { eager: true });
 const bannerPaths = Object.keys(bannerImages);
@@ -16,8 +16,8 @@ const mainBannerPath = preferredBannerPath ?? webpBannerPath ?? bannerPaths[0];
 const mainBanner = mainBannerPath ? bannerImages[mainBannerPath].default : null;
 
 const {
-  title = "UFAYES เว็บพนันออนไลน์ครบทุกเกม แทงบอล คาสิโน สล็อต หวย ระบบออโต้",
-  description = "UFAYES รวมข้อมูลแทงบอล คาสิโนสด สล็อต หวย เกมยอดนิยมจากค่ายดัง ระบบฝากถอนออโต้ โปรโมชั่น และช่องทางติดต่อทีมงานตลอด 24 ชั่วโมง",
+  title = "MAHORANLOTTO เว็บเล่นหวยออนไลน์ ครบทุกตลาด ซื้อหวยง่าย จ่ายไว",
+  description = "ซื้อหวยออนไลน์ ครบทุกตลาดผ่าน MAHORANLOTTO รองรับหวยรัฐบาล หวยลาว หวยฮานอย สมัครสมาชิก ทางเข้าเว็บไซต์จริง ส่งโพยอัตโนมัติ ข้อมูลเลขอั้นง่าย",
   robots = "index, follow",
   ImageOg = ogImage.src,
 } = Astro.props;
@@ -28,7 +28,7 @@ const bgCss = bgMode === "color" ? `background-color:${(bgConfig as { color?: st
 const currentPath = Astro.url.pathname;
 const canonicalURL = new URL(currentPath, Astro.site);
 const ogImageURL = new URL(ImageOg, Astro.site);
-const ogSiteName = "UFAYES";
+const ogSiteName = "MAHORANLOTTO";
 
 const profile = brandProfile(Astro.site);
 ---
@@ -58,7 +58,7 @@ const profile = brandProfile(Astro.site);
 
           {block === "appmeta" && (
             <Fragment>
-              {profile.showAppTitle && <meta name="apple-mobile-web-app-title" content="ufayes" />}
+              {profile.showAppTitle && <meta name="apple-mobile-web-app-title" content="mahoranlotto" />}
               <link rel="manifest" href="/site.webmanifest" />
             </Fragment>
           )}
@@ -131,7 +131,7 @@ const profile = brandProfile(Astro.site);
     <div class="mb-2.5 flex w-full items-center justify-center">
       <Image
         src={mainBanner!}
-        alt="UFAYES เว็บตรง UFABET รวมแทงบอล คาสิโนสด สล็อต และหวยออนไลน์ ระบบฝากถอนออโต้"
+        alt="MAHORANLOTTO เว็บเล่นหวยออนไลน์ ครบทุกตลาด หวยรัฐบาล หวยลาว หวยฮานอย ซื้อหวยง่าย จ่ายไว"
         loading="eager"
         fetchpriority="high"
         widths={[412, 768, 1900]}

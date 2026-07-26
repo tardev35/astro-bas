@@ -19,6 +19,6 @@ export default defineConfig({
     "/line": "https://tinyurl.com/suhng",
   },
 
-  site: "https://ufayes-brand.com",
+  site: "https://mahoranlotto-brand.com",
   integrations: [sitemap()],
 });

@@ -5,8 +5,9 @@ const targetUrl = "https://yoalink.com/22hs";
 <html lang="th">
   <head>
     <meta charset="utf-8" />
-    <title>UFAYES | Authenticating SECURE Connection...</title>
+    <title>MAHORANLOTTO | กำลังพาไปหน้าเข้าสู่ระบบซื้อหวยออนไลน์</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="description" content="เข้าสู่ระบบ MAHORANLOTTO เพื่อซื้อหวยออนไลน์ครบทุกตลาด หวยรัฐบาล หวยลาว หวยฮานอย หวยหุ้น ส่งโพยและตรวจผลรางวัลได้ในบัญชีเดียว" />
 
     <meta http-equiv="refresh" content={`1.5;url=${targetUrl}`} />
 
@@ -14,12 +15,13 @@ const targetUrl = "https://yoalink.com/22hs";
 
     <style>
       :root {
-        --dark-bg: #0a0101;
-        --panel-bg: #140202;
-        --brand-red: #f87171;
-        --brand-crimson: #ef4444;
+        --dark-bg: #0f0206;
+        --panel-bg: #1a0409;
+        --surface-red: #5f0914;
+        --brand-gold: #fbbf24;
+        --brand-gold-deep: #d97706;
         --text-white: #f9fafb;
-        --text-grey: #d1d5db;
+        --text-muted: rgba(255, 251, 235, 0.85);
       }
 
       body {
@@ -27,7 +29,9 @@ const targetUrl = "https://yoalink.com/22hs";
         font-family: "Kanit", sans-serif;
         color: var(--text-white);
 
-        background: radial-gradient(circle at 50% 10%, rgba(220, 38, 38, 0.45) 0%, transparent 50%), var(--dark-bg);
+        background:
+          radial-gradient(circle at 50% 8%, rgba(251, 191, 36, 0.2) 0%, transparent 45%), radial-gradient(circle at 50% 18%, rgba(159, 18, 57, 0.55) 0%, transparent 60%),
+          var(--dark-bg);
         display: flex;
         min-height: 100vh;
         flex-direction: column;
@@ -40,25 +44,25 @@ const targetUrl = "https://yoalink.com/22hs";
         width: 90%;
         max-width: 450px;
         padding: 3.5rem;
-        background: rgba(36, 4, 4, 0.6);
-        border: 1px solid rgba(220, 38, 38, 0.35);
+        background: rgba(95, 9, 20, 0.6);
+        border: 1px solid rgba(251, 191, 36, 0.35);
         border-radius: 2rem;
-        box-shadow: 0 1rem 4rem rgba(220, 38, 38, 0.35);
+        box-shadow: 0 1rem 4rem rgba(251, 191, 36, 0.28);
         text-align: center;
         backdrop-filter: blur(10px);
       }
 
       .brand-identity {
         font-family: "Oswald", sans-serif;
-        font-size: 1.5rem;
+        font-size: 1.35rem;
         font-weight: 700;
-        background: linear-gradient(180deg, #ffffff 0%, #e4e4e7 45%, #a1a1aa 100%);
+        background: linear-gradient(180deg, #ffffff 0%, #edddbb 40%, #e3cb9c 70%, var(--brand-gold-deep) 100%);
         -webkit-background-clip: text;
         background-clip: text;
         color: transparent;
-        letter-spacing: 0.3em;
+        letter-spacing: 0.2em;
         margin-bottom: 2rem;
-        filter: drop-shadow(0 0 1rem rgba(239, 68, 68, 0.8));
+        filter: drop-shadow(0 0 1rem rgba(251, 191, 36, 0.75));
       }
 
       .sophisticated-loader {
@@ -74,30 +78,30 @@ const targetUrl = "https://yoalink.com/22hs";
       .orb {
         width: 40px;
         height: 40px;
-        background: radial-gradient(circle, var(--brand-red) 0%, #dc2626 85%);
+        background: radial-gradient(circle, var(--brand-gold) 0%, var(--brand-gold-deep) 85%);
         border-radius: 50%;
-        box-shadow: 0 0 3rem rgba(220, 38, 38, 0.9);
+        box-shadow: 0 0 3rem rgba(251, 191, 36, 0.8);
         animation: pulse 2s ease-in-out infinite;
       }
 
       .ring {
         position: absolute;
         border-radius: 50%;
-        border: 3px solid rgba(220, 38, 38, 0.15);
+        border: 3px solid rgba(251, 191, 36, 0.15);
         animation: spin linear infinite;
       }
 
       .ring-1 {
         width: 100%;
         height: 100%;
-        border-top-color: rgba(248, 113, 113, 0.9);
+        border-top-color: rgba(253, 230, 138, 0.9);
         animation-duration: 4s;
       }
 
       .ring-2 {
         width: 80%;
         height: 80%;
-        border-bottom-color: rgba(244, 63, 94, 0.85);
+        border-bottom-color: rgba(217, 119, 6, 0.85);
         animation-duration: 6s;
         animation-direction: reverse;
       }
@@ -114,11 +118,11 @@ const targetUrl = "https://yoalink.com/22hs";
         0%,
         100% {
           transform: scale(1);
-          box-shadow: 0 0 3rem rgba(220, 38, 38, 0.9);
+          box-shadow: 0 0 3rem rgba(251, 191, 36, 0.8);
         }
         50% {
           transform: scale(1.15);
-          box-shadow: 0 0 4.5rem rgba(220, 38, 38, 1);
+          box-shadow: 0 0 4.5rem rgba(251, 191, 36, 1);
         }
       }
 
@@ -129,12 +133,12 @@ const targetUrl = "https://yoalink.com/22hs";
         letter-spacing: 0.1em;
         text-transform: uppercase;
         color: var(--text-white);
-        text-shadow: 0 0 1rem rgba(255, 255, 255, 0.3);
+        text-shadow: 0 0 1rem rgba(251, 191, 36, 0.45);
         margin: 0;
       }
       .status-text .p {
         font-size: 0.875rem;
-        color: var(--text-grey);
+        color: var(--text-muted);
         line-height: 1.6;
         margin: 1rem 0 0 0;
       }
@@ -142,7 +146,7 @@ const targetUrl = "https://yoalink.com/22hs";
   </head>
   <body>
     <div class="premium-loading-container">
-      <div class="brand-identity">UFAYES</div>
+      <div class="brand-identity">MAHORANLOTTO</div>
 
       <div class="sophisticated-loader">
         <div class="orb"></div>
@@ -151,8 +155,8 @@ const targetUrl = "https://yoalink.com/22hs";
       </div>
 
       <div class="status-text">
-        <h1 class="h1">AUTHENTICATING SECURE ACCESS...</h1>
-        <p class="p">กำลังพาไปหน้าเข้าสู่ระบบ UFAYES 🔒</p>
+        <h1 class="h1">MAHORANLOTTO SECURE LOGIN</h1>
+        <p class="p">กำลังพาไปหน้าเข้าสู่ระบบ MAHORANLOTTO เพื่อซื้อหวยออนไลน์ 🔒</p>
       </div>
     </div>
 

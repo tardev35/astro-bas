@@ -1647,7 +1647,8 @@ uploader แกะข้อความครบทุกย่อหน้า�
 
 ### บั๊ก/ปัญหาที่เจอและแก้
 
-1. **`Announcement2` อ้างไฟล์พื้นหลังที่ไม่มีอยู่จริง** — `bg-[url('/assets/noise.png')]`
+1. **`Announcement2` อ้างไฟล์พื้นหลังที่ไม่มีอยู่จริง** — utility background-image แบบ arbitrary
+   ที่ชี้ไปโฟลเดอร์ `/assets/` + ไฟล์ noise (ตั้งใจไม่เขียนเป็นคลาสเต็มตรงนี้ ดูหมายเหตุ 2026-07-27)
    แต่ `public/assets/` ไม่มีอยู่เลย (404 เงียบๆ) → ถอด class ออก
 2. **`Announcement2` เส้น accent ล่างวางผิดบรรพบุรุษ** — `<div class="absolute bottom-0 ...">`
    อยู่ในกล่องนอกที่**ไม่มี `relative`** → เส้นไปอิง ancestor ตัวอื่น แก้โดยเติม `relative` ให้กล่องนอก
@@ -1720,3 +1721,169 @@ gen จากการสแกน component inventory ที่ไม่ได�
 - **ไม่มีปุ่ม/ลิงก์ Telegram** ในหน้า `contact-us` ทั้งที่ docx พูดถึง — เพราะโค้ดเบสไม่มี URL Telegram จริง
   จึงกล่าวถึงเฉพาะในเนื้อความ/meta ไม่แต่ง URL ขึ้นเอง
 - **ไม่ deploy และไม่ `git push`** ตามที่ผู้ใช้สั่ง — หยุดที่ build + verify
+
+---
+
+## 2026-07-27 — รีแบรนด์ MAHORANLOTTO (เว็บหวยออนไลน์) — แทน UFAYES
+
+**เป้าหมาย:** rebrand + retheme ทั้งเว็บเป็น **MAHORANLOTTO** เว็บเล่นหวยออนไลน์
+โดเมนจริงที่ผู้ใช้ระบุ: **`https://mahoranlotto-brand.com`** (ไม่มี www)
+รันแบบ **ขนาน 3 agent** ตาม playbook · **หยุดที่ build + verify — ไม่ deploy ไม่ `git push`** ตามคำสั่ง
+
+### แบรนด์ + palette
+
+- โลโก้ = ตัวอักษรทองนูน "มโหฬาร" · อาร์ตเวิร์ก = ไทยหรูหรา วัดทอง ผ้าไหมแดง กลีบกุหลาบ
+- `palette.json`: logo vivid = ทองครีม `#e3cb9c`/`#edddbb` + แดงเลือดหมู `#640b1b` ·
+  banner/slide dominant = ดำอมแดง `#240200`/`#2c0301`
+- **จุดตัดสินใจสำคัญ: ทอง = accent, แดงเลือดหมู = พื้นผิว**
+  UFAYES เดิมใช้ *แดงสด `red-500/600` เป็น accent + เงิน/zinc* → รอบนี้แดงถูกลดชั้นไปเป็นพื้นหลังล้วน
+  ทองขึ้นมาเป็น accent ทุกจุด (ปุ่ม/ขอบ/หัวข้อ/ไอคอน/glow) เพื่อไม่ให้สองแบรนด์ติดกันดูเป็นเว็บเดียวกัน
+- ทอง: `amber-200..600` · พื้นผิว: navbar `#5f0914` · footer `#2a0408` · การ์ด `#1a0409` · ลึกสุด `#0f0206` · `#7f1d1d`
+- glow ทอง `rgba(251,191,36,α)` · glow แดง `rgba(159,18,57,α)`
+- **ไม่แตะ:** LINE เขียว `#00B900` · สีธนาคารจริง (KB/SCB/KTB/BBL/TrueWallet ส้ม) · ไฟเขียว status
+
+### Variant rotation (before → after)
+
+| family | จาก (UFAYES) | เป็น (MAHORANLOTTO) |
+|---|---|---|
+| Navbar | `NavbarStyle5` | **`NavbarHuay`** |
+| Footer | `Footer` (plain) | **`FooterHuay`** |
+| Announcement | `Announcement2` | **`AnnouncementHuay`** (ทุกหน้า) |
+| LatestWinners | `LatestWinners` (plain) | **`LatestWinnersHuay`** |
+| Faq | `Faq3` | **`FaqHuay`** |
+| ContentBox mix | Neumorphism + Premium หนัก | **Huay + FloatingBadge + CyberCut + Special + plain** |
+| Grid widget | `ProviderGrid` + `GameRankingBoard` | **`LottoGrid`** |
+
+หมุนทั้งชุดไปตระกูล **Huay** เพราะแบรนด์นี้เป็นเว็บหวยจริง ๆ และตระกูลนี้ไม่เคยถูกใช้เป็นธีมหลัก
+ทั้งเว็บโดยแบรนด์ไหนมาก่อน (เคยใช้เฉพาะหน้าหวยย่อย) — ไม่มี family ไหนที่ต้องใช้ variant ซ้ำของเดิม
+`ProviderGrid` + `GameRankingBoard` เป็นวิดเจ็ตคาสิโน ถูกถอดออกจาก index (**ไฟล์ยังอยู่ = inventory**)
+
+### หวย = เปิด
+
+prompt มีคำว่า **`เว็บหวย`** และ docx เป็นเนื้อหาหวยล้วน → ตาม playbook ต้องเปิดสองหน้านี้
+→ `git mv` `ตรวจหวย.astro` + `แนวทาง.astro` จาก `src/pages-disabled/` เข้า `src/pages/`
+(ตอนนี้ `pages-disabled/` ว่างเปล่า) · ลิงก์ `/ตรวจหวย` + `/แนวทาง` มีอยู่ใน `NavbarHuay` เดิมแล้ว
+เพิ่ม `/ทางเข้า` เข้าไปทั้ง desktop + mobile และเติมลิงก์ครบใน `FooterHuay`
+สองหน้านี้ **คงธีม Huay ไว้ตามเจตนาเดิม** แค่ปรับเฉดให้เข้า palette ใหม่ (เหลือง→amber, พื้นเป็น burgundy)
+
+### แบ่งงานขนาน (ไม่มีไฟล์ทับกันเลย)
+
+- **P1 — orchestrator ทำเอง (collision zone):** `astro.config.mjs` · `MainLayout.astro` ·
+  `NavbarHuay` · `FooterHuay` · `Navfoot` · `AnnouncementHuay` · `ContentBoxHuay` · `ContentBox`
+  (สองตัวหลัง = component ที่ถูก import จาก ≥2 หน้า) · `public/site.webmanifest` · ย้าย 2 หน้าหวย
+- **Agent A — Landing:** `index.astro` + 13 component เฉพาะหน้าแรก
+- **Agent B — Sub-pages:** `promotion` · `contact-us` · `ทดลองเล่น` · `ตรวจหวย`
+- **Agent C — Sub-pages:** `login` · `register` · `ทางเข้า` · `แนวทาง`
+
+### แผนที่หัวข้อ docx → component (ครบ 7 เรียงตรงตาม docx)
+
+| # | tag | component | ภาพ |
+|---|---|---|---|
+| 1 | h1 | `ContentBoxHuay as="h1"` | — |
+| 2 | h2 | `ContentBoxSevenThreeHuay` | **`slide3.png`** (SevenThree #1) |
+| 3 | h2 | `ContentBoxFloatingBadge` | — |
+| 4 | h2 | `ContentBoxCyberCut` | — |
+| 5 | h2 | `ContentBoxSpecial` | — |
+| 6 | h2 | `ContentBoxSevenThreeFloatingBadge` | **`slide2.png`** (SevenThree #2) |
+| 7 | h2 | `ContentBox` (plain) | — |
+
+วิดเจ็ตที่ผูกกับหัวข้อ: `LottoGrid` ต่อจาก §2 · `LoginRtpSection`+ปุ่ม ต่อจาก §3 ·
+`LatestWinnersHuay` ต่อจาก §6 · ที่เหลือ (`SmoothCarousel`/`FaqHuay`/`ReviewCardSumo2`/`Navfoot`) ต่อท้าย
+
+### ภาพที่ใช้ / ไม่ใช้
+
+- `banner1.png` = hero (glob ใน MainLayout ล็อกที่ `banner1` อยู่แล้ว ไม่ต้องแก้)
+- `slide1.png` = OG/Twitter image เท่านั้น · `slide3` → SevenThree #1 · `slide2` → SevenThree #2
+- `slide4.png` **ไม่ใช้เป็นภาพเนื้อหา** (โควตา SevenThree เต็ม 2 ตามกฎ) — ยังโผล่ผ่าน
+  `promotion.astro` + `SmoothCarousel` ที่ import เองอยู่แล้ว ถือว่าปกติ
+- **ไม่มีภาพประกอบบทความรอบนี้** — `banner2.png` มี mtime 01:13 ซึ่งเก่ากว่าชุดใหม่ (01:36–01:37)
+  = ของ UFAYES · `banner3.png` + `banner.png` (23 ก.ค.) = ของ BESTCLUB88 → ทั้งสาม **ไม่ถูกใช้**
+  ยืนยันแล้วว่าไม่โผล่ใน `dist/` เลย
+- ชุดใหม่เป็น `.png` ล้วน ไม่มี `.webp` drop → ไม่มีบั๊ก stale extension รอบนี้
+
+### บั๊ก/ปัญหาที่เจอและแก้
+
+1. **docx ก๊อป body ผิด** — หัวข้อ #5 (เลขอั้น เลขเต็ม) มี body ซ้ำคำต่อคำกับหัวข้อ #4
+   → ไม่วางข้อความซ้ำสองบล็อก (duplicate content) แต่**เขียน body ของ #5 ขึ้นใหม่ให้ตรงหัวข้อ**
+   (นิยามเลขอั้น/เลขเต็ม, ปัญหาก่อนส่งโพย, ตรวจอัตราจ่ายบนหน้ายืนยัน, เวลาปิดรับต่างตลาด)
+   **ควรแจ้งลูกค้าให้แก้ docx ต้นทาง**
+2. **คำพิมพ์ผิดใน docx** — body §1 เขียน "เป็นเรื่องงายมากขึ้น" (ขาดไม้เอก) → แก้เป็น "ง่าย"
+3. **`ทดลองเล่น.astro` ใช้ภาพสล็อตคาสิโนกับชื่อตลาดหวย** — Agent B เปลี่ยนชื่อการ์ด 12 ใบ
+   เป็นตลาดหวยแล้ว แต่รูปยังเป็น `gamedemo7–18.webp` (อาร์ตสล็อตของแบรนด์เก่า) และชุดภาพใหม่
+   ไม่มีรูปหวยมาให้ → orchestrator **เปลี่ยนการ์ดเป็น tile ข้อความล้วน** (ไอคอนธง + ชื่อตลาด +
+   เวลาปิดรับ + อัตราจ่าย) ตัด import `gamedemo*` ทิ้งทั้ง 12 ตัว ยืนยัน `gamedemo` = 0 hit ใน `dist/`
+4. **JSON-LD พังที่ `ทดลองเล่น.astro`** (ค้างมาหลายรอบรีแบรนด์) — เดิมยิง array ดิบของ
+   `{name, image}` โดยไม่มี `@context`/`@type` → แก้เป็น `ItemList` ที่ถูกต้อง (`ListItem` +
+   `position`) และยุบ array ซ้ำสองชุดเหลือชุดเดียว
+5. **`contact-us.astro` hardcode โดเมนเก่า** — `const homePage = "https://ufayes-brand.com"`
+   → เปลี่ยนเป็น `Astro.url.origin` เพื่อไม่ให้ค้างอีกในรีแบรนด์ถัดไป
+6. **h1 ซ้อนใน `ตรวจหวย.astro`** — `ContentBoxHuay`/`ContentBox` มี default `as="h1"`
+   ทำให้มี h1 สองตัว (hero + title กล่อง) → เติม `as="h2"`
+7. **`แนวทาง.astro` ข้ามระดับหัวข้อ** — มี h1 แล้วกระโดดไป h3 เลย → การ์ด tip 6 ใบเปลี่ยน
+   `<h3>`→`<span>` และเพิ่ม `<h2>` หัว section · ลบ `<style> p { color:#e6bd57 }` ที่ override
+   สี `<p>` ทุกตัวในหน้าแบบเงียบ ๆ
+8. **✦ ถูกฝังในเนื้อความ `<h2>`** — `ContentBoxFloatingBadge` เขียน ✦ ครอบ `{title}` ไว้ใน
+   heading ทำให้ข้อความ H2 จริงมีอักขระตกแต่งปนไปด้วย → ย้าย ✦ ออกไปเป็น `<span aria-hidden>`
+   พี่น้องของ heading ในกล่อง flex (หน้าตาเหมือนเดิม แต่ข้อความ heading สะอาด)
+9. **`login`/`register` มี CSS var ที่ชื่อไม่ตรงค่า** — `--brand-red`/`--brand-crimson`/
+   `--text-grey` → เปลี่ยนเป็น `--brand-gold`/`--brand-gold-deep`/`--surface-red`/`--text-muted`
+   และย่อ font-size ของ `.brand-identity` (1.5→1.35rem, letter-spacing 0.3→0.2em) เพราะ
+   MAHORANLOTTO ยาวกว่า UFAYES 7 ตัวอักษร จะล้นการ์ดที่จอ 360px
+10. **`workspec.md` ทำให้ build warning ทุกครั้ง** — Tailwind 4 สแกนไฟล์ `.md` ด้วย จึงหยิบ
+    สตริงคลาส background-image แบบ arbitrary ที่ถูก *อ้างถึงในบันทึกของรอบก่อน* ไป gen เป็น
+    utility จริง → `[WARN] [vite] … didn't resolve at build time` + dead CSS ติดไปทุกหน้า
+    (คลาสนี้ **ไม่เคยถูกใช้กับ element ไหนเลย** ตรวจแล้ว) → แก้บรรทัดนั้นในบันทึกให้ไม่เป็นคลาสเต็ม
+    ระวังด้วยว่าการแทนที่ path ด้วย `…` **ยังนับเป็น arbitrary value อยู่** ต้องเลี่ยงวงเล็บเหลี่ยม
+    ทั้งชุดถึงจะหาย
+    **ข้อควรระวังสำหรับรอบถัดไป: อย่าเขียนสตริงคลาส Tailwind แบบเต็มลงใน `workspec.md`**
+
+### FloatingBadge (ตรวจตาม playbook)
+
+- **แนวนอน:** ทั้ง 4 ไฟล์ไม่มี `whitespace-nowrap` และมี `w-[92%] max-w-2xl text-center` ครบอยู่แล้ว
+  (แก้ไว้ตั้งแต่รอบก่อน) · `overflow-x: hidden` ใน `MainLayout` ยังอยู่
+- **แนวตั้ง:** `ContentBoxFloatingBadge` = `pt-32` (ใช้จริง §3) ·
+  `ContentBoxSevenThreeFloatingBadge` `pt-28 md:pt-32` (ใช้จริง §6) ·
+  `ContentBoxTwoFloatingBadge` `pt-12`→`pt-16` · `ContentBox3ThreeFloatingBadge` `pt-18` อยู่แล้ว
+- คำนวณที่จอ 360px: หัวข้อจริงตกเป็น 2 บรรทัด → badge สูง ≈ 78px, ขอบล่างอยู่ที่ 54px จากขอบบนการ์ด
+  เทียบกับ `pt-28`/`pt-32` (112/128px) → เหลือ clearance 58–74px
+  **หมายเหตุความซื่อสัตย์: ตรวจด้วยการคำนวณ + โครงสร้าง class ไม่ได้เปิดเบราว์เซอร์วัดจริง**
+  (สภาพแวดล้อมนี้ไม่มี browser automation)
+
+### Verify (build ครั้งเดียว + fix + rebuild)
+
+- `npm run build` → **9 หน้า สำเร็จ 0 fail** · rebuild หลังแก้ ✦ + workspec ผ่านสะอาด
+- **ชื่อแบรนด์เก่า 23 ตัว** (UFAYES/GSYBET/CASHOT/PABLO666/GROW268/BESTCLUB/OHO21/MARINA65/
+  CHOKDEE/TAKDEE/MAFIA168/999LORD/SUMOHENG/HYDRA888/FINNBET/LOTTO888/LOT888/Var99/
+  ลุ้นหวย88/UFABET/HENGJUD/…) → **0 hit ทั้ง 10 ไฟล์ HTML ใน `dist/`**
+- **token สีเก่าใน `class="…"`** (`red|rose|yellow|zinc|slate|gray|orange|purple|emerald|cyan|blue` + เลขเฉด)
+  → เหลือจุดเดียวคือ `from-orange-500 to-orange-400` ของชิป **TrueWallet ใน footer**
+  = สีแบรนด์ผู้ให้บริการจริงตามรายการ "ห้ามแตะ" → **ไม่ใช่บั๊ก**
+- `undefined` / `NaN` / `[object Object]` / `TODO(rebrand)` / placeholder = **0 ทั้งหมด**
+- `<!--` = **0 ทุกหน้า** (ทั้ง 10 ไฟล์)
+- **heading:** `index.html` = **h1×1 · h2×10 · h3×5 · h4×0** — ดึงหัวข้อออกมาเรียงลำดับแล้ว
+  **ครบทั้ง 7 หัวข้อ docx เรียงตรงตามเอกสาร** · h3 ทั้ง 5 = คำถาม FAQ เท่านั้น ·
+  หน้าย่อยทุกหน้า **h1×1 และ h3×0**
+- `og:image` = `https://mahoranlotto-brand.com/_astro/slide1.BwlYDvfx.png` (asset ที่ hash แล้ว
+  ไม่ใช่ path ใน `public/`) · `canonical` + `og:site_name` = MAHORANLOTTO
+- hero `<img>` = `banner1.*` จริง · `banner2`/`banner3`/`banner.png`/`gamedemo` = **0 hit ใน `dist/`**
+- `robots.txt` gen จาก `site:` ผ่าน `robots.txt.ts` ตามเดิม (ไม่มี `public/robots.txt` มาทับ) ·
+  sitemap สร้างครบ
+- redirect affiliate `yoalink.com/22hs` ใน `login`/`register` **ยังอยู่ครบ ไม่แตะ** ตามที่ผู้ใช้ยืนยันไว้
+- `<head>` block order ปล่อยให้ `brandProfile.ts` จัดตามโดเมนใหม่ตามปกติ — **ไม่ได้จัดมือ**
+
+**noise ที่ยอมรับได้:** hex/สีของแบรนด์เก่ายังปรากฏใน `<style>` ที่ inline อยู่บ้าง เพราะ
+`inlineStylesheets: 'always'` + Tailwind gen utility จาก component inventory ที่ไม่ได้ render
+ตรวจแล้วไม่มีตัวไหนอยู่ใน `class="…"` ของ element จริง
+
+### นอกสโคป / ไม่ได้แตะ
+
+- **component inventory ทั้งหมด** (`Navbar*`/`Footer*`/`Announcement*`/`LatestWinners*`/
+  `ContentBox*` variant ที่ไม่ได้ใช้, `ProviderGrid`, `GameRankingBoard`) — ยังเป็นเนื้อหา/สี
+  ของแบรนด์เก่าตามปกติ **ไม่ได้ลบไฟล์ไหนเลย** · หมายเหตุ: `ContentBoxTwoFloatingBadge` +
+  `ContentBox3ThreeFloatingBadge` ยังเป็นธีมเขียว emerald (แก้เฉพาะ padding)
+- `src/assets/banner2.png`, `banner3.png`, `banner.png` — ไฟล์ตายจากรีแบรนด์ก่อน ยังเก็บไว้ตาม CLAUDE.md
+- `public/pro3.webp`, `public/slide3.webp`, `favicon-16x16/32x32`, `android-chrome-*` (23 ก.ค.)
+  — ไฟล์ค้างจาก BESTCLUB88 ไม่มีโค้ดไหนอ้างถึง ยังไม่ลบ
+- ปุ่มตรวจหวยใน `ตรวจหวย.astro` ยังเป็น mock (แสดงผลถูกรางวัลเสมอ) — ไม่แตะ logic
+  แต่ปรับข้อความบรรทัดท้ายให้ไม่ยืนยันว่าเติมเครดิตจริงแล้ว
+- **ไม่ deploy · ไม่ `git push` · ไม่ `git commit`** ตามที่ผู้ใช้สั่ง — หยุดที่ build + verify
