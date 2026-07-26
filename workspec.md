@@ -1433,3 +1433,43 @@ prompt ไม่มีคำว่า `เว็บหวย` → `src/pages-dis
 - ปลายทาง redirect affiliate ของ login/register (`yoalink.com/22hs`) และ `/line` — ตั้งใจ ไม่แตะ
 - `public/favicon-16x16.png` / `favicon-32x32.png` — ไฟล์ตายค้างที่ยังไม่ได้ลบ (ตามบันทึกรอบก่อน)
 - `public/site.webmanifest` — `name`/`short_name` ว่างเปล่ามาแต่เดิม ไม่มีชื่อแบรนด์เก่ารั่ว จึงปล่อยไว้
+
+## 2026-07-26 — uploader เฟส 2: ยิง rebrand ตรงจากหน้า UI
+
+**เป้าหมาย:** เดิม "ส่วนที่ 6" ของ `tools/rebrand-uploader` จบที่ `navigator.clipboard.writeText()` —
+คนต้องเอา prompt ไปวางใน Claude Code เอง ตอนนี้กดปุ่มในหน้าเว็บให้ server `spawn` `claude -p` แบบ
+headless แล้ว stream ความคืบหน้ากลับมาโชว์ในหน้าเดิมได้เลย (เป้าปลายทางคือทีม non-tech ไม่ต้องแตะ terminal)
+
+**ตัดสินใจไว้ก่อนลงมือ:** `--permission-mode bypassPermissions` (ไม่มีคนเฝ้าตอบ prompt) · **แยกปุ่ม**
+"เริ่ม Rebrand" ออกจาก "อัพโหลดทั้งหมด" (ไม่อัพให้อัตโนมัติ) · live log เต็ม + ปุ่มหยุด + reconnect ได้
+
+**แก้ `tools/rebrand-uploader/server.mjs` (ไฟล์เดียว):**
+- โมดูล runner ใหม่: `buildRebrandPrompt()` (ประกอบ prompt **ฝั่ง server** จาก field ที่ validate แล้ว —
+  UI ไม่ได้ส่ง prompt ดิบมา), `runState` เดียวรันได้ทีละงาน, parse stdout เป็น NDJSON ทีละบรรทัด,
+  ring buffer 4000 event, timeout 90 นาที (`REBRAND_TIMEOUT_MS`), kill ด้วย `taskkill /T /F`
+  (`child.kill()` เฉยๆ เหลือ node/npm ที่ claude spawn ค้าง)
+- args ที่ยิง: `-p <prompt> --output-format stream-json --verbose --forward-subagent-text
+  --permission-mode bypassPermissions` — **`--forward-subagent-text` จำเป็น** เพราะ playbook รัน 2-agent
+  ขนาน ถ้าไม่ใส่ log จะเงียบยาวจนคนนึกว่าค้าง
+- endpoint ใหม่: `GET /rebrand/preview` (UI ดึง prompt จากตัวนี้ → ที่โชว์กับที่ยิง drift กันไม่ได้),
+  `GET /rebrand/status`, `POST /rebrand/start` (`?dry=1` = ทดสอบท่อ), `GET /rebrand/stream` (SSE,
+  replay จาก `?from=<seq>` ก่อนค่อยต่อ live), `POST /rebrand/stop`
+- UI ส่วนที่ 6: ปุ่ม ▶ เริ่ม / ■ หยุด / 🧪 ทดสอบท่อ, pill สถานะ + นาฬิกา, live log สีตามชนิด event,
+  ตัวนับ tools/ไฟล์ที่แก้, `confirm()` ที่โชว์วันเวลาของ `content.docx` ที่ staged ไว้, reconnect
+  อัตโนมัติหลัง refresh, และ **ล็อกปุ่ม "อัพโหลดทั้งหมด" ระหว่างรัน** (กันอัพไฟล์ทับตอน agent อ่านอยู่)
+- prompt ที่ยิงจาก UI มี clause เพิ่ม: `— หยุดที่ build + verify เท่านั้น ห้าม deploy และห้าม git push`
+- แก้คอมเมนต์ที่ล้าสมัยแล้ว: header (":ไม่ได้รัน rebrand เอง") และคอมเมนต์ auth — ความเสี่ยงเปลี่ยนจาก
+  "เขียนทับไฟล์ใน repo" เป็น **arbitrary code execution** แล้ว `HOST=0.0.0.0` จึงห้ามเด็ดขาดจนกว่าจะมี auth
+
+**แก้ `.claude/skills/rebrand-site/SKILL.md`:** เพิ่มย่อหน้าใน Phase 1 ว่า ส่วนที่ 6 ยิงตรงได้ และเมื่อ
+ถูกยิงแบบนั้นจะไม่มี permission prompt มาหยุด → ต้องจบที่ Phase 6 verify **ห้าม deploy / git push**
+
+**Verify:** `node --check` ผ่านทั้ง server.mjs และ client JS ที่ดึงออกมาจากหน้าที่ serve จริง;
+`/rebrand/preview` คืน prompt ถูกทั้งกรณีมี/ไม่มี URL และ **400** กับ brand ที่มี `"`, brand ที่ขึ้นต้นด้วย
+`--`, และ `javascript:` URL; ยิง `?dry=1` จริงแล้วได้ครบเส้น `start → init → text → result → end`
+(exit 0, 7.1s); ยิงซ้ำระหว่างรันได้ **409**; `?from=2` replay ย้อนหลังได้หลังงานจบ; กดหยุดแล้ว status
+เป็น `stopped` และไม่เหลือ process ค้าง; endpoint เดิม (`/current`, `/current-pages`,
+`/current-newpages`, `/parse-docx`) ยังคืน 200 ครบ; `git status` หลังเทสมีแค่ 2 ไฟล์ที่ตั้งใจแก้
+
+**ยังไม่ได้ทำ:** ไม่มี auth (ยังพึ่ง bind `127.0.0.1` อย่างเดียว) · ปิดหน้าต่าง cmd = งาน rebrand ตาย
+กลางคัน (process ผูกกับ server ไม่ได้ใช้ `claude --bg`) · ยังไม่ได้ยิง rebrand เต็มรอบจาก UI จริง

@@ -1,18 +1,24 @@
-// Local-only asset uploader for the rebrand workflow.
+// Local-only rebrand console.
 // Run with: npm run rebrand:upload   (opens http://localhost:4000)
 //
-// It stages a new brand's files into src/assets and public with the exact
-// filenames + extensions the components import, so the "extension drift" bug
-// class (Phase 4 of the rebrand-site skill) can't happen. It does NOT run the
-// rebrand itself — after staging, tell Claude to rebrand per the skill.
+// Two jobs, in the order an operator does them:
+//   1. STAGE (ส่วนที่ 1-5) — copy a new brand's files into src/assets and public
+//      with the exact filenames + extensions the components import, so the
+//      "extension drift" bug class (Phase 4 of the rebrand-site skill) can't
+//      happen; plus the aff/LINE links and sub-page Title/Meta.
+//   2. RUN (ส่วนที่ 6) — spawn `claude -p` headless on this repo to perform the
+//      rebrand itself, and stream its progress back to the page over SSE.
+//      It stops at build + verify: it never deploys and never pushes.
 //
 // Deps: Node built-ins + sharp (already in package.json). No new dependency.
 
 import http from "node:http";
 import { fileURLToPath } from "node:url";
 import { dirname, resolve, join } from "node:path";
-import { readFile, unlink, writeFile, mkdir } from "node:fs/promises";
+import { readFile, unlink, writeFile, mkdir, stat } from "node:fs/promises";
 import { inflateRawSync } from "node:zlib";
+import { spawn } from "node:child_process";
+import { randomUUID } from "node:crypto";
 import sharp from "sharp";
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
@@ -21,10 +27,12 @@ const ASSETS = join(ROOT, "src", "assets");
 const PUBLIC = join(ROOT, "public");
 const PAGES = join(ROOT, "src", "pages");
 const CONFIG = join(ROOT, "astro.config.mjs");
-// Port/host are env-overridable but default to a localhost-only bind: every
-// endpoint rewrites source files with NO auth, so it must never be reachable
-// off-machine as-is. A future hosted deployment sets HOST=0.0.0.0 *after*
-// adding auth/HTTPS — the default keeps a bare run safe.
+// Port/host are env-overridable but the localhost-only bind is load-bearing,
+// not a nicety: there is NO auth on any endpoint, /upload rewrites source files,
+// and /rebrand/start spawns a Claude session with --permission-mode
+// bypassPermissions. Anyone who can reach this port can therefore run arbitrary
+// code on this machine. HOST=0.0.0.0 is FORBIDDEN until real auth + HTTPS exist
+// (see the rebrand web-UI plan); the default keeps a bare run safe.
 const PORT = Number(process.env.PORT) || 4000;
 const HOST = process.env.HOST || "127.0.0.1";
 
@@ -631,6 +639,374 @@ function readBody(req) {
   });
 }
 
+// Every other endpoint passes its parameters in the query string and uses the
+// body for raw file bytes, so JSON parsing lives here rather than in readBody().
+async function readJson(req, cap = 64 * 1024) {
+  const buf = await readBody(req);
+  // Localhost-only + tiny payloads, so this checks the size after buffering
+  // rather than aborting mid-stream.
+  if (buf.length > cap) throw new Error("ข้อมูลที่ส่งมาใหญ่เกินไป");
+  if (!buf.length) return {};
+  try {
+    return JSON.parse(buf.toString("utf8"));
+  } catch {
+    throw new Error("body ไม่ใช่ JSON ที่ถูกต้อง");
+  }
+}
+
+// ════════════════════════════════════════════════════════════════════════════
+// ส่วนที่ 6 — run the rebrand itself (spawn `claude -p`, stream back over SSE)
+// ════════════════════════════════════════════════════════════════════════════
+// The operator stages files with ส่วนที่ 1-5, then fires this. It runs headless,
+// so nobody is there to answer a permission prompt — hence bypassPermissions,
+// which is also why the prompt is assembled HERE from validated fields instead
+// of accepting a free-form prompt from the browser.
+//
+// One run at a time; its whole event log is kept in memory so a page refresh
+// (or a browser that slept) can replay from any index and pick the live stream
+// back up. Closing the uploader's console window kills the run — closing the
+// browser tab does not.
+
+// `claude` resolves off PATH (it is a real .exe on Windows, not a .cmd shim, so
+// spawn() finds it without a shell — which is what lets a long Thai prompt be
+// passed as one argv entry with no quoting/escaping at all).
+const CLAUDE_BIN = process.env.CLAUDE_BIN || "claude";
+const RUN_TIMEOUT_MS = Number(process.env.REBRAND_TIMEOUT_MS) || 90 * 60 * 1000;
+// Ring-buffer the log: a long rebrand emits thousands of events and this process
+// also serves uploads, so the oldest lines are dropped rather than grown forever.
+const MAX_EVENTS = 4000;
+// Guard against a single pathological NDJSON line (a huge tool_result) growing
+// the split buffer without bound.
+const MAX_LINE_BUF = 8 * 1024 * 1024;
+
+// Brand names go into the prompt as an argv entry, so the only real hazard is a
+// value that argv-parses as a flag; the character class also keeps a typo'd
+// paste from silently becoming the brand. Thai + latin + digits + . _ - space.
+const BRAND_RE = /^[A-Za-z0-9฀-๿][A-Za-z0-9฀-๿ ._-]{0,39}$/;
+
+// The exact prompt shape SKILL.md:108-119 decodes:
+//   rebrand and retheme to "<BRAND>"[ then real url is "<URL>"] ทำแบบ 2-agent ขนานตาม playbook[ — <notes>]
+// The URL clause is dropped when blank — that absence is what tells the skill to
+// leave the domain alone. The trailing stop-clause is added only for a fired run
+// (unattended): a human pasting this into Claude Code is there to say "no".
+function buildRebrandPrompt({ brand, url, notes }, { unattended = true } = {}) {
+  const b = String(brand ?? "").trim();
+  if (!b) throw new Error("ชื่อแบรนด์: ยังไม่ได้กรอก");
+  if (!BRAND_RE.test(b)) throw new Error("ชื่อแบรนด์: ใช้ได้เฉพาะ A-Z 0-9 ไทย เว้นวรรค และ . _ - (ไม่เกิน 40 ตัว)");
+  let p = 'rebrand and retheme to "' + b + '"';
+  const u = String(url ?? "").trim();
+  if (u) p += ' then real url is "' + validateLink(u, "URL production") + '"';
+  p += " ทำแบบ 2-agent ขนานตาม playbook";
+  const n = String(notes ?? "").replace(/[\r\n]+/g, " ").trim();
+  if (n) p += " — " + validateText(n, "หมายเหตุ");
+  if (unattended) p += " — หยุดที่ build + verify เท่านั้น ห้าม deploy และห้าม git push";
+  return p;
+}
+
+// Cheap end-to-end test of spawn → NDJSON → SSE → UI without burning 40 minutes.
+const DRY_PROMPT = 'ตอบกลับสั้นๆ ว่า "ท่อ uploader ทำงานปกติ" แล้วจบเลย ห้ามใช้ tool ใดๆ ห้ามแก้ไฟล์';
+
+const runState = {
+  id: null,
+  status: "idle", // idle | running | stopping | done | error | stopped
+  dry: false,
+  child: null,
+  prompt: "",
+  startedAt: 0,
+  endedAt: 0,
+  exitCode: null,
+  stopReason: null,
+  sessionId: null,
+  model: null,
+  numTurns: 0,
+  costUsd: null,
+  toolCount: 0,
+  files: new Set(),
+  events: [],
+  nextSeq: 0,
+  clients: new Set(),
+  timer: null,
+};
+
+const isActive = () => runState.status === "running" || runState.status === "stopping";
+
+// Absolute sequence numbers (not array indices) survive the ring buffer, so a
+// reconnecting client asks for "?from=<last seen + 1>" and gets exactly what it
+// missed — or the oldest surviving event if it was away too long.
+function pushEvent(type, payload = {}) {
+  const ev = { i: runState.nextSeq++, t: Date.now(), type, ...payload };
+  runState.events.push(ev);
+  if (runState.events.length > MAX_EVENTS) runState.events.shift();
+  const frame = "data: " + JSON.stringify(ev) + "\n\n";
+  for (const client of runState.clients) {
+    try { client.write(frame); } catch { /* dead socket; the close handler removes it */ }
+  }
+  return ev;
+}
+
+function relFromRoot(p) {
+  const s = String(p || "").replace(/\\/g, "/");
+  const root = ROOT.replace(/\\/g, "/");
+  return s.toLowerCase().startsWith(root.toLowerCase() + "/") ? s.slice(root.length + 1) : s;
+}
+
+// One short line describing what a tool call is doing, from whichever field
+// carries the meaning for that tool.
+function summarizeToolInput(input) {
+  if (!input || typeof input !== "object") return "";
+  const pick =
+    input.file_path ?? input.path ?? input.command ?? input.description ??
+    input.pattern ?? input.url ?? input.skill ?? input.prompt ?? "";
+  const s = String(pick).replace(/\s+/g, " ").trim();
+  return s.length > 180 ? s.slice(0, 177) + "…" : s;
+}
+
+function flattenToolResult(content) {
+  if (typeof content === "string") return content.slice(0, 400);
+  if (Array.isArray(content)) {
+    return content.map((b) => (typeof b === "string" ? b : b?.text || "")).join(" ").slice(0, 400);
+  }
+  return "";
+}
+
+const EDIT_TOOLS = new Set(["Edit", "MultiEdit", "Write", "NotebookEdit"]);
+
+// Translate one stream-json message from the CLI into the compact events the UI
+// renders. Unknown message types are ignored on purpose — the CLI adds new ones
+// over time and a rebrand must not fall over because of a message we don't know.
+function handleCliMessage(msg) {
+  switch (msg?.type) {
+    case "system":
+      if (msg.subtype === "init") {
+        runState.sessionId = msg.session_id || null;
+        runState.model = msg.model || null;
+        pushEvent("init", { text: "session " + (runState.sessionId || "?") + " · model " + (runState.model || "?") });
+      }
+      break;
+
+    case "assistant": {
+      // parent_tool_use_id is set for text forwarded from a subagent
+      // (--forward-subagent-text): the 2-agent parallel playbook would otherwise
+      // look frozen for many minutes at a stretch.
+      const sub = msg.parent_tool_use_id ? 1 : 0;
+      for (const b of msg.message?.content || []) {
+        if (b.type === "text" && b.text && b.text.trim()) {
+          pushEvent("text", { text: b.text.trim(), sub });
+        } else if (b.type === "tool_use") {
+          runState.toolCount++;
+          const ev = { name: b.name, text: summarizeToolInput(b.input), sub };
+          if (EDIT_TOOLS.has(b.name) && b.input?.file_path) {
+            ev.file = relFromRoot(b.input.file_path);
+            runState.files.add(ev.file);
+          }
+          pushEvent("tool", ev);
+        }
+      }
+      break;
+    }
+
+    case "user":
+      for (const b of msg.message?.content || []) {
+        if (b.type === "tool_result" && b.is_error) {
+          pushEvent("tool_error", { text: flattenToolResult(b.content) });
+        }
+      }
+      break;
+
+    case "result":
+      runState.numTurns = msg.num_turns ?? runState.numTurns;
+      runState.costUsd = typeof msg.total_cost_usd === "number" ? msg.total_cost_usd : null;
+      pushEvent("result", {
+        subtype: msg.subtype || "",
+        text: typeof msg.result === "string" ? msg.result.trim() : "",
+        durationMs: msg.duration_ms ?? null,
+        numTurns: runState.numTurns,
+        costUsd: runState.costUsd,
+      });
+      break;
+  }
+}
+
+function finishRun(code, signal) {
+  clearTimeout(runState.timer);
+  runState.timer = null;
+  runState.exitCode = code;
+  runState.endedAt = Date.now();
+  if (runState.stopReason === "timeout") runState.status = "error";
+  else if (runState.stopReason === "manual") runState.status = "stopped";
+  else runState.status = code === 0 ? "done" : "error";
+  runState.child = null;
+  pushEvent("end", {
+    status: runState.status,
+    exitCode: code,
+    signal: signal || null,
+    elapsedMs: runState.endedAt - runState.startedAt,
+    files: [...runState.files],
+    toolCount: runState.toolCount,
+    numTurns: runState.numTurns,
+    costUsd: runState.costUsd,
+  });
+  for (const client of runState.clients) {
+    try { client.end(); } catch { /* already gone */ }
+  }
+  runState.clients.clear();
+}
+
+function startRun({ brand, url, notes, dry }) {
+  if (isActive()) throw new Error("มีงาน rebrand กำลังรันอยู่แล้ว — รอให้จบหรือกดหยุดก่อน");
+  const prompt = dry ? DRY_PROMPT : buildRebrandPrompt({ brand, url, notes });
+
+  const args = [
+    "-p", prompt,
+    "--output-format", "stream-json",
+    "--verbose",                 // required by stream-json
+    "--forward-subagent-text",   // surface both parallel agents in the log
+    "--permission-mode", "bypassPermissions",
+  ];
+
+  Object.assign(runState, {
+    id: randomUUID(),
+    status: "running",
+    dry: !!dry,
+    prompt,
+    startedAt: Date.now(),
+    endedAt: 0,
+    exitCode: null,
+    stopReason: null,
+    sessionId: null,
+    model: null,
+    numTurns: 0,
+    costUsd: null,
+    toolCount: 0,
+    files: new Set(),
+    events: [],
+    nextSeq: 0,
+  });
+
+  let child;
+  try {
+    child = spawn(CLAUDE_BIN, args, {
+      cwd: ROOT,
+      windowsHide: true,
+      shell: false,
+      stdio: ["ignore", "pipe", "pipe"],
+    });
+  } catch (err) {
+    runState.status = "error";
+    throw new Error("รัน " + CLAUDE_BIN + " ไม่ได้: " + err.message);
+  }
+  runState.child = child;
+
+  pushEvent("start", {
+    text: (dry ? "[ทดสอบท่อ] " : "") + prompt,
+    dry: !!dry,
+    id: runState.id,
+    startedAt: runState.startedAt,
+  });
+
+  let buf = "";
+  child.stdout.setEncoding("utf8");
+  child.stdout.on("data", (chunk) => {
+    buf += chunk;
+    if (buf.length > MAX_LINE_BUF) {
+      pushEvent("stderr", { text: "บรรทัด output ยาวผิดปกติ — ตัดทิ้ง 1 ก้อน" });
+      buf = "";
+      return;
+    }
+    let nl;
+    while ((nl = buf.indexOf("\n")) >= 0) {
+      const line = buf.slice(0, nl).trim();
+      buf = buf.slice(nl + 1);
+      if (!line) continue;
+      try {
+        handleCliMessage(JSON.parse(line));
+      } catch {
+        // Not JSON: a CLI notice/warning printed on stdout. Show it verbatim —
+        // this is usually the only clue when a flag is wrong.
+        pushEvent("raw", { text: line.slice(0, 500) });
+      }
+    }
+  });
+
+  child.stderr.setEncoding("utf8");
+  child.stderr.on("data", (chunk) => {
+    const text = String(chunk).trim();
+    if (text) pushEvent("stderr", { text: text.slice(0, 2000) });
+  });
+
+  child.on("error", (err) => {
+    const hint = err.code === "ENOENT"
+      ? "ไม่พบคำสั่ง " + CLAUDE_BIN + " — ติดตั้ง Claude Code หรือกำหนด CLAUDE_BIN=<เต็มพาธของ claude.exe> ก่อนรัน uploader"
+      : err.message;
+    pushEvent("stderr", { text: hint });
+    if (isActive()) finishRun(null, null);
+  });
+
+  child.on("close", (code, signal) => {
+    if (!isActive()) return;
+    finishRun(code, signal);
+  });
+
+  runState.timer = setTimeout(() => {
+    if (!isActive()) return;
+    pushEvent("stderr", { text: "เกินเวลา " + Math.round(RUN_TIMEOUT_MS / 60000) + " นาที — กำลังหยุด" });
+    stopRun("timeout");
+  }, RUN_TIMEOUT_MS);
+
+  return runSnapshot();
+}
+
+// child.kill() alone leaves the node/npm processes that Claude spawned running,
+// so on Windows kill the whole tree.
+function stopRun(reason = "manual") {
+  if (!isActive() || !runState.child) throw new Error("ไม่มีงานที่กำลังรันอยู่");
+  runState.status = "stopping";
+  runState.stopReason = reason;
+  pushEvent("stopping", { text: reason === "timeout" ? "หยุดเพราะเกินเวลา" : "ผู้ใช้กดหยุด" });
+  const pid = runState.child.pid;
+  if (process.platform === "win32" && pid) {
+    try {
+      spawn("taskkill", ["/PID", String(pid), "/T", "/F"], { windowsHide: true, stdio: "ignore" });
+    } catch {
+      try { runState.child.kill(); } catch { /* already dead */ }
+    }
+  } else {
+    try { runState.child.kill("SIGTERM"); } catch { /* already dead */ }
+  }
+}
+
+function runSnapshot() {
+  return {
+    id: runState.id,
+    status: runState.status,
+    dry: runState.dry,
+    prompt: runState.prompt,
+    startedAt: runState.startedAt || null,
+    endedAt: runState.endedAt || null,
+    elapsedMs: runState.startedAt ? (runState.endedAt || Date.now()) - runState.startedAt : 0,
+    sessionId: runState.sessionId,
+    model: runState.model,
+    exitCode: runState.exitCode,
+    numTurns: runState.numTurns,
+    costUsd: runState.costUsd,
+    toolCount: runState.toolCount,
+    files: [...runState.files],
+    nextSeq: runState.nextSeq,
+    oldestSeq: runState.events[0]?.i ?? runState.nextSeq,
+  };
+}
+
+// Shown in the confirm dialog so an operator sees whether today's brief is
+// actually staged before firing a 40-minute run.
+async function stagedDocxInfo() {
+  try {
+    const s = await stat(join(ASSETS, "content.docx"));
+    return { exists: true, mtime: s.mtimeMs, size: s.size };
+  } catch {
+    return { exists: false, mtime: null, size: 0 };
+  }
+}
+
 const PAGE = /* html */ `<!doctype html>
 <html lang="th">
 <head>
@@ -821,6 +1197,45 @@ const PAGE = /* html */ `<!doctype html>
   .pull-row { display: flex; flex-wrap: wrap; align-items: center; gap: 8px 12px; margin: 2px 0 12px; padding-bottom: 14px; border-bottom: 1px solid var(--line-soft); }
   .pull-hint { flex: 1 1 200px; min-width: 0; font-size: 11px; color: var(--faint); line-height: 1.5; }
 
+  /* ── ส่วนที่ 6: fire the rebrand + live run log ──────── */
+  button.fire {
+    background: var(--grad); color: #05101f; border: 0;
+    padding: 10px 20px; font-size: 14px; font-weight: 800; border-radius: 10px; cursor: pointer;
+    box-shadow: 0 8px 20px -8px rgba(56,189,248,0.55); transition: transform .12s, filter .15s;
+  }
+  button.fire:hover:not(:disabled) { filter: brightness(1.06); transform: translateY(-1px); }
+  button.fire:disabled, button.ghost:disabled { opacity: .45; cursor: not-allowed; filter: none; transform: none; box-shadow: none; }
+  button.danger { color: var(--err); }
+  button.danger:hover:not(:disabled) { background: rgba(248,113,113,0.1); border-color: var(--err); box-shadow: 0 0 0 3px rgba(248,113,113,0.12); }
+  .pill {
+    font-size: 10.5px; font-weight: 700; padding: 3px 10px; border-radius: 999px;
+    border: 1px solid var(--line); background: var(--panel); color: var(--muted);
+  }
+  .pill.run { color: var(--accent); border-color: rgba(56,189,248,0.4); background: #0b2b40; animation: pulse 1.6s ease-in-out infinite; }
+  .pill.done { color: var(--ok); border-color: rgba(74,222,128,0.35); background: rgba(74,222,128,0.1); }
+  .pill.bad { color: var(--err); border-color: rgba(248,113,113,0.35); background: rgba(248,113,113,0.1); }
+  @keyframes pulse { 50% { opacity: .55; } }
+  .rb-timer { font-family: ui-monospace, monospace; font-size: 12px; color: var(--muted); }
+  .rb-stat { font-size: 11px; color: var(--faint); }
+  .rb-stat b { color: var(--ink); font-family: ui-monospace, monospace; font-size: 12px; }
+  #rbLog {
+    margin: 0; max-height: 320px; overflow: auto; white-space: pre-wrap; word-break: break-word;
+    font-family: ui-monospace, monospace; font-size: 11.5px; line-height: 1.65;
+    background: #070d1a; border: 1px solid var(--line); border-radius: 9px; padding: 10px 12px;
+  }
+  #rbLog::-webkit-scrollbar { width: 8px; }
+  #rbLog::-webkit-scrollbar-thumb { background: var(--line); border-radius: 8px; }
+  #rbLog .l { display: block; }
+  #rbLog .l.tool { color: var(--accent); }
+  #rbLog .l.sub { border-left: 2px solid var(--accent-2); padding-left: 8px; margin-left: 2px; }
+  #rbLog .l.meta { color: var(--faint); }
+  #rbLog .l.bad { color: var(--err); }
+  #rbLog .l.good { color: var(--ok); }
+  #rbLog .l .who { color: var(--accent-2); font-weight: 700; }
+  #rbFileBox { font-size: 11.5px; color: var(--muted); }
+  #rbFileBox summary { cursor: pointer; color: var(--accent); }
+  #rbFileList { font-family: ui-monospace, monospace; font-size: 11px; line-height: 1.7; padding: 6px 0 0 14px; max-height: 150px; overflow: auto; white-space: pre-wrap; word-break: break-all; }
+
   /* ── sticky action bar ──────────────────────────────── */
   .bar {
     position: sticky; bottom: 0; z-index: 15;
@@ -848,7 +1263,7 @@ const PAGE = /* html */ `<!doctype html>
 <header>
   <div class="head-inner">
     <h1><span class="mark">📦</span> <span class="grad-text">Rebrand Asset Uploader</span></h1>
-    <p>เลือกไฟล์แล้วกด "อัพโหลดทั้งหมด" — ระบบจะเซฟลง <code>src/assets</code> และ <code>public</code> ด้วยชื่อ/นามสกุลที่ถูกต้องอัตโนมัติ พร้อม<strong>บีบอัดรูปแบบ lossless</strong> (คมเท่าเดิม ไฟล์เล็กลง) ย่อรูปที่กว้างเกิน ${MAX_SOURCE_WIDTH}px ให้พอดี และย่อรูป <strong>Promotion/Carousel เหลือ ${SLIDE_BOX}×${SLIDE_BOX}</strong> (ขนาดที่หน้าเว็บใช้จริง) — แค่ stage ไฟล์ ไม่ได้รัน rebrand</p>
+    <p>เลือกไฟล์แล้วกด "อัพโหลดทั้งหมด" — ระบบจะเซฟลง <code>src/assets</code> และ <code>public</code> ด้วยชื่อ/นามสกุลที่ถูกต้องอัตโนมัติ พร้อม<strong>บีบอัดรูปแบบ lossless</strong> (คมเท่าเดิม ไฟล์เล็กลง) ย่อรูปที่กว้างเกิน ${MAX_SOURCE_WIDTH}px ให้พอดี และย่อรูป <strong>Promotion/Carousel เหลือ ${SLIDE_BOX}×${SLIDE_BOX}</strong> (ขนาดที่หน้าเว็บใช้จริง) — จากนั้นกด <strong>"เริ่ม Rebrand"</strong> ใน<strong>ส่วนที่ 6</strong> เพื่อให้ Claude ลงมือรีแบรนด์ให้เลย (หยุดที่ verify ไม่ deploy ให้)</p>
   </div>
 </header>
 <main>
@@ -1047,9 +1462,32 @@ const PAGE = /* html */ `<!doctype html>
       <textarea class="metadesc" id="rbNotes" rows="2" placeholder="เช่น โทนทอง-ดำ, ใช้ NavbarPremium, เน้นหน้าโปรโมชั่น" spellcheck="false"></textarea>
     </div>
     <div class="field">
-      <div class="row"><label>คำสั่งที่จะ copy</label><button type="button" id="rbCopy" class="ghost">📋 Copy คำสั่ง</button></div>
+      <div class="row"><label>คำสั่งที่จะรัน</label><button type="button" id="rbCopy" class="ghost">📋 Copy คำสั่ง</button></div>
       <textarea class="metadesc" id="rbPrompt" rows="3" readonly spellcheck="false"></textarea>
-      <span class="status" id="rbHint">flow: Copy → วางใน Claude Code → รอเสร็จ → <code>npm run preview</code> ตรวจด้วยตา → ค่อย deploy แยกด้วย deploy.ps1 (ห้าม deploy อัตโนมัติ)</span>
+      <span class="status" id="rbHint">Copy ไว้วางเองใน Claude Code ก็ได้ หรือกด "เริ่ม Rebrand" ให้ระบบยิงให้เลย</span>
+    </div>
+    <div class="field">
+      <div class="row">
+        <button type="button" id="rbFire" class="fire">▶ เริ่ม Rebrand</button>
+        <button type="button" id="rbStop" class="ghost danger" disabled>■ หยุด</button>
+        <button type="button" id="rbDry" class="ghost" title="ยิง prompt สั้นๆ เพื่อเช็กว่าต่อ Claude ได้จริง ใช้เวลาไม่กี่วินาที ไม่แตะไฟล์">🧪 ทดสอบท่อ</button>
+        <span class="pill" id="rbPill">พร้อม</span>
+        <span class="rb-timer" id="rbTimer"></span>
+      </div>
+      <span class="status" id="rbFireHint">ต้องกด "อัพโหลดทั้งหมด" ให้เสร็จก่อน — ปุ่มนี้ไม่อัพโหลดไฟล์ให้ · งานจริงกินเวลาหลายสิบนาที · <strong>ห้ามปิดหน้าต่างดำ (cmd)</strong> ระหว่างรัน (ปิดแท็บเบราว์เซอร์ได้ ไม่กระทบ)</span>
+    </div>
+    <div class="field" id="rbRunBox" hidden>
+      <div class="row">
+        <span class="rb-stat">tools <b id="rbTools">0</b></span>
+        <span class="rb-stat">ไฟล์ที่แก้ <b id="rbFiles">0</b></span>
+        <span class="rb-stat" id="rbMeta"></span>
+      </div>
+      <pre id="rbLog"></pre>
+      <details id="rbFileBox" hidden>
+        <summary>ไฟล์ที่ถูกแก้</summary>
+        <div id="rbFileList"></div>
+      </details>
+      <span class="status" id="rbDone"></span>
     </div>
   </section>
 </main>
@@ -1304,32 +1742,210 @@ const PAGE = /* html */ `<!doctype html>
     return true;
   }
 
-  // ── Rebrand prompt (ส่วนที่ 6): assemble the exact prompt, client-side only ──
-  // No server call — just helps a dev paste a correct, typo-free command into
-  // Claude Code, in the one-liner style they actually use. URL clause is dropped
-  // when empty (playbook + the URL-scope rule already keep a bare rebrand off the
-  // domain); the verify / stop-at-preview reminder lives in the UI hint, not the
-  // copied text, to keep the prompt short.
+  // ── Rebrand run (ส่วนที่ 6) ────────────────────────────────────────────────
+  // The prompt is NOT assembled here: /rebrand/preview returns the exact string
+  // /rebrand/start will fire, so the textarea can never show something different
+  // from what runs. Copy still works for pasting into Claude Code by hand.
   const rbBrand = document.getElementById('rbBrand');
   const rbUrl = document.getElementById('rbUrl');
   const rbNotes = document.getElementById('rbNotes');
   const rbPrompt = document.getElementById('rbPrompt');
   const rbCopy = document.getElementById('rbCopy');
-  function buildPrompt() {
-    const brand = rbBrand.value.trim() || '<ชื่อแบรนด์>';
-    const url = rbUrl.value.trim();
-    const notes = rbNotes.value.trim();
-    let p = 'rebrand and retheme to "' + brand + '"';
-    if (url) p += ' then real url is "' + url + '"';
-    p += ' ทำแบบ 2-agent ขนานตาม playbook';
-    if (notes) p += ' — ' + notes;
-    return p;
+  const rbFire = document.getElementById('rbFire');
+  const rbStop = document.getElementById('rbStop');
+  const rbPill = document.getElementById('rbPill');
+  const rbTimer = document.getElementById('rbTimer');
+  const rbHint = document.getElementById('rbHint');
+  const rbRunBox = document.getElementById('rbRunBox');
+  const rbLog = document.getElementById('rbLog');
+  const rbTools = document.getElementById('rbTools');
+  const rbFilesN = document.getElementById('rbFiles');
+  const rbMeta = document.getElementById('rbMeta');
+  const rbFileBox = document.getElementById('rbFileBox');
+  const rbFileList = document.getElementById('rbFileList');
+  const rbDone = document.getElementById('rbDone');
+  const uploadAllBtn = document.getElementById('uploadAll');
+
+  let promptOk = false;
+  let promptTimer = null;
+  let rbSource = null;        // EventSource
+  let rbLastIdx = -1;         // last event seq rendered, for gap-free reconnect
+  let rbClosed = false;       // run ended: stop reconnecting
+  let rbTicker = null;
+  let rbStartedAt = 0;
+  let rbFileSet = new Set();
+  let rbToolCount = 0;
+
+  const esc = (s) => String(s).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
+
+  function refreshPrompt() {
+    clearTimeout(promptTimer);
+    promptTimer = setTimeout(async () => {
+      const q = new URLSearchParams({ brand: rbBrand.value, url: rbUrl.value, notes: rbNotes.value });
+      try {
+        const res = await fetch('/rebrand/preview?' + q.toString());
+        const j = await res.json();
+        if (j.ok) {
+          rbPrompt.value = j.prompt;
+          promptOk = true;
+          rbHint.textContent = 'Copy ไว้วางเองใน Claude Code ก็ได้ หรือกด "เริ่ม Rebrand" ให้ระบบยิงให้เลย';
+        } else {
+          rbPrompt.value = '⚠ ' + j.error;
+          promptOk = false;
+          rbHint.textContent = j.error;
+        }
+      } catch (e) {
+        rbPrompt.value = '⚠ ต่อ server ไม่ได้: ' + e.message;
+        promptOk = false;
+      }
+      syncButtons();
+    }, 250);
   }
-  function refreshPrompt() { rbPrompt.value = buildPrompt(); }
   [rbBrand, rbUrl, rbNotes].forEach((el) => el.addEventListener('input', refreshPrompt));
-  refreshPrompt();
+
+  function running() { return rbPill.dataset.status === 'running' || rbPill.dataset.status === 'stopping'; }
+
+  function syncButtons() {
+    const busy = running();
+    rbFire.disabled = busy || !promptOk;
+    rbStop.disabled = !busy;
+    document.getElementById('rbDry').disabled = busy;
+    // While an agent is reading src/assets, re-staging files underneath it would
+    // hand it a half-swapped brand — so uploads are locked for the duration.
+    uploadAllBtn.disabled = busy;
+    uploadAllBtn.style.opacity = busy ? '.45' : '';
+    uploadAllBtn.style.cursor = busy ? 'not-allowed' : '';
+  }
+
+  const PILL = {
+    idle:     ['พร้อม', ''],
+    running:  ['กำลังทำงาน', 'run'],
+    stopping: ['กำลังหยุด...', 'run'],
+    done:     ['เสร็จแล้ว', 'done'],
+    stopped:  ['หยุดแล้ว', 'bad'],
+    error:    ['ล้มเหลว', 'bad'],
+  };
+  function setPill(status) {
+    const [label, cls] = PILL[status] || PILL.idle;
+    rbPill.dataset.status = status;
+    rbPill.textContent = label;
+    rbPill.className = 'pill' + (cls ? ' ' + cls : '');
+    syncButtons();
+  }
+
+  function fmtElapsed(ms) {
+    const s = Math.max(0, Math.round(ms / 1000));
+    return String(Math.floor(s / 60)).padStart(2, '0') + ':' + String(s % 60).padStart(2, '0');
+  }
+  function startTicker() {
+    clearInterval(rbTicker);
+    rbTicker = setInterval(() => { rbTimer.textContent = fmtElapsed(Date.now() - rbStartedAt); }, 1000);
+  }
+
+  function rbLine(cls, html) {
+    // keep following the tail only if the operator hasn't scrolled up to read
+    const atBottom = rbLog.scrollHeight - rbLog.scrollTop - rbLog.clientHeight < 40;
+    const d = document.createElement('span');
+    d.className = 'l ' + cls;
+    d.innerHTML = html;
+    rbLog.appendChild(d);
+    if (atBottom) rbLog.scrollTop = rbLog.scrollHeight;
+  }
+
+  function rbReset() {
+    rbLog.textContent = '';
+    rbFileSet = new Set();
+    rbToolCount = 0;
+    rbLastIdx = -1;
+    rbClosed = false;
+    rbTools.textContent = '0';
+    rbFilesN.textContent = '0';
+    rbMeta.textContent = '';
+    rbDone.textContent = '';
+    rbFileBox.hidden = true;
+    rbFileList.textContent = '';
+    rbRunBox.hidden = false;
+  }
+
+  function renderEvent(ev) {
+    if (ev.i <= rbLastIdx) return; // replay overlap after a reconnect
+    rbLastIdx = ev.i;
+    const sub = ev.sub ? ' sub' : '';
+    const who = ev.sub ? '<span class="who">agent</span> ' : '';
+    switch (ev.type) {
+      case 'start':
+        rbStartedAt = ev.startedAt || ev.t;
+        startTicker();
+        rbLine('meta', '▶ ' + esc(ev.text));
+        break;
+      case 'init':
+        rbLine('meta', esc(ev.text));
+        break;
+      case 'text':
+        rbLine('' + sub, who + esc(ev.text));
+        break;
+      case 'tool':
+        rbToolCount++;
+        rbTools.textContent = rbToolCount;
+        if (ev.file) {
+          rbFileSet.add(ev.file);
+          rbFilesN.textContent = rbFileSet.size;
+          rbFileBox.hidden = false;
+          rbFileList.textContent = [...rbFileSet].join('\\n');
+        }
+        rbLine('tool' + sub, who + '● ' + esc(ev.name) + (ev.text ? ' — ' + esc(ev.text) : ''));
+        break;
+      case 'tool_error':
+        rbLine('bad', '⚠ tool error: ' + esc(ev.text));
+        break;
+      case 'stderr':
+      case 'raw':
+        rbLine('bad', esc(ev.text));
+        break;
+      case 'stopping':
+        setPill('stopping');
+        rbLine('bad', '■ ' + esc(ev.text));
+        break;
+      case 'result': {
+        const bits = [];
+        if (ev.numTurns) bits.push(ev.numTurns + ' turns');
+        if (ev.durationMs) bits.push(fmtElapsed(ev.durationMs));
+        if (typeof ev.costUsd === 'number') bits.push('$' + ev.costUsd.toFixed(2));
+        rbMeta.textContent = bits.join(' · ');
+        if (ev.text) rbLine('good', esc(ev.text));
+        break;
+      }
+      case 'end': {
+        clearInterval(rbTicker);
+        rbClosed = true;
+        rbTimer.textContent = fmtElapsed(ev.elapsedMs || 0);
+        setPill(ev.status);
+        const okRun = ev.status === 'done';
+        rbLine(okRun ? 'good' : 'bad', (okRun ? '✓ จบงาน' : '✗ จบแบบ ' + ev.status) + ' (exit ' + ev.exitCode + ')');
+        rbDone.innerHTML = okRun
+          ? 'ต่อไป: รัน <code>npm run preview</code> ตรวจด้วยตา แล้วค่อย deploy แยกด้วย deploy.ps1'
+          : 'งานไม่จบสมบูรณ์ — repo อาจถูกแก้ค้างไว้ ตรวจด้วย <code>git status</code> / ย้อนด้วย <code>git checkout .</code> ก่อนยิงใหม่';
+        addLog('rebrand: ' + ev.status, okRun);
+        break;
+      }
+    }
+  }
+
+  function attach(from) {
+    if (rbSource) { rbSource.close(); rbSource = null; }
+    rbSource = new EventSource('/rebrand/stream?from=' + from);
+    rbSource.onmessage = (e) => { try { renderEvent(JSON.parse(e.data)); } catch { /* ignore */ } };
+    rbSource.onerror = () => {
+      // EventSource retries on its own, but it would replay from the same
+      // ?from= — so reconnect explicitly at the next unseen event instead.
+      rbSource.close();
+      rbSource = null;
+      if (rbClosed) return;
+      setTimeout(() => { if (!rbClosed) attach(rbLastIdx + 1); }, 2000);
+    };
+  }
+
   rbCopy.addEventListener('click', async () => {
-    refreshPrompt();
     try {
       await navigator.clipboard.writeText(rbPrompt.value);
       addLog('คัดลอกคำสั่ง rebrand แล้ว — วางใน Claude Code ได้เลย', true);
@@ -1339,7 +1955,83 @@ const PAGE = /* html */ `<!doctype html>
     }
   });
 
+  async function fireRun(dry) {
+    if (!dry) {
+      let docxNote = 'ไม่พบ content.docx ใน src/assets — ยังไม่ได้อัพ brief!';
+      try {
+        const st = await (await fetch('/rebrand/status')).json();
+        if (st.docx?.exists) docxNote = 'content.docx ที่ staged ไว้: ' + new Date(st.docx.mtime).toLocaleString('th-TH');
+      } catch { /* keep the warning */ }
+      const ok = confirm(
+        'เริ่ม rebrand จริงหรือไม่?\\n\\n' +
+        '• จะแก้ไฟล์จริงใน src/ ของโปรเจกต์นี้\\n' +
+        '• กินเวลาหลายสิบนาที ห้ามปิดหน้าต่าง cmd ระหว่างรัน\\n' +
+        '• ต้องกด "อัพโหลดทั้งหมด" ให้เสร็จก่อนแล้ว (ปุ่มนี้ไม่อัพให้)\\n' +
+        '• ' + docxNote + '\\n\\n' +
+        'คำสั่ง: ' + rbPrompt.value
+      );
+      if (!ok) return;
+    }
+    rbReset();
+    setPill('running');
+    rbStartedAt = Date.now();
+    startTicker();
+    try {
+      const res = await fetch('/rebrand/start' + (dry ? '?dry=1' : ''), {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ brand: rbBrand.value, url: rbUrl.value, notes: rbNotes.value }),
+      });
+      const j = await res.json();
+      if (!res.ok || !j.ok) throw new Error(j.error || ('HTTP ' + res.status));
+      addLog(dry ? 'เริ่มทดสอบท่อ' : 'เริ่ม rebrand แล้ว', true);
+      attach(0);
+    } catch (e) {
+      clearInterval(rbTicker);
+      setPill('error');
+      rbClosed = true;
+      rbLine('bad', 'เริ่มไม่สำเร็จ: ' + esc(e.message));
+      addLog('เริ่ม rebrand ไม่สำเร็จ: ' + e.message, false);
+    }
+  }
+
+  rbFire.addEventListener('click', () => fireRun(false));
+  rbStop.addEventListener('click', async () => {
+    if (!confirm('หยุดงาน rebrand ตอนนี้?\\n\\nไฟล์ที่แก้ไปแล้วจะค้างครึ่งทาง ต้องไปตรวจ git status เอง')) return;
+    rbStop.disabled = true;
+    try {
+      const j = await (await fetch('/rebrand/stop', { method: 'POST' })).json();
+      if (!j.ok) throw new Error(j.error);
+    } catch (e) {
+      addLog('หยุดไม่สำเร็จ: ' + e.message, false);
+      syncButtons();
+    }
+  });
+
+  // Pipe smoke-test: same spawn → NDJSON → SSE path, seconds instead of an hour.
+  document.getElementById('rbDry').addEventListener('click', () => fireRun(true));
+
+  // Reattach to a run already in flight (page refresh / reopened tab).
+  (async () => {
+    try {
+      const st = await (await fetch('/rebrand/status')).json();
+      const run = st.run;
+      if (run && (run.status === 'running' || run.status === 'stopping')) {
+        rbReset();
+        setPill(run.status);
+        rbStartedAt = run.startedAt || Date.now();
+        startTicker();
+        attach(0);
+        addLog('มีงาน rebrand ค้างอยู่ — ต่อ log กลับมาแล้ว', true);
+      }
+    } catch { /* server just started; nothing to reattach */ }
+  })();
+
+  refreshPrompt();
+  syncButtons();
+
   document.getElementById('uploadAll').addEventListener('click', async () => {
+    if (running()) { addLog('มี rebrand กำลังรันอยู่ — อัพโหลดตอนนี้ไม่ได้', false); return; }
     const inputs = [...document.querySelectorAll('input[type=file]')].filter((i) => i !== bgFile);
     let any = false;
 
@@ -1477,6 +2169,85 @@ const server = http.createServer(async (req, res) => {
     }
     return;
   }
+  // ── ส่วนที่ 6: build / fire / watch / stop the rebrand run ────────────────
+  if (req.method === "GET" && url.pathname === "/rebrand/preview") {
+    // The UI never assembles the prompt itself — it renders whatever this
+    // returns, so what's shown and what's fired can't drift apart.
+    try {
+      const prompt = buildRebrandPrompt({
+        brand: url.searchParams.get("brand"),
+        url: url.searchParams.get("url"),
+        notes: url.searchParams.get("notes"),
+      });
+      res.writeHead(200, { "Content-Type": "application/json" });
+      res.end(JSON.stringify({ ok: true, prompt }));
+    } catch (err) {
+      res.writeHead(400, { "Content-Type": "application/json" });
+      res.end(JSON.stringify({ ok: false, error: err.message }));
+    }
+    return;
+  }
+  if (req.method === "GET" && url.pathname === "/rebrand/status") {
+    res.writeHead(200, { "Content-Type": "application/json" });
+    res.end(JSON.stringify({ ok: true, run: runSnapshot(), docx: await stagedDocxInfo() }));
+    return;
+  }
+  if (req.method === "POST" && url.pathname === "/rebrand/start") {
+    try {
+      const body = await readJson(req);
+      const run = startRun({
+        brand: body.brand,
+        url: body.url,
+        notes: body.notes,
+        dry: url.searchParams.get("dry") === "1",
+      });
+      res.writeHead(200, { "Content-Type": "application/json" });
+      res.end(JSON.stringify({ ok: true, run }));
+    } catch (err) {
+      res.writeHead(isActive() ? 409 : 400, { "Content-Type": "application/json" });
+      res.end(JSON.stringify({ ok: false, error: err.message }));
+    }
+    return;
+  }
+  if (req.method === "POST" && url.pathname === "/rebrand/stop") {
+    try {
+      stopRun("manual");
+      res.writeHead(200, { "Content-Type": "application/json" });
+      res.end(JSON.stringify({ ok: true, run: runSnapshot() }));
+    } catch (err) {
+      res.writeHead(400, { "Content-Type": "application/json" });
+      res.end(JSON.stringify({ ok: false, error: err.message }));
+    }
+    return;
+  }
+  if (req.method === "GET" && url.pathname === "/rebrand/stream") {
+    const from = Number(url.searchParams.get("from")) || 0;
+    res.writeHead(200, {
+      "Content-Type": "text/event-stream; charset=utf-8",
+      "Cache-Control": "no-cache, no-transform",
+      Connection: "keep-alive",
+    });
+    res.write("retry: 3000\n\n");
+    // Replay first, then subscribe. Node is single-threaded and nothing awaits
+    // between the two, so no event can slip through the gap.
+    for (const ev of runState.events) {
+      if (ev.i >= from) res.write("data: " + JSON.stringify(ev) + "\n\n");
+    }
+    if (isActive()) {
+      runState.clients.add(res);
+      const heartbeat = setInterval(() => {
+        try { res.write(":ping\n\n"); } catch { /* closing */ }
+      }, 15000);
+      req.on("close", () => {
+        clearInterval(heartbeat);
+        runState.clients.delete(res);
+      });
+    } else {
+      res.end();
+    }
+    return;
+  }
+
   res.writeHead(404, { "Content-Type": "text/plain" });
   res.end("Not found");
 });
@@ -1489,5 +2260,6 @@ server.listen(PORT, HOST, () => {
   const shown = HOST === "0.0.0.0" ? "localhost" : HOST;
   console.log(`\n  Rebrand asset uploader running:\n  → http://${shown}:${PORT}   (bind ${HOST})\n`);
   console.log(`  Writes into:\n  - ${ASSETS}\n  - ${PUBLIC}\n`);
-  console.log("  Ctrl+C to stop. This only stages files; run the rebrand via Claude afterward.\n");
+  console.log(`  Rebrand runner: ${CLAUDE_BIN} (override with CLAUDE_BIN=<path to claude.exe>)`);
+  console.log("  Ctrl+C to stop — that also kills a rebrand run in progress.\n");
 });

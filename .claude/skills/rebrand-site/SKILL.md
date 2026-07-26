@@ -109,7 +109,7 @@ collision; when in doubt, widen P1 and shrink the fan-out.
 (launch by double-clicking `tools/rebrand-uploader/start-uploader.cmd` — no VS
 Code needed — or `npm run rebrand:upload`, opens `localhost:4000`) is where the
 operator stages the brand files first. Its **"ส่วนที่ 6 — สร้างคำสั่ง Rebrand"**
-card generates the very prompt that starts you, in the form
+card produces the very prompt that starts you, in the form
 `rebrand and retheme to "<BRAND>" then real url is "<URL>" ทำแบบ 2-agent ขนานตาม
 playbook`. So when you receive that shape of request: the logo/banner/slide/docx
 are already in `src/assets`, the `2-agent ขนาน`/`playbook` phrase means run the
@@ -117,6 +117,17 @@ default parallel workflow above, and `real url is "<URL>"` is the explicit real
 domain (per the URL-scope rule below) — if that clause is absent, the operator
 left it blank on purpose: **do not change the domain.** Still run every phase in
 full; the prompt is only the trigger, not a shortcut around verification.
+
+That card can either copy the prompt for a human to paste, or **fire it
+directly** — its "เริ่ม Rebrand" button spawns `claude -p` on this repo with
+`--permission-mode bypassPermissions` and streams the run back into the page. A
+fired run carries the extra clause `— หยุดที่ build + verify เท่านั้น ห้าม deploy
+และห้าม git push`, and it means exactly what it says: **nobody is watching, no
+permission prompt will stop you.** Finish at Phase 6 verification (`npm run
+build` clean + grep the rendered HTML) and stop there. Do not deploy, do not
+`git push`, and do not `git commit` unless the operator asked in the notes
+field. Everything the run prints is visible live in the browser, so report
+progress in the normal way — there is no separate channel to write to.
 
 1. **Find the brief.** Look for a `.docx` file dropped into `src/assets`
    or `src/components` (past runs named it `<brand>-content.docx`). The
