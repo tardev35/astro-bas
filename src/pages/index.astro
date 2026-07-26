@@ -16,6 +16,7 @@ import SmoothCarousel from "../components/SmoothCarousel.astro";
 import Navfoot from "../components/Navfoot.astro";
 
 import { Picture } from "astro:assets";
+import { orderForBrand } from "../lib/brandProfile";
 import imgRtp from "../assets/slide1.png";
 import imgAutoWallet from "../assets/slide3.png";
 
@@ -48,7 +49,9 @@ const orgSchema = {
   logo: logoUrl,
   url: homePage,
 };
-const allSchemas = [webPageSchema, orgSchema, webSiteSchema];
+// Order carries no meaning to a JSON-LD parser, so it is varied per brand —
+// every launch of this template used to emit these three in the same sequence.
+const allSchemas = orderForBrand([webPageSchema, orgSchema, webSiteSchema], Astro.site, "jsonld");
 ---
 
 <MainLayout title={pageTitle} description={pageDescription}>

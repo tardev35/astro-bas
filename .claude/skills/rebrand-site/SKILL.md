@@ -195,16 +195,39 @@ progress in the normal way — there is no separate channel to write to.
 guessing a URL like `https://www.<brand>.com` from the brand name, a
 reference image, or the docx (a past run guessed a domain off a
 reference image that happened to show a URL, and it was wrong). Leave
-`astro.config.mjs`'s `site:`, `public/robots.txt`'s `Sitemap:` line,
-and any hardcoded `url:` string literal in `index.astro`'s
-`webSiteSchema`/similar schema.org objects exactly as they already are
-— even if they still show a previous brand's domain, that's expected
-drift, not something to silently "fix." Only touch those three spots
-when the user explicitly gives a real URL alongside the brand name
-(e.g. "rebrand to `<brand>` and real url `<XXXX>`"), and then set all
-three to that exact URL — don't miss the schema.org one, it's a plain
-string literal that doesn't auto-follow `site:` the way
+`astro.config.mjs`'s `site:` and any hardcoded `url:` string literal in
+`index.astro`'s `webSiteSchema`/similar schema.org objects exactly as
+they already are — even if they still show a previous brand's domain,
+that's expected drift, not something to silently "fix." Only touch
+those two spots when the user explicitly gives a real URL alongside the
+brand name (e.g. "rebrand to `<brand>` and real url `<XXXX>`"), and
+then set both to that exact URL — don't miss the schema.org one, it's a
+plain string literal that doesn't auto-follow `site:` the way
 `Astro.url.origin`-derived values do.
+
+`robots.txt` used to be a third spot; it isn't any more. It is generated
+by `src/pages/robots.txt.ts` from `site:`, so it follows the domain on
+its own. **Do not re-create `public/robots.txt`** — a static file there
+would silently win over the generated route.
+
+**Leave `MainLayout.astro`'s `<head>` structure alone.** It looks
+unusual on purpose: the optional blocks (icons / manifest / OG /
+Twitter) are emitted in an order chosen by `src/lib/brandProfile.ts`
+from the brand's own domain, and a few redundant tags
+(`shortcut icon`, `twitter:url`, `og:locale`,
+`apple-mobile-web-app-title`) appear on some brands and not others.
+Every brand launched from this template used to ship a byte-identical
+head, which linked all of them together for anyone reading the source;
+that map exists to break the pattern. So during a rebrand:
+- **do not** re-sort the head into a "canonical" order, hardcode the
+  block sequence, or restore a tag "that's missing" — nothing is
+  missing, and tidying it silently re-creates the footprint
+- **do not** add a `google-site-verification` meta. Search Console is
+  verified by DNS TXT record; the same token was previously hardcoded
+  across every brand, which was the strongest cross-site link of all
+- the head is per-domain but **stable** — the same domain always builds
+  the same bytes, so a redeploy never churns a live site's markup
+Retheming colors, copy, and components is untouched by any of this.
 
 ## Phase 2 — Map docx content onto existing component slots
 

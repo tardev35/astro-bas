@@ -1473,3 +1473,56 @@ headless แล้ว stream ความคืบหน้ากลับมา
 
 **ยังไม่ได้ทำ:** ไม่มี auth (ยังพึ่ง bind `127.0.0.1` อย่างเดียว) · ปิดหน้าต่าง cmd = งาน rebrand ตาย
 กลางคัน (process ผูกกับ server ไม่ได้ใช้ `claude --bg`) · ยังไม่ได้ยิง rebrand เต็มรอบจาก UI จริง
+
+## 2026-07-26 — ลด footprint ของ template ใน HTML (ทุกแบรนด์เหมือนกันเกินไป)
+
+**ที่มา:** ผู้ใช้กังวลว่าโครงสร้าง HTML ที่เหมือนกันทุกแบรนด์จะกระทบ SEO ตรวจจาก git จริง
+(GROW268 `000f93f` → OHO21 `284ce8f` → GSYBET `e36661b`) แล้วพบว่าหนักกว่าที่คิด:
+
+- `MainLayout.astro:47` ฝัง **google-site-verification token ตัวเดียวกันเป๊ะทั้ง 3 แบรนด์**
+  (`THWudFWFF0…`) — ไม่ใช่แค่ footprint แต่เป็นหลักฐานสาธารณะว่าเจ้าของเดียวกัน
+- `<head>` **byte-identical** — diff OHO21↔GSYBET เปลี่ยนแค่บรรทัด `apple-mobile-web-app-title`
+- `robots.txt` ต่างแค่บรรทัด Sitemap — ชุดบล็อก AI bot 4 ตัวเรียงเดิมเป๊ะ
+- font preload 3 บรรทัดเดิม + มี `crossorigin` กับ `crossorigin="anonymous"` ปนกันในไฟล์เดียว
+  (ความไม่สม่ำเสมอนี้เองเป็นลายเซ็นที่เฉพาะตัวมาก)
+
+**ผู้ใช้ยืนยัน: verify Search Console ผ่าน DNS TXT อยู่แล้ว** → meta ใน HTML ไม่มีหน้าที่อะไรเลย
+
+**สิ่งที่ทำ:**
+1. **ลบ meta google-site-verification** — grep แล้วมีที่เดียวในซอร์สทั้งโปรเจกต์
+2. **`src/lib/brandProfile.ts` (ใหม่)** — hash ชื่อโฮสต์จาก `Astro.site` เป็น seed แล้วคืนลำดับ
+   บล็อก head / แท็ก optional ที่จะใส่ / ลำดับ+จำนวน font preload / รูปแบบ `crossorigin` /
+   ลำดับ AI bot ใน robots — **deterministic**: โดเมนเดิม build กี่ครั้งก็ได้ไบต์เดิม
+   (ถ้าสุ่มใหม่ทุก build เว็บจะเปลี่ยน HTML ทุกรอบ deploy ซึ่งแย่กว่าปัญหาเดิม)
+3. **`MainLayout.astro`** — head render ตามโปรไฟล์ โดย `charset` ยังเป็นแท็กแรกเสมอ และแท็กที่มีน้ำหนัก
+   SEO (title/description/viewport/canonical/robots/og:*/twitter:card) ยัง emit ทุกแบรนด์ไม่มีเงื่อนไข
+4. **`src/pages/robots.txt.ts` (ใหม่)** + ลบ `public/robots.txt` — generate จาก `site:` โดยตรง
+   นโยบายเดิมทุกอย่าง (บล็อก AI bot ชุดเดิม) แค่จัดเรียงต่างกันต่อแบรนด์ **ผลพลอยได้:**
+   บรรทัด `Sitemap:` ตามโดเมนเอง เลยเหลือ 2 จุดที่ต้องแก้มือตอนได้ URL จริง จากเดิม 3
+5. **`index.astro`** — สลับลำดับ JSON-LD 3 ก้อนตามโปรไฟล์ (เนื้อหา schema เหมือนเดิมทุกตัวอักษร)
+6. **`SKILL.md`** — เพิ่มกฎว่าห้ามจัด head กลับเป็นลำดับมาตรฐาน ห้ามใส่ meta verification กลับ
+   และห้ามสร้าง `public/robots.txt` ขึ้นมาใหม่ (ไฟล์ static จะชนะ route ที่ generate แบบเงียบๆ)
+
+**บั๊กที่เจอตอนเขียนเอง แก้แล้ว:** ตอน verify พบว่า `fakebrand-alpha.com` กับ `fakebrand-bravo.com`
+ได้ head **เหมือนกันเป๊ะ** — สาเหตุคือ FNV-1a มีบิตล่างอ่อน แต่โค้ดดันเอาไปใช้ `% 2` / `% 4` พอดี
+แก้ด้วยการเติม lowbias32 finalizer หลัง hash แล้วทดสอบซ้ำ: **13 โดเมนจริงของแบรนด์เก่าทั้งหมด
+ได้รูปร่างไม่ซ้ำกันเลย 13/13**
+
+**Verify:** `npm run build` ผ่าน · `grep google-site-verification dist/` = **0** ·
+build 2 ครั้งด้วยโดเมนเดิม → head เหมือนกันเป๊ะ (deterministic) · เปลี่ยน `site:` เป็นโดเมนอื่น →
+ลำดับ head + robots ต่างกันจริง แล้ว restore config กลับ · `crossorigin` แบบ bare ยัง render เป็น
+`crossorigin` ไม่ถูกตัดทิ้ง (ถ้าหายฟอนต์จะโหลด 2 รอบ) · **diff `<body>` ก่อน/หลังทั้งไซต์: เปลี่ยน
+บรรทัดเดียวคือลำดับ JSON-LD ที่ตั้งใจ** หน้าเว็บที่คนเห็นไม่ขยับเลย · JSON-LD ยัง parse ผ่าน ·
+sitemap ไม่ได้ดูด `/robots.txt` เข้าไป (7 entry เท่าเดิม)
+
+**เจอเพิ่ม ยังไม่แก้ (นอกสโคป):** `src/pages/ทดลองเล่น.astro` วาง `<script type="application/ld+json">`
+**นอก** `<MainLayout>` (บรรทัด 52 ก่อน 53) ต่างจาก `index.astro` ที่วางข้างใน ทำให้ JSON-LD ถูก render
+ก่อน `<html>` แล้วดัน `<meta charset>` ไปอยู่ที่ไบต์ที่ **1182** ซึ่งเกิน 1024 ที่สเปกกำหนด — เสี่ยง
+เบราว์เซอร์เดา encoding ผิดในหน้าภาษาไทย (`contact-us` ก็แพตเทิร์นเดียวกันแต่ยังรอดที่ 732)
+แก้ได้ด้วยการย้าย `<script>` เข้าไปข้างใน `<MainLayout>` เหมือน index — เป็นบั๊กเดิม ไม่ได้เกิดจากงานรอบนี้
+
+**นอกสโคป (ตั้งใจ):** ไม่เปลี่ยน route ต่อแบรนด์ (`/promotion`, `/ทางเข้า` …) เพราะต้องแก้ nav +
+internal link + sitemap + uploader และเว็บที่ index ไปแล้วต้องทำ 301 · ไม่สุ่ม DOM/class เพราะ
+Google ไม่ได้ลงโทษการใช้ template ซ้ำ ต้นทุนสูงแต่ได้ผลเกือบศูนย์ · `/line` → `tinyurl.com/suhng`
+และลิงก์ aff ใช้ร่วมกันทุกแบรนด์โดยตั้งใจ · **เว็บเก่าที่ deploy ไปแล้วยังส่ง token เดิมอยู่**
+จนกว่าจะ build+deploy ใหม่ทีละแบรนด์
