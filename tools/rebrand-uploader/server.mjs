@@ -2526,7 +2526,7 @@ const PAGE = /* html */ `<!doctype html>
   // POST one page's Title/Meta if it changed since last save. Blank = skip.
   async function sendPageMeta(f) {
     const { title, desc, status } = metaEls(f);
-    const t = title.value.trim(), d = desc.value.trim();
+    const t = title ? title.value.trim() : '', d = desc ? desc.value.trim() : '';
     if (t === (f.dataset.origTitle || '') && d === (f.dataset.origDesc || '')) return false;
     if (!t || !d) { status.textContent = '⚠️ ต้องกรอกทั้ง Title และ Meta'; return false; }
     const q = new URLSearchParams({ slot: 'pagemeta', page: f.dataset.page, title: t, desc: d });
@@ -2555,9 +2555,12 @@ const PAGE = /* html */ `<!doctype html>
     status: f.querySelector('.status'),
     badge: f.querySelector('.np-badge'),
   });
+  // The lottery toggles are pure on/off — those pages ship with the repo and
+  // have no Title/Meta fields, so .np-body and the inputs are absent for them.
+  // Every read of those three has to tolerate null or the whole card throws.
   for (const f of newpageFields) {
     const { toggle, body } = npEls(f);
-    toggle.addEventListener('change', () => { body.hidden = !toggle.checked; });
+    toggle.addEventListener('change', () => { if (body) body.hidden = !toggle.checked; });
   }
   fetch('/current-newpages').then((r) => r.json()).then((cur) => {
     for (const f of newpageFields) {
@@ -2569,15 +2572,18 @@ const PAGE = /* html */ `<!doctype html>
       // parking rewrites the navbar and footer.
       f.dataset.origOn = c.exists ? '1' : '0';
       if (c.exists) {
-        toggle.checked = true; body.hidden = false;
-        title.value = c.title || ''; desc.value = c.meta || '';
+        toggle.checked = true;
+        if (body) body.hidden = false;
+        if (title) title.value = c.title || '';
+        if (desc) desc.value = c.meta || '';
         badge.textContent = 'เปิดอยู่'; badge.className = 'badge np-badge exists';
       } else if (c.parked) {
         // The page exists but a previous rebrand switched it off. Left OFF it
         // stays off; switched on it is moved back, not scaffolded again — so
         // the label has to say "เปิดกลับ" rather than "สร้างใหม่", or the
         // operator expects a blank page and gets last brand's article.
-        title.value = c.title || ''; desc.value = c.meta || '';
+        if (title) title.value = c.title || '';
+        if (desc) desc.value = c.meta || '';
         badge.textContent = 'ปิดอยู่ — เปิดกลับได้'; badge.className = 'badge np-badge exists';
       } else {
         badge.textContent = 'จะสร้างใหม่'; badge.className = 'badge np-badge new';
