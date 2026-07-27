@@ -1636,6 +1636,12 @@ const PAGE = /* html */ `<!doctype html>
 
   /* ── fields ─────────────────────────────────────────── */
   .field { display: flex; flex-direction: column; gap: 7px; padding: 13px 0; border-top: 1px solid var(--line-soft); }
+  /* The display:flex above outranks the UA stylesheet's [hidden] rule, so
+     without this a .field carrying the hidden attribute stays on screen and
+     only the JS believes it is gone — which is how the "เว็บสร้างไม่ผ่าน" box
+     appeared, empty, beside a preview that had built fine. Same reason
+     .np-body and .panel below carry the rule. */
+  .field[hidden] { display: none; }
   .field:first-of-type { border-top: 0; padding-top: 4px; }
   .field .row { display: flex; align-items: center; gap: 10px; flex-wrap: wrap; }
   .field label { font-size: 13.5px; font-weight: 600; color: #dbe4f0; }
@@ -2912,10 +2918,21 @@ const PAGE = /* html */ `<!doctype html>
     catch { /* leave the UI as-is */ }
   });
 
-  // tick counter, so progress through the list is visible at a glance
-  pvCheck.querySelectorAll('input[type=checkbox]').forEach((c) => c.addEventListener('change', () => {
-    const boxes = [...pvCheck.querySelectorAll('input[type=checkbox]')];
-    document.getElementById('pvCount').textContent = boxes.filter((b) => b.checked).length + '/' + boxes.length;
+  // Tick counter, so progress through the list is visible at a glance.
+  //
+  // The ticks do nothing else today — they are not sent, not stored, and Claude
+  // never sees them. That is deliberate but temporary: the agreed job for this
+  // list is to GATE THE DEPLOY BUTTON in phase 3 (all five ticked, or deploy
+  // stays disabled), the same way Rebrand stays locked until the upload
+  // finishes. Deploy is the one button here that reaches production, so making
+  // it wait until somebody has actually looked at the site is worth a gate.
+  // Whoever builds that: read pvAllChecked() below, don't re-count inline.
+  const pvBoxes = () => [...pvCheck.querySelectorAll('input[type=checkbox]')];
+  const pvAllChecked = () => pvBoxes().every((b) => b.checked);
+  pvBoxes().forEach((c) => c.addEventListener('change', () => {
+    document.getElementById('pvCount').textContent = pvBoxes().filter((b) => b.checked).length + '/' + pvBoxes().length;
+    // phase 3 hooks in here: deployBtn.disabled = !pvAllChecked();
+    void pvAllChecked;
   }));
 
   // a preview may already be up from before this page was opened
