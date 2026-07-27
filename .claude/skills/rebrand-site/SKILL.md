@@ -259,11 +259,11 @@ that was on it is gone the moment someone runs `wrangler deploy`.
 
 So when a real URL is given, that is **three** files, not two:
 
-| file | change |
-|---|---|
-| `astro.config.mjs` | `site:` |
-| `src/pages/index.astro` | `webSiteSchema` `url:` (and any sibling schema literal) |
-| **`wrangler.toml`** | **`name`** |
+| file | change | why |
+|---|---|---|
+| `astro.config.mjs` | `site:` | canonical, sitemap, robots all derive from it |
+| `src/pages/index.astro` | `webSiteSchema` `url:` (and any sibling schema literal) | plain string, does not follow `site:` |
+| **`wrangler.toml`** | **`name`** | **reusing another brand's name deletes its site** |
 
 Set `name` to something derived from the brand — lowercase, no spaces,
 e.g. brand `MAHORANLOTTO` → `name = "mahoranlotto"`. It must not match any
@@ -273,6 +273,14 @@ name a previous brand used.
 `site:` above. A name that still reads as the previous brand is expected
 drift on a content-only rebrand — the operator has not deployed anything
 yet, and guessing here is what breaks a live site.
+
+**`account_id` is NOT in that list — leave it as you find it.** It says
+which Cloudflare account the Worker deploys into, and one account holds
+five to ten brands, so it changes once per *group* of brands rather than
+per brand. Carrying the previous brand's value over is almost always
+right. Only change it when the user explicitly gives a new account ID;
+guessing one is worse than a wrong Worker name, because a wrong account
+means the deploy lands somewhere nobody is looking.
 
 Two more keys in that file are load-bearing; **do not remove either**:
 `workers_dev = false` keeps the duplicate `*.workers.dev` copy of the site

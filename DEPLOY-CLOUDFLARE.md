@@ -62,6 +62,7 @@ npx wrangler whoami
 
 ```toml
 name = "mahoranlotto"
+account_id = "74bd4e712aca2afaa89bd2ea6a015e85"
 compatibility_date = "2026-07-27"
 workers_dev = false
 
@@ -72,11 +73,43 @@ not_found_handling = "404-page"
 
 | บรรทัด | ความหมาย |
 |---|---|
-| `name` | **ชื่อ Worker = ตัวตนของ deployment** เปลี่ยนทุกครั้งที่รีแบรนด์ (ดูหัวข้อ "รีแบรนด์รอบหน้า") |
+| `name` | **ชื่อ Worker = ตัวตนของ deployment** เปลี่ยน**ทุกแบรนด์** (ดูหัวข้อ "รีแบรนด์รอบหน้า") |
+| `account_id` | บัญชี Cloudflare ที่จะ deploy เข้าไป — เปลี่ยน**ทุก 5-10 แบรนด์** ไม่ใช่ทุกแบรนด์ |
 | `compatibility_date` | วันที่ล็อกพฤติกรรม runtime — ใส่วันที่ตั้งค่าครั้งแรก ไม่ต้องขยับบ่อย |
 | `workers_dev = false` | **ปิด `*.workers.dev`** — สำคัญมาก อ่านด้านล่าง |
 | `directory` | โฟลเดอร์ที่ Astro build ออกมา |
 | `not_found_handling` | ให้ URL มั่วได้หน้า 404 จริง **ถ้าไม่ใส่ ทุก URL ผิดจะได้หน้าแรกพร้อม HTTP 200** |
+
+### หา `account_id` จากไหน
+
+**ทางที่เร็วและแม่นที่สุด — ไม่ต้องเข้า dashboard:**
+
+```powershell
+npx wrangler whoami
+```
+
+```
+│ Account Name                      │ Account ID                       │
+│ Ufayes-brand1@gmail.com's Account │ 74bd4e712aca2afaa89bd2ea6a015e85 │
+```
+
+> ดีกว่าก๊อปจากเบราว์เซอร์ เพราะมันบอก**บัญชีที่ wrangler จะ deploy ไปจริงๆ** ไม่ใช่บัญชีที่บังเอิญเปิดค้างอยู่ในแท็บ — ถ้ามีหลายบัญชีแล้วก๊อปผิด เว็บจะไปโผล่ผิดที่โดยไม่มีอะไรเตือน
+
+ถ้าอยากดูจาก dashboard: **Workers & Pages → กล่อง Account details ทางขวา → Click to copy**
+หรือดูจาก URL ตอนอยู่ในหน้า dashboard — สตริง hex ยาวๆ ต่อจาก `dash.cloudflare.com/`
+
+### ทำไมไม่มีปุ่มสลับบัญชี
+
+**`account_id` อยู่ในไฟล์ของแต่ละแบรนด์** — แบรนด์พกบัญชีของตัวเองมาด้วย ไม่ต้อง logout/login
+ไม่ต้องมี dropdown ให้เลือก และ**ไม่มีโอกาส deploy ผิดบัญชีเพราะกดผิด**
+
+หนึ่งบัญชี Cloudflare ใส่ได้หลายโดเมน (ไม่จำกัดในแผนฟรี) แผนที่ใช้อยู่คือ **5-10 แบรนด์ต่อบัญชี**
+เมื่อจะขึ้นบัญชีที่ 2 ให้ **เชิญอีเมลกลางที่ใช้ `wrangler login` เข้าเป็น member ของบัญชีใหม่**
+(Members → Invite) แล้ว `npx wrangler whoami` จะลิสต์ทุกบัญชีพร้อม ID ในตารางเดียว
+
+> ⚠️ **ข้อแลกเปลี่ยนที่ต้องรู้:** อีเมลกลางที่เป็น member ของทุกบัญชี = ถ้าบัญชีนั้นโดนแฮ็ก
+> คนร้ายคุมเว็บทุกแบรนด์พร้อมกัน ไม่ใช่แบรนด์เดียว ถ้ารับไม่ได้ ต้องแยก login จริงแล้วใช้
+> `CLOUDFLARE_API_TOKEN` ต่อบัญชีแทน ซึ่งแลกด้วยการมี token ที่ deploy ได้วางบนเครื่องทีม
 
 ### ⚠️ `workers_dev = false` ห้ามลืม
 
@@ -245,12 +278,13 @@ nslookup mahoranlotto-brand.com 8.8.8.8    # Google
 
 รายการที่ต้องแก้ให้ครบทุกครั้งที่ได้โดเมนจริงใหม่:
 
-| ไฟล์ | แก้อะไร |
-|---|---|
-| `wrangler.toml` | `name` |
-| `astro.config.mjs` | `site:` |
-| `src/pages/index.astro` | `webSiteSchema.url` |
-| `public/robots.txt` | สร้างเองจาก `site:` แล้ว — ไม่ต้องแก้ |
+| ไฟล์ | แก้อะไร | เปลี่ยนบ่อยแค่ไหน |
+|---|---|---|
+| `wrangler.toml` | `name` | **ทุกแบรนด์** |
+| `astro.config.mjs` | `site:` | **ทุกแบรนด์** |
+| `src/pages/index.astro` | `webSiteSchema.url` | **ทุกแบรนด์** |
+| `wrangler.toml` | `account_id` | ทุก 5-10 แบรนด์ (ตอนขึ้นบัญชีใหม่) |
+| `public/robots.txt` | — | ไม่ต้องแก้ สร้างเองจาก `site:` แล้ว |
 
 แล้วทำขั้นที่ 3-6 ใหม่ทั้งหมด (สร้าง Custom Domain ของโดเมนใหม่ + www redirect ของโดเมนใหม่)
 
