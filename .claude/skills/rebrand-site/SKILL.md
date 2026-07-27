@@ -745,10 +745,30 @@ turning them off is an action, not an absence of one:**
 
 Record the on/off decision in the workspec either way.
 
-> The same trap applies to any page the uploader's ส่วนที่ 5 scaffolded
-> (`บทความ.astro`, `about-us.astro`): once created they persist into the next
-> brand. Decide per rebrand whether they belong, rather than assuming a clean
-> slate — nothing in this repo resets itself between brands.
+**Preset pages (`บทความ.astro`, `about-us.astro`) follow the same rule, with a
+different trigger.** They are created by the uploader's ส่วนที่ 5 toggle, not by
+a keyword, and like the lottery pages nothing removes them again — so a page one
+brand asked for keeps shipping on every brand after it, carrying that first
+brand's article.
+
+Decide per rebrand, and **check `src/pages/` rather than assuming a clean
+slate**:
+
+- **Asked for this round** — it holds a `TODO(rebrand)` placeholder body, freshly
+  scaffolded. Fill it from the docx per Phase 4.5. (Already the rule above.)
+- **Present with real content and the operator did not ask for it** — that is
+  last brand's page. Its article is about a different client's site, so it must
+  not ship. **Move it to `src/pages-disabled/` and strip its nav link. Never
+  delete it** — someone wrote that page, and parking costs nothing.
+- **Kept on for this brand deliberately** — treat it as any other sub-page and
+  rebrand its copy in full. A leftover that slipped through is caught by the
+  Phase 5 sweep anyway: the old brand name is still in its text.
+
+> The uploader understands parked pages. `createPage()` looks in
+> `src/pages-disabled/` before scaffolding, so switching a page back on **moves
+> the file back** instead of creating a second copy of the same filename in two
+> directories — and ส่วนที่ 5 labels it `ปิดอยู่ — เปิดกลับได้` rather than
+> `จะสร้างใหม่`. Park pages there and nowhere else, or that link breaks.
 
 **The `tools/rebrand-uploader` "ส่วนที่ 4 — Title/Meta หน้าย่อย" is an
 OPTIONAL shortcut, NOT a replacement for this phase.** The uploader can

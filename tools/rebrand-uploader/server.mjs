@@ -15,7 +15,7 @@
 import http from "node:http";
 import { fileURLToPath } from "node:url";
 import { dirname, resolve, join } from "node:path";
-import { readFile, unlink, writeFile, mkdir, stat } from "node:fs/promises";
+import { readFile, unlink, writeFile, mkdir, stat, rename } from "node:fs/promises";
 import { inflateRawSync } from "node:zlib";
 import { spawn } from "node:child_process";
 import { randomUUID } from "node:crypto";
@@ -26,6 +26,10 @@ const ROOT = resolve(__dirname, "..", "..");
 const ASSETS = join(ROOT, "src", "assets");
 const PUBLIC = join(ROOT, "public");
 const PAGES = join(ROOT, "src", "pages");
+// Astro routes src/pages only, so this is where a page goes to be switched off
+// without losing it. The rebrand skill parks preset pages here when a brand did
+// not ask for them; createPage() looks here before scaffolding a second copy.
+const PAGES_DISABLED = join(ROOT, "src", "pages-disabled");
 const CONFIG = join(ROOT, "astro.config.mjs");
 // Port/host are env-overridable but the localhost-only bind is load-bearing,
 // not a nicety: there is NO auth on any endpoint, /upload rewrites source files,
@@ -602,11 +606,21 @@ async function createPage(key, title, desc) {
   if (!cfg) throw new Error(`ไม่รู้จักหน้า preset: ${key}`);
   const label = `${cfg.navLabel} (${cfg.file})`;
   const file = join(PAGES, cfg.file);
+  const parked = join(PAGES_DISABLED, cfg.file);
   const hasTitle = !!(title && title.trim());
   const hasDesc = !!(desc && desc.trim());
   if (await fileExists(file)) {
     if (hasTitle && hasDesc) await setMainLayoutMeta(file, title, desc, label);
     return { written: [`src/pages/${cfg.file}`], created: false };
+  }
+  // Parked by a previous rebrand that wasn't asked for this page (the skill
+  // moves it to pages-disabled rather than deleting it). Move it back instead
+  // of scaffolding a second copy — otherwise toggling the page on would leave
+  // the same filename sitting in two directories, and only one of them routed.
+  if (await fileExists(parked)) {
+    await rename(parked, file);
+    if (hasTitle && hasDesc) await setMainLayoutMeta(file, title, desc, label);
+    return { written: [`src/pages/${cfg.file}`], created: false, restored: true };
   }
   // new page: blank Title/Meta fall back to safe defaults (Claude rewrites both
   // + the article body when the rebrand runs).
@@ -669,13 +683,23 @@ async function addNavLink(route, label) {
 async function readCurrentNewPages() {
   const out = {};
   for (const [key, cfg] of Object.entries(PRESET_PAGES)) {
-    const entry = { file: `src/pages/${cfg.file}`, route: cfg.route, label: cfg.navLabel, exists: false, title: "", meta: "" };
+    const entry = { file: `src/pages/${cfg.file}`, route: cfg.route, label: cfg.navLabel, exists: false, parked: false, title: "", meta: "" };
     try {
       const src = await readFile(join(PAGES, cfg.file), "utf8");
       entry.exists = true;
       entry.title = src.match(ML_TITLE_RE)?.[0]?.match(/"([^"]*)"$/)?.[1] || "";
       entry.meta = src.match(ML_DESC_RE)?.[0]?.match(/description=("|')([^"']*)\1/)?.[2] || "";
-    } catch { /* not created yet — leave blank */ }
+    } catch {
+      // Not routed — but it may be parked rather than absent, and those are very
+      // different things to an operator: one needs writing from scratch, the
+      // other is last brand's page waiting to be switched back on.
+      try {
+        const src = await readFile(join(PAGES_DISABLED, cfg.file), "utf8");
+        entry.parked = true;
+        entry.title = src.match(ML_TITLE_RE)?.[0]?.match(/"([^"]*)"$/)?.[1] || "";
+        entry.meta = src.match(ML_DESC_RE)?.[0]?.match(/description=("|')([^"']*)\1/)?.[2] || "";
+      } catch { /* genuinely not created yet — leave blank */ }
+    }
     out[key] = entry;
   }
   return out;
@@ -2232,6 +2256,13 @@ const PAGE = /* html */ `<!doctype html>
         toggle.checked = true; body.hidden = false;
         title.value = c.title || ''; desc.value = c.meta || '';
         badge.textContent = 'มีอยู่แล้ว'; badge.className = 'badge np-badge exists';
+      } else if (c.parked) {
+        // The page exists but a previous rebrand switched it off. Left OFF it
+        // stays off; switched on it is moved back, not scaffolded again — so
+        // the label has to say "เปิดกลับ" rather than "สร้างใหม่", or the
+        // operator expects a blank page and gets last brand's article.
+        title.value = c.title || ''; desc.value = c.meta || '';
+        badge.textContent = 'ปิดอยู่ — เปิดกลับได้'; badge.className = 'badge np-badge exists';
       } else {
         badge.textContent = 'จะสร้างใหม่'; badge.className = 'badge np-badge new';
       }
@@ -2253,6 +2284,7 @@ const PAGE = /* html */ `<!doctype html>
       if (!res.ok || !j.ok) throw new Error(j.error || ('HTTP ' + res.status));
       status.textContent = '✅ ' + j.written.join(', ');
       addLog(f.dataset.newpage + ' → ' + j.written.join(', '), true);
+      if (j.restored) addLog(f.dataset.newpage + ': เปิดกลับจากที่ปิดไว้ — เนื้อหาเป็นของแบรนด์ก่อน Claude จะเขียนใหม่ตอนรีแบรนด์', true);
       if (j.navAlready) addLog(f.dataset.newpage + ': ลิงก์เมนูมีอยู่แล้ว (ข้าม)', true);
       if (j.navWarning) addLog('navbar: ' + j.navWarning, false);
     } catch (e) {
@@ -2907,7 +2939,15 @@ const server = http.createServer(async (req, res) => {
         const navRes = await addNavLink(cfg.route, cfg.navLabel);
         written = [...pageRes.written];
         if (navRes.inserted) written.push(`navbar ${navRes.navFile} (+${navRes.inserted})`);
-        extra = { created: pageRes.created, navWarning: navRes.warning || null, navAlready: !!navRes.already };
+        extra = {
+          created: pageRes.created,
+          // distinguishes "moved back from pages-disabled" from "scaffolded
+          // fresh" — the operator gets last brand's article in one case and a
+          // TODO placeholder in the other, so the log has to say which
+          restored: !!pageRes.restored,
+          navWarning: navRes.warning || null,
+          navAlready: !!navRes.already,
+        };
       } else {
         if (!buf.length) throw new Error("empty upload");
         written = await handleUpload(slot, index, ext, buf);
