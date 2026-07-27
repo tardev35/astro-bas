@@ -392,6 +392,10 @@ git remote -v
 
 ## 7. เอาเว็บขึ้นจริง (Deploy)
 
+> ☁️ **กำลังย้ายไป Cloudflare** — แบรนด์ใหม่ให้ใช้ [`DEPLOY-CLOUDFLARE.md`](DEPLOY-CLOUDFLARE.md)
+> แทนหัวข้อนี้ (ไม่ต้องใช้ password ของ server, ไม่ต้องรอ purge cache)
+> หัวข้อ 7 ข้างล่างนี้คือวิธีเดิมบน VPS ที่แบรนด์เก่ายังใช้อยู่ — **ยังห้ามปิด VPS**
+
 เมื่องานพร้อมขึ้น production ใช้คำสั่งเดียว (ใส่โดเมนของแบรนด์นั้น):
 
 ```powershell

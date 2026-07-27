@@ -220,7 +220,8 @@ git push                              # ขึ้น astro-bas branch uploader-p
 4. กรอกชื่อแบรนด์ (+ URL จริงถ้ามี) → กด **▶ เริ่ม Rebrand**
 5. รอจนขึ้น "เสร็จแล้ว" → กด **🔍 ทดสอบหน้าเว็บ** ในส่วนที่ 7 แล้วไล่เช็กลิสต์ 5 ข้อ
 6. พอใจแล้วค่อย `git add . ; git commit -m "..." ; git push`
-   และ deploy แยกด้วย `.\deploy.ps1 -Domain <โดเมน>`
+   แล้วค่อย deploy — ดู [`DEPLOY-CLOUDFLARE.md`](DEPLOY-CLOUDFLARE.md) (วิธีใหม่ ไม่ต้องใช้
+   password ของ server) หรือ `.\deploy.ps1 -Domain <โดเมน>` สำหรับแบรนด์เก่าที่ยังอยู่บน VPS
 
 > ⚠️ **ห้ามปิดหน้าต่างดำ (cmd) ระหว่างที่ rebrand กำลังรัน** — ปิดแล้วงานตายกลางคัน
 > ไฟล์จะค้างครึ่งทาง ปิด/refresh **แท็บเบราว์เซอร์** ได้ตามสบาย log ต่อกลับมาเอง
