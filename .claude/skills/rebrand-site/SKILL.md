@@ -278,9 +278,15 @@ yet, and guessing here is what breaks a live site.
 which Cloudflare account the Worker deploys into, and one account holds
 five to ten brands, so it changes once per *group* of brands rather than
 per brand. Carrying the previous brand's value over is almost always
-right. Only change it when the user explicitly gives a new account ID;
-guessing one is worse than a wrong Worker name, because a wrong account
-means the deploy lands somewhere nobody is looking.
+right. Guessing one is worse than a wrong Worker name, because a wrong
+account means the deploy lands somewhere nobody is looking.
+
+Never edit it by hand even when the user does want a different account.
+The uploader's card 7 has a **สลับบัญชี** button that runs the real
+`wrangler logout`/`login` and then writes the id the operator picks from
+the accounts that login can actually reach — which is the part a value
+typed from memory gets wrong. See `DEPLOY-CLOUDFLARE.md` →
+"สลับบัญชีเมื่อบัญชีเดิมครบจำนวน".
 
 Two more keys in that file are load-bearing; **do not remove either**:
 `workers_dev = false` keeps the duplicate `*.workers.dev` copy of the site

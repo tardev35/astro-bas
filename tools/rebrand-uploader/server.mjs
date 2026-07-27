@@ -1616,6 +1616,205 @@ function deploySnapshot() {
   };
 }
 
+// ════════════════════════════════════════════════════════════════════════════
+// ส่วนที่ 7 (ต่อ) — สลับบัญชี Cloudflare
+// ════════════════════════════════════════════════════════════════════════════
+// Brands are spread across several Cloudflare accounts deliberately. An account
+// suspension takes down every site inside it, and the nameserver pair a zone is
+// given turns out to be per-account — mahoranlotto and ufayes, added to the same
+// account, both got armfazh/arushi. Neither fact is visible to a search engine.
+// Both are visible to Cloudflare, which is the party that can act on them.
+//
+// Switching is a real logout/login rather than inviting one shared email into
+// every account, or keeping an API token per account on disk. The shared member
+// would be exactly the link between accounts we are trying not to create, and a
+// deploy-capable token in a plaintext file is a worse credential than an OAuth
+// session that can be revoked.
+//
+// `wrangler login` looks interactive but the interaction happens in a browser,
+// not on stdin, so it can be driven from here. `--browser false` makes it print
+// the OAuth URL instead of opening it; we surface that as a link, which also
+// means none of this depends on the browser being on the same machine.
+const CF_LOGIN_TIMEOUT_MS = 5 * 60 * 1000;
+const CF_WHO_TTL_MS = 60 * 1000;
+
+const cfState = {
+  status: "idle", // idle | running | done | error
+  phase: "", // logout | login | whoami
+  authUrl: "", // shown the moment wrangler prints it
+  log: [],
+  error: "",
+  startedAt: 0,
+  endedAt: 0,
+  child: null,
+};
+
+// Last known answer from `whoami`, so polling /cf/status does not shell out
+// every second. Refreshed on demand and after a switch.
+let cfWho = { at: 0, email: "", accounts: [] };
+
+function cfLog(text) {
+  for (const line of String(text).split(/\r?\n/)) {
+    const clean = line.replace(/\[[0-9;]*m/g, "").trimEnd();
+    if (clean.trim()) cfState.log.push(clean);
+  }
+  if (cfState.log.length > MAX_PREVIEW_LOG) cfState.log = cfState.log.slice(-MAX_PREVIEW_LOG);
+}
+
+// Read-only wrangler call: no logging, no cfState.child, so it is safe to run
+// while the switch flow owns the state.
+function wranglerOut(args) {
+  return new Promise((resolvePromise) => {
+    let out = "";
+    const child = spawn(process.execPath, [WRANGLER_BIN, ...args], {
+      cwd: ROOT, windowsHide: true, shell: false, stdio: ["ignore", "pipe", "pipe"],
+    });
+    child.stdout.setEncoding("utf8");
+    child.stderr.setEncoding("utf8");
+    child.stdout.on("data", (c) => { out += c; });
+    child.stderr.on("data", (c) => { out += c; });
+    child.on("error", () => resolvePromise(""));
+    child.on("close", () => resolvePromise(out));
+  });
+}
+
+function cfRun(args, onData) {
+  return new Promise((resolvePromise) => {
+    let out = "";
+    const child = spawn(process.execPath, [WRANGLER_BIN, ...args], {
+      cwd: ROOT, windowsHide: true, shell: false, stdio: ["ignore", "pipe", "pipe"],
+    });
+    cfState.child = child;
+    const take = (chunk) => { out += chunk; cfLog(chunk); if (onData) onData(out); };
+    child.stdout.setEncoding("utf8");
+    child.stderr.setEncoding("utf8");
+    child.stdout.on("data", take);
+    child.stderr.on("data", take);
+    child.on("error", (err) => { cfLog(err.message); resolvePromise({ code: -1, out }); });
+    child.on("close", (code) => { cfState.child = null; resolvePromise({ code, out }); });
+  });
+}
+
+// `whoami` prints the email in a sentence and the accounts in a box-drawing
+// table. Match the id by its shape (32 hex) rather than by column position, so
+// a longer account name shifting the table does not break the parse.
+function parseWhoami(out) {
+  const email = out.match(/associated with the email\s+(\S+?)\.?\s*$/m)?.[1] || "";
+  const accounts = [];
+  for (const line of out.split(/\r?\n/)) {
+    const m = line.match(/│\s*(.+?)\s*│\s*([0-9a-f]{32})\s*│/);
+    if (m) accounts.push({ name: m[1], id: m[2] });
+  }
+  return { email, accounts };
+}
+
+async function cfWhoami(force = false) {
+  if (!force && cfWho.at && Date.now() - cfWho.at < CF_WHO_TTL_MS) return cfWho;
+  cfWho = { at: Date.now(), ...parseWhoami(await wranglerOut(["whoami"])) };
+  return cfWho;
+}
+
+// Returns as soon as the flow is under way; the browser polls /cf/status for
+// the OAuth link and the result, because the operator may take minutes over it.
+async function startCfSwitch() {
+  if (cfState.status === "running") throw new Error("กำลังสลับบัญชีอยู่แล้ว");
+  if (deployState.status === "running") throw new Error("กำลัง deploy อยู่ — รอให้จบก่อน");
+  if (isActive()) throw new Error("มี rebrand กำลังรันอยู่ — รอให้จบก่อน");
+
+  Object.assign(cfState, {
+    status: "running", phase: "logout", authUrl: "",
+    log: [], error: "", startedAt: Date.now(), endedAt: 0,
+  });
+
+  const timer = setTimeout(() => { if (cfState.child) killTree(cfState.child); }, CF_LOGIN_TIMEOUT_MS);
+
+  (async () => {
+    try {
+      cfLog("== logout ==");
+      // A machine that was never logged in has nothing to log out of, and
+      // wrangler says so on stderr. That is not a failure — keep going.
+      await cfRun(["logout"]);
+
+      cfState.phase = "login";
+      cfLog("== login ==");
+      const { code } = await cfRun(["login", "--browser", "false"], (out) => {
+        if (!cfState.authUrl) {
+          cfState.authUrl = out.match(/https:\/\/dash\.cloudflare\.com\/oauth2\/auth\S+/)?.[0] || "";
+        }
+      });
+      if (code !== 0) {
+        cfState.status = "error";
+        cfState.error = "ยังไม่ได้กดอนุญาต — ปิดหน้าเบราว์เซอร์ไปก่อน หรือหมดเวลา 5 นาที";
+        return;
+      }
+
+      cfState.phase = "whoami";
+      const { out } = await cfRun(["whoami"]);
+      cfWho = { at: Date.now(), ...parseWhoami(out) };
+      if (!cfWho.accounts.length) {
+        cfState.status = "error";
+        cfState.error = "login ผ่านแล้วแต่ยังไม่เห็นบัญชีไหนเลย — ลองสลับใหม่อีกครั้ง";
+        return;
+      }
+      cfState.status = "done";
+    } catch (err) {
+      cfState.status = "error";
+      cfState.error = err.message;
+    } finally {
+      clearTimeout(timer);
+      cfState.phase = "";
+      cfState.endedAt = Date.now();
+    }
+  })();
+
+  return cfSnapshot();
+}
+
+function stopCfSwitch() {
+  if (cfState.child) killTree(cfState.child);
+  if (cfState.status === "running") {
+    cfState.status = "error";
+    cfState.error = "ยกเลิกการสลับบัญชีแล้ว — ตอนนี้ยังไม่ได้ login บัญชีไหน กดสลับใหม่อีกครั้ง";
+    cfState.endedAt = Date.now();
+  }
+  return cfSnapshot();
+}
+
+// The other half of switching. `wrangler login` decides which accounts are
+// reachable; `account_id` decides which one is actually written to. Change only
+// the first and the tool is logged into B while still aiming at A — the deploy
+// fails rather than going somewhere wrong, but somebody still has to edit the
+// file, and that is the step a non-tech operator has no way to know about.
+async function setAccountId(id) {
+  if (!/^[0-9a-f]{32}$/.test(id)) throw new Error("รูปแบบ Account ID ไม่ถูกต้อง");
+  const path = join(ROOT, "wrangler.toml");
+  const src = await readFile(path, "utf8");
+  let out;
+  if (/^\s*account_id\s*=/m.test(src)) {
+    out = src.replace(/^(\s*account_id\s*=\s*)"[^"]*"/m, `$1"${id}"`);
+  } else if (/^\s*name\s*=/m.test(src)) {
+    out = src.replace(/^(\s*name\s*=.*)$/m, `$1\naccount_id = "${id}"`);
+  } else {
+    throw new Error("อ่าน wrangler.toml ไม่ออก — ไม่เจอทั้ง account_id และ name");
+  }
+  if (out === src) throw new Error("เขียน account_id ลง wrangler.toml ไม่สำเร็จ");
+  await writeFile(path, out, "utf8");
+  return deployTarget();
+}
+
+function cfSnapshot() {
+  return {
+    status: cfState.status,
+    phase: cfState.phase,
+    authUrl: cfState.authUrl,
+    error: cfState.error,
+    email: cfWho.email,
+    accounts: cfWho.accounts,
+    log: cfState.log.slice(-120),
+    elapsedMs: cfState.startedAt ? (cfState.endedAt || Date.now()) - cfState.startedAt : 0,
+  };
+}
+
 const PAGE = /* html */ `<!doctype html>
 <html lang="th">
 <head>
@@ -1996,6 +2195,28 @@ const PAGE = /* html */ `<!doctype html>
   ul.checks label { display: flex; gap: 9px; align-items: flex-start; font-size: 12.5px; line-height: 1.6; color: #dbe4f0; cursor: pointer; }
   ul.checks input { margin: 3px 0 0; accent-color: var(--ok); width: 15px; height: 15px; flex: none; cursor: pointer; }
   ul.checks label:has(input:checked) { color: var(--faint); text-decoration: line-through; }
+
+  /* Cloudflare account row */
+  #cfNow b { color: #dbe4f0; font-weight: 700; }
+  #cfNow code { font-size: 11px; color: var(--faint); }
+  a.cf-auth {
+    display: inline-flex; align-items: center; gap: 8px; margin: 6px 0 4px;
+    padding: 10px 16px; border-radius: 10px; text-decoration: none;
+    font-size: 13px; font-weight: 700; color: #08131f;
+    background: linear-gradient(180deg, #7dd3fc, #38bdf8);
+    box-shadow: 0 4px 14px rgba(56,189,248,0.28);
+  }
+  a.cf-auth:hover { filter: brightness(1.08); }
+  .cf-acct {
+    display: flex; align-items: center; gap: 10px; width: 100%;
+    margin-top: 6px; padding: 9px 12px; text-align: left; cursor: pointer;
+    border: 1px solid var(--line); border-radius: 9px;
+    background: rgba(148,163,184,0.06); color: #dbe4f0; font-size: 12.5px;
+  }
+  .cf-acct:hover { border-color: rgba(125,211,252,0.5); background: rgba(56,189,248,0.08); }
+  .cf-acct .id { margin-left: auto; font-family: ui-monospace, monospace; font-size: 10.5px; color: var(--faint); }
+  .cf-acct.on { border-color: rgba(74,222,128,0.45); background: rgba(74,222,128,0.08); }
+  .cf-acct.on::after { content: 'ใช้อยู่'; font-size: 10.5px; color: var(--ok); font-weight: 700; }
 </style>
 </head>
 <body>
@@ -2293,6 +2514,26 @@ const PAGE = /* html */ `<!doctype html>
           <li><label><input type="checkbox" /> ปุ่มสมัคร/เข้าสู่ระบบ กดแล้วไปถูกที่</label></li>
         </ul>
         <span class="status">ติ๊กให้ครบ 5 ข้อ แล้วปุ่มขึ้นเว็บจริงข้างล่างจะกดได้</span>
+      </div>
+
+      <!-- Shown whether or not anyone intends to switch: the account is the one
+           thing about a deploy that is invisible until it is wrong. -->
+      <div class="field" id="cfBox">
+        <div class="row">
+          <label>บัญชี Cloudflare</label>
+          <button type="button" id="cfSwitch" class="ghost">🔑 สลับบัญชี</button>
+          <button type="button" id="cfCancelBtn" class="ghost danger" hidden>■ ยกเลิก</button>
+        </div>
+        <span class="status" id="cfNow">กำลังตรวจสอบ...</span>
+        <div id="cfAuth" hidden>
+          <a id="cfAuthLink" class="cf-auth" target="_blank" rel="noopener">🔓 เปิดหน้าอนุญาตของ Cloudflare</a>
+          <span class="status">กดลิงก์ → login บัญชีใหม่ → กด Allow แล้วกลับมาที่หน้านี้ รอสักครู่</span>
+        </div>
+        <div id="cfPick" hidden>
+          <div class="row"><label>เลือกบัญชีที่จะ deploy เข้า</label></div>
+          <div id="cfPickList"></div>
+        </div>
+        <pre id="cfLog" hidden></pre>
       </div>
 
       <div class="field">
@@ -3145,6 +3386,9 @@ const PAGE = /* html */ `<!doctype html>
       lines: [
         'จะ <b>build ใหม่แล้วส่งขึ้น Cloudflare</b> ทับของเดิมที่อยู่บนเว็บตอนนี้',
         t.name ? 'Worker ปลายทาง: <code>' + esc(t.name) + '</code>' : '<b>อ่านชื่อ Worker จาก wrangler.toml ไม่ได้</b>',
+        // The account was readable all along but never shown; a deploy into the
+        // wrong one is the mistake with no symptom until somebody looks.
+        cfAcctName(t.accountId) ? 'บัญชี: <b>' + esc(cfAcctName(t.accountId)) + '</b>' : 'บัญชี: <code>' + esc(t.accountId || 'ไม่ได้ตั้งไว้') + '</code>',
         'ถ้าชื่อ Worker ไม่ใช่ของแบรนด์นี้ <b>เว็บของแบรนด์นั้นจะถูกทับหาย</b> — ยกเลิกแล้วไปแก้ wrangler.toml ก่อน',
       ],
       ok: '🚀 ขึ้นเลย',
@@ -3179,6 +3423,132 @@ const PAGE = /* html */ `<!doctype html>
       if (st.deploy && st.deploy.log && st.deploy.log.length) dpRender(st.deploy);
     } catch { /* server not answering */ }
     dpSync();
+  })();
+
+  // ── Cloudflare account ────────────────────────────────────────────────────
+  // Two separate things have to agree before a deploy lands where it should:
+  // which account wrangler is logged into, and which account_id wrangler.toml
+  // names. This panel shows both and can change both.
+  const cfSwitch = document.getElementById('cfSwitch');
+  const cfCancelBtn = document.getElementById('cfCancelBtn');
+  const cfNow = document.getElementById('cfNow');
+  const cfAuth = document.getElementById('cfAuth');
+  const cfAuthLink = document.getElementById('cfAuthLink');
+  const cfPick = document.getElementById('cfPick');
+  const cfPickList = document.getElementById('cfPickList');
+  const cfLogEl = document.getElementById('cfLog');
+  let cfPoll = null;
+  let cfAccounts = [];
+  let cfWhoEmail = '';
+
+  // Hoisted on purpose: the deploy confirm dialog above is wired up before this
+  // block runs, and calls it to name the account instead of showing a raw id.
+  function cfAcctName(id) {
+    return cfAccounts.find((a) => a.id === id)?.name || '';
+  }
+
+  function cfRenderNow(c) {
+    const id = dpTarget?.accountId || '';
+    const hit = cfAccounts.find((a) => a.id === id);
+    if (!c.email) {
+      cfNow.innerHTML = '<b>ยังไม่ได้ login</b> — กด "สลับบัญชี" เพื่อเข้าสู่ระบบ Cloudflare';
+      return;
+    }
+    // A wrangler.toml pointing at an account this login cannot see is the one
+    // state that looks fine and fails at deploy time, so name it here.
+    const where = hit
+      ? '<b>' + esc(hit.name) + '</b>'
+      : id
+        ? '<b style="color:var(--bad)">บัญชีใน wrangler.toml ไม่อยู่ในรายการที่ login นี้เข้าถึงได้</b>'
+        : '<b style="color:var(--bad)">wrangler.toml ยังไม่มี account_id</b>';
+    cfNow.innerHTML = esc(c.email) + ' · ' + where + (id ? '<br><code>' + esc(id) + '</code>' : '');
+  }
+
+  function cfRenderPick() {
+    cfPick.hidden = cfAccounts.length < 1;
+    cfPickList.innerHTML = '';
+    for (const a of cfAccounts) {
+      const b = document.createElement('button');
+      b.type = 'button';
+      b.className = 'cf-acct' + (a.id === (dpTarget?.accountId || '') ? ' on' : '');
+      b.innerHTML = '<span>' + esc(a.name) + '</span><span class="id">' + esc(a.id) + '</span>';
+      b.addEventListener('click', async () => {
+        const j = await (await fetch('/cf/account?id=' + encodeURIComponent(a.id), { method: 'POST' })).json();
+        if (!j.ok) { cfNow.innerHTML = '<b style="color:var(--bad)">' + esc(j.error) + '</b>'; return; }
+        dpTarget = j.target;
+        cfRenderPick();
+        cfRenderNow({ email: cfWhoEmail });
+        dpSync();
+      });
+      cfPickList.appendChild(b);
+    }
+  }
+
+  function cfRender(c) {
+    cfWhoEmail = c.email || '';
+    cfAccounts = c.accounts || [];
+    const running = c.status === 'running';
+    cfSwitch.disabled = running;
+    cfCancelBtn.hidden = !running;
+    cfAuth.hidden = !(running && c.authUrl);
+    if (c.authUrl) cfAuthLink.href = c.authUrl;
+    cfLogEl.hidden = !(c.log && c.log.length && (running || c.status === 'error'));
+    cfLogEl.textContent = (c.log || []).join('\\n');
+
+    if (running) {
+      cfNow.textContent = c.phase === 'login'
+        ? (c.authUrl ? 'รออนุญาตในเบราว์เซอร์...' : 'กำลังขอลิงก์อนุญาต...')
+        : c.phase === 'whoami' ? 'อนุญาตแล้ว กำลังอ่านรายชื่อบัญชี...' : 'กำลังออกจากบัญชีเดิม...';
+      cfPick.hidden = true;
+      return;
+    }
+    if (c.status === 'error') {
+      cfNow.innerHTML = '<b style="color:var(--bad)">' + esc(c.error || 'สลับบัญชีไม่สำเร็จ') + '</b>';
+      cfPick.hidden = true;
+      return;
+    }
+    cfRenderNow(c);
+    cfRenderPick();
+  }
+
+  async function cfTick() {
+    try {
+      const j = await (await fetch('/cf/status')).json();
+      if (j.target) dpTarget = j.target;
+      cfRender(j.cf);
+      if (j.cf.status !== 'running') { clearInterval(cfPoll); cfPoll = null; dpSync(); }
+    } catch { /* server not answering; keep the last state */ }
+  }
+
+  cfSwitch.addEventListener('click', async () => {
+    const go = await askConfirm({
+      title: 'สลับบัญชี Cloudflare?',
+      sub: 'ใช้ตอนบัญชีเดิมมีโดเมนครบตามจำนวนที่ตั้งไว้แล้ว',
+      icon: '🔑',
+      lines: [
+        'จะ <b>ออกจากบัญชีเดิมก่อน</b> แล้วเปิดหน้าให้ login บัญชีใหม่',
+        'การออกจากระบบมีผล <b>ทั้งเครื่อง</b> ไม่ใช่แค่โปรเจกต์นี้ — โปรเจกต์อื่นบนเครื่องนี้จะต้อง login ใหม่ด้วย',
+        'ต้องมี <b>อีเมลกับรหัสผ่าน</b>ของบัญชีใหม่พร้อมอยู่ตรงหน้า',
+      ],
+      ok: '🔑 สลับเลย',
+    });
+    if (!go) return;
+    cfLogEl.hidden = false;
+    cfLogEl.textContent = '';
+    const j = await (await fetch('/cf/switch', { method: 'POST' })).json();
+    if (!j.ok) { cfNow.innerHTML = '<b style="color:var(--bad)">' + esc(j.error) + '</b>'; return; }
+    cfRender(j.cf);
+    clearInterval(cfPoll);
+    cfPoll = setInterval(cfTick, 1500);
+  });
+
+  cfCancelBtn.addEventListener('click', async () => {
+    cfRender((await (await fetch('/cf/stop', { method: 'POST' })).json()).cf);
+    clearInterval(cfPoll); cfPoll = null;
+  });
+
+  (async () => {
+    try { cfTick(); } catch { /* server not answering */ }
   })();
 
   // a preview may already be up from before this page was opened
@@ -3526,6 +3896,42 @@ const server = http.createServer(async (req, res) => {
     } catch (err) {
       res.writeHead(409, { "Content-Type": "application/json" });
       res.end(JSON.stringify({ ok: false, error: err.message, deploy: deploySnapshot() }));
+    }
+    return;
+  }
+
+  // ── Cloudflare account ────────────────────────────────────────────────────
+  if (req.method === "GET" && url.pathname === "/cf/status") {
+    // Only reach for whoami when nothing is mid-switch; during a switch the
+    // flow owns the answer and will refresh it itself.
+    if (cfState.status !== "running") await cfWhoami(url.searchParams.get("refresh") === "1");
+    res.writeHead(200, { "Content-Type": "application/json" });
+    res.end(JSON.stringify({ ok: true, cf: cfSnapshot(), target: await deployTarget() }));
+    return;
+  }
+  if (req.method === "POST" && url.pathname === "/cf/switch") {
+    try {
+      res.writeHead(200, { "Content-Type": "application/json" });
+      res.end(JSON.stringify({ ok: true, cf: await startCfSwitch() }));
+    } catch (err) {
+      res.writeHead(409, { "Content-Type": "application/json" });
+      res.end(JSON.stringify({ ok: false, error: err.message, cf: cfSnapshot() }));
+    }
+    return;
+  }
+  if (req.method === "POST" && url.pathname === "/cf/stop") {
+    res.writeHead(200, { "Content-Type": "application/json" });
+    res.end(JSON.stringify({ ok: true, cf: stopCfSwitch() }));
+    return;
+  }
+  if (req.method === "POST" && url.pathname === "/cf/account") {
+    try {
+      const target = await setAccountId(url.searchParams.get("id") || "");
+      res.writeHead(200, { "Content-Type": "application/json" });
+      res.end(JSON.stringify({ ok: true, target }));
+    } catch (err) {
+      res.writeHead(400, { "Content-Type": "application/json" });
+      res.end(JSON.stringify({ ok: false, error: err.message }));
     }
     return;
   }
