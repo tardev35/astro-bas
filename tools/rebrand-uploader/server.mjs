@@ -2775,6 +2775,11 @@ const PAGE = /* html */ `<!doctype html>
         setStatus(bgFile, '✅ ' + j.written.join(', '));
         addLog(bgReq.label + ' → ' + j.written.join(', '), true);
         sent++;
+        // Same clear as the main loop below, and easy to forget precisely
+        // because bgFile is filtered OUT of that loop and uploaded here on its
+        // own: without it the input still holds a file, pendingFiles() keeps
+        // saying "not uploaded yet", and Rebrand stays locked forever.
+        bgFile.value = '';
       } catch (e) {
         setStatus(bgFile, '❌ ' + e.message);
         addLog(bgReq.label + ': ' + e.message, false);
@@ -2811,6 +2816,14 @@ const PAGE = /* html */ `<!doctype html>
       document.getElementById('upSub').textContent = 'ยังไม่ได้เลือกไฟล์ หรือกรอกลิงก์/Title ใดๆ ในส่วนที่ 1-5';
       document.getElementById('upActions').hidden = false;
     } else {
+      // Safety net for the gate. Each slot clears its own input on success
+      // above, which is the correct behaviour when only some of them fail —
+      // but it is one line per slot and it was already missed once (bgFile is
+      // uploaded outside the main loop, so it kept the Rebrand button locked
+      // even after a clean upload). If nothing failed, then by definition
+      // everything selected is now on disk, so sweep the lot. Any input added
+      // to this page in future is covered without anyone remembering to.
+      if (!upFailed) document.querySelectorAll('input[type=file]').forEach((i) => { i.value = ''; });
       upFinish(sent);
     }
     // a fresh docx may have just landed, and cleared inputs change the gate
