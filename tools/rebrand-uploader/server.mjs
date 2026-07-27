@@ -1496,6 +1496,126 @@ function previewSnapshot() {
   };
 }
 
+// ════════════════════════════════════════════════════════════════════════════
+// ส่วนที่ 7 (ต่อ) — deploy the site to Cloudflare
+// ════════════════════════════════════════════════════════════════════════════
+// This is the only button in the tool that reaches the public internet, so it
+// is also the only one with a gate in front of it (the five-item checklist).
+//
+// It needs nothing from the operator. `wrangler.toml` already carries which
+// Worker to write and which Cloudflare account to write it into, so there is
+// no password to type as there was with deploy.ps1 over SSH, no domain
+// argument to get wrong, and no account to pick.
+const WRANGLER_BIN = join(ROOT, "node_modules", "wrangler", "bin", "wrangler.js");
+const DEPLOY_TIMEOUT_MS = 10 * 60 * 1000;
+
+const deployState = {
+  status: "idle", // idle | running | done | error
+  log: [],
+  error: "",
+  url: "", // the deployed URL wrangler reports back
+  target: null, // { name, account_id } read from wrangler.toml, shown before firing
+  startedAt: 0,
+  endedAt: 0,
+  child: null,
+};
+
+function deployLog(text) {
+  for (const line of String(text).split(/\r?\n/)) {
+    // wrangler paints progress with ANSI colour; strip it or the log is unreadable
+    const clean = line.replace(/\[[0-9;]*m/g, "").trimEnd();
+    if (clean.trim()) deployState.log.push(clean);
+  }
+  if (deployState.log.length > MAX_PREVIEW_LOG) {
+    deployState.log = deployState.log.slice(-MAX_PREVIEW_LOG);
+  }
+}
+
+// Show the operator what they are about to overwrite. Reading the file rather
+// than remembering it means a rebrand that changed `name` is reflected without
+// restarting the uploader — and a name still reading as the previous brand is
+// visible in the confirm dialog before anything is published.
+async function deployTarget() {
+  try {
+    const toml = await readFile(join(ROOT, "wrangler.toml"), "utf8");
+    return {
+      name: toml.match(/^\s*name\s*=\s*"([^"]+)"/m)?.[1] || "",
+      accountId: toml.match(/^\s*account_id\s*=\s*"([^"]+)"/m)?.[1] || "",
+    };
+  } catch {
+    return { name: "", accountId: "" };
+  }
+}
+
+function runStep(bin, args) {
+  return new Promise((resolvePromise) => {
+    const child = spawn(process.execPath, [bin, ...args], {
+      cwd: ROOT,
+      windowsHide: true,
+      shell: false,
+      stdio: ["ignore", "pipe", "pipe"],
+    });
+    deployState.child = child;
+    child.stdout.setEncoding("utf8");
+    child.stderr.setEncoding("utf8");
+    child.stdout.on("data", deployLog);
+    child.stderr.on("data", deployLog);
+    child.on("error", (err) => { deployLog(err.message); resolvePromise(-1); });
+    child.on("close", (code) => { deployState.child = null; resolvePromise(code); });
+  });
+}
+
+async function startDeploy() {
+  if (deployState.status === "running") throw new Error("กำลัง deploy อยู่แล้ว");
+  if (isActive()) throw new Error("มี rebrand กำลังรันอยู่ — รอให้จบก่อน");
+
+  Object.assign(deployState, {
+    status: "running", log: [], error: "", url: "", startedAt: Date.now(), endedAt: 0,
+    target: await deployTarget(),
+  });
+
+  const timer = setTimeout(() => {
+    if (deployState.child) killTree(deployState.child);
+  }, DEPLOY_TIMEOUT_MS);
+
+  try {
+    // Always rebuild. dist/ may be stale from an edit made after the last
+    // preview, and publishing a stale build is the one mistake here that is
+    // invisible — the deploy succeeds and ships yesterday's site.
+    deployLog("== build ==");
+    if ((await runStep(ASTRO_BIN, ["build"])) !== 0) {
+      deployState.status = "error";
+      deployState.error = "build ไม่ผ่าน — ยังไม่ได้ deploy อะไรขึ้นไป";
+      return deploySnapshot();
+    }
+
+    deployLog("== deploy ==");
+    if ((await runStep(WRANGLER_BIN, ["deploy"])) !== 0) {
+      deployState.status = "error";
+      deployState.error = "deploy ไม่สำเร็จ — ดูรายละเอียดด้านล่าง";
+      return deploySnapshot();
+    }
+
+    deployState.url = deployState.log.join("\n").match(/https:\/\/[^\s]+/g)?.pop() || "";
+    deployState.status = "done";
+    return deploySnapshot();
+  } finally {
+    clearTimeout(timer);
+    deployState.endedAt = Date.now();
+  }
+}
+
+function deploySnapshot() {
+  return {
+    status: deployState.status,
+    error: deployState.error,
+    url: deployState.url,
+    target: deployState.target,
+    log: deployState.log.slice(-150),
+    elapsedMs: deployState.startedAt ? (deployState.endedAt || Date.now()) - deployState.startedAt : 0,
+  };
+}
+
 const PAGE = /* html */ `<!doctype html>
 <html lang="th">
 <head>
@@ -1857,6 +1977,19 @@ const PAGE = /* html */ `<!doctype html>
     white-space: pre-wrap; word-break: break-word; color: #fca5a5;
   }
   #pvErrMsg { color: var(--err); font-weight: 700; }
+
+  /* The only button here that publishes. Red on purpose — it should not look
+     like the green "have a look" button sitting directly above it. */
+  button.fire.go-live { background: linear-gradient(135deg, #fb7185, #be123c); color: #fff; box-shadow: 0 8px 20px -8px rgba(244,63,94,0.55); }
+  #dpLog {
+    margin: 6px 0 0; padding: 10px 12px; max-height: 260px; overflow: auto;
+    background: #070d1a; border: 1px solid var(--line); border-radius: 9px;
+    font-family: ui-monospace, monospace; font-size: 11px; line-height: 1.7;
+    white-space: pre-wrap; word-break: break-word; color: #cbd5e1;
+  }
+  #dpBox.bad #dpLog { border-color: rgba(248,113,113,0.35); color: #fca5a5; }
+  #dpBox.bad #dpMsg { color: var(--err); font-weight: 700; }
+  #dpBox.done #dpMsg { color: var(--ok); font-weight: 700; }
   /* A checklist, not prose: the operator is looking away at another tab, and
      ticking is how they keep their place when they come back. */
   ul.checks { margin: 4px 0 0; padding: 0; list-style: none; display: flex; flex-direction: column; gap: 9px; }
@@ -2159,6 +2292,22 @@ const PAGE = /* html */ `<!doctype html>
           <li><label><input type="checkbox" /> กดเมนูทุกอันแล้วเปิดได้ ไม่เจอหน้า 404</label></li>
           <li><label><input type="checkbox" /> ปุ่มสมัคร/เข้าสู่ระบบ กดแล้วไปถูกที่</label></li>
         </ul>
+        <span class="status">ติ๊กให้ครบ 5 ข้อ แล้วปุ่มขึ้นเว็บจริงข้างล่างจะกดได้</span>
+      </div>
+
+      <div class="field">
+        <div class="row">
+          <button type="button" id="dpStart" class="fire go-live" disabled>🚀 ขึ้นเว็บจริง</button>
+          <span class="pill" id="dpPill">ยังไม่ได้ขึ้น</span>
+          <span class="rb-timer" id="dpTimer"></span>
+        </div>
+        <span class="status" id="dpHint">ทดสอบหน้าเว็บและติ๊กให้ครบ 5 ข้อก่อน</span>
+      </div>
+
+      <div class="field" id="dpBox" hidden>
+        <div class="row"><label id="dpTitle"></label></div>
+        <span class="status" id="dpMsg"></span>
+        <pre id="dpLog"></pre>
       </div>
     </section>
   </aside>
@@ -2862,6 +3011,10 @@ const PAGE = /* html */ `<!doctype html>
   function pvRender(p) {
     const s = p.status;
     pvUrl = p.url || '';
+    // the deploy gate reads this: publishing without having looked at the site
+    // is exactly what the checklist exists to prevent
+    pvPill.dataset.ok = s === 'running' ? '1' : '0';
+    if (typeof dpSync === 'function') dpSync();
     pvStart.disabled = s === 'building';
     pvOpen.hidden = s !== 'running';
     pvStop.hidden = s !== 'running';
@@ -2931,9 +3084,94 @@ const PAGE = /* html */ `<!doctype html>
   const pvAllChecked = () => pvBoxes().every((b) => b.checked);
   pvBoxes().forEach((c) => c.addEventListener('change', () => {
     document.getElementById('pvCount').textContent = pvBoxes().filter((b) => b.checked).length + '/' + pvBoxes().length;
-    // phase 3 hooks in here: deployBtn.disabled = !pvAllChecked();
-    void pvAllChecked;
+    dpSync();
   }));
+
+  // ── ส่วนที่ 7 (ต่อ): deploy ────────────────────────────────────────────────
+  // The publish button. Everything it needs is already in wrangler.toml, so it
+  // asks for nothing — but it is gated, because it is the only action in this
+  // tool that the public sees, and the gate is the checklist above: somebody
+  // has to have actually looked at the site before it goes out.
+  const dpStart = document.getElementById('dpStart');
+  const dpPill = document.getElementById('dpPill');
+  const dpHint = document.getElementById('dpHint');
+  const dpTimer = document.getElementById('dpTimer');
+  const dpBox = document.getElementById('dpBox');
+  let dpTicker = null;
+  let dpBusy = false;
+  let dpTarget = null;
+
+  function dpSync() {
+    if (dpBusy) return;
+    const previewed = pvPill.dataset.ok === '1';
+    const ticked = pvAllChecked();
+    dpStart.disabled = !(previewed && ticked) || running();
+    if (running()) dpHint.textContent = 'มี rebrand กำลังรันอยู่ — รอให้จบก่อน';
+    else if (!previewed) dpHint.textContent = 'กด "ทดสอบหน้าเว็บ" ให้เว็บขึ้นก่อน';
+    else if (!ticked) dpHint.textContent = 'ติ๊กให้ครบ 5 ข้อก่อน — ยังเหลือ ' + pvBoxes().filter((b) => !b.checked).length + ' ข้อ';
+    else dpHint.innerHTML = 'พร้อมขึ้นเว็บจริงแล้ว' + (dpTarget?.name ? ' → Worker <code>' + esc(dpTarget.name) + '</code>' : '');
+  }
+
+  function dpRender(d) {
+    dpBox.hidden = !(d.log && d.log.length);
+    dpBox.className = 'field' + (d.status === 'done' ? ' done' : d.status === 'error' ? ' bad' : '');
+    document.getElementById('dpLog').textContent = (d.log || []).join('\\n');
+    if (d.status === 'done') {
+      dpPill.className = 'pill done'; dpPill.textContent = 'ขึ้นแล้ว';
+      document.getElementById('dpTitle').textContent = 'ขึ้นเว็บจริงเรียบร้อย';
+      document.getElementById('dpMsg').innerHTML = 'อาจต้องรอสักครู่กว่าเว็บจะอัปเดต — ถ้าเปิดแล้วยังเห็นของเก่า ให้ล้างแคชเบราว์เซอร์';
+    } else if (d.status === 'error') {
+      dpPill.className = 'pill bad'; dpPill.textContent = 'ไม่สำเร็จ';
+      document.getElementById('dpTitle').textContent = 'ขึ้นเว็บไม่สำเร็จ';
+      document.getElementById('dpMsg').textContent = d.error || 'ดูรายละเอียดด้านล่าง';
+    }
+  }
+
+  dpStart.addEventListener('click', async () => {
+    const t = dpTarget || {};
+    const go = await askConfirm({
+      title: 'ขึ้นเว็บจริงเลยหรือไม่?',
+      sub: 'คนทั่วไปจะเห็นเว็บเวอร์ชันนี้ทันทีหลังจากนี้',
+      icon: '🚀',
+      danger: true,
+      lines: [
+        'จะ <b>build ใหม่แล้วส่งขึ้น Cloudflare</b> ทับของเดิมที่อยู่บนเว็บตอนนี้',
+        t.name ? 'Worker ปลายทาง: <code>' + esc(t.name) + '</code>' : '<b>อ่านชื่อ Worker จาก wrangler.toml ไม่ได้</b>',
+        'ถ้าชื่อ Worker ไม่ใช่ของแบรนด์นี้ <b>เว็บของแบรนด์นั้นจะถูกทับหาย</b> — ยกเลิกแล้วไปแก้ wrangler.toml ก่อน',
+      ],
+      ok: '🚀 ขึ้นเลย',
+    });
+    if (!go) return;
+
+    dpBusy = true;
+    dpStart.disabled = true;
+    dpPill.className = 'pill run'; dpPill.textContent = 'กำลังขึ้น...';
+    dpHint.textContent = 'กำลัง build แล้วส่งขึ้น Cloudflare — อย่าปิดหน้าต่างดำ';
+    dpBox.hidden = true;
+    const t0 = Date.now();
+    clearInterval(dpTicker);
+    dpTicker = setInterval(() => { dpTimer.textContent = fmtElapsed(Date.now() - t0); }, 1000);
+    try {
+      const j = await (await fetch('/deploy/start', { method: 'POST' })).json();
+      dpRender(j.deploy || { status: 'error', error: j.error, log: [] });
+    } catch (e) {
+      dpRender({ status: 'error', error: 'ต่อ server ไม่ได้: ' + e.message, log: [] });
+    } finally {
+      clearInterval(dpTicker);
+      dpTimer.textContent = fmtElapsed(Date.now() - t0);
+      dpBusy = false;
+      dpSync();
+    }
+  });
+
+  (async () => {
+    try {
+      const st = await (await fetch('/deploy/status')).json();
+      dpTarget = st.target || null;
+      if (st.deploy && st.deploy.log && st.deploy.log.length) dpRender(st.deploy);
+    } catch { /* server not answering */ }
+    dpSync();
+  })();
 
   // a preview may already be up from before this page was opened
   (async () => {
@@ -3263,6 +3501,24 @@ const server = http.createServer(async (req, res) => {
     stopPreview();
     res.writeHead(200, { "Content-Type": "application/json" });
     res.end(JSON.stringify({ ok: true, preview: previewSnapshot() }));
+    return;
+  }
+
+  // ── deploy ────────────────────────────────────────────────────────────────
+  if (req.method === "GET" && url.pathname === "/deploy/status") {
+    res.writeHead(200, { "Content-Type": "application/json" });
+    res.end(JSON.stringify({ ok: true, deploy: deploySnapshot(), target: await deployTarget() }));
+    return;
+  }
+  if (req.method === "POST" && url.pathname === "/deploy/start") {
+    try {
+      const snap = await startDeploy();
+      res.writeHead(200, { "Content-Type": "application/json" });
+      res.end(JSON.stringify({ ok: snap.status === "done", deploy: snap }));
+    } catch (err) {
+      res.writeHead(409, { "Content-Type": "application/json" });
+      res.end(JSON.stringify({ ok: false, error: err.message, deploy: deploySnapshot() }));
+    }
     return;
   }
 
