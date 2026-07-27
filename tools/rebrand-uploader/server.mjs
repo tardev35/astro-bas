@@ -1179,6 +1179,163 @@ async function stagedDocxInfo() {
   }
 }
 
+// ════════════════════════════════════════════════════════════════════════════
+// ส่วนที่ 7 — build the site and serve it, so the operator can look at it
+// ════════════════════════════════════════════════════════════════════════════
+// Written for someone who will never open a terminal: one button has to cover
+// "npm run build", "npm run preview", and "now go to localhost:4321".
+//
+// It previews the BUILT output rather than starting the dev server, for two
+// reasons. The dev server keeps file handles on everything under src/assets it
+// has served, which is exactly the lock that makes the next upload fail (see
+// friendlyUploadError). And the point of checking a rebrand is to see what will
+// actually ship — the dev server can happily render a page the real build
+// refuses to produce.
+const ASTRO_BIN = join(ROOT, "node_modules", "astro", "astro.js");
+const PREVIEW_PORT = Number(process.env.PREVIEW_PORT) || 4321;
+const PREVIEW_READY_TIMEOUT_MS = 40000;
+const MAX_PREVIEW_LOG = 400;
+
+const previewState = {
+  status: "idle", // idle | building | running | error
+  child: null,
+  url: "",
+  error: "",
+  log: [], // build output — the only place a non-technical operator sees why a build failed
+  startedAt: 0,
+};
+
+function previewLog(text) {
+  for (const line of String(text).split(/\r?\n/)) {
+    if (line.trim()) previewState.log.push(line);
+  }
+  if (previewState.log.length > MAX_PREVIEW_LOG) {
+    previewState.log = previewState.log.slice(-MAX_PREVIEW_LOG);
+  }
+}
+
+// astro.js is plain JS run through the node we are already inside: no npm, no
+// shell, and no .cmd shim — which Node refuses to spawn without shell:true.
+function spawnAstro(args) {
+  return spawn(process.execPath, [ASTRO_BIN, ...args], {
+    cwd: ROOT,
+    windowsHide: true,
+    shell: false,
+    stdio: ["ignore", "pipe", "pipe"],
+  });
+}
+
+function killTree(child) {
+  if (!child?.pid) return;
+  if (process.platform === "win32") {
+    try {
+      spawn("taskkill", ["/PID", String(child.pid), "/T", "/F"], { windowsHide: true, stdio: "ignore" });
+      return;
+    } catch { /* fall through to kill() */ }
+  }
+  try { child.kill("SIGTERM"); } catch { /* already gone */ }
+}
+
+// Ready means actually answering HTTP. Astro prints a banner too, but reading
+// readiness out of console output breaks every time that banner is restyled.
+function waitForPreview(url, timeoutMs) {
+  const deadline = Date.now() + timeoutMs;
+  return new Promise((resolvePromise, reject) => {
+    const tick = () => {
+      const req = http.get(url, (res) => { res.resume(); resolvePromise(); });
+      req.on("error", () => {
+        if (Date.now() > deadline) reject(new Error("เปิดเซิร์ฟเวอร์ทดสอบไม่สำเร็จ (หมดเวลารอ)"));
+        else setTimeout(tick, 400);
+      });
+      req.setTimeout(2000, () => req.destroy());
+    };
+    tick();
+  });
+}
+
+async function startPreview() {
+  if (previewState.status === "building") throw new Error("กำลังเตรียมเว็บอยู่แล้ว");
+  if (previewState.status === "running") return previewSnapshot(); // idempotent: button pressed twice
+
+  stopPreview();
+  Object.assign(previewState, { status: "building", url: "", error: "", log: [], startedAt: Date.now() });
+
+  const exitCode = await new Promise((resolvePromise) => {
+    const b = spawnAstro(["build"]);
+    b.stdout.setEncoding("utf8");
+    b.stderr.setEncoding("utf8");
+    b.stdout.on("data", previewLog);
+    b.stderr.on("data", previewLog);
+    b.on("error", (err) => { previewLog(err.message); resolvePromise(-1); });
+    b.on("close", resolvePromise);
+  });
+
+  if (exitCode !== 0) {
+    previewState.status = "error";
+    previewState.error = "build ไม่ผ่าน — เว็บยังมีข้อผิดพลาดอยู่ ดูรายละเอียดด้านล่าง";
+    return previewSnapshot();
+  }
+
+  // --host 127.0.0.1 on purpose. Left to itself astro preview binds ::1 only,
+  // so anything resolving localhost to IPv4 first cannot reach it — verified:
+  // localhost:4321 answered while 127.0.0.1:4321 refused. Binding explicitly
+  // (same as the dev script) removes the resolution order from the equation,
+  // and keeps the preview off the network, which a preview has no business on.
+  const child = spawnAstro(["preview", "--port", String(PREVIEW_PORT), "--host", "127.0.0.1"]);
+  previewState.child = child;
+  child.stdout.setEncoding("utf8");
+  child.stderr.setEncoding("utf8");
+  child.stdout.on("data", previewLog);
+  child.stderr.on("data", previewLog);
+  child.on("close", () => {
+    // only reset if this is still the current process — a restart may have replaced it
+    if (previewState.child === child) {
+      previewState.child = null;
+      if (previewState.status === "running") { previewState.status = "idle"; previewState.url = ""; }
+    }
+  });
+
+  // Poll the address it is actually bound to; hand the operator the name they
+  // are used to typing (localhost, same as :8888 and :4000).
+  const url = "http://localhost:" + PREVIEW_PORT + "/";
+  try {
+    await waitForPreview("http://127.0.0.1:" + PREVIEW_PORT + "/", PREVIEW_READY_TIMEOUT_MS);
+  } catch (err) {
+    killTree(child);
+    previewState.child = null;
+    previewState.status = "error";
+    previewState.error = err.message;
+    return previewSnapshot();
+  }
+
+  previewState.status = "running";
+  previewState.url = url;
+  return previewSnapshot();
+}
+
+function stopPreview() {
+  if (previewState.child) killTree(previewState.child);
+  previewState.child = null;
+  if (previewState.status === "running" || previewState.status === "building") previewState.status = "idle";
+  previewState.url = "";
+}
+
+// Never strand a preview server holding the port after the uploader is closed.
+process.on("exit", () => { if (previewState.child) killTree(previewState.child); });
+for (const sig of ["SIGINT", "SIGTERM"]) {
+  process.on(sig, () => { if (previewState.child) killTree(previewState.child); process.exit(0); });
+}
+
+function previewSnapshot() {
+  return {
+    status: previewState.status,
+    url: previewState.url,
+    error: previewState.error,
+    log: previewState.log.slice(-120),
+    port: PREVIEW_PORT,
+  };
+}
+
 const PAGE = /* html */ `<!doctype html>
 <html lang="th">
 <head>
@@ -1524,6 +1681,22 @@ const PAGE = /* html */ `<!doctype html>
   /* the upload button sits beside Rebrand now — same weight, different hue so
      the two primary actions stay tellable apart at a glance */
   button.fire.alt { background: linear-gradient(135deg, #a78bfa, #6366f1); color: #0b1120; box-shadow: 0 8px 20px -8px rgba(129,140,248,0.55); }
+  button.fire.go { background: linear-gradient(135deg, #4ade80, #16a34a); color: #052e16; box-shadow: 0 8px 20px -8px rgba(74,222,128,0.5); }
+
+  /* ── ส่วนที่ 7: post-rebrand check ──────────────────── */
+  #pvLog {
+    margin: 6px 0 0; padding: 10px 12px; max-height: 220px; overflow: auto;
+    background: #070d1a; border: 1px solid rgba(248,113,113,0.35); border-radius: 9px;
+    font-family: ui-monospace, monospace; font-size: 11px; line-height: 1.7;
+    white-space: pre-wrap; word-break: break-word; color: #fca5a5;
+  }
+  #pvErrMsg { color: var(--err); font-weight: 700; }
+  /* A checklist, not prose: the operator is looking away at another tab, and
+     ticking is how they keep their place when they come back. */
+  ul.checks { margin: 4px 0 0; padding: 0; list-style: none; display: flex; flex-direction: column; gap: 9px; }
+  ul.checks label { display: flex; gap: 9px; align-items: flex-start; font-size: 12.5px; line-height: 1.6; color: #dbe4f0; cursor: pointer; }
+  ul.checks input { margin: 3px 0 0; accent-color: var(--ok); width: 15px; height: 15px; flex: none; cursor: pointer; }
+  ul.checks label:has(input:checked) { color: var(--faint); text-decoration: line-through; }
 </style>
 </head>
 <body>
@@ -1768,6 +1941,37 @@ const PAGE = /* html */ `<!doctype html>
           <div id="rbFileList"></div>
         </details>
         <span class="status" id="rbDone"></span>
+      </div>
+    </section>
+
+    <section class="card" id="card7">
+      <h2 data-n="7">ทดสอบหน้าเว็บ</h2>
+
+      <div class="field">
+        <div class="row">
+          <button type="button" id="pvStart" class="fire go">🔍 ทดสอบหน้าเว็บ</button>
+          <button type="button" id="pvOpen" class="ghost" hidden>🌐 เปิดเว็บ</button>
+          <button type="button" id="pvStop" class="ghost danger" hidden>■ ปิดเซิร์ฟเวอร์ทดสอบ</button>
+          <span class="pill" id="pvPill">ยังไม่ได้ทดสอบ</span>
+        </div>
+        <span class="status" id="pvHint">ทำหลังรีแบรนด์เสร็จ · ใช้เวลาประมาณครึ่งนาที</span>
+      </div>
+
+      <div class="field" id="pvErrBox" hidden>
+        <div class="row"><label>เว็บสร้างไม่ผ่าน</label></div>
+        <span class="status" id="pvErrMsg"></span>
+        <pre id="pvLog"></pre>
+      </div>
+
+      <div class="field" id="pvCheck" hidden>
+        <div class="row"><label>ดูให้ครบ 5 ข้อนี้</label><span class="opt" id="pvCount">0/5</span></div>
+        <ul class="checks">
+          <li><label><input type="checkbox" /> ชื่อแบรนด์ถูกต้องทุกหน้า ไม่มีชื่อเก่าโผล่</label></li>
+          <li><label><input type="checkbox" /> สีเว็บเข้ากับโลโก้ที่อัพไป</label></li>
+          <li><label><input type="checkbox" /> รูปขึ้นครบ ทั้งแบนเนอร์และสไลด์ ไม่มีช่องว่างหรือรูปแตก</label></li>
+          <li><label><input type="checkbox" /> กดเมนูทุกอันแล้วเปิดได้ ไม่เจอหน้า 404</label></li>
+          <li><label><input type="checkbox" /> ปุ่มสมัคร/เข้าสู่ระบบ กดแล้วไปถูกที่</label></li>
+        </ul>
       </div>
     </section>
   </aside>
@@ -2433,6 +2637,90 @@ const PAGE = /* html */ `<!doctype html>
   refreshPrompt();
   refreshBriefStaged();
 
+  // ── ส่วนที่ 7: build + preview ────────────────────────────────────────────
+  // The operator gets one button. Everything a terminal would have told them —
+  // that a build is running, that it failed and why, that a server is up on a
+  // port — has to be visible here instead.
+  const pvStart = document.getElementById('pvStart');
+  const pvOpen = document.getElementById('pvOpen');
+  const pvStop = document.getElementById('pvStop');
+  const pvPill = document.getElementById('pvPill');
+  const pvHint = document.getElementById('pvHint');
+  const pvErrBox = document.getElementById('pvErrBox');
+  const pvCheck = document.getElementById('pvCheck');
+  let pvUrl = '';
+
+  function pvRender(p) {
+    const s = p.status;
+    pvUrl = p.url || '';
+    pvStart.disabled = s === 'building';
+    pvOpen.hidden = s !== 'running';
+    pvStop.hidden = s !== 'running';
+    pvCheck.hidden = s !== 'running';
+    pvErrBox.hidden = s !== 'error';
+
+    if (s === 'building') {
+      pvPill.className = 'pill run'; pvPill.textContent = 'กำลังสร้างเว็บ...';
+      pvStart.textContent = '⏳ กำลังสร้าง...';
+      pvHint.textContent = 'กำลัง build เวอร์ชันจริง — รอสักครู่ อย่าเพิ่งปิดหน้าต่างดำ';
+    } else if (s === 'running') {
+      pvPill.className = 'pill done'; pvPill.textContent = 'เปิดอยู่';
+      pvStart.textContent = '🔄 สร้างใหม่อีกครั้ง';
+      pvHint.innerHTML = 'เว็บทดสอบเปิดอยู่ที่ <code>' + esc(pvUrl) + '</code> — แก้อะไรเพิ่มแล้วกด "สร้างใหม่อีกครั้ง"';
+    } else if (s === 'error') {
+      pvPill.className = 'pill bad'; pvPill.textContent = 'ไม่ผ่าน';
+      pvStart.textContent = '🔍 ลองใหม่';
+      pvHint.textContent = 'เว็บยังสร้างไม่สำเร็จ ดูสาเหตุด้านล่าง';
+      document.getElementById('pvErrMsg').textContent = p.error || 'build ไม่ผ่าน';
+      document.getElementById('pvLog').textContent = (p.log || []).join('\\n');
+    } else {
+      pvPill.className = 'pill'; pvPill.textContent = 'ยังไม่ได้ทดสอบ';
+      pvStart.textContent = '🔍 ทดสอบหน้าเว็บ';
+      pvHint.textContent = 'ทำหลังรีแบรนด์เสร็จ · ใช้เวลาประมาณครึ่งนาที';
+    }
+  }
+
+  pvStart.addEventListener('click', async () => {
+    pvRender({ status: 'building' });
+    // poll while the build runs so the pill isn't frozen for 30 seconds
+    const poll = setInterval(async () => {
+      try {
+        const st = await (await fetch('/preview/status')).json();
+        if (st.preview.status === 'building') pvRender(st.preview);
+      } catch { /* transient */ }
+    }, 1500);
+    try {
+      const j = await (await fetch('/preview/start', { method: 'POST' })).json();
+      clearInterval(poll);
+      pvRender(j.preview);
+      // browsers block window.open outside a gesture, and this resolves long
+      // after the click — so the ปุ่มเปิดเว็บ above is the reliable path and
+      // this is only a convenience when the browser allows it.
+      if (j.preview.status === 'running') window.open(j.preview.url, '_blank', 'noopener');
+    } catch (e) {
+      clearInterval(poll);
+      pvRender({ status: 'error', error: 'ต่อ server ไม่ได้: ' + e.message, log: [] });
+    }
+  });
+
+  pvOpen.addEventListener('click', () => { if (pvUrl) window.open(pvUrl, '_blank', 'noopener'); });
+  pvStop.addEventListener('click', async () => {
+    try { pvRender((await (await fetch('/preview/stop', { method: 'POST' })).json()).preview); }
+    catch { /* leave the UI as-is */ }
+  });
+
+  // tick counter, so progress through the list is visible at a glance
+  pvCheck.querySelectorAll('input[type=checkbox]').forEach((c) => c.addEventListener('change', () => {
+    const boxes = [...pvCheck.querySelectorAll('input[type=checkbox]')];
+    document.getElementById('pvCount').textContent = boxes.filter((b) => b.checked).length + '/' + boxes.length;
+  }));
+
+  // a preview may already be up from before this page was opened
+  (async () => {
+    try { pvRender((await (await fetch('/preview/status')).json()).preview); }
+    catch { /* server not answering; leave the default idle state */ }
+  })();
+
   // ── upload progress dialog ────────────────────────────────────────────────
   // The log used to live in a sticky footer bar, which meant the result of the
   // upload was reported far away from the button that caused it. It is a modal
@@ -2695,6 +2983,33 @@ const server = http.createServer(async (req, res) => {
     } else {
       res.end();
     }
+    return;
+  }
+
+  // ── ส่วนที่ 7: build + preview the site ───────────────────────────────────
+  if (req.method === "GET" && url.pathname === "/preview/status") {
+    res.writeHead(200, { "Content-Type": "application/json" });
+    res.end(JSON.stringify({ ok: true, preview: previewSnapshot() }));
+    return;
+  }
+  if (req.method === "POST" && url.pathname === "/preview/start") {
+    try {
+      // Responds only once the build has finished and the server answers, so
+      // the browser never opens a tab on a page that isn't up yet. The client
+      // polls /preview/status meanwhile to show progress.
+      const snap = await startPreview();
+      res.writeHead(200, { "Content-Type": "application/json" });
+      res.end(JSON.stringify({ ok: snap.status === "running", preview: snap }));
+    } catch (err) {
+      res.writeHead(400, { "Content-Type": "application/json" });
+      res.end(JSON.stringify({ ok: false, error: err.message, preview: previewSnapshot() }));
+    }
+    return;
+  }
+  if (req.method === "POST" && url.pathname === "/preview/stop") {
+    stopPreview();
+    res.writeHead(200, { "Content-Type": "application/json" });
+    res.end(JSON.stringify({ ok: true, preview: previewSnapshot() }));
     return;
   }
 
