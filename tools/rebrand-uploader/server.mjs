@@ -311,9 +311,16 @@ const PAGE_META = {
 // deletes): off simply means "don't create". `route` is the Astro file-based
 // route (Thai filename → Thai route); `navLabel` is the menu text; `boxTitle`
 // is the placeholder ContentBox heading. Add a row here to offer another page.
+// `kind` decides what switching a page ON means:
+//   scaffold — the uploader creates it blank, with a TODO body Claude fills in
+//   template — the page already exists in the repo with real content and its own
+//              Huay theme; it may only ever be moved in or out of src/pages,
+//              never regenerated, or a rebrand would wipe the lottery copy
 const PRESET_PAGES = {
-  article: { file: "บทความ.astro", route: "/บทความ", navLabel: "บทความ", boxTitle: "บทความ" },
-  aboutus: { file: "about-us.astro", route: "/about-us", navLabel: "เกี่ยวกับเรา", boxTitle: "เกี่ยวกับเรา" },
+  article: { kind: "scaffold", file: "บทความ.astro", route: "/บทความ", navLabel: "บทความ", boxTitle: "บทความ" },
+  aboutus: { kind: "scaffold", file: "about-us.astro", route: "/about-us", navLabel: "เกี่ยวกับเรา", boxTitle: "เกี่ยวกับเรา" },
+  huaycheck: { kind: "template", file: "ตรวจหวย.astro", route: "/ตรวจหวย", navLabel: "ตรวจหวย", footerLabel: "ตรวจผลรางวัล", boxTitle: "ตรวจหวย" },
+  huayguide: { kind: "template", file: "แนวทาง.astro", route: "/แนวทาง", navLabel: "แนวทาง", footerLabel: "แนวทางหวย", boxTitle: "แนวทาง" },
 };
 // A generated page is cloned from this existing sub-page's frontmatter so it
 // stays on the brand's current component variants without hardcoding names here.
@@ -622,6 +629,12 @@ async function createPage(key, title, desc) {
     if (hasTitle && hasDesc) await setMainLayoutMeta(file, title, desc, label);
     return { written: [`src/pages/${cfg.file}`], created: false, restored: true };
   }
+  // A template page has real content that ships with the repo — there is nothing
+  // to scaffold, and generating a placeholder in its place would silently
+  // replace the lottery copy with an empty shell.
+  if (cfg.kind === "template") {
+    throw new Error(`ไม่พบไฟล์ ${cfg.file} ทั้งใน src/pages และ src/pages-disabled — หน้านี้เป็นหน้าที่มากับ template สร้างใหม่ให้ไม่ได้`);
+  }
   // new page: blank Title/Meta fall back to safe defaults (Claude rewrites both
   // + the article body when the rebrand runs).
   const t = hasTitle ? validateText(title, `Title ${label}`) : cfg.boxTitle;
@@ -643,39 +656,162 @@ async function createPage(key, title, desc) {
   return { written: [`src/pages/${cfg.file}`], created: true };
 }
 
+// Switching a page OFF parks it: the file moves out of the routed folder and its
+// menu links go, but nothing is deleted. Someone wrote that page, and a brand
+// that doesn't want it today may want it back next time — the file is the only
+// copy outside git, so removing it would be the one irreversible thing this tool
+// does. Off on a page that was already off is a no-op, not an error.
+async function disablePage(key) {
+  const cfg = PRESET_PAGES[key];
+  if (!cfg) throw new Error(`ไม่รู้จักหน้า preset: ${key}`);
+  const file = join(PAGES, cfg.file);
+  const parked = join(PAGES_DISABLED, cfg.file);
+  const written = [];
+
+  if (await fileExists(file)) {
+    await mkdir(PAGES_DISABLED, { recursive: true });
+    await rename(file, parked);
+    written.push(`src/pages-disabled/${cfg.file}`);
+  } else if (!(await fileExists(parked))) {
+    return { written: [], parked: false, missing: true };
+  }
+
+  const nav = await removeNavLink(cfg.route);
+  const foot = await removeFooterLink(cfg.route);
+  if (nav.removed) written.push(`navbar ${nav.navFile} (-${nav.removed})`);
+  if (foot.removed) written.push(`footer ${foot.footerFile} (-${foot.removed})`);
+  return { written, parked: true, navRemoved: nav.removed || 0, footerRemoved: foot.removed || 0 };
+}
+
 // Best-effort: add a { name, path } entry to the ACTIVE navbar's link arrays
 // (resolved from MainLayout's import, since the active file rotates each
 // rebrand). Inserts into every inline `[ {…path…} ].map(` array (desktop +
 // mobile). Idempotent — skips if the route is already linked. If the navbar
 // variant doesn't use that array shape, it writes nothing and returns a warning
 // telling the operator/Claude to wire the link by hand.
-async function addNavLink(route, label) {
+// ── Menu links, in both the navbar and the footer ───────────────────────────
+// Links live in two shapes across the variant library — some navbars declare an
+// inline array right before `.map(`, others a named `const menu = [...]` — and
+// the footer uses <li><a> markup instead of objects. Rather than a regex per
+// shape, find the individual entries and group the ones that sit adjacent
+// (separated only by commas and whitespace); each group is one list, whichever
+// way it was written. NavbarHuay is the named-const kind, and it is exactly the
+// navbar lottery brands use, so handling only the inline shape would fail on
+// the one case this is most needed for.
+const NAV_ITEM_RE = /\{[^{}]*\bpath:\s*["'][^"']*["'][^{}]*\}/g;
+const FOOTER_ITEM_RE = /<li>\s*<a\b[^>]*href="[^"]*"[\s\S]*?<\/a>\s*<\/li>/g;
+
+function linkGroups(src, re) {
+  const items = [...src.matchAll(re)].map((m) => ({ start: m.index, end: m.index + m[0].length, text: m[0] }));
+  const groups = [];
+  for (const it of items) {
+    const prev = groups[groups.length - 1];
+    if (prev && /^[\s,]*$/.test(src.slice(prev[prev.length - 1].end, it.start))) prev.push(it);
+    else groups.push([it]);
+  }
+  return groups;
+}
+
+const indentOf = (src, pos) => (src.slice(0, pos).match(/([ \t]*)$/) || ["", ""])[1];
+
+// Append `render(lastItem)` after the final entry of every group. Groups are
+// processed back to front so earlier offsets stay valid as the string grows.
+// `sep` separates entries — "," between object literals in a JS array, nothing
+// between <li> elements, where a comma would render as a visible comma on the
+// page. Getting that wrong is silent: the build still passes.
+function appendToGroups(src, re, render, sep = ",") {
+  const groups = linkGroups(src, re);
+  let out = src;
+  for (let i = groups.length - 1; i >= 0; i--) {
+    const last = groups[i][groups[i].length - 1];
+    const indent = indentOf(src, groups[i][0].start);
+    out = out.slice(0, last.end) + sep + "\n" + indent + render(last.text) + out.slice(last.end);
+  }
+  return { out, count: groups.length };
+}
+
+// Drop every entry pointing at `route`, plus the separator it leaves behind.
+function dropFromGroups(src, re, route) {
+  const items = [...src.matchAll(re)].filter((m) => m[0].includes(`"${route}"`) || m[0].includes(`'${route}'`));
+  let out = src;
+  for (let i = items.length - 1; i >= 0; i--) {
+    const m = items[i];
+    let start = m.index;
+    let end = m.index + m[0].length;
+    // Take the entry's own line: its leading indent, and the comma + newline
+    // after it. Deliberately NOT the next line's indent — swallowing that
+    // pulls the following entry to column 0, which is how the first version of
+    // this left NavbarHuay looking mangled after a single toggle.
+    const after = out.slice(end).match(/^,?[ \t]*\r?\n?/);
+    if (after) end += after[0].length;
+    const before = out.slice(0, start).match(/[ \t]*$/);
+    if (before) start -= before[0].length;
+    out = out.slice(0, start) + out.slice(end);
+  }
+  return { out, count: items.length };
+}
+
+// Which navbar/footer is live rotates every rebrand, so resolve from MainLayout
+// rather than trusting a remembered filename.
+async function activeChrome(kind) {
   const ml = await readFile(join(ROOT, "src", "layouts", "MainLayout.astro"), "utf8");
-  const m = ml.match(NAV_IMPORT_RE);
-  if (!m) return { warning: `หา import Navbar ใน MainLayout.astro ไม่เจอ — เพิ่มลิงก์ ${route} (${label}) ในเมนูเองตอนรีแบรนด์` };
-  const navName = m[1];
-  const navFile = join(ROOT, "src", "components", navName);
+  const re = kind === "footer"
+    ? /import\s+Footer\s+from\s+["']\.\.\/components\/([^"']+)["']/
+    : NAV_IMPORT_RE;
+  const m = ml.match(re);
+  if (!m) return null;
+  return { name: m[1], file: join(ROOT, "src", "components", m[1]) };
+}
+
+async function addNavLink(route, label) {
+  const nav = await activeChrome("navbar");
+  if (!nav) return { warning: `หา import Navbar ใน MainLayout.astro ไม่เจอ — เพิ่มลิงก์ ${route} (${label}) ในเมนูเองตอนรีแบรนด์` };
   let src;
-  try { src = await readFile(navFile, "utf8"); }
-  catch { return { navFile: navName, warning: `เปิด navbar ${navName} ไม่ได้ — เพิ่มลิงก์ ${route} (${label}) ในเมนูเองตอนรีแบรนด์` }; }
+  try { src = await readFile(nav.file, "utf8"); }
+  catch { return { navFile: nav.name, warning: `เปิด navbar ${nav.name} ไม่ได้ — เพิ่มลิงก์ ${route} (${label}) ในเมนูเองตอนรีแบรนด์` }; }
   if (src.includes(`path: "${route}"`) || src.includes(`path: '${route}'`)) {
-    return { navFile: navName, already: true };
+    return { navFile: nav.name, already: true };
   }
-  // Match the LAST object before `].map(` in each nav array; `[^{}]*` keeps the
-  // match to a single object. Rebuild it (normalising its trailing comma) and
-  // append the new sibling right after it, at the same indentation.
-  const re = /(\n([ \t]*))(\{[^{}]*\bpath:\s*["'][^"']*["'][^{}]*\}),?(\s*\]\.map\()/g;
-  const item = `{ name: "${label}", path: "${route}" }`;
-  let count = 0;
-  const next = src.replace(re, (_full, lead, _indent, lastObj, tail) => {
-    count++;
-    return `${lead}${lastObj},${lead}${item},${tail}`;
-  });
-  if (count === 0) {
-    return { navFile: navName, warning: `navbar ${navName} ไม่ตรงรูปแบบ array ที่รองรับ — เพิ่มลิงก์ ${route} (${label}) ในเมนูเองตอนรีแบรนด์` };
-  }
-  await writeFile(navFile, next);
-  return { navFile: navName, inserted: count };
+  const { out, count } = appendToGroups(src, NAV_ITEM_RE, () => `{ name: "${label}", path: "${route}" }`);
+  if (!count) return { navFile: nav.name, warning: `navbar ${nav.name} ไม่ตรงรูปแบบ array ที่รองรับ — เพิ่มลิงก์ ${route} (${label}) ในเมนูเองตอนรีแบรนด์` };
+  await writeFile(nav.file, out);
+  return { navFile: nav.name, inserted: count };
+}
+
+async function removeNavLink(route) {
+  const nav = await activeChrome("navbar");
+  if (!nav) return { removed: 0 };
+  let src;
+  try { src = await readFile(nav.file, "utf8"); } catch { return { removed: 0 }; }
+  const { out, count } = dropFromGroups(src, NAV_ITEM_RE, route);
+  if (count) await writeFile(nav.file, out);
+  return { navFile: nav.name, removed: count };
+}
+
+async function addFooterLink(route, label) {
+  const foot = await activeChrome("footer");
+  if (!foot) return { removed: 0 };
+  let src;
+  try { src = await readFile(foot.file, "utf8"); } catch { return { footerFile: null }; }
+  if (src.includes(`href="${route}"`)) return { footerFile: foot.name, already: true };
+  // clone the sibling's classes so the new row matches the brand's styling
+  const { out, count } = appendToGroups(src, FOOTER_ITEM_RE, (sibling) => {
+    const cls = sibling.match(/class="([^"]*)"/);
+    return `<li><a href="${route}"${cls ? ` class="${cls[1]}"` : ""}>${label}</a></li>`;
+  }, ""); // HTML list — no separator between items
+  if (!count) return { footerFile: foot.name, warning: `footer ${foot.name} ไม่มีลิสต์ลิงก์ที่รองรับ — เพิ่มลิงก์ ${route} เองตอนรีแบรนด์` };
+  await writeFile(foot.file, out);
+  return { footerFile: foot.name, inserted: count };
+}
+
+async function removeFooterLink(route) {
+  const foot = await activeChrome("footer");
+  if (!foot) return { removed: 0 };
+  let src;
+  try { src = await readFile(foot.file, "utf8"); } catch { return { removed: 0 }; }
+  const { out, count } = dropFromGroups(src, FOOTER_ITEM_RE, route);
+  if (count) await writeFile(foot.file, out);
+  return { footerFile: foot.name, removed: count };
 }
 
 // Read the current state of each preset page so the UI can set its toggle
@@ -1887,7 +2023,28 @@ const PAGE = /* html */ `<!doctype html>
     
     </section>
     <section class="card" id="card5">
-      <h2 data-n="5">สร้างหน้าเพิ่ม</h2>
+      <h2 data-n="5">หน้าเสริม · เปิด/ปิด</h2>
+      <p class="sub">ติ๊ก = มีหน้านี้ในเว็บ · เอาติ๊กออก = พักหน้าไว้ (ไฟล์ไม่ถูกลบ เปิดกลับได้ทุกเมื่อ)</p>
+
+      <div class="field newpage" data-newpage="huaycheck">
+        <div class="row">
+          <label class="switch"><input type="checkbox" class="np-toggle" /><span class="slider"></span></label>
+          <label>ตรวจหวย</label>
+          <span class="target">src/pages/ตรวจหวย.astro</span>
+          <span class="badge np-badge"></span>
+        </div>
+        <span class="status">เปิดเฉพาะเว็บหวย — หน้านี้มากับ template พร้อมเนื้อหาแล้ว</span>
+      </div>
+      <div class="field newpage" data-newpage="huayguide">
+        <div class="row">
+          <label class="switch"><input type="checkbox" class="np-toggle" /><span class="slider"></span></label>
+          <label>แนวทาง</label>
+          <span class="target">src/pages/แนวทาง.astro</span>
+          <span class="badge np-badge"></span>
+        </div>
+        <span class="status">เปิดเฉพาะเว็บหวย — หน้านี้มากับ template พร้อมเนื้อหาแล้ว</span>
+      </div>
+
       <div class="field newpage" data-newpage="article">
         <div class="row">
           <label class="switch"><input type="checkbox" class="np-toggle" /><span class="slider"></span></label>
@@ -2252,10 +2409,14 @@ const PAGE = /* html */ `<!doctype html>
       const c = cur[f.dataset.newpage];
       if (!c) continue;
       const { toggle, body, title, desc, badge } = npEls(f);
+      // Remember the state on load. Only a CHANGE is sent on upload — without
+      // this every run would re-park or re-enable pages nobody touched, and
+      // parking rewrites the navbar and footer.
+      f.dataset.origOn = c.exists ? '1' : '0';
       if (c.exists) {
         toggle.checked = true; body.hidden = false;
         title.value = c.title || ''; desc.value = c.meta || '';
-        badge.textContent = 'มีอยู่แล้ว'; badge.className = 'badge np-badge exists';
+        badge.textContent = 'เปิดอยู่'; badge.className = 'badge np-badge exists';
       } else if (c.parked) {
         // The page exists but a previous rebrand switched it off. Left OFF it
         // stays off; switched on it is moved back, not scaffolded again — so
@@ -2269,24 +2430,34 @@ const PAGE = /* html */ `<!doctype html>
     }
   }).catch(() => {});
 
-  // POST one preset page if its toggle is on. Off = do nothing (never deletes).
-  // Title/Meta are optional — blank is fine, the page is scaffolded with default
-  // meta + a placeholder article for Claude to write at rebrand time.
+  // Send a preset page only when its switch MOVED. Doing it unconditionally
+  // would rewrite the navbar and footer on every upload for pages nobody
+  // touched — and parking is a file move, so a no-op run must stay a no-op.
+  // Title/Meta are optional; blank means Claude writes them at rebrand time.
   async function sendNewPage(f) {
     const { toggle, title, desc, status } = npEls(f);
-    if (!toggle.checked) return false;
+    const want = toggle.checked;
+    const had = f.dataset.origOn === '1';
+    if (want === had) return false;
+
     const t = title.value.trim(), d = desc.value.trim();
-    const q = new URLSearchParams({ slot: 'newpage', page: f.dataset.newpage, title: t, desc: d });
-    status.textContent = (!t && !d) ? '⏳ กำลังสร้าง (Claude เขียนเนื้อหาให้ตอนรีแบรนด์)...' : '⏳ กำลังสร้าง...';
+    const q = new URLSearchParams({ slot: 'newpage', page: f.dataset.newpage, title: t, desc: d, on: want ? '1' : '0' });
+    status.textContent = want
+      ? ((!t && !d) ? '⏳ กำลังเปิดหน้า (Claude เขียนเนื้อหาให้ตอนรีแบรนด์)...' : '⏳ กำลังเปิดหน้า...')
+      : '⏳ กำลังพักหน้า (ไฟล์ไม่ถูกลบ)...';
     try {
       const res = await fetch('/upload?' + q.toString(), { method: 'POST' });
       const j = await res.json();
       if (!res.ok || !j.ok) throw new Error(j.error || ('HTTP ' + res.status));
-      status.textContent = '✅ ' + j.written.join(', ');
-      addLog(f.dataset.newpage + ' → ' + j.written.join(', '), true);
+      status.textContent = j.written.length ? '✅ ' + j.written.join(', ') : '✅ ไม่มีอะไรต้องเปลี่ยน';
+      addLog(f.dataset.newpage + ' → ' + (j.written.join(', ') || 'ไม่มีอะไรต้องเปลี่ยน'), true);
       if (j.restored) addLog(f.dataset.newpage + ': เปิดกลับจากที่ปิดไว้ — เนื้อหาเป็นของแบรนด์ก่อน Claude จะเขียนใหม่ตอนรีแบรนด์', true);
+      if (j.disabled) addLog(f.dataset.newpage + ': พักไว้ที่ src/pages-disabled แล้ว — ไม่ได้ลบ กดเปิดกลับได้', true);
+      if (j.missing) addLog(f.dataset.newpage + ': ไม่มีไฟล์อยู่แล้ว ไม่ต้องทำอะไร', true);
       if (j.navAlready) addLog(f.dataset.newpage + ': ลิงก์เมนูมีอยู่แล้ว (ข้าม)', true);
       if (j.navWarning) addLog('navbar: ' + j.navWarning, false);
+      if (j.footerWarning) addLog('footer: ' + j.footerWarning, false);
+      f.dataset.origOn = want ? '1' : '0'; // committed — a second upload must not repeat it
     } catch (e) {
       status.textContent = '❌ ' + e.message;
       addLog(f.dataset.newpage + ': ' + e.message, false);
@@ -2931,23 +3102,35 @@ const server = http.createServer(async (req, res) => {
           url.searchParams.get("desc"),
         );
       } else if (slot === "newpage") {
-        // optional preset page: scaffold the file + wire its nav link, no body
+        // Optional page, switched on or off. `on=0` parks it (see disablePage);
+        // anything else turns it on — either scaffolding it, or moving it back
+        // out of src/pages-disabled — and wires both the navbar and footer link.
         const key = url.searchParams.get("page") || "";
         const cfg = PRESET_PAGES[key];
         if (!cfg) throw new Error(`ไม่รู้จักหน้า preset: ${key}`);
-        const pageRes = await createPage(key, url.searchParams.get("title"), url.searchParams.get("desc"));
-        const navRes = await addNavLink(cfg.route, cfg.navLabel);
-        written = [...pageRes.written];
-        if (navRes.inserted) written.push(`navbar ${navRes.navFile} (+${navRes.inserted})`);
-        extra = {
-          created: pageRes.created,
-          // distinguishes "moved back from pages-disabled" from "scaffolded
-          // fresh" — the operator gets last brand's article in one case and a
-          // TODO placeholder in the other, so the log has to say which
-          restored: !!pageRes.restored,
-          navWarning: navRes.warning || null,
-          navAlready: !!navRes.already,
-        };
+
+        if (url.searchParams.get("on") === "0") {
+          const off = await disablePage(key);
+          written = off.written;
+          extra = { disabled: off.parked, missing: !!off.missing };
+        } else {
+          const pageRes = await createPage(key, url.searchParams.get("title"), url.searchParams.get("desc"));
+          const navRes = await addNavLink(cfg.route, cfg.navLabel);
+          const footRes = await addFooterLink(cfg.route, cfg.footerLabel || cfg.navLabel);
+          written = [...pageRes.written];
+          if (navRes.inserted) written.push(`navbar ${navRes.navFile} (+${navRes.inserted})`);
+          if (footRes.inserted) written.push(`footer ${footRes.footerFile} (+${footRes.inserted})`);
+          extra = {
+            created: pageRes.created,
+            // distinguishes "moved back from pages-disabled" from "scaffolded
+            // fresh" — the operator gets last brand's article in one case and a
+            // TODO placeholder in the other, so the log has to say which
+            restored: !!pageRes.restored,
+            navWarning: navRes.warning || null,
+            navAlready: !!navRes.already,
+            footerWarning: footRes.warning || null,
+          };
+        }
       } else {
         if (!buf.length) throw new Error("empty upload");
         written = await handleUpload(slot, index, ext, buf);
