@@ -730,11 +730,16 @@ turning them off is an action, not an absence of one:**
   `src/pages-disabled/`. Left alone, a slot brand ships `/ตรวจหวย` and
   `/แนวทาง` — lottery pages rethemed in slot colours, off-topic for the
   site and thin content Google has no reason to rank.
-- **Remove their two nav links** from the active navbar's desktop *and*
-  mobile arrays. The navbar rotates each rebrand, so also check: if the new
-  brand picks a *different* navbar, the stale links vanish with the old one
-  and there is nothing to remove — but if it reuses the same one, they are
-  still there.
+- **Remove their links from the active navbar AND the active footer.** The
+  navbar's desktop *and* mobile arrays, plus the footer's link list — the
+  `*Huay` footer carries its own `/ตรวจหวย` and `/แนวทาง` entries under
+  "ทางลัดหน้าเว็บ", which is easy to miss because the navbar is the obvious
+  place to look. Both rotate each rebrand, so if the new brand picks a
+  different navbar/footer the stale links leave with the old ones; if it
+  reuses either, they are still there.
+  **Grep, don't guess:** `grep -rn "ตรวจหวย\|แนวทาง" src/ --include="*.astro"`
+  lists every file still pointing at them. Anything that isn't rendered by the
+  current brand is dormant inventory and stays as it is.
 - Leave the `*Huay` components themselves alone — they are inventory for the
   next lottery brand, same as every other unused variant.
 
