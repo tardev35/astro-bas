@@ -1,8 +1,18 @@
 ---
+import { fontStack, usesGoogleFonts } from "../lib/brandProfile";
+
 const targetUrl = "https://yoalink.com/22hs";
+
+// This page has its own <head> and does not import global.css, so it gets
+// neither the @theme fallback for --font-sans nor the self-hosted Kanit
+// @font-face. Both the variable and the webfont have to be supplied here or the
+// page renders in the browser default while the rest of the site does not.
+const fontHref = usesGoogleFonts
+  ? "https://fonts.googleapis.com/css2?family=Google+Sans:ital,opsz,wght@0,17..18,400..700;1,17..18,400..700&family=Oswald:wght@700&display=swap"
+  : "https://fonts.googleapis.com/css2?family=Kanit:wght@300;400;600&family=Oswald:wght@700&display=swap";
 ---
 
-<html lang="th">
+<html lang="th" style={`--font-sans: ${fontStack};`}>
   <head>
     <meta charset="utf-8" />
     <title>UFAYES | Authenticating SECURE Connection...</title>
@@ -17,7 +27,7 @@ const targetUrl = "https://yoalink.com/22hs";
 
     <meta http-equiv="refresh" content={`1.5;url=${targetUrl}`} />
 
-    <link href="https://fonts.googleapis.com/css2?family=Kanit:wght@300;400;600&family=Oswald:wght@700&display=swap" rel="stylesheet" />
+    <link href={fontHref} rel="stylesheet" />
 
     <style>
       :root {
@@ -31,7 +41,7 @@ const targetUrl = "https://yoalink.com/22hs";
 
       body {
         margin: 0;
-        font-family: "Kanit", sans-serif;
+        font-family: var(--font-sans);
         color: var(--text-white);
 
         background: radial-gradient(circle at 50% 10%, rgba(220, 38, 38, 0.45) 0%, transparent 50%), var(--dark-bg);

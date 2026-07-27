@@ -1821,6 +1821,9 @@ const PAGE = /* html */ `<!doctype html>
 <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>Rebrand Asset Uploader</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Google+Sans:ital,opsz,wght@0,17..18,400..700;1,17..18,400..700&display=swap" rel="stylesheet">
 <link rel="icon" href="data:," />
 <style>
   :root {
@@ -1845,7 +1848,9 @@ const PAGE = /* html */ `<!doctype html>
   * { box-sizing: border-box; }
   html, body { overflow-x: hidden; }
   body {
-    font-family: "Segoe UI", system-ui, -apple-system, sans-serif;
+    /* Google Sans has a Thai subset, so the Thai labels get it too rather
+       than dropping to a fallback */
+    font-family: "Google Sans", "Segoe UI", system-ui, -apple-system, sans-serif;
     margin: 0; color: var(--ink); min-height: 100vh;
     background:
       radial-gradient(900px 500px at 82% -8%, rgba(99,102,241,0.18), transparent 60%),
@@ -1989,7 +1994,7 @@ const PAGE = /* html */ `<!doctype html>
     transition: border-color .15s, box-shadow .15s;
   }
   .field input.linkinput { font-family: ui-monospace, monospace; }
-  .field .metadesc { resize: vertical; font-family: "Segoe UI", system-ui, sans-serif; line-height: 1.5; }
+  .field .metadesc { resize: vertical; font-family: "Google Sans", "Segoe UI", system-ui, sans-serif; line-height: 1.5; }
   .field input.linkinput:focus, .field .metatitle:focus, .field .metadesc:focus,
   .panel input:focus, .panel select:focus {
     outline: none; border-color: var(--accent); box-shadow: 0 0 0 3px rgba(56,189,248,0.16);

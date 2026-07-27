@@ -404,6 +404,21 @@ the same one:
 - **Footer family** (`Footer`/`FooterStyle2..3`/`*Cyber`/`*Huay`/
   `*Premium`(`Sumo`)) — same as navbar: switch `MainLayout.astro` to a
   different single footer file and retheme it.
+- **Brand font** — flip `BRAND_FONT` in `src/lib/brandProfile.ts` between
+  `"kanit"` and `"google-sans"` so it is not the same as the outgoing
+  brand's. **One line, and that is the whole change** — no component
+  hardcodes a font name any more; they all read `var(--font-sans)`, and
+  the layout puts the right stack on `<html>`. Do not edit
+  `font-family` anywhere else, and do not add a Google Fonts `<link>` by
+  hand: `MainLayout`, `login.astro` and `register.astro` each emit the
+  correct one from that flag, and `brandProfile` drops the Kanit
+  preloads when the brand is not on Kanit.
+
+  This family matters more than it looks. A Kanit brand ships
+  `@font-face` rules pointing at `/fonts/kanit-v17-latin_thai-*.woff2` —
+  the *same four paths on every brand that uses it*, which is a sharper
+  cross-brand match than anything visual. Rotating the font breaks that
+  set in half.
 
 If a family genuinely has no better-fitting alternative for this brand's
 mood and you must reuse the previous variant, say so explicitly in the

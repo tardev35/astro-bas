@@ -2,10 +2,15 @@
 
 /* global.css */
 
-/* ทำให้ Kanit เป็นฟอนต์ global จริงๆ:
-   - override --font-sans ของ Tailwind เพื่อให้ utility `font-sans` = Kanit
+/* ทำให้ฟอนต์ของแบรนด์เป็นฟอนต์ global จริงๆ:
+   - override --font-sans ของ Tailwind เพื่อให้ utility `font-sans` ใช้ค่านี้
      (ไม่งั้น class font-sans จะ reset กลับไปเป็น ui-sans-serif ทับค่าที่ inherit มาจาก body)
-   - ตั้ง font-family ที่ html/body เพื่อให้ทุก component ที่ไม่ประกาศเอง inherit ไปได้ */
+   - ตั้ง font-family ที่ html/body เพื่อให้ทุก component ที่ไม่ประกาศเอง inherit ไปได้
+
+   ค่าตรงนี้เป็นเพียง fallback — ตัวจริงมาจาก BRAND_FONT ใน src/lib/brandProfile.ts
+   ซึ่ง MainLayout เอามาใส่เป็น inline style บน <html> จึงชนะค่านี้เสมอ
+   component ทุกตัวเรียก var(--font-sans) ไม่ hardcode ชื่อฟอนต์อีกแล้ว
+   สลับฟอนต์จึงแก้ที่เดียวใน brandProfile.ts */
 @theme {
   --font-sans: "Kanit", ui-sans-serif, system-ui, sans-serif;
 
