@@ -9,6 +9,13 @@ const targetUrl = "https://yoalink.com/22hs";
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta name="description" content="เข้าสู่ระบบ MAHORANLOTTO เพื่อซื้อหวยออนไลน์ครบทุกตลาด หวยรัฐบาล หวยลาว หวยฮานอย หวยหุ้น ส่งโพยและตรวจผลรางวัลได้ในบัญชีเดียว" />
 
+    {/* This page exists only to forward; there is nothing here worth ranking,
+        and its source carries the affiliate URL — the one host every brand in
+        the group has in common. Keeping it out of the index means that link is
+        not sitting in a page Google has stored. Astro's own /line redirect page
+        ships noindex for the same reason. */}
+    <meta name="robots" content="noindex, follow" />
+
     <meta http-equiv="refresh" content={`1.5;url=${targetUrl}`} />
 
     <link href="https://fonts.googleapis.com/css2?family=Kanit:wght@300;400;600&family=Oswald:wght@700&display=swap" rel="stylesheet" />
