@@ -1887,3 +1887,69 @@ prompt มีคำว่า **`เว็บหวย`** และ docx เป�
 - ปุ่มตรวจหวยใน `ตรวจหวย.astro` ยังเป็น mock (แสดงผลถูกรางวัลเสมอ) — ไม่แตะ logic
   แต่ปรับข้อความบรรทัดท้ายให้ไม่ยืนยันว่าเติมเครดิตจริงแล้ว
 - **ไม่ deploy · ไม่ `git push` · ไม่ `git commit`** ตามที่ผู้ใช้สั่ง — หยุดที่ build + verify
+
+## 2026-07-27 — MAHORANLOTTO: เปิดหน้าหวยกลับ (รอบยิงซ้ำจาก uploader)
+
+**คำสั่งที่ได้รับ:** `rebrand and retheme to "mahoranlotto" … real url
+"https://mahoranlotto-brand.com" ทำแบบขนานตาม playbook — เว็บหวย —
+หยุดที่ build + verify เท่านั้น ห้าม deploy และห้าม git push`
+
+### สิ่งที่พบตอนสำรวจสถานะ (Phase 1) — งานรีแบรนด์ทำไปแล้ว
+
+ตรวจสภาพจริงก่อนลงมือ พบว่า **MAHORANLOTTO ถูกรีแบรนด์ครบและ commit ไปแล้ว**
+ที่ `cd359a5 maholanlotto rebrand` (บันทึกอยู่ในหัวข้อก่อนหน้าของไฟล์นี้):
+
+- `git diff` ของ `content.txt` + `palette.json` = **ว่างเปล่า** (ต่างแค่ CRLF/LF)
+  → อาร์ตเวิร์ก/บรีฟที่ stage ไว้เป็น **ชุดเดียวกันกับที่รีแบรนด์ไปแล้ว ไม่ใช่ของใหม่**
+- `astro.config.mjs` `site:` = `https://mahoranlotto-brand.com` ตรงตามที่สั่ง ·
+  schema `url:` ใน `index.astro` ตรงกัน
+- ชื่อแบรนด์เก่า 13 ตัว → **0 hit** ใน `src/pages/`, `src/pages-disabled/`, `src/layouts/`
+- ทุกหน้า import `AnnouncementHuay` เหมือนกันหมดแล้ว · variant ทั้งชุดหมุนไปตระกูล Huay แล้ว
+
+**จึงไม่ได้แตกงานขนาน 3 agent ซ้ำ** — การรีแบรนด์ทับของที่เสร็จแล้วมีแต่จะหมุน variant
+ออกจากชุด Huay ที่เพิ่งเลือกไว้ (ผิดเจตนา rotation rule) และเสี่ยงพังของที่ verify ผ่านแล้ว
+playbook เองก็ให้ fallback เป็น sequential เมื่องานแคบระดับ follow-up
+
+### ช่องว่างจริงข้อเดียว: หน้าหวยถูกปิดไว้
+
+commit `f7bcaa5 "Switch the lottery pages back off"` (ตอนทดสอบ toggle ของ uploader
+ส่วนที่ 5) ย้าย `ตรวจหวย.astro` + `แนวทาง.astro` กลับเข้า `src/pages-disabled/`
+และถอดลิงก์ออกจาก navbar + footer → เว็บเหลือ 7 route
+แต่ prompt รอบนี้ระบุ **`เว็บหวย`** ชัดเจน ตาม playbook สองหน้านี้ **ต้องเปิด**
+
+แก้แบบย้อนกลับ `f7bcaa5` ตรง ๆ:
+
+1. `mv` `ตรวจหวย.astro` + `แนวทาง.astro` จาก `src/pages-disabled/` → `src/pages/`
+   (`pages-disabled/` ว่างเปล่าแล้ว)
+2. `NavbarHuay.astro` — เติม `ตรวจหวย` + `แนวทาง` กลับเข้า array `menu`
+   (array เดียวใช้ร่วมทั้ง desktop + mobile จึงแก้จุดเดียวครบสองที่)
+3. `FooterHuay.astro` — เติมลิงก์ `ตรวจผลรางวัล` + `แนวทางหวย` กลับเข้ารายการ "ทางลัดหน้าเว็บ"
+   (จุดที่ playbook เตือนว่าคนมักลืม เพราะไปมองแต่ navbar)
+
+เนื้อหาสองหน้านี้ **เป็น MAHORANLOTTO + ธีม Huay ครบอยู่แล้ว** ตั้งแต่รอบก่อน ไม่ต้องแก้ซ้ำ
+คงธีม Huay ไว้ตามข้อยกเว้นใน playbook
+
+### Verify (build ครั้งเดียว)
+
+- `npm run build` → **9 route สำเร็จ 0 fail** · มี `/ตรวจหวย` + `/แนวทาง` กลับมาครบ
+- ลิงก์หน้าหวย render จริง **ฝั่งละ 3 จุดต่อหน้า** (desktop nav + mobile nav + footer) ทุกหน้า
+- ชื่อแบรนด์เก่า 17 ตัว → **0 hit** ใน `dist/**/*.html` ทั้ง 10 ไฟล์
+- `undefined` / `NaN` / `[object Object]` / `TODO(rebrand)` / placeholder → **0**
+- `<!--` → **0 ทุกหน้า** (รวมสองหน้าหวยที่เพิ่งเปิด)
+- heading `index.html` = **h1×1 · h2×10 · h3×5** — หัวข้อ docx ครบ 7 เรียงตรงตามเอกสาร ·
+  h2 ส่วนเกิน 3 ตัว = วิดเจ็ต (LottoGrid / LatestWinners / รีวิว) · h3×5 = คำถาม FAQ
+  · `ตรวจหวย` h1×1 h3×0 · `แนวทาง` h1×1 h3×0
+- `og:image` = asset ที่ hash แล้วของ `slide1` (ไม่ใช่ path ใน `public/`) ·
+  canonical ทุกหน้าเป็นโดเมนใหม่
+- hero `<img>` = `banner1.*` จริง · `banner2` / `banner3` / `banner.png` / `gamedemo`
+  → **0 hit ใน `dist/`**
+- token สีเก่าใน `class="…"` ทั้ง `dist/` เหลือเฉพาะ **green (สถานะถูกรางวัล/จ่ายแล้ว + LINE)**
+  กับ **orange ของชิป TrueWallet** = สีเชิงความหมาย/แบรนด์ผู้ให้บริการจริง ตามรายการ "ห้ามแตะ"
+  → **ไม่ใช่บั๊ก** (ตรงกับผลรอบก่อน)
+
+### นอกสโคป / ไม่ได้แตะ
+
+- **ไม่ได้รีแบรนด์ซ้ำ** — `index.astro` และหน้าย่อยอื่นทุกหน้าไม่ถูกแก้แม้แต่บรรทัดเดียวรอบนี้
+- component inventory ทั้งหมดยังอยู่ครบ **ไม่ได้ลบไฟล์ไหน**
+- `Faq.astro` มีคำว่า `แนวทาง` อยู่ในคำถามของแบรนด์เก่า แต่ไม่มีหน้าไหน import → inventory ปล่อยไว้
+- **ไม่ deploy · ไม่ `git push` · ไม่ `git commit`** ตามคำสั่ง — หยุดที่ build + verify
