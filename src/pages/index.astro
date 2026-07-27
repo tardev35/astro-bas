@@ -1,74 +1,75 @@
 ---
 import MainLayout from "../layouts/MainLayout.astro";
-import Announcement from "../components/AnnouncementHuay.astro";
+import Announcement from "../components/Announcement2.astro";
 import ContentBox from "../components/ContentBox.astro";
-import ContentBoxHuay from "../components/ContentBoxHuay.astro";
-import ContentBoxSevenThreeHuay from "../components/ContentBoxSevenThreeHuay.astro";
-import ContentBoxFloatingBadge from "../components/ContentBoxFloatingBadge.astro";
-import ContentBoxSevenThreeFloatingBadge from "../components/ContentBoxSevenThreeFloatingBadge.astro";
-import ContentBoxCyberCut from "../components/ContentBoxCyberCut.astro";
-import ContentBoxSpecial from "../components/ContentBoxSpecial.astro";
-import LottoGrid from "../components/LottoGrid.astro";
+import ContentBoxNeumorphism from "../components/ContentBoxNeumorphism.astro";
+import ContentBoxPremium from "../components/ContentBoxPremium.astro";
+import ContentBoxSevenThreeNeumorphism from "../components/ContentBoxSevenThreeNeumorphism.astro";
+import ContentBoxSevenThreePremium from "../components/ContentBoxSevenThreePremium.astro";
+import ContentBoxTwoPremium from "../components/ContentBoxTwoPremium.astro";
 import LoginRtpSection from "../components/LoginRtpSection.astro";
+import ProviderGrid from "../components/ProviderGrid.astro";
+import GameRankingBoard from "../components/GameRankingBoard.astro";
 import ReviewCardSumo2 from "../components/ReviewCardSumo2.astro";
-import LatestWinners from "../components/LatestWinnersHuay.astro";
+import LatestWinners from "../components/LatestWinners.astro";
 import SmoothCarousel from "../components/SmoothCarousel.astro";
-import Faq from "../components/FaqHuay.astro";
+import Faq from "../components/Faq3.astro";
 import Navfoot from "../components/Navfoot.astro";
 
 import { Picture } from "astro:assets";
 import { orderForBrand } from "../lib/brandProfile";
-import imgMarkets from "../assets/slide3.png";
-import imgPayout from "../assets/slide2.png";
+import imgCategories from "../assets/slide4.png";
+import imgRegister from "../assets/slide3.png";
+import imgStandard from "../assets/banner2.png";
 
 const currentPath = Astro.url.pathname;
 const homePage = Astro.url.origin;
 const logoUrl = homePage + "/logo.webp";
 
-const pageTitle = "MAHORANLOTTO เว็บเล่นหวยออนไลน์ ครบทุกตลาด ซื้อหวยง่าย จ่ายไว";
-const pageDescription = "ซื้อหวยออนไลน์ ครบทุกตลาดผ่าน MAHORANLOTTO รองรับหวยรัฐบาล หวยลาว หวยฮานอย สมัครสมาชิก ทางเข้าเว็บไซต์จริง ส่งโพยอัตโนมัติ ข้อมูลเลขอั้นง่าย";
+const pageTitle = "UFAYES เว็บพนันออนไลน์ครบทุกเกม แทงบอล คาสิโน สล็อต หวย ระบบออโต้";
+const pageDescription = "UFAYES รวมข้อมูลแทงบอล คาสิโนสด สล็อต หวย เกมยอดนิยมจากค่ายดัง ระบบฝากถอนออโต้ โปรโมชั่น และช่องทางติดต่อทีมงานตลอด 24 ชั่วโมง";
 
 const faqs = [
   {
-    q: "MAHORANLOTTO รองรับตลาดหวยอะไรบ้าง",
-    a: "ระบบรวมตลาดหวยหลายประเภทไว้ในเว็บไซต์เดียว ทั้งหวยรัฐบาลไทย หวยลาว หวยฮานอย หวยหุ้น หวยยี่กี และหวยต่างประเทศ สมาชิกสามารถดูรอบที่เปิดรับ เวลาปิดรับ และอัตราจ่ายของแต่ละตลาดก่อนเลือกส่งโพยได้จากหน้าเดียว",
+    q: "UFAYES มีเกมอะไรให้เลือกบ้าง",
+    a: "เว็บไซต์แบ่งบริการหลักเป็นแทงบอล คาสิโนสด สล็อตออนไลน์ และหวยออนไลน์ พร้อมส่วนเกมยอดนิยมที่มีบาคาร่า รูเล็ต ไฮโล และเกมประเภทอื่นให้เลือก",
   },
   {
-    q: "สมัครสมาชิก MAHORANLOTTO ต้องทำอย่างไร",
-    a: "กรอกข้อมูลตามที่ระบบกำหนด ยืนยันบัญชี แล้วเข้าสู่ระบบ จากนั้นเติมเครดิตและเลือกตลาดหวยที่ต้องการได้ทันที ขั้นตอนเป็นระบบอัตโนมัติจึงใช้เวลาไม่นาน แต่ควรตรวจสอบชื่อบัญชีและจำนวนเงินให้ถูกต้องก่อนยืนยันทุกครั้ง",
+    q: "UFAYES เชื่อมต่อกับ UFABET หรือไม่",
+    a: "หน้าเว็บไซต์ระบุว่าให้บริการผ่าน UFABET และนำเสนอว่าเป็นตัวแทนโดยตรง แต่ผู้ใช้งานควรตรวจสอบโดเมนและข้อมูลทางเข้าก่อนสมัครทุกครั้ง",
   },
   {
-    q: "เลขอั้นกับเลขเต็มต่างกันอย่างไร ตรวจสอบก่อนส่งโพยได้ที่ไหน",
-    a: "เลขอั้นคือเลขที่ยอดแทงเข้ามามากจนต้องปรับลดอัตราจ่ายลงจากปกติ ส่วนเลขเต็มคือเลขที่ปิดรับแล้วและส่งโพยเพิ่มไม่ได้ในรอบนั้น ทั้งสองรายการจะแสดงอยู่ในหน้าของแต่ละตลาด และหน้ายืนยันโพยจะแจ้งอัตราจ่ายจริงให้เห็นก่อนกดยืนยันเสมอ",
+    q: "UFAYES ใช้ระบบฝากถอนออโต้หรือไม่",
+    a: "หน้าเว็บไซต์ระบุว่ารองรับการฝากถอนออโต้ สมาชิกควรตรวจสอบชื่อบัญชีและรายละเอียดธุรกรรมให้ถูกต้องก่อนยืนยันรายการ",
   },
   {
-    q: "ถูกรางวัลแล้วรับเงินรางวัลอย่างไร",
-    a: "หลังประกาศผล ระบบจะตรวจโพยของสมาชิกและอัปเดตสถานะรายการให้เห็นในบัญชีผู้ใช้งาน หากเป็นรายการที่เข้าเงื่อนไขการรับรางวัล ระบบจะดำเนินการตามขั้นตอนที่กำหนด และสมาชิกสามารถย้อนดูประวัติการถูกรางวัลได้จากหน้าประวัติรายการ",
+    q: "โปรโมชั่น UFAYES ถอนเงินได้ทันทีหรือไม่",
+    a: "ขึ้นอยู่กับเงื่อนไขของแต่ละโปรโมชั่น เช่น ยอดเทิร์น เกมที่ร่วมรายการ ระยะเวลา และวงเงินถอน จึงควรอ่านรายละเอียดก่อนกดรับสิทธิ์",
   },
   {
-    q: "ตรวจสอบทางเข้า MAHORANLOTTO เว็บไซต์จริงอย่างไร",
-    a: "สังเกตชื่อโดเมนให้ตรงกับแบรนด์ ตรวจสอบว่าเชื่อมต่อแบบ HTTPS และดูว่าหน้าเว็บไซต์มีเมนูสมัครสมาชิก เข้าสู่ระบบ และช่องทางติดต่อครบถ้วน หลีกเลี่ยงลิงก์จากแหล่งที่ไม่ทราบที่มาหรือเว็บไซต์ที่ตั้งชื่อเลียนแบบ",
+    q: "หากใช้งาน UFAYES แล้วมีปัญหาควรทำอย่างไร",
+    a: "เว็บไซต์มีช่องทางติดต่อผ่าน Line Official และ Telegram พร้อมระบุว่าทีมงานดูแลตลอด 24 ชั่วโมง ควรเตรียมข้อมูลรายการและติดต่อผ่านช่องทางที่อยู่บนเว็บไซต์จริง",
   },
 ];
 
 const webPageSchema = {
   "@context": "https://schema.org",
   "@type": "WebPage",
-  name: "MAHORANLOTTO",
+  name: "UFAYES",
   description: pageDescription,
   url: homePage + currentPath,
 };
 const webSiteSchema = {
   "@context": "https://schema.org",
   "@type": "WebSite",
-  name: "MAHORANLOTTO",
-  alternateName: ["MAHORANLOTTO", "MAHORANLOTTO เว็บเล่นหวยออนไลน์ ครบทุกตลาด ซื้อหวยง่าย จ่ายไว"],
-  url: "https://mahoranlotto-brand.com/",
+  name: "UFAYES",
+  alternateName: ["UFAYES", "UFAYES เว็บพนันออนไลน์ครบทุกเกม แทงบอล คาสิโน สล็อต หวย ระบบออโต้"],
+  url: "https://ufayes-brand.com/",
 };
 const orgSchema = {
   "@context": "https://schema.org",
   "@type": "Organization",
-  name: "MAHORANLOTTO",
+  name: "UFAYES",
   logo: logoUrl,
   url: homePage,
 };
@@ -82,17 +83,24 @@ const allSchemas = orderForBrand([webPageSchema, orgSchema, webSiteSchema], Astr
 
   <Announcement />
 
-  <ContentBoxHuay as="h1" title="ซื้อหวยออนไลน์กับ MAHORANLOTTO รองรับตลาดเล่นหวยใดบ้าง">
+  <ContentBoxNeumorphism as="h1" title="UFAYES เว็บตรง UFABET รวมเกมยอดนิยมจากค่ายดัง พร้อมระบบฝากถอนออโต้">
     <p>
-      <strong class="text-amber-300">MAHORANLOTTO</strong> เป็นเว็บเล่นหวยออนไลน์ที่รวบรวมตลาดหวยหลายประเภทไว้ในระบบเดียว ช่วยให้สมาชิกสามารถเลือกซื้อหวยได้สะดวกโดยไม่ต้องสลับใช้งานหลายเว็บไซต์ ไม่ว่าจะเป็นหวยรัฐบาล
-      หวยลาว หวยฮานอย หวยหุ้น หรือหวยต่างประเทศ สมัครสมาชิก ฝากถอน ไปจนถึงการส่งโพยและตรวจสอบรายการย้อนหลัง ภายในหน้าเดียว ทำให้การซื้อหวยออนไลน์เป็นเรื่องง่ายมากขึ้น
+      <strong class="text-red-300">UFAYES</strong> เป็นแพลตฟอร์มพนันออนไลน์ที่เชื่อมต่อระบบ UFABET พร้อมรวมแทงบอล คาสิโนสด สล็อต และหวยออนไลน์ไว้ในบัญชีเดียว สมาชิกสามารถเลือกเกม สมัคร ฝากถอน และตรวจสอบรายการผ่านระบบอัตโนมัติ
+      ภายในเว็บไซต์ยังมีเกมยอดนิยม โปรโมชั่น และช่องทางติดต่อทีมงานตลอด 24 ชั่วโมง
     </p>
-  </ContentBoxHuay>
+  </ContentBoxNeumorphism>
 
-  <ContentBoxSevenThreeHuay titleright="ซื้อหวยออนไลน์กับ MAHORANLOTTO รองรับตลาดหวยใดบ้าง">
+  <ContentBoxPremium as="h2" title="UFAYES เชื่อมต่อระบบ UFABET เว็บตรง รองรับการเดิมพันประเภทใดบ้าง">
+    <p>
+      <strong class="text-red-300">UFAYES</strong> แบ่งบริการเป็นหมวดกีฬา คาสิโนสด สล็อต และหวยออนไลน์ สมาชิกจึงเลือกเดิมพันหลายประเภทได้โดยไม่ต้องสมัครหลายเว็บไซต์ พร้อมจัดการเครดิตและตรวจสอบประวัติรายการจากบัญชีเดียว
+      หมวดกีฬารองรับการแข่งขันและตลาดเดิมพันหลากหลาย คาสิโนสดมีบาคาร่า รูเล็ต และไฮโล ส่วนสล็อตเชื่อมต่อเกมจากหลายผู้ให้บริการ ขณะที่หวยออนไลน์เปิดรับตามรอบเวลาของแต่ละตลาด
+    </p>
+  </ContentBoxPremium>
+
+  <ContentBoxSevenThreeNeumorphism titleright="แทงบอล คาสิโน สล็อต และหวยบน UFAYES แตกต่างกันอย่างไร">
     <div slot="left" class="flex h-full flex-col justify-center">
       <Picture
-        src={imgMarkets}
+        src={imgCategories}
         loading="lazy"
         fetchpriority="low"
         widths={[200, 400, 600, 800]}
@@ -101,98 +109,117 @@ const allSchemas = orderForBrand([webPageSchema, orgSchema, webSiteSchema], Astr
         formats={["avif", "webp"]}
         fallbackFormat="webp"
         quality={80}
-        alt="MAHORANLOTTO ถ่ายทอดสดผลหวยฮานอย พร้อมตลาดหวยออนไลน์ครบทุกตลาดในระบบเดียว"
-        class="mx-auto h-auto w-full rounded-2xl border-2 border-amber-500/30 shadow-[0_10px_30px_rgba(251,191,36,0.3)]"
+        alt="UFAYES ตัวจริงเรื่องบอล รวมแทงบอล คาสิโนสด สล็อต และหวยออนไลน์ในระบบเดียว"
+        class="mx-auto h-auto w-full rounded-2xl border-2 border-red-500/30 shadow-[0_10px_30px_rgba(220,38,38,0.35)]"
       />
     </div>
-    <p slot="right" class="text-left text-base leading-relaxed">
-      MAHORANLOTTO รวบรวมตลาดหวยออนไลน์ หลายประเภทไว้ใน เว็บไซต์เดียว เพื่อลดขั้นตอนในการค้นหาและสลับใช้งานหลายแพลตฟอร์ม สมาชิกสามารถเลือกซื้อหวยได้ตามวันและรอบที่เปิดรับ
-      พร้อมตรวจสอบอัตราจ่ายและรายละเอียดของแต่ละตลาดก่อนส่งโพยได้ทันที ไม่ว่าจะเป็นหวยรัฐบาล หวยลาว หวยฮานอย หวยหุ้น หรือหวยต่างประเทศ
-    </p>
-  </ContentBoxSevenThreeHuay>
+    <div slot="right">
+      <p>แทงบอลต้องพิจารณาคู่แข่งขัน อัตราต่อรอง และเวลาเริ่มแข่ง ส่วนคาสิโนสดดำเนินเกมตามรอบของแต่ละโต๊ะ ผู้เล่นจึงควรตรวจสอบกติกาและวงเงินก่อนเริ่มเล่น</p>
+      <p class="mt-4">
+        สล็อตมีรูปแบบและฟีเจอร์แตกต่างกันตามค่ายเกม ขณะที่หวยออนไลน์ต้องเลือกตลาด เลข จำนวนเงิน และส่งรายการก่อนเวลาปิดรับ แม้ทุกหมวดจะอยู่ใน UFAYES ระบบเดียวกัน
+        แต่เงื่อนไขการเล่นและการตัดสินผลไม่เหมือนกัน
+      </p>
+    </div>
+  </ContentBoxSevenThreeNeumorphism>
 
-  <LottoGrid />
-
-  <ContentBoxFloatingBadge as="h2" title="สมัครสมาชิก MAHORANLOTTO อย่างไรให้เริ่มซื้อหวยได้ทันที">
-    <p class="text-left text-base leading-relaxed">
-      การ สมัครสมาชิก MAHORANLOTTO ไม่ซับซ้อน เพียงกรอกข้อมูลตามที่ระบบกำหนด ยืนยันบัญชี และเข้าสู่ระบบ ก็สามารถเลือกตลาดหวย เติมเครดิต และเริ่มส่งโพยได้ทันที ระบบอัตโนมัติช่วยลดระยะเวลาในการดำเนินการ
-      ทำให้ผู้เล่นใหม่สามารถเริ่มซื้อหวยออนไลน์ได้ง่ายโดยไม่ต้องผ่านขั้นตอนที่ยุ่งยาก
+  <ContentBox as="h2" title="เกมยอดนิยมและค่ายดังที่ UFAYES คัดมาให้สมาชิก">
+    <p>
+      เว็บไซต์รวบรวมสล็อต บาคาร่า รูเล็ต ไฮโล และเกมออนไลน์ประเภทอื่นไว้ในส่วนเกมยอดนิยม พร้อมแยกหมวดค่ายเกมเพื่อให้ค้นหาตามประเภทหรือผู้ให้บริการได้ง่ายขึ้นก่อนเล่นควรตรวจสอบกติกา อัตราจ่าย
+      และวงเงินของแต่ละเกม หากหน้าเกมโหลดไม่สมบูรณ์ ไม่ควรกดยืนยันซ้ำทันที แต่ควรตรวจสอบประวัติรายการก่อน เพื่อป้องกันการเดิมพันซ้ำโดยไม่ตั้งใจ
     </p>
-  </ContentBoxFloatingBadge>
+  </ContentBox>
+
+  <ProviderGrid />
+
+  <GameRankingBoard />
+
+  <ContentBoxSevenThreePremium titleright="สมัครสมาชิก UFAYES พร้อมใช้ระบบฝากถอนออโต้ได้อย่างไร">
+    <div slot="left" class="flex h-full flex-col justify-center">
+      <Picture
+        src={imgRegister}
+        loading="lazy"
+        fetchpriority="low"
+        widths={[200, 400, 600, 800]}
+        sizes="(max-width: 768px) 100vw, 30vw"
+        decoding="async"
+        formats={["avif", "webp"]}
+        fallbackFormat="webp"
+        quality={80}
+        alt="UFAYES สมัครสมาชิกใหม่ ฝากแรกรับโบนัส พร้อมระบบฝากถอนออโต้"
+        class="mx-auto h-auto w-full rounded-2xl border-2 border-red-500/30 shadow-[0_10px_30px_rgba(220,38,38,0.35)]"
+      />
+    </div>
+    <p slot="right">
+      ผู้ใช้งานใหม่สามารถสมัคร UFAYES ด้วยข้อมูลตามที่ระบบกำหนด จากนั้นเข้าสู่หน้าสมาชิก เติมเครดิต และเลือกเกมที่ต้องการได้ทันที หน้าเว็บไซต์แยกเมนูสมัครและเข้าสู่ระบบไว้อย่างชัดเจน
+      ระบบฝากถอนออโต้ช่วยลดขั้นตอนการแจ้งรายการกับเจ้าหน้าที่ แต่สมาชิกควรตรวจสอบชื่อบัญชี ช่องทางทำธุรกรรม และจำนวนเงินก่อนยืนยันทุกครั้ง พร้อมเก็บหลักฐานไว้จนกว่ารายการจะเสร็จสมบูรณ์
+    </p>
+  </ContentBoxSevenThreePremium>
 
   <LoginRtpSection />
 
   <div class="mx-auto mb-10 flex flex-nowrap justify-center gap-3 px-4 sm:gap-6">
     <a
       href="/login"
-      class="group relative flex flex-1 items-center justify-center rounded-full bg-gradient-to-r from-amber-300 via-amber-400 to-amber-600 px-4 py-3 text-sm font-black whitespace-nowrap text-[#1a0409] shadow-[0_5px_20px_rgba(251,191,36,0.45)] transition-all duration-300 hover:-translate-y-1 hover:scale-105 hover:shadow-[0_8px_25px_rgba(251,191,36,0.65)] sm:flex-none sm:px-10 sm:py-3.5 sm:text-base">
+      class="group relative flex flex-1 items-center justify-center rounded-full bg-gradient-to-r from-red-500 via-red-600 to-red-700 px-4 py-3 text-sm font-black whitespace-nowrap text-white shadow-[0_5px_20px_rgba(220,38,38,0.45)] transition-all duration-300 hover:-translate-y-1 hover:scale-105 hover:shadow-[0_8px_25px_rgba(220,38,38,0.65)] sm:flex-none sm:px-10 sm:py-3.5 sm:text-base">
       เข้าสู่ระบบ
     </a>
 
     <a
       href="/register"
-      class="group relative flex flex-1 items-center justify-center rounded-full border border-amber-400/60 bg-[#1a0409]/80 px-4 py-3 text-sm font-black whitespace-nowrap text-amber-300 backdrop-blur-sm transition-all duration-300 hover:scale-105 hover:border-amber-300 hover:bg-[#5f0914] hover:shadow-[0_0_15px_rgba(251,191,36,0.45)] sm:flex-none sm:px-10 sm:py-3.5 sm:text-base">
+      class="group relative flex flex-1 items-center justify-center rounded-full border border-red-400/60 bg-[#140202]/80 px-4 py-3 text-sm font-black whitespace-nowrap text-red-300 backdrop-blur-sm transition-all duration-300 hover:scale-105 hover:border-red-300 hover:bg-[#240404] hover:shadow-[0_0_15px_rgba(239,68,68,0.45)] sm:flex-none sm:px-10 sm:py-3.5 sm:text-base">
       สมัครสมาชิก
     </a>
   </div>
 
-  <ContentBoxCyberCut as="h2" title="ระบบซื้อหวยออนไลน์ของ MAHORANLOTTO ช่วยให้แทงหวยได้สะดวกขึ้นอย่างไร">
-    <p class="text-left text-base leading-relaxed">
-      ภายในเว็บไซต์มีระบบที่ช่วยจัดการขั้นตอนการซื้อหวยตั้งแต่การเลือกประเภทหวย กรอกหมายเลข ระบุจำนวนเงิน ไปจนถึงการยืนยันรายการในลำดับเดียว ผู้ใช้งานสามารถตรวจสอบรายละเอียดโพยก่อนส่งทุกครั้ง
-      ลดความผิดพลาดจากการกรอกข้อมูล และยังสามารถดูประวัติการซื้อย้อนหลังได้ ทำให้การแทงหวยออนไลน์มีความสะดวกและจัดการข้อมูลได้ง่ายขึ้น
-    </p>
-  </ContentBoxCyberCut>
-
-  <ContentBoxSpecial as="h2" title="เลขอั้น เลขเต็ม และปัญหาที่ผู้เล่นหวยออนไลน์มักพบก่อนส่งโพย">
-    <div slot="left">
-      <p class="text-left text-base leading-relaxed">
-        เลขอั้นคือหมายเลขที่มียอดแทงเข้ามามากผิดปกติจนต้องปรับลดอัตราจ่ายลงจากเรตปกติของตลาดนั้น ส่วนเลขเต็มคือหมายเลขที่ปิดรับไปแล้วและไม่สามารถส่งโพยเพิ่มได้อีกในรอบนั้น
-        ปัญหาที่ผู้เล่นหวยออนไลน์พบบ่อยที่สุดคือการกดยืนยันโพยโดยไม่ได้ดูสถานะของเลขก่อน แล้วมาพบภายหลังว่าอัตราจ่ายที่ได้รับไม่เท่ากับที่คาดไว้ หรือเลขที่ตั้งใจแทงถูกปิดรับไปก่อนหน้าแล้ว
-      </p>
-    </div>
-    <div slot="right">
-      <p class="text-left text-base leading-relaxed">
-        ก่อนส่งโพยทุกครั้ง สมาชิก MAHORANLOTTO ควรเปิดดูตารางเลขอั้นและเลขเต็มของตลาดที่ต้องการ ตรวจสอบอัตราจ่ายที่ระบบแสดงบนหน้ายืนยันโพยว่าตรงกับที่ตั้งใจไว้หรือไม่
-        และดูเวลาปิดรับของแต่ละตลาดให้ชัดเจน เพราะหวยรัฐบาล หวยลาว หวยฮานอย และหวยหุ้นปิดรับคนละเวลากัน การตรวจโพยให้ครบทั้งหมายเลข จำนวนเงิน และประเภทการแทงก่อนกดยืนยัน
-        จะช่วยลดปัญหาที่พบบ่อยของผู้เล่นหวยออนไลน์ได้เกือบทั้งหมด
-      </p>
-    </div>
-  </ContentBoxSpecial>
-
-  <ContentBoxSevenThreeFloatingBadge title="ระบบจ่ายไวของ MAHORANLOTTO ทำงานอย่างไร หลังถูกรางวัล">
-    <div slot="left" class="flex h-full flex-col justify-center">
-      <Picture
-        src={imgPayout}
-        loading="lazy"
-        fetchpriority="low"
-        widths={[200, 400, 600, 800]}
-        sizes="(max-width: 768px) 100vw, 30vw"
-        decoding="async"
-        formats={["avif", "webp"]}
-        fallbackFormat="webp"
-        quality={80}
-        alt="MAHORANLOTTO ถูกตรงจ่ายจริง รับเงินรางวัลหวยออนไลน์หลักล้านผ่านระบบจ่ายไว"
-        class="mx-auto h-auto w-full rounded-2xl border-2 border-amber-500/30 shadow-[0_10px_30px_rgba(251,191,36,0.3)]"
-      />
-    </div>
-    <p slot="right" class="text-left text-base leading-relaxed">
-      หลังประกาศผลรางวัล สมาชิก MAHORANLOTTO สามารถตรวจสอบผลผ่านระบบและติดตามสถานะรายการของตนเองได้ทันที หากเป็นรายการที่เข้าเงื่อนไขการรับรางวัล ระบบจะดำเนินการตามขั้นตอนที่กำหนด
-      ช่วยลดระยะเวลาในการตรวจสอบและอำนวยความสะดวกในการจัดการธุรกรรม สมาชิกยังสามารถตรวจสอบประวัติการรับรางวัลและรายการย้อนหลังได้จากบัญชีผู้ใช้งาน
-    </p>
-  </ContentBoxSevenThreeFloatingBadge>
-
   <LatestWinners />
 
-  <ContentBox as="h2" title="ทางเข้า MAHORANLOTTO เว็บไซต์จริง และวิธีหลีกเลี่ยงเว็บปลอม">
-    <p class="text-left text-base leading-relaxed">
-      ก่อนเข้าใช้งานควรตรวจสอบว่าเป็นทางเข้าของเว็บไซต์จริงทุกครั้ง โดยสังเกตชื่อโดเมน <strong class="text-amber-300">MAHORANLOTTO</strong> การเชื่อมต่อ HTTPS และข้อมูลความปลอดภัยของหน้าเว็บไซต์ หลีกเลี่ยงการเข้าสู่ระบบผ่านลิงก์ที่ไม่ทราบแหล่งที่มา
-      หรือเว็บไซต์ที่มีการเลียนแบบชื่อแบรนด์ การใช้ทางเข้าล่าสุดจากช่องทางทางการจะช่วยลดความเสี่ยงในการพบเว็บไซต์ปลอมและทำให้ใช้งานได้อย่างต่อเนื่องและปลอดภัย
-    </p>
-  </ContentBox>
+  <ContentBoxNeumorphism as="h2" title="โปรโมชั่น UFAYES ต้องตรวจสอบเงื่อนไขอะไรบ้างก่อนรับสิทธิ์">
+    <div>
+      <p>
+        ก่อนรับโปรโมชั่น <strong class="text-red-300">UFAYES</strong> ควรตรวจสอบยอดฝากขั้นต่ำ ระยะเวลารับสิทธิ์ เกมที่ร่วมรายการ ยอดเทิร์น และวงเงินถอน เพราะแต่ละแคมเปญอาจมีเงื่อนไขแตกต่างกัน
+      </p>
+      <p class="mt-4">
+        ไม่ควรตัดสินใจจากจำนวนโบนัสเพียงอย่างเดียว เนื่องจากบางเกมอาจไม่นับยอดเทิร์นเต็มจำนวน หรือกำหนดให้ทำรายการภายในเวลาที่ระบุ การอ่านเงื่อนไขล่วงหน้าช่วยลดปัญหาถอนเงินไม่ได้หรือมียอดเทิร์นค้าง
+      </p>
+    </div>
+  </ContentBoxNeumorphism>
 
   <SmoothCarousel />
 
-  <Faq title="คำถามที่พบบ่อยเกี่ยวกับ MAHORANLOTTO" faqs={faqs} />
+  <ContentBoxTwoPremium titleleft="พบปัญหาสมัคร ฝากถอน หรือเข้าเกม ติดต่อทีมงาน UFAYES ได้อย่างไร" titleright="ทางเข้า UFAYES เว็บจริง ควรตรวจสอบอะไรเพื่อหลีกเลี่ยงเว็บไซต์เลียนแบบ">
+    <p slot="left">
+      UFAYES ระบุว่ามีทีมงานให้บริการตลอด 24 ชั่วโมง พร้อมช่องทางติดต่อผ่าน Line Official และ Telegram สำหรับช่วยเหลือเรื่องสมัคร ฝากถอน และปัญหาการเข้าเกม เมื่อติดต่อควรเตรียมชื่อบัญชี เวลา จำนวนเงิน
+      เลขอ้างอิง และภาพหน้าจอที่เกี่ยวข้อง ไม่ควรส่งรหัสผ่านหรือ OTP ให้ผู้อื่น และควรติดต่อผ่านช่องทางที่แสดงบนเว็บไซต์จริงเท่านั้น
+    </p>
+    <p slot="right">
+      ก่อนเข้าสู่ระบบควรตรวจชื่อโดเมนและการเชื่อมต่อ HTTPS ให้ถูกต้อง พร้อมสังเกตรูปแบบหน้าเว็บ เมนูเข้าสู่ระบบ สมัครสมาชิก โปรโมชั่น และช่องทางติดต่อว่าอยู่ครบหรือไม่ หลีกเลี่ยงลิงก์จากบุคคลไม่รู้จัก
+      โฆษณาป๊อปอัป หรือหน้าที่ขอข้อมูลผิดปกติ หากบัญชีรับเงินหรือหน้าเข้าสู่ระบบเปลี่ยนไป ควรหยุดทำรายการและตรวจสอบกับทีมงานก่อน
+    </p>
+  </ContentBoxTwoPremium>
+
+  <ContentBox as="h2" title="สรุปภาพรวม UFAYES ก่อนเริ่มใช้งาน">
+    <div>
+      <p>
+        <strong class="text-red-300">UFAYES</strong> รวมแทงบอล คาสิโนสด สล็อต และหวยออนไลน์ไว้ในระบบเดียว พร้อมเกมยอดนิยม ระบบฝากถอนออโต้ โปรโมชั่น และทีมงานตลอด 24 ชั่วโมง ก่อนใช้งานควรตรวจสอบกติกาเกม
+        เงื่อนไขโปรโมชั่น รายละเอียดธุรกรรม และทางเข้าเว็บไซต์จริงทุกครั้ง เพื่อลดปัญหารายการซ้ำ ยอดฝากไม่เข้า หรือการเข้าสู่เว็บไซต์เลียนแบบ
+      </p>
+      <Picture
+        src={imgStandard}
+        loading="lazy"
+        fetchpriority="low"
+        widths={[400, 800, 1200]}
+        sizes="(max-width: 768px) 100vw, 768px"
+        decoding="async"
+        formats={["avif", "webp"]}
+        fallbackFormat="webp"
+        quality={75}
+        alt="UFAYES เว็บพนันอันดับ 1 การันตีมาตรฐานสากล ดูแลระดับพรีเมียมตลอด 24 ชั่วโมง"
+        class="mx-auto mt-6 h-auto w-full max-w-3xl rounded-2xl"
+      />
+    </div>
+  </ContentBox>
+
+  <Faq title="คำถามที่พบบ่อยเกี่ยวกับ UFAYES" faqs={faqs} />
 
   <ReviewCardSumo2 />
 

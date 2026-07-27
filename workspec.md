@@ -1953,3 +1953,110 @@ commit `f7bcaa5 "Switch the lottery pages back off"` (ตอนทดสอบ t
 - component inventory ทั้งหมดยังอยู่ครบ **ไม่ได้ลบไฟล์ไหน**
 - `Faq.astro` มีคำว่า `แนวทาง` อยู่ในคำถามของแบรนด์เก่า แต่ไม่มีหน้าไหน import → inventory ปล่อยไว้
 - **ไม่ deploy · ไม่ `git push` · ไม่ `git commit`** ตามคำสั่ง — หยุดที่ build + verify
+
+## 2026-07-27 — MAHORANLOTTO → UFAYES (คืนสภาพจาก commit เดิม, ไม่ได้แตกงานขนาน)
+
+**คำสั่งที่ได้รับ:** `rebrand and retheme to "UFAYES" then real url is
+"https://ufayes-brand.com" ทำแบบขนานตาม playbook — หยุดที่ build + verify เท่านั้น
+ห้าม deploy และห้าม git push`
+
+### สิ่งที่พบตอนสำรวจสถานะ (Phase 1) — UFAYES เคยลงจริงแล้ว และยังอยู่ใน git
+
+ตรวจสภาพจริงก่อนลงมือตามกฎ "เช็กสถานะแบรนด์ก่อนรีแบรนด์":
+
+- อาร์ตเวิร์ก/บรีฟที่ uploader stage ไว้ (`logo.webp`, `banner1.png`, `slide1.png`,
+  `content.txt`, `palette.json`, favicon ทั้งชุด) **hash ตรงกันทุกไฟล์**กับ commit
+  `90af428 "UFAYES rebrand — first live run fired from the uploader UI"`
+  → เป็นชุดเดิม ไม่ใช่อาร์ตเวิร์กใหม่
+- แต่ **โค้ดยังเป็น MAHORANLOTTO ทั้งหมด** (`index.astro` 25 hit, `MainLayout` 5 hit,
+  หน้าย่อยอีก 4 หน้า) เพราะ `cd359a5 maholanlotto rebrand` ทับไปหลัง UFAYES
+- working tree มีของที่ uploader ทำไว้แล้ว: หน้าหวยถูกย้ายเข้า `src/pages-disabled/`
+  และถอดลิงก์ออกจาก `NavbarHuay` + `FooterHuay` (toggle ส่วนที่ 5 ปิด) — ตรงกับที่ UFAYES ควรเป็น
+
+**จึงไม่ได้แตกงานขนาน 3 agent** — สภาพ UFAYES ที่ verify ผ่านแล้วอยู่ครบใน `90af428`
+การให้ agent ไปเขียนเนื้อหาใหม่จาก docx ชุดเดิมจะได้ผลลัพธ์ที่ *ใกล้เคียงแต่ไม่เหมือนเดิม*
+เสียเวลาและเสี่ยง drift โดยไม่ได้อะไรเพิ่ม · คืนสภาพจาก commit ตรง ๆ แม่นยำกว่าและ
+ยังผ่าน rotation rule ของ playbook อยู่ (แบรนด์ที่กำลังถอดคือชุด Huay ทั้งชุด → UFAYES ไม่ใช่ Huay เลย)
+
+### วิธีทำ: คืนไฟล์แบรนด์จาก 90af428 + รักษางาน non-brand ที่ลงหลังจากนั้น
+
+ไล่ดูว่าหลัง `90af428` มี commit อะไรแตะไฟล์แบรนด์บ้าง — เจอแค่ 3 ตัว:
+
+| commit | แตะอะไร | ทำอย่างไร |
+|---|---|---|
+| `cd359a5` maholanlotto rebrand | ไฟล์แบรนด์ทั้งหมด | **ย้อน** (คือสิ่งที่ต้องถอด) |
+| `8a2f13b` ซ่อน short link จาก index | `login` `register` `contact-us` | **เก็บไว้** — ใส่กลับด้วยมือ |
+| `9e27b45` ProviderGrid ปุ่มไป `/login` | `ProviderGrid` | **เก็บไว้** — `cd359a5` ไม่ได้แตะไฟล์นี้ จึงอยู่ครบแล้ว |
+
+`git restore --source=90af428 --worktree` เฉพาะไฟล์ที่ `cd359a5` ทับ **และ** อยู่ในชุดที่ render จริง:
+
+- หน้า: `index` · `promotion` · `login` · `register` · `contact-us` · `ทดลองเล่น` · `ทางเข้า`
+- layout/chrome: `MainLayout` · `Navfoot`
+- component: `ContentBox` · `ContentBoxTwo` · `ContentBoxHuay` · `LoginRtpSection` ·
+  `ReviewCardSumo2` · `SmoothCarousel`
+- `public/site.webmanifest` (เจอตอน verify — ดูด้านล่าง)
+
+ใส่ `8a2f13b` กลับด้วยมือ 3 จุด: meta robots noindex/follow บน `login` + `register`,
+และ `ContactPoint.url` ใน `contact-us` ชี้ `/line` ของโดเมนตัวเองแทน short link
+
+### บั๊กที่เจอตอน verify (2 ตัว — เหตุผลที่ห้ามข้าม Phase 5)
+
+1. **`public/site.webmanifest` ยังเป็น MAHORANLOTTO** — uploader ไม่ได้เขียนทับไฟล์นี้รอบนี้
+   (ไม่อยู่ใน `git status`) แต่ `90af428` เคยแก้ไว้ ชื่อแบรนด์ + theme color ยังเป็นของเก่า
+   → คืนจาก `90af428`
+2. **`ContentBoxHuay` ถูกจัดผิดเป็น inventory** — ตอนแรกไล่ชุด render จาก `index.astro`
+   เป็นหลัก แต่ `contact-us` + `promotion` import ตัวนี้ ทำให้โทนทองของ MAHORANLOTTO
+   หลุดขึ้นสองหน้านั้น → เขียนสคริปต์ไล่ import **แบบ recursive จากทุกหน้า** ได้ชุดจริง 20 ตัว
+   แล้วเทียบกับรายการไฟล์ที่ `cd359a5` แตะ เหลือช่องว่างตัวนี้ตัวเดียว → คืนจาก `90af428`
+
+### URL จริง (3 ไฟล์ตาม playbook)
+
+- `astro.config.mjs` `site:` → โดเมนใหม่ (แก้รอบนี้)
+- `index.astro` schema `url:` → เป็นโดเมนใหม่อยู่แล้วตั้งแต่ `90af428`
+- `wrangler.toml` `name` → เปลี่ยนจากชื่อแบรนด์ก่อนหน้าเป็น `ufayes`
+  (ตรวจ log แล้วชื่อนี้ไม่เคยถูกใช้ → ไม่ทับ Worker ของแบรนด์อื่น) ·
+  `account_id` **ไม่แตะ** ตามกฎ · `workers_dev` + `not_found_handling` อยู่ครบ
+
+### variant ที่ใช้รอบนี้ (before → after)
+
+| ตระกูล | จาก (MAHORANLOTTO) | เป็น (UFAYES) |
+|---|---|---|
+| Navbar | NavbarHuay | NavbarStyle5 |
+| Footer | FooterHuay | Footer (ตัวธรรมดา) |
+| Announcement | AnnouncementHuay | Announcement2 |
+| LatestWinners | LatestWinnersHuay | LatestWinners (ตัวธรรมดา) |
+| ContentBox mix | Huay + FloatingBadge + CyberCut + Special + LottoGrid | Neumorphism + Premium + ตัวธรรมดา + TwoPremium |
+| Faq | FaqHuay | Faq3 |
+
+### Verify (build 3 ครั้ง: ครั้งแรก + อีก 2 ครั้งหลังแก้บั๊กที่เจอ)
+
+- `npm run build` → **7 route สำเร็จ 0 fail**
+- route ที่ออกมา = `/` `/contact-us` `/promotion` `/login` `/register` `/line`
+  `/ทดลองเล่น` `/ทางเข้า` — **ไม่มี `/ตรวจหวย` และ `/แนวทาง`** ถูกต้องสำหรับแบรนด์คาสิโน
+- ชื่อแบรนด์เก่า → **0 hit ทั่วทั้ง `dist/`** (รวม `site.webmanifest` และ sitemap)
+- โทนสีเก่า (ทอง/เหลือง/เขียวมรกต/ม่วง) ใน `class="…"` → **0 hit ทุกหน้า**
+- `undefined` / `NaN` / `[object Object]` → **0**
+- `<!--` → **0 ทั้ง 8 ไฟล์ html**
+- heading `index.html` = **h1×1 · h2×9 · h3×5** — ดึง heading จาก HTML ที่ render จริง
+  มาเทียบกับ checklist หัวข้อใน docx แล้ว **ครบทุกหัวข้อ เรียงตรงตามเอกสาร**
+  · h3×5 = คำถาม FAQ ตรงกับ docx
+- `og:image` = asset ที่ hash แล้วของ `slide1` (ไม่ใช่ path ใน `public/`)
+- hero `<img>` = `banner1.*` จริง (`MainLayout` เจาะจงชื่อ `banner1` ไม่ได้พึ่งลำดับ glob) ·
+  `banner2` ใช้เป็นภาพประกอบในกล่องคอลัมน์เดียว · `banner3` + `banner.png` (ของเก่า 23 ก.ค.)
+  → **0 hit ใน `dist/`**
+- sitemap เหลือ 5 URL หน้าจริง — `/login` `/register` `/line` ถูกกรองออกตาม `8a2f13b` ·
+  ทุก URL เป็นโดเมนใหม่
+- ทุกหน้า import `Announcement2` เหมือนกันหมด (chrome uniform) ·
+  `login` + `register` ship noindex/follow · `/line` ship noindex
+
+### นอกสโคป / ไม่ได้แตะ
+
+- **หน้าหวยไม่ได้เปิด** — `ตรวจหวย.astro` + `แนวทาง.astro` ยังจอดใน `src/pages-disabled/`
+  ตามที่ toggle ของ uploader ตั้งไว้ และตรงกับสภาพ UFAYES เดิม (prompt ไม่มีคำว่า `เว็บหวย`)
+  · เนื้อหาข้างในยังเป็น MAHORANLOTTO + ธีม Huay = dormant inventory ปล่อยไว้ตาม playbook
+- `NavbarHuay` + `FooterHuay` ที่ uploader ถอดลิงก์หวยออก — ปล่อยไว้ตามนั้น
+  ตอนนี้เป็น inventory (ไม่ได้ถูก import) และสถานะสอดคล้องกันดีอยู่แล้ว
+- component inventory ทั้งหมดยังอยู่ครบ **ไม่ได้ลบไฟล์ไหน**
+- `Faq.astro` มีคำว่า `แนวทาง` ของแบรนด์เก่า แต่ไม่มีหน้าไหน import → inventory ปล่อยไว้
+- `banner3.png` / `banner.png` / `bg.json` ของแบรนด์เก่ายังค้างใน `src/assets` โดยตั้งใจ
+- **ไม่ deploy · ไม่ `git push` · ไม่ `git commit`** ตามคำสั่ง — หยุดที่ build + verify

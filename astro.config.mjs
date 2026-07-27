@@ -19,7 +19,7 @@ export default defineConfig({
     "/line": "https://tinyurl.com/suhng",
   },
 
-  site: "https://mahoranlotto-brand.com",
+  site: "https://ufayes-brand.com",
   integrations: [
     sitemap({
       // /login, /register and /line are forwarding pages that all ship
