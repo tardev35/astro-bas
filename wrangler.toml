@@ -1,22 +1,8 @@
-# Deploy target for this brand's site: Cloudflare Workers Static Assets.
-# `npm run build` then `npx wrangler deploy`.
-
-# The Worker name IS the deployment identity. Every brand needs its own —
-# deploying with a name that already belongs to another brand overwrites that
-# brand's live site. Change this whenever the brand changes, alongside `site:`
-# in astro.config.mjs.
 name = "mahoranlotto"
 compatibility_date = "2026-07-27"
 
-# Keep the site off *.workers.dev. That hostname serves the identical site, and
-# a second public copy is duplicate content Google can index. It was switched
-# off in the dashboard first, but this key is what makes it stick: `workers_dev`
-# defaults to TRUE, so leaving it unset lets the next deploy quietly turn the
-# duplicate back on.
 workers_dev = false
 
 [assets]
 directory = "dist"
-# Astro builds real 404s; without this an unknown path falls back to index.html
-# and every typo'd URL answers 200 with the home page.
 not_found_handling = "404-page"
