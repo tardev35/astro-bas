@@ -236,16 +236,50 @@ reference image that happened to show a URL, and it was wrong). Leave
 `index.astro`'s `webSiteSchema`/similar schema.org objects exactly as
 they already are — even if they still show a previous brand's domain,
 that's expected drift, not something to silently "fix." Only touch
-those two spots when the user explicitly gives a real URL alongside the
+those spots when the user explicitly gives a real URL alongside the
 brand name (e.g. "rebrand to `<brand>` and real url `<XXXX>`"), and
-then set both to that exact URL — don't miss the schema.org one, it's a
+then set each to that exact URL — don't miss the schema.org one, it's a
 plain string literal that doesn't auto-follow `site:` the way
-`Astro.url.origin`-derived values do.
+`Astro.url.origin`-derived values do. **There is a third file too — see
+the `wrangler.toml` warning below.**
 
 `robots.txt` used to be a third spot; it isn't any more. It is generated
 by `src/pages/robots.txt.ts` from `site:`, so it follows the domain on
 its own. **Do not re-create `public/robots.txt`** — a static file there
 would silently win over the generated route.
+
+### 🚨 `wrangler.toml` `name` — the one that destroys another brand's site
+
+Sites deploy to Cloudflare Workers now (see
+[`DEPLOY-CLOUDFLARE.md`](../../../DEPLOY-CLOUDFLARE.md)), and
+**`name` in `wrangler.toml` IS the deployment identity.** Deploying with a
+name that already belongs to another brand does not fail, warn, or create
+anything new — it **overwrites that brand's live Worker**, and the site
+that was on it is gone the moment someone runs `wrangler deploy`.
+
+So when a real URL is given, that is **three** files, not two:
+
+| file | change |
+|---|---|
+| `astro.config.mjs` | `site:` |
+| `src/pages/index.astro` | `webSiteSchema` `url:` (and any sibling schema literal) |
+| **`wrangler.toml`** | **`name`** |
+
+Set `name` to something derived from the brand — lowercase, no spaces,
+e.g. brand `MAHORANLOTTO` → `name = "mahoranlotto"`. It must not match any
+name a previous brand used.
+
+**Without an explicit real URL, leave all three alone**, exactly as with
+`site:` above. A name that still reads as the previous brand is expected
+drift on a content-only rebrand — the operator has not deployed anything
+yet, and guessing here is what breaks a live site.
+
+Two more keys in that file are load-bearing; **do not remove either**:
+`workers_dev = false` keeps the duplicate `*.workers.dev` copy of the site
+off the internet (it defaults to `true`, so deleting the line quietly
+brings the duplicate back on the next deploy), and
+`not_found_handling = "404-page"` stops every mistyped URL answering 200
+with the home page.
 
 **Leave `MainLayout.astro`'s `<head>` structure alone.** It looks
 unusual on purpose: the optional blocks (icons / manifest / OG /
@@ -936,6 +970,12 @@ pointing at a `public/` path during a rebrand, repoint it to the
    exactly what routes exist, and nothing in this repo turns them off by
    itself (see the lottery trigger in Phase 4.5). Same check for any
    `บทความ`/`about-us` page the uploader scaffolded in an earlier run.
+
+   **If a real URL was given this run, check `wrangler.toml` `name` changed
+   with it.** `grep -n 'name =' wrangler.toml` — a name still reading as the
+   previous brand means the next `wrangler deploy` overwrites that brand's
+   live Worker and takes its site down. Nothing else in the build catches
+   this, because the site builds perfectly either way.
 2. Start `npm run dev`, `curl` the built pages, and grep the rendered
    HTML:
    - old brand name must not appear anywhere in the response body
