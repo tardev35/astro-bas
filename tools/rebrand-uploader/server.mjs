@@ -2601,7 +2601,9 @@ const PAGE = /* html */ `<!doctype html>
     const had = f.dataset.origOn === '1';
     if (want === had) return false;
 
-    const t = title.value.trim(), d = desc.value.trim();
+    // null for the lottery rows — those pages ship with the repo and have no
+    // Title/Meta inputs to read (see npEls above)
+    const t = title ? title.value.trim() : '', d = desc ? desc.value.trim() : '';
     const q = new URLSearchParams({ slot: 'newpage', page: f.dataset.newpage, title: t, desc: d, on: want ? '1' : '0' });
     status.textContent = want
       ? ((!t && !d) ? '⏳ กำลังเปิดหน้า (Claude เขียนเนื้อหาให้ตอนรีแบรนด์)...' : '⏳ กำลังเปิดหน้า...')
