@@ -697,11 +697,21 @@ Phase 5 build covers all pages at once.) For each page:
    is exempt, not the brand name. Note this decision in the workspec.
 
 **Lottery brand trigger — `เว็บหวย`.** The two lottery pages
-`ตรวจหวย.astro` and `แนวทาง.astro` live in **`src/pages-disabled/`**, which
-Astro does **not** route (only `src/pages/` is routed) — so by default a
-casino brand ships without them, and that's correct. **If the rebrand prompt
-contains the word `เว็บหวย` (or the brand is clearly a lottery site), turn
-both ON:**
+`ตรวจหวย.astro` and `แนวทาง.astro` are routed only when they sit in
+`src/pages/`; Astro ignores `src/pages-disabled/` entirely.
+
+⚠️ **Do not assume where they currently are — check.** They are wherever the
+*previous* brand left them, and the previous brand may well have been a
+lottery site. This is a state you must set every rebrand, in both
+directions, not a default you can inherit. (MAHORANLOTTO turned them on;
+whatever runs next starts with them in `src/pages/` and both links live in
+the navbar.)
+
+Run `ls src/pages/ src/pages-disabled/` and then make reality match the
+brand:
+
+**If the rebrand prompt contains the word `เว็บหวย` (or the brand is clearly
+a lottery site) — they must end up ON:**
 - **Enable the pages** — move `ตรวจหวย.astro` and `แนวทาง.astro` from
   `src/pages-disabled/` into `src/pages/`, so they become the routes
   `/ตรวจหวย` and `/แนวทาง`.
@@ -714,8 +724,26 @@ both ON:**
 - Rebrand their copy like any other page (brand name, title, stale assets),
   **but keep their intentional `Huay` theme + `AnnouncementHuay`** per the
   exception above.
-For a **non-lottery** brand, leave both files in `pages-disabled/` (off) and
-do **not** add the nav links. Record the on/off decision in the workspec.
+**For a non-lottery brand (slot/casino/sport) they must end up OFF — and
+turning them off is an action, not an absence of one:**
+- **If they are sitting in `src/pages/`, move them back** to
+  `src/pages-disabled/`. Left alone, a slot brand ships `/ตรวจหวย` and
+  `/แนวทาง` — lottery pages rethemed in slot colours, off-topic for the
+  site and thin content Google has no reason to rank.
+- **Remove their two nav links** from the active navbar's desktop *and*
+  mobile arrays. The navbar rotates each rebrand, so also check: if the new
+  brand picks a *different* navbar, the stale links vanish with the old one
+  and there is nothing to remove — but if it reuses the same one, they are
+  still there.
+- Leave the `*Huay` components themselves alone — they are inventory for the
+  next lottery brand, same as every other unused variant.
+
+Record the on/off decision in the workspec either way.
+
+> The same trap applies to any page the uploader's ส่วนที่ 5 scaffolded
+> (`บทความ.astro`, `about-us.astro`): once created they persist into the next
+> brand. Decide per rebrand whether they belong, rather than assuming a clean
+> slate — nothing in this repo resets itself between brands.
 
 **The `tools/rebrand-uploader` "ส่วนที่ 4 — Title/Meta หน้าย่อย" is an
 OPTIONAL shortcut, NOT a replacement for this phase.** The uploader can
@@ -867,6 +895,13 @@ pointing at a `public/` path during a rebrand, repoint it to the
    0 pages failing. A clean build only proves the code compiles, not that
    content/images are correct. Only build again if a check below turns up
    a bug you then fix.
+   **Then read the route list the build printed and check it against the
+   brand type.** A slot/casino brand must NOT have shipped `/ตรวจหวย` or
+   `/แนวทาง`; a lottery brand must have both. This is the cheapest place to
+   catch a page the *previous* brand left switched on — the build tells you
+   exactly what routes exist, and nothing in this repo turns them off by
+   itself (see the lottery trigger in Phase 4.5). Same check for any
+   `บทความ`/`about-us` page the uploader scaffolded in an earlier run.
 2. Start `npm run dev`, `curl` the built pages, and grep the rendered
    HTML:
    - old brand name must not appear anywhere in the response body
