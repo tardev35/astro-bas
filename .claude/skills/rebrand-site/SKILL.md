@@ -696,9 +696,18 @@ Phase 5 build covers all pages at once.) For each page:
    verify they carry **zero** old-brand-name references; only the theme
    is exempt, not the brand name. Note this decision in the workspec.
 
-**Lottery brand trigger — `เว็บหวย`.** The two lottery pages
-`ตรวจหวย.astro` and `แนวทาง.astro` are routed only when they sit in
-`src/pages/`; Astro ignores `src/pages-disabled/` entirely.
+**Lottery pages — normally the operator's switch, not yours.** `ตรวจหวย.astro`
+and `แนวทาง.astro` are routed only when they sit in `src/pages/`; Astro ignores
+`src/pages-disabled/` entirely.
+
+**ส่วนที่ 5 of the uploader now has a toggle for each of them**, alongside
+บทความ and เกี่ยวกับเรา. When the rebrand was fired from the uploader the
+operator has already decided: the pages are in the right folder and the navbar
+and footer links already match. **Check the state, don't re-derive it** — if
+`src/pages/` matches what the brand should have, there is nothing to do here.
+
+The keyword rule below is the **fallback for prompts typed straight into Claude
+Code**, where no toggle was involved.
 
 ⚠️ **Do not assume where they currently are — check.** They are wherever the
 *previous* brand left them, and the previous brand may well have been a
