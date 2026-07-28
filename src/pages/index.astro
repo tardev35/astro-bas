@@ -1,75 +1,75 @@
 ---
 import MainLayout from "../layouts/MainLayout.astro";
-import Announcement from "../components/Announcement2.astro";
+import Announcement from "../components/Announcement4.astro";
 import ContentBox from "../components/ContentBox.astro";
-import ContentBoxNeumorphism from "../components/ContentBoxNeumorphism.astro";
-import ContentBoxPremium from "../components/ContentBoxPremium.astro";
-import ContentBoxSevenThreeNeumorphism from "../components/ContentBoxSevenThreeNeumorphism.astro";
-import ContentBoxSevenThreePremium from "../components/ContentBoxSevenThreePremium.astro";
-import ContentBoxTwoPremium from "../components/ContentBoxTwoPremium.astro";
+import ContentBoxCyberCut from "../components/ContentBoxCyberCut.astro";
+import ContentBoxFloatingBadge from "../components/ContentBoxFloatingBadge.astro";
+import ContentBoxSevenThreeCyberCut from "../components/ContentBoxSevenThreeCyberCut.astro";
+import ContentBoxSevenThreeFloatingBadge from "../components/ContentBoxSevenThreeFloatingBadge.astro";
+import ContentBoxSpecial from "../components/ContentBoxSpecial.astro";
+import ContentBoxTwoCyberCut from "../components/ContentBoxTwoCyberCut.astro";
 import LoginRtpSection from "../components/LoginRtpSection.astro";
 import ProviderGrid from "../components/ProviderGrid.astro";
 import GameRankingBoard from "../components/GameRankingBoard.astro";
 import ReviewCardSumo2 from "../components/ReviewCardSumo2.astro";
-import LatestWinners from "../components/LatestWinners.astro";
+import LatestWinners from "../components/LatestWinners3.astro";
 import SmoothCarousel from "../components/SmoothCarousel.astro";
-import Faq from "../components/Faq3.astro";
+import Faq from "../components/Faq2.astro";
 import Navfoot from "../components/Navfoot.astro";
 
 import { Picture } from "astro:assets";
 import { orderForBrand } from "../lib/brandProfile";
-import imgCategories from "../assets/slide4.png";
-import imgRegister from "../assets/slide3.png";
-import imgStandard from "../assets/banner2.png";
+import imgHidden from "../assets/slide2.png";
+import imgOdds from "../assets/slide4.png";
 
 const currentPath = Astro.url.pathname;
 const homePage = Astro.url.origin;
 const logoUrl = homePage + "/logo.webp";
 
-const pageTitle = "UFAYES เว็บพนันออนไลน์ครบทุกเกม แทงบอล คาสิโน สล็อต หวย ระบบออโต้";
-const pageDescription = "UFAYES รวมข้อมูลแทงบอล คาสิโนสด สล็อต หวย เกมยอดนิยมจากค่ายดัง ระบบฝากถอนออโต้ โปรโมชั่น และช่องทางติดต่อทีมงานตลอด 24 ชั่วโมง";
+const pageTitle = "PAY69 โลกเกมครบทุกสาย สล็อต กีฬา ไลฟ์สด และกิจกรรมล่ารางวัล";
+const pageDescription = "จุดเด่น PAY69 ตั้งแต่กิจกรรมเปิดกล่อง ล่า Hidden เกมไลฟ์สด ค่าน้ำกีฬา ไปจนถึงแอปและเงื่อนไขโปรที่ควรอ่านก่อนกดรับ";
 
 const faqs = [
   {
-    q: "UFAYES มีเกมอะไรให้เลือกบ้าง",
-    a: "เว็บไซต์แบ่งบริการหลักเป็นแทงบอล คาสิโนสด สล็อตออนไลน์ และหวยออนไลน์ พร้อมส่วนเกมยอดนิยมที่มีบาคาร่า รูเล็ต ไฮโล และเกมประเภทอื่นให้เลือก",
+    q: "PAY69 มีเกมหมวดไหนให้เลือกบ้าง",
+    a: "หมวดหลักของ PAY69 ครอบคลุมสล็อต กีฬา เกม Live สด และเดิมพันด้านการเงิน โดยแต่ละหมวดทำงานคนละแบบ สล็อตใช้รอบสปิน เกมสดเล่นตามรอบโต๊ะและภาพถ่ายทอดแบบเรียลไทม์ กีฬาขึ้นกับเหตุการณ์แข่งขัน ส่วนเดิมพันด้านการเงินอิงความเคลื่อนไหวของราคา จึงไม่ควรใช้วิธีเลือกแบบเดียวกันทั้งหมด",
   },
   {
-    q: "UFAYES เชื่อมต่อกับ UFABET หรือไม่",
-    a: "หน้าเว็บไซต์ระบุว่าให้บริการผ่าน UFABET และนำเสนอว่าเป็นตัวแทนโดยตรง แต่ผู้ใช้งานควรตรวจสอบโดเมนและข้อมูลทางเข้าก่อนสมัครทุกครั้ง",
+    q: "กิจกรรมเปิดกล่อง เปิดดวง และล่า Hidden ของ PAY69 คืออะไร",
+    a: "เป็นระบบ Gamification ที่ให้สมาชิกกลับมามีส่วนร่วมกับหน้าเว็บ ทั้งการเปิดกล่อง เปิดดวง ล่า Hidden และเครดิตฟรีแบบกดรับเอง ก่อนร่วมกิจกรรมควรตรวจจำนวนสิทธิ์ วันหมดอายุ ยอดเทิร์น และเกมที่รองรับให้ครบ เพราะคำว่ารับฟรีมักมาพร้อมเงื่อนไขเสมอ",
   },
   {
-    q: "UFAYES ใช้ระบบฝากถอนออโต้หรือไม่",
-    a: "หน้าเว็บไซต์ระบุว่ารองรับการฝากถอนออโต้ สมาชิกควรตรวจสอบชื่อบัญชีและรายละเอียดธุรกรรมให้ถูกต้องก่อนยืนยันรายการ",
+    q: "สายกีฬาควรดูอะไรก่อนกดยืนยันบิลบน PAY69",
+    a: "PAY69 นำเสนอค่าน้ำเป็นจุดขายสำหรับสายกีฬา ก่อนกดยืนยันควรดูทั้งราคา ตลาดเดิมพัน เวลาปิดรับ และประเภทบิล เช่น เต็มเวลา ครึ่งแรก หรือสเต็ป เพราะราคาสามารถเปลี่ยนตามเวลาและสถานการณ์ แม้ชื่อทีมจะเหมือนเดิมก็ตาม",
   },
   {
-    q: "โปรโมชั่น UFAYES ถอนเงินได้ทันทีหรือไม่",
-    a: "ขึ้นอยู่กับเงื่อนไขของแต่ละโปรโมชั่น เช่น ยอดเทิร์น เกมที่ร่วมรายการ ระยะเวลา และวงเงินถอน จึงควรอ่านรายละเอียดก่อนกดรับสิทธิ์",
+    q: "โปรฝากเพิ่ม 5% และเครดิตฟรีกดรับเองคุ้มหรือไม่",
+    a: "หน้าเว็บนำเสนอทั้งฝากเพิ่ม 5% เครดิตฟรีกดรับเอง และการถอนที่ไม่จำกัด ก่อนรับสิทธิ์ควรตรวจว่าเปอร์เซ็นต์คิดจากยอดใด รับได้กี่ครั้ง และรองรับเกมประเภทไหน ส่วนที่สำคัญกว่าตัวเลขบนแบนเนอร์คือยอดเทิร์น เพดานถอน และเวลาหมดอายุ",
   },
   {
-    q: "หากใช้งาน UFAYES แล้วมีปัญหาควรทำอย่างไร",
-    a: "เว็บไซต์มีช่องทางติดต่อผ่าน Line Official และ Telegram พร้อมระบุว่าทีมงานดูแลตลอด 24 ชั่วโมง ควรเตรียมข้อมูลรายการและติดต่อผ่านช่องทางที่อยู่บนเว็บไซต์จริง",
+    q: "PAY69 App จำเป็นต้องติดตั้งหรือไม่",
+    a: "PAY69 App เชื่อมกับขั้นตอนสมัคร เข้าระบบ ติดตามกิจกรรม และจัดการบัญชีผ่านมือถือ จึงมีบทบาทมากกว่าการเป็นทางเข้าสำรอง ก่อนติดตั้งควรตรวจแหล่งดาวน์โหลด ชื่อไฟล์ และเวอร์ชันอุปกรณ์ และหลีกเลี่ยงไฟล์ที่ส่งมาทางข้อความส่วนตัว",
   },
 ];
 
 const webPageSchema = {
   "@context": "https://schema.org",
   "@type": "WebPage",
-  name: "UFAYES",
+  name: "PAY69",
   description: pageDescription,
   url: homePage + currentPath,
 };
 const webSiteSchema = {
   "@context": "https://schema.org",
   "@type": "WebSite",
-  name: "UFAYES",
-  alternateName: ["UFAYES", "UFAYES เว็บพนันออนไลน์ครบทุกเกม แทงบอล คาสิโน สล็อต หวย ระบบออโต้"],
-  url: "https://ufayes-brand.com/",
+  name: "PAY69",
+  alternateName: ["PAY69", "PAY69 โลกเกมครบทุกสาย สล็อต กีฬา ไลฟ์สด และกิจกรรมล่ารางวัล"],
+  url: "https://pay69-brand.com/",
 };
 const orgSchema = {
   "@context": "https://schema.org",
   "@type": "Organization",
-  name: "UFAYES",
+  name: "PAY69",
   logo: logoUrl,
   url: homePage,
 };
@@ -83,24 +83,32 @@ const allSchemas = orderForBrand([webPageSchema, orgSchema, webSiteSchema], Astr
 
   <Announcement />
 
-  <ContentBoxNeumorphism as="h1" title="UFAYES เว็บตรง UFABET รวมเกมยอดนิยมจากค่ายดัง พร้อมระบบฝากถอนออโต้">
-    <p>
-      <strong class="text-red-300">UFAYES</strong> เป็นแพลตฟอร์มพนันออนไลน์ที่เชื่อมต่อระบบ UFABET พร้อมรวมแทงบอล คาสิโนสด สล็อต และหวยออนไลน์ไว้ในบัญชีเดียว สมาชิกสามารถเลือกเกม สมัคร ฝากถอน และตรวจสอบรายการผ่านระบบอัตโนมัติ
-      ภายในเว็บไซต์ยังมีเกมยอดนิยม โปรโมชั่น และช่องทางติดต่อทีมงานตลอด 24 ชั่วโมง
-    </p>
-  </ContentBoxNeumorphism>
+  <ContentBoxCyberCut as="h1" title="PAY69 พาเข้าโลกเกมหลายสไตล์ ตั้งแต่สล็อต กีฬา ไปจนถึงกิจกรรมล่ารางวัล">
+    <div>
+      <p>
+        <strong class="text-amber-200">PAY69</strong> ไม่ได้วางหน้าเว็บให้เป็นเพียงชั้นวางสล็อต แต่รวมกีฬา เกม Live เดิมพันด้านการเงิน แอปมือถือ และกิจกรรมล่ารางวัลไว้ในพื้นที่เดียว
+        ภาพหน้าแรกจึงเต็มไปด้วยตัวละครแนวอวกาศ กีฬา แฟนตาซี และการผจญภัย
+      </p>
+      <p class="mt-4">
+        จุดขายไม่ได้มีแค่ “เกมเยอะ” แต่คือการทำให้สมาชิกมีหลายอย่างให้สำรวจ ตั้งแต่เปิดกล่อง ล่า Hidden ไปจนถึงรับสิทธิ์ผ่านหน้าเว็บ เพียงแต่อย่าตื่นเต้นจนลืมอ่านเงื่อนไข เดี๋ยวได้รางวัลแต่ถอนแล้วเรื่องยาว
+      </p>
+    </div>
+  </ContentBoxCyberCut>
 
-  <ContentBoxPremium as="h2" title="UFAYES เชื่อมต่อระบบ UFABET เว็บตรง รองรับการเดิมพันประเภทใดบ้าง">
-    <p>
-      <strong class="text-red-300">UFAYES</strong> แบ่งบริการเป็นหมวดกีฬา คาสิโนสด สล็อต และหวยออนไลน์ สมาชิกจึงเลือกเดิมพันหลายประเภทได้โดยไม่ต้องสมัครหลายเว็บไซต์ พร้อมจัดการเครดิตและตรวจสอบประวัติรายการจากบัญชีเดียว
-      หมวดกีฬารองรับการแข่งขันและตลาดเดิมพันหลากหลาย คาสิโนสดมีบาคาร่า รูเล็ต และไฮโล ส่วนสล็อตเชื่อมต่อเกมจากหลายผู้ให้บริการ ขณะที่หวยออนไลน์เปิดรับตามรอบเวลาของแต่ละตลาด
-    </p>
-  </ContentBoxPremium>
+  <ContentBoxFloatingBadge as="h2" title="เปิดเว็บ PAY69 แล้วเจออะไร ทำไมเหมือนยกโลกเกมมาไว้ในเว็บเดียว">
+    <div>
+      <p>
+        หน้าแรกของ <strong class="text-amber-200">PAY69</strong> ใช้ตัวละครหลายแนวเพื่อสื่อว่ามีเกมมากกว่าหนึ่งประเภท ทั้งสล็อต กีฬา เกมสด และกิจกรรมพิเศษ
+        ภาพรวมจึงใกล้เคียงศูนย์รวมความบันเทิงมากกว่าเว็บที่มีแต่ปุ่มเลือกเกมเรียงกัน
+      </p>
+      <p class="mt-4">การออกแบบช่วยให้แต่ละหมวดดูมีเรื่องราว แต่ก่อนเลือกควรดูประเภทเกม กติกา และรูปแบบเดิมพันให้เข้าใจ ภาพ Hero ดูอลังการได้ แต่อย่าให้ความอลังการเลือกเกมแทนเรา</p>
+    </div>
+  </ContentBoxFloatingBadge>
 
-  <ContentBoxSevenThreeNeumorphism titleright="แทงบอล คาสิโน สล็อต และหวยบน UFAYES แตกต่างกันอย่างไร">
+  <ContentBoxSevenThreeCyberCut titleright="เปิดกล่อง เปิดดวง และล่า Hidden ทำไมผู้ใช้ต้องกลับมาเช็กหน้าเว็บ">
     <div slot="left" class="flex h-full flex-col justify-center">
       <Picture
-        src={imgCategories}
+        src={imgHidden}
         loading="lazy"
         fetchpriority="low"
         widths={[200, 400, 600, 800]}
@@ -109,117 +117,120 @@ const allSchemas = orderForBrand([webPageSchema, orgSchema, webSiteSchema], Astr
         formats={["avif", "webp"]}
         fallbackFormat="webp"
         quality={80}
-        alt="UFAYES ตัวจริงเรื่องบอล รวมแทงบอล คาสิโนสด สล็อต และหวยออนไลน์ในระบบเดียว"
-        class="mx-auto h-auto w-full rounded-2xl border-2 border-red-500/30 shadow-[0_10px_30px_rgba(220,38,38,0.35)]"
+        alt="PAY69 กิจกรรมเปิดกล่อง เปิดดวง และล่า Hidden พร้อมเครดิตฟรีแบบกดรับเอง"
+        class="mx-auto h-auto w-full rounded-2xl border-2 border-amber-400/40 shadow-[0_10px_30px_rgba(212,162,74,0.35)]"
       />
     </div>
     <div slot="right">
-      <p>แทงบอลต้องพิจารณาคู่แข่งขัน อัตราต่อรอง และเวลาเริ่มแข่ง ส่วนคาสิโนสดดำเนินเกมตามรอบของแต่ละโต๊ะ ผู้เล่นจึงควรตรวจสอบกติกาและวงเงินก่อนเริ่มเล่น</p>
+      <p>
+        กิจกรรมเปิดกล่อง เปิดดวง ล่า Hidden และเครดิตฟรีแบบกดรับเอง ทำให้ <strong class="text-amber-200">PAY69</strong> ใช้ระบบ Gamification ดึงผู้ใช้กลับมามีส่วนร่วม
+        ไม่ได้ปล่อยให้หน้าเว็บทำหน้าที่แค่พาเข้าเกมแล้วจบ
+      </p>
+      <p class="mt-4">ก่อนร่วมกิจกรรมควรตรวจจำนวนสิทธิ์ วันหมดอายุ ยอดเทิร์น และเกมที่รองรับ เพราะคำว่า “รับฟรี” มักมีเพื่อนสนิทชื่อ “เงื่อนไข” เดินตามมาติด ๆ</p>
+    </div>
+  </ContentBoxSevenThreeCyberCut>
+
+  <ContentBoxSevenThreeFloatingBadge title="ค่าน้ำ PAY69 มีอะไรให้สายกีฬาดูมากกว่าชื่อทีม">
+    <div slot="left" class="flex h-full flex-col justify-center">
+      <Picture
+        src={imgOdds}
+        loading="lazy"
+        fetchpriority="low"
+        widths={[200, 400, 600, 800]}
+        sizes="(max-width: 768px) 100vw, 30vw"
+        decoding="async"
+        formats={["avif", "webp"]}
+        fallbackFormat="webp"
+        quality={80}
+        alt="ค่าน้ำ PAY69 สำหรับสายกีฬา พร้อมตลาดเดิมพัน เวลาปิดรับ และประเภทบิล"
+        class="mx-auto h-auto w-full rounded-2xl border-2 border-amber-400/40 shadow-[0_10px_30px_rgba(212,162,74,0.35)]"
+      />
+    </div>
+    <div slot="right">
+      <p>
+        <strong class="text-amber-200">PAY69</strong> รองรับการเดิมพันกีฬาและมีการนำเสนอค่าน้ำเป็นจุดขาย สายบอลควรดูทั้งราคา ตลาดเดิมพัน เวลาปิดรับ และประเภทบิล เช่น เต็มเวลา ครึ่งแรก หรือสเต็ป
+        ก่อนกดยืนยัน
+      </p>
+      <p class="mt-4">ชื่อทีมอาจเหมือนเดิม แต่ราคาสามารถเปลี่ยนตามเวลาและสถานการณ์ อย่ากดเพราะเห็นทีมรักอย่างเดียว ไม่อย่างนั้นอาจเชียร์ถูกทีม แต่ถือบิลผิดตลาดแบบเจ็บเงียบ ๆ</p>
+    </div>
+  </ContentBoxSevenThreeFloatingBadge>
+
+  <ContentBox as="h2" title="จากเกม Live สด ถึงเดิมพันด้านการเงิน PAY69 มีหมวดอะไรบ้าง">
+    <div>
+      <p>
+        หมวดหลักของ <strong class="text-amber-200">PAY69</strong> ครอบคลุมสล็อต กีฬา เกม Live สด และเดิมพันด้านการเงิน โดยแต่ละประเภททำงานต่างกัน สล็อตใช้รอบสปิน
+        ส่วนเกมสดเล่นตามรอบโต๊ะและภาพถ่ายทอดแบบเรียลไทม์
+      </p>
       <p class="mt-4">
-        สล็อตมีรูปแบบและฟีเจอร์แตกต่างกันตามค่ายเกม ขณะที่หวยออนไลน์ต้องเลือกตลาด เลข จำนวนเงิน และส่งรายการก่อนเวลาปิดรับ แม้ทุกหมวดจะอยู่ใน UFAYES ระบบเดียวกัน
-        แต่เงื่อนไขการเล่นและการตัดสินผลไม่เหมือนกัน
+        กีฬาขึ้นอยู่กับเหตุการณ์แข่งขัน ขณะที่เดิมพันด้านการเงินอิงความเคลื่อนไหวของราคา จึงไม่ควรใช้วิธีเลือกแบบเดียวกันทั้งหมด รองเท้าแตะใส่ได้หลายที่ แต่ไม่จำเป็นต้องใส่ลงสนามบอล
       </p>
     </div>
-  </ContentBoxSevenThreeNeumorphism>
-
-  <ContentBox as="h2" title="เกมยอดนิยมและค่ายดังที่ UFAYES คัดมาให้สมาชิก">
-    <p>
-      เว็บไซต์รวบรวมสล็อต บาคาร่า รูเล็ต ไฮโล และเกมออนไลน์ประเภทอื่นไว้ในส่วนเกมยอดนิยม พร้อมแยกหมวดค่ายเกมเพื่อให้ค้นหาตามประเภทหรือผู้ให้บริการได้ง่ายขึ้นก่อนเล่นควรตรวจสอบกติกา อัตราจ่าย
-      และวงเงินของแต่ละเกม หากหน้าเกมโหลดไม่สมบูรณ์ ไม่ควรกดยืนยันซ้ำทันที แต่ควรตรวจสอบประวัติรายการก่อน เพื่อป้องกันการเดิมพันซ้ำโดยไม่ตั้งใจ
-    </p>
   </ContentBox>
 
   <ProviderGrid />
 
   <GameRankingBoard />
 
-  <ContentBoxSevenThreePremium titleright="สมัครสมาชิก UFAYES พร้อมใช้ระบบฝากถอนออโต้ได้อย่างไร">
-    <div slot="left" class="flex h-full flex-col justify-center">
-      <Picture
-        src={imgRegister}
-        loading="lazy"
-        fetchpriority="low"
-        widths={[200, 400, 600, 800]}
-        sizes="(max-width: 768px) 100vw, 30vw"
-        decoding="async"
-        formats={["avif", "webp"]}
-        fallbackFormat="webp"
-        quality={80}
-        alt="UFAYES สมัครสมาชิกใหม่ ฝากแรกรับโบนัส พร้อมระบบฝากถอนออโต้"
-        class="mx-auto h-auto w-full rounded-2xl border-2 border-red-500/30 shadow-[0_10px_30px_rgba(220,38,38,0.35)]"
-      />
-    </div>
-    <p slot="right">
-      ผู้ใช้งานใหม่สามารถสมัคร UFAYES ด้วยข้อมูลตามที่ระบบกำหนด จากนั้นเข้าสู่หน้าสมาชิก เติมเครดิต และเลือกเกมที่ต้องการได้ทันที หน้าเว็บไซต์แยกเมนูสมัครและเข้าสู่ระบบไว้อย่างชัดเจน
-      ระบบฝากถอนออโต้ช่วยลดขั้นตอนการแจ้งรายการกับเจ้าหน้าที่ แต่สมาชิกควรตรวจสอบชื่อบัญชี ช่องทางทำธุรกรรม และจำนวนเงินก่อนยืนยันทุกครั้ง พร้อมเก็บหลักฐานไว้จนกว่ารายการจะเสร็จสมบูรณ์
+  <ContentBoxSpecial as="h2" title="ฝากปุ๊บเพิ่ม 5% และเครดิตฟรีกดรับเอง คุ้มจริงหรือแค่ตัวเลขสวย">
+    <p slot="left">
+      หน้าเว็บนำเสนอจุดขายอย่างฝากเพิ่ม 5% เครดิตฟรีกดรับเอง และการถอนที่ไม่จำกัด ก่อนรับสิทธิ์ควรตรวจว่าเปอร์เซ็นต์คิดจากยอดใด รับได้กี่ครั้ง และรองรับเกมประเภทไหน
     </p>
-  </ContentBoxSevenThreePremium>
+    <p slot="right">
+      ส่วนที่สำคัญกว่าตัวเลขบนแบนเนอร์คือยอดเทิร์น เพดานถอน และเวลาหมดอายุ โบนัสที่ดูเยอะอาจไม่คุ้ม หากต้องเล่นต่อยาวจนจำไม่ได้ว่าตอนแรกเข้ามาทำอะไร
+    </p>
+  </ContentBoxSpecial>
+
+  <SmoothCarousel />
+
+  <LatestWinners />
+
+  <ContentBoxTwoCyberCut titleleft="คู่มือภาพของ PAY69 ช่วยสมาชิกใหม่ตรงไหน" titleright="PAY69 App เป็นทางเข้าสำรอง หรือจำเป็นต่อการใช้งาน">
+    <div slot="left">
+      <p>
+        Beginner Guide ของ <strong class="text-amber-200">PAY69</strong> ใช้ภาพอธิบายตั้งแต่เข้าเว็บหรือแอป กดสมัคร ตั้งชื่อผู้ใช้ และกำหนดรหัสผ่าน
+        ช่วยให้ผู้เริ่มต้นมองเห็นตำแหน่งปุ่มและทำตามลำดับได้ง่ายขึ้น
+      </p>
+      <p class="mt-4">
+        อย่างไรก็ตาม ต้องตรวจข้อมูลก่อนยืนยันและตั้งรหัสผ่านที่เดายาก ไม่ควรใช้รหัสเดียวกับโซเชียลหรืออีเมล ส่วน OTP เก็บไว้กับตัว ต่อให้คนขอพูดเพราะแค่ไหนก็ห้ามแจก
+      </p>
+    </div>
+    <div slot="right">
+      <p>
+        <strong class="text-amber-200">PAY69</strong> App เชื่อมกับขั้นตอนสมัคร เข้าระบบ ติดตามกิจกรรม และจัดการบัญชีผ่านมือถือ จึงมีบทบาทมากกว่าการเป็นทางเข้าสำรองสำหรับวันที่เปิดเว็บไม่สะดวก
+      </p>
+      <p class="mt-4">ก่อนติดตั้งควรตรวจแหล่งดาวน์โหลด ชื่อไฟล์ และเวอร์ชันอุปกรณ์ หลีกเลี่ยงไฟล์จากข้อความส่วนตัว เพราะแอปปลอมสมัยนี้แต่งตัวเก่ง บางครั้งหน้าตาดีกว่าของจริงเสียอีก</p>
+    </div>
+  </ContentBoxTwoCyberCut>
 
   <LoginRtpSection />
 
   <div class="mx-auto mb-10 flex flex-nowrap justify-center gap-3 px-4 sm:gap-6">
     <a
       href="/login"
-      class="group relative flex flex-1 items-center justify-center rounded-full bg-gradient-to-r from-red-500 via-red-600 to-red-700 px-4 py-3 text-sm font-black whitespace-nowrap text-white shadow-[0_5px_20px_rgba(220,38,38,0.45)] transition-all duration-300 hover:-translate-y-1 hover:scale-105 hover:shadow-[0_8px_25px_rgba(220,38,38,0.65)] sm:flex-none sm:px-10 sm:py-3.5 sm:text-base">
+      class="group relative flex flex-1 items-center justify-center rounded-full bg-gradient-to-r from-[#f7e3bd] via-[#e0b877] to-[#b8823a] px-4 py-3 text-sm font-black whitespace-nowrap text-[#1a1130] shadow-[0_5px_20px_rgba(212,162,74,0.45)] transition-all duration-300 hover:-translate-y-1 hover:scale-105 hover:shadow-[0_8px_25px_rgba(212,162,74,0.65)] sm:flex-none sm:px-10 sm:py-3.5 sm:text-base">
       เข้าสู่ระบบ
     </a>
 
     <a
       href="/register"
-      class="group relative flex flex-1 items-center justify-center rounded-full border border-red-400/60 bg-[#140202]/80 px-4 py-3 text-sm font-black whitespace-nowrap text-red-300 backdrop-blur-sm transition-all duration-300 hover:scale-105 hover:border-red-300 hover:bg-[#240404] hover:shadow-[0_0_15px_rgba(239,68,68,0.45)] sm:flex-none sm:px-10 sm:py-3.5 sm:text-base">
+      class="group relative flex flex-1 items-center justify-center rounded-full border border-violet-400/60 bg-[#150a24]/80 px-4 py-3 text-sm font-black whitespace-nowrap text-amber-200 backdrop-blur-sm transition-all duration-300 hover:scale-105 hover:border-amber-300 hover:bg-[#241040] hover:shadow-[0_0_15px_rgba(124,58,237,0.55)] sm:flex-none sm:px-10 sm:py-3.5 sm:text-base">
       สมัครสมาชิก
     </a>
   </div>
 
-  <LatestWinners />
-
-  <ContentBoxNeumorphism as="h2" title="โปรโมชั่น UFAYES ต้องตรวจสอบเงื่อนไขอะไรบ้างก่อนรับสิทธิ์">
+  <ContentBox as="h2" title="สรุป PAY69 เด่นที่เกมเยอะ หรือมีกิจกรรมให้กลับมาทุกวัน">
     <div>
       <p>
-        ก่อนรับโปรโมชั่น <strong class="text-red-300">UFAYES</strong> ควรตรวจสอบยอดฝากขั้นต่ำ ระยะเวลารับสิทธิ์ เกมที่ร่วมรายการ ยอดเทิร์น และวงเงินถอน เพราะแต่ละแคมเปญอาจมีเงื่อนไขแตกต่างกัน
+        <strong class="text-amber-200">PAY69</strong> เด่นจากการรวมสล็อต กีฬา เกม Live เดิมพันด้านการเงิน กิจกรรมเปิดกล่อง ล่า Hidden และแอปมือถือไว้ในระบบเดียว
+        จึงมีหลายจุดให้สมาชิกเลือกใช้งานตามความสนใจ
       </p>
       <p class="mt-4">
-        ไม่ควรตัดสินใจจากจำนวนโบนัสเพียงอย่างเดียว เนื่องจากบางเกมอาจไม่นับยอดเทิร์นเต็มจำนวน หรือกำหนดให้ทำรายการภายในเวลาที่ระบุ การอ่านเงื่อนไขล่วงหน้าช่วยลดปัญหาถอนเงินไม่ได้หรือมียอดเทิร์นค้าง
+        แต่ก่อนเริ่มควรตรวจค่าน้ำ ยอดเทิร์น เพดานถอน และวันหมดอายุให้ครบ เกมมีหลายหมวดเป็นข้อดี ขอแค่อย่าเปิดพร้อมกันทุกอย่างจนจาก “โลกเกมหลายสไตล์” กลายเป็น “งงหลายหน้า” ก็พอ
       </p>
-    </div>
-  </ContentBoxNeumorphism>
-
-  <SmoothCarousel />
-
-  <ContentBoxTwoPremium titleleft="พบปัญหาสมัคร ฝากถอน หรือเข้าเกม ติดต่อทีมงาน UFAYES ได้อย่างไร" titleright="ทางเข้า UFAYES เว็บจริง ควรตรวจสอบอะไรเพื่อหลีกเลี่ยงเว็บไซต์เลียนแบบ">
-    <p slot="left">
-      UFAYES ระบุว่ามีทีมงานให้บริการตลอด 24 ชั่วโมง พร้อมช่องทางติดต่อผ่าน Line Official และ Telegram สำหรับช่วยเหลือเรื่องสมัคร ฝากถอน และปัญหาการเข้าเกม เมื่อติดต่อควรเตรียมชื่อบัญชี เวลา จำนวนเงิน
-      เลขอ้างอิง และภาพหน้าจอที่เกี่ยวข้อง ไม่ควรส่งรหัสผ่านหรือ OTP ให้ผู้อื่น และควรติดต่อผ่านช่องทางที่แสดงบนเว็บไซต์จริงเท่านั้น
-    </p>
-    <p slot="right">
-      ก่อนเข้าสู่ระบบควรตรวจชื่อโดเมนและการเชื่อมต่อ HTTPS ให้ถูกต้อง พร้อมสังเกตรูปแบบหน้าเว็บ เมนูเข้าสู่ระบบ สมัครสมาชิก โปรโมชั่น และช่องทางติดต่อว่าอยู่ครบหรือไม่ หลีกเลี่ยงลิงก์จากบุคคลไม่รู้จัก
-      โฆษณาป๊อปอัป หรือหน้าที่ขอข้อมูลผิดปกติ หากบัญชีรับเงินหรือหน้าเข้าสู่ระบบเปลี่ยนไป ควรหยุดทำรายการและตรวจสอบกับทีมงานก่อน
-    </p>
-  </ContentBoxTwoPremium>
-
-  <ContentBox as="h2" title="สรุปภาพรวม UFAYES ก่อนเริ่มใช้งาน">
-    <div>
-      <p>
-        <strong class="text-red-300">UFAYES</strong> รวมแทงบอล คาสิโนสด สล็อต และหวยออนไลน์ไว้ในระบบเดียว พร้อมเกมยอดนิยม ระบบฝากถอนออโต้ โปรโมชั่น และทีมงานตลอด 24 ชั่วโมง ก่อนใช้งานควรตรวจสอบกติกาเกม
-        เงื่อนไขโปรโมชั่น รายละเอียดธุรกรรม และทางเข้าเว็บไซต์จริงทุกครั้ง เพื่อลดปัญหารายการซ้ำ ยอดฝากไม่เข้า หรือการเข้าสู่เว็บไซต์เลียนแบบ
-      </p>
-      <Picture
-        src={imgStandard}
-        loading="lazy"
-        fetchpriority="low"
-        widths={[400, 800, 1200]}
-        sizes="(max-width: 768px) 100vw, 768px"
-        decoding="async"
-        formats={["avif", "webp"]}
-        fallbackFormat="webp"
-        quality={75}
-        alt="UFAYES เว็บพนันอันดับ 1 การันตีมาตรฐานสากล ดูแลระดับพรีเมียมตลอด 24 ชั่วโมง"
-        class="mx-auto mt-6 h-auto w-full max-w-3xl rounded-2xl"
-      />
     </div>
   </ContentBox>
 
-  <Faq title="คำถามที่พบบ่อยเกี่ยวกับ UFAYES" faqs={faqs} />
+  <Faq title="คำถามที่พบบ่อยเกี่ยวกับ PAY69" faqs={faqs} />
 
   <ReviewCardSumo2 />
 
