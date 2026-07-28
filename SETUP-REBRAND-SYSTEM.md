@@ -22,7 +22,7 @@
 | repo ที่คุณทำงาน | `gitlab.com/tardev-group/astro-<ชื่อคุณ>` (คนละอันต่อคน) |
 | branch ที่ทำงาน | `main` |
 | หน้าเว็บ dev | http://localhost:8888 |
-| หน้า uploader | http://localhost:4000 |
+| หน้า uploader | http://localhost:4444 |
 | หน้า preview หลังรีแบรนด์ | http://localhost:4321 |
 
 ---
@@ -34,7 +34,7 @@
 | ส่วน | ทำอะไร | ต้องติดตั้งอะไร |
 |---|---|---|
 | เว็บ Astro | ตัวเว็บลูกค้า | Node.js |
-| Rebrand Uploader | หน้า UI ที่ `localhost:4000` รับไฟล์ + ยิงคำสั่ง | Node.js (ใช้ `sharp` ย่อรูป) |
+| Rebrand Uploader | หน้า UI ที่ `localhost:4444` รับไฟล์ + ยิงคำสั่ง | Node.js (ใช้ `sharp` ย่อรูป) |
 | Claude Code CLI | ตัวที่ลงมือรีแบรนด์จริงตอนกดปุ่ม | **Claude CLI + login** |
 | Cloudflare (wrangler) | ปุ่มขึ้นเว็บจริง + ปุ่มสลับบัญชี | **`wrangler login`** |
 
@@ -327,7 +327,7 @@ npm run dev
 npm run rebrand:upload
 ```
 
-เปิด http://localhost:4000 ต้องเห็นการ์ด 1-7
+เปิด http://localhost:4444 ต้องเห็นการ์ด 1-7
 (หรือดับเบิลคลิก `tools\rebrand-uploader\start-uploader.cmd` ก็ได้ ไม่ต้องเปิด VS Code)
 
 **3) uploader ต่อกับ Claude ได้ไหม** ⭐ ข้อที่ตัดสินว่าติดตั้งสำเร็จหรือไม่
@@ -424,7 +424,7 @@ npx wrangler whoami
 
 # --- ทดสอบว่าพร้อม (ครบ 4 ข้อ) ---
 npm run dev              # 1) เปิด localhost:8888 → Ctrl+C
-npm run rebrand:upload   # 2) เปิด localhost:4000
+npm run rebrand:upload   # 2) เปิด localhost:4444
                          # 3) การ์ด 6 → กด 🧪 ทดสอบท่อ → ต้องเขียว
                          # 4) การ์ด 7 → แถวบัญชี Cloudflare ต้องขึ้นอีเมล
 ```
