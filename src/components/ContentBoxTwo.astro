@@ -4,11 +4,11 @@ const { titleleft, titleright } = Astro.props;
 
 <section class="relative z-10 mx-auto mb-10 w-full max-w-[1400px] px-4 font-sans">
   <div class="grid grid-cols-1 gap-6 md:grid-cols-2 lg:gap-8">
-    <article class="flex flex-col gap-4 text-left text-base leading-relaxed text-white/90">
+    <article class="flex flex-col gap-4 text-left text-base leading-relaxed text-amber-50/85">
       {
         titleleft && (
           <p class="flex items-center gap-3 border-b border-amber-400/40 pb-3 text-xl leading-normal font-black tracking-widest text-white uppercase drop-shadow-md">
-            <span class="flex h-9 w-9 shrink-0 items-center justify-center rounded-lg border border-amber-300/40 bg-gradient-to-br from-[#d4a24a] to-[#4c1d95] text-sm text-white shadow-[0_0_10px_rgba(212,162,74,0.5)]">
+            <span class="flex h-9 w-9 shrink-0 items-center justify-center rounded-lg border border-amber-300/40 bg-gradient-to-br from-[#b1873a] to-[#0b0906] text-sm text-amber-100 shadow-[0_0_10px_rgba(212,175,90,0.5)]">
               🔐
             </span>
             {titleleft}
@@ -18,11 +18,11 @@ const { titleleft, titleright } = Astro.props;
       <slot name="left" />
     </article>
 
-    <article class="flex flex-col gap-4 text-left text-base leading-relaxed text-white/90">
+    <article class="flex flex-col gap-4 text-left text-base leading-relaxed text-amber-50/85">
       {
         titleright && (
           <p class="flex items-center gap-3 border-b border-amber-400/40 pb-3 text-xl leading-normal font-black tracking-widest text-white uppercase drop-shadow-md">
-            <span class="flex h-9 w-9 shrink-0 items-center justify-center rounded-lg border border-amber-200/50 bg-gradient-to-br from-[#f7e3bd] to-[#b8823a] text-sm text-[#1a1130] shadow-[0_0_10px_rgba(212,162,74,0.5)]">
+            <span class="flex h-9 w-9 shrink-0 items-center justify-center rounded-lg border border-amber-200/50 bg-gradient-to-br from-[#f6e4b4] via-[#e0bd72] to-[#b1873a] text-sm text-[#140f05] shadow-[0_0_10px_rgba(212,175,90,0.5)]">
               💰
             </span>
             {titleright}

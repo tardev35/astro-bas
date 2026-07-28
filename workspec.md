@@ -2188,3 +2188,146 @@ LoginRtpSection + ปุ่ม CTA ต่อท้าย #7+#8 (สมัคร/
 - JSON-LD ใน `ทดลองเล่น.astro` เป็น array เปล่าไม่มี `@context`/`@type` (ของเดิม) —
   agent C รายงานไว้ ไม่ได้อยู่ในสโคปรอบนี้
 - **ไม่ deploy · ไม่ `git push` · ไม่ `git commit`** ตามคำสั่ง — หยุดที่ build + verify
+
+---
+
+## 2026-07-28 — รีแบรนด์ PAY69 → LAPDEE88 (สล็อต/คาสิโน, ทอง-ดำ)
+
+**เป้าหมาย:** เปิดตัวแบรนด์ LAPDEE88 บน template เดิม พร้อมโดเมนจริง
+`https://lapdee88-play.com` · รันแบบขนาน 3 agent ตาม playbook · หยุดที่ build + verify
+
+### อินพุตแบรนด์
+
+- brief: `src/assets/content.txt` (uploader extract มาให้แล้ว) — Title/Description +
+  H1×1, H2×9, H3×5 (FAQ) · docx เขียนหัวข้อ FAQ ผิดเป็น `AQ คำถามเกี่ยวกับ LAPDEE88`
+  → render เป็น `คำถามที่พบบ่อยเกี่ยวกับ LAPDEE88`
+- `palette.json`: logo vivid `#dccb9e` / `#b18c5a` (ทองแชมเปญ + บรอนซ์),
+  banner/slide dominant `#020201`–`#0c0b0a` (ดำอุ่น) → **ทองบนดำสไตล์คาสิโนหรู**
+- ภาพชุดใหม่ mtime 21:59: `logo.webp` `banner1.png` `bg.png` `slide1-4.png`
+
+### พาเลตที่ใช้
+
+ทองหลัก `#e0bd72` · ทองเข้ม/บรอนซ์ `#b1873a` · แชมเปญไฮไลต์ `#f6e4b4` / `#f1e6cf` ·
+พื้นดำอุ่น `#0b0906` → การ์ด `#12100a` → ยกระดับ `#1c1609` · เรืองแสง
+`rgba(212,175,90,0.35)` · ตัวอักษรบนปุ่มทอง `#140f05`
+
+**ล้างทิ้งหมด:** ม่วงของ PAY69 (`#150a24` `#1a1130` `#120c22` `#0a0714` `#241040`
+`rgba(124,58,237,…)` + ตระกูล violet/purple), ทองเก่า `#d4a24a` / `rgba(212,162,74,…)`,
+gradient ปุ่ม `#f7e3bd`→`#b8823a`, แดง/rose, เขียว emerald, น้ำเงิน ·
+**คงไว้:** LINE `#00B900`, จุดเขียว live/success, สีแบรนด์ธนาคารจริง
+
+### การหมุน variant (ตามกฎ playbook — ห้ามซ้ำแบรนด์ก่อนหน้า)
+
+| family | PAY69 (เดิม) | LAPDEE88 (ใหม่) |
+|---|---|---|
+| Navbar | NavbarStyle8 | **NavbarStyle9** |
+| Footer | FooterStyle3 | **FooterPremium** |
+| Announcement | Announcement4 | **Announcement** (ตัวธรรมดา, variant gold) |
+| LatestWinners | LatestWinners3 | **LatestWinnersPremium** |
+| Faq | Faq2 | **Faq3** |
+| ContentBox mix | CyberCut + FloatingBadge + Special + TwoCyberCut | **Premium + Neumorphism + ธรรมดา + TwoPremium + SevenThreePremium + SevenThreeNeumorphism** |
+| ฟอนต์ | google-sans | **kanit** |
+
+ไม่มี family ไหนที่จำเป็นต้องใช้ variant ซ้ำของเดิมเลย
+
+### วิธีทำงาน (ขนาน 3 agent, แบ่งตามไฟล์ ไม่ทับกัน)
+
+- **P0/P1 — orchestrator ทำเอง:** อ่าน brief/ภาพ, เลือก variant, เขียน brand spec
+  (วางไว้นอก repo ที่ temp เพราะ Tailwind 4 สแกนไฟล์ md), แล้ว retheme **shared chrome**
+  ให้เสร็จก่อนแตก agent = `MainLayout` + `NavbarStyle9` + `FooterPremium` +
+  `Navfoot` + `Announcement` + `ContentBox` + `ContentBoxHuay`
+  (คำนวณสดจาก import ของหน้าเพจ: `Navfoot`/ticker ใช้ 5 หน้า, `ContentBox` 3 หน้า,
+  `ContentBoxHuay` 2 หน้า) + `brandProfile.ts` + config 3 ไฟล์ + webmanifest
+- **Agent A:** `index.astro` + 13 component ที่มีแต่หน้าแรก render
+- **Agent B:** `login.astro` + `register.astro` (หน้า custom HTML ล้วน)
+- **Agent C:** `contact-us` + `promotion` + `ทดลองเล่น` + `ทางเข้า`
+
+### ไฟล์ที่แก้
+
+**โดเมน/ตัวตนแบรนด์ (3 ไฟล์ตาม playbook + manifest)**
+- `astro.config.mjs` `site:` → `https://lapdee88-play.com`
+- `index.astro` `webSiteSchema.url` → `"https://lapdee88-play.com/"` (string literal)
+- `wrangler.toml` `name` → `lapdee88` (ไล่ log แล้วไม่ซ้ำแบรนด์ไหน → ไม่ทับ Worker เจ้าอื่น) ·
+  `account_id` **ไม่แตะ** · `workers_dev = false` + `not_found_handling` ครบ
+- `public/site.webmanifest` → LAPDEE88 + theme `#d4af5a` / bg `#0b0906`
+- `robots.txt` ไม่ได้แตะ — generate จาก `site:` เองผ่าน `src/pages/robots.txt.ts`
+
+**Shared chrome** — `MainLayout.astro` (สลับ import navbar/footer, title/desc/ogSiteName,
+`apple-mobile-web-app-title`, alt ของ hero) · `NavbarStyle9` · `FooterPremium` ·
+`Navfoot` · `Announcement` · `ContentBox` · `ContentBoxHuay` · `brandProfile.ts` (ฟอนต์)
+
+**หน้าแรก + component เฉพาะหน้าแรก (14 ไฟล์)** — `index.astro`, `ContentBoxPremium`,
+`ContentBoxNeumorphism`, `ContentBoxSevenThreePremium`, `ContentBoxSevenThreeNeumorphism`,
+`ContentBoxTwoPremium`, `ContentBoxTwo`, `LoginRtpSection`, `Faq3`, `LatestWinnersPremium`,
+`ProviderGrid`, `GameRankingBoard`, `ReviewCardSumo2`, `SmoothCarousel`
+
+**หน้าย่อย (6 ไฟล์)** — `login`, `register`, `contact-us`, `promotion`, `ทดลองเล่น`,
+`ทางเข้า` · ทั้ง 4 หน้าที่ใช้ MainLayout สลับ ticker จาก `Announcement4` → `Announcement`
+เรียกแบบเปล่าให้รับ default message ของแบรนด์
+
+### การแมป docx → slot (ตามลำดับเอกสาร)
+
+1 H1 → ContentBoxPremium · 2 → ContentBox · 3 (สมัครสมาชิก) →
+SevenThreePremium + **slide3** · 4 (ฝาก 1 บาท/ออโต้) → SevenThreeNeumorphism +
+**slide2** · 5 (สล็อต/RTP) → ContentBoxNeumorphism แล้วตามด้วย ProviderGrid →
+GameRankingBoard → LoginRtpSection · 6 (คาสิโนสด) → ContentBoxPremium ·
+7+8 (โปรโมชั่น / ทางเข้า) → ContentBoxTwoPremium สองคอลัมน์ · 9 (สรุป) → ContentBox ·
+10 (FAQ) → Faq3 · widget ที่ไม่ใช่ docx (carousel, winners, ปุ่ม login/register,
+review card) วางท้ายหลังเนื้อหา
+
+**slide ที่ใช้:** slide3 + slide2 (SevenThree 2 บล็อกตามเพดาน) · **ไม่ได้ใช้:**
+slide4 (เนื้อหาซ้ำ slide3) · slide1 ใช้เป็น OG image + carousel เท่านั้น
+
+### บั๊ก/กับดักที่เจอรอบนี้
+
+1. **`banner2.png` เป็นของเก่า** — mtime 17:07 (ชุดของ PAY69 วันเดียวกัน) ขณะที่ชุดใหม่
+   คือ 21:59 → เข้าเกณฑ์ "banner2+ ที่ไม่ใช่ชุดปัจจุบัน = inventory เก่า ให้ข้าม"
+   รอบนี้จึงไม่มีบล็อกภาพประกอบคอลัมน์เดียว
+2. **`NavbarStyle9` hardcode ชื่อฟอนต์ kanit ใน style is:global** — ขัดกติกาที่ให้
+   สลับฟอนต์ที่ `brandProfile.ts` ที่เดียว และรั่วเป็น global ทั้งเว็บ → เปลี่ยนเป็น
+   `var(--font-sans)`
+3. **`NavbarStyle9` ลิงก์ไป `/signin` `/signup` ซึ่งไม่มี route จริง** → แก้เป็น
+   `/login` `/register` ทั้ง desktop และ mobile
+4. **`LatestWinnersPremium` ใส่ป้าย UI ไว้ในแท็ก h2** ทำให้จำนวน h2 เกิน checklist →
+   ลดเป็นแท็ก p คลาสเดิม (จำนวน h2 กลับมาเป็น 9 พอดี)
+5. **`login`/`register` มี CSS custom property ตายที่ยังถือสีม่วงของ PAY69 ไว้**
+   (`--panel-bg: #150a24`, `--brand-violet: #7c3aed` ไม่ถูกใช้ที่ไหนเลย) — grep แบบดู
+   class อย่างเดียวจับไม่เจอ → ลบ/แทนด้วยตัวแปรทองที่ถูกใช้จริง และเปลี่ยนชื่อ
+   `--text-grey` เป็น `--text-muted` ให้ตรงค่าจริง
+
+### Verify (build ครั้งเดียว)
+
+- `npm run build` → **7 page สำเร็จ 0 fail**
+- route ที่ออก = `/` `/contact-us` `/promotion` `/login` `/register` `/line`
+  `/ทดลองเล่น` `/ทางเข้า` — **ไม่มี `/ตรวจหวย` และ `/แนวทาง`** ถูกต้องสำหรับแบรนด์สล็อต
+- `PAY69` / `GROW268` / `CHOKDEE1688` / `PANAMA888` / แบรนด์เก่าอื่น → **0 hit ทั่วทั้ง dist**
+- โทนสีเก่า (violet/purple/red/rose/emerald/blue) ในแอตทริบิวต์ class จริง → **0 ทุกหน้า**
+- คอมเมนต์ HTML → **0 ทั้ง 8 ไฟล์ html**
+- `undefined` / `NaN` / `[object Object]` → **0**
+- heading `index.html` = **h1×1 · h2×9 · h3×5** · ดึง heading จาก HTML ที่ render จริงมา
+  เทียบ checklist → **ครบ 9 หัวข้อ เรียงตรงตาม docx** · หน้าย่อยทุกหน้า h1×1 h2×2
+- FAQ render ครบ 5 ข้อ (h3×5 + กล่องคำตอบ 5)
+- hero img = `banner1.*` จริง · `banner2` / `banner3` / `banner.png` → **0 hit ใน dist**
+- `og:image` + `twitter:image` = asset ที่ hash แล้วของ `slide1` (ไม่ใช่ path ใน public)
+- ฟอนต์: preload `kanit-v17-*.woff2` มาครบ · ลิงก์ `fonts.googleapis.com` → **0**
+- ย่อหน้าในหน้าเพจที่โดนบีบความกว้าง → **0**
+- `robots.txt` + sitemap ชี้โดเมนใหม่ · ไม่เหลือโดเมน `-brand.com` เดิมที่ไหนเลย
+- **ไม่ได้ใช้ตระกูล FloatingBadge รอบนี้** จึงไม่มีเคส badge ล้น/ทับเนื้อหาให้ตรวจ
+
+### นอกสโคป / ไม่ได้แตะ
+
+- **หน้าหวยปิดอยู่ถูกต้องแล้ว** — `ตรวจหวย.astro` + `แนวทาง.astro` จอดใน
+  `src/pages-disabled/` · navbar/footer ที่ active ไม่มีลิงก์ไปหา (grep ยืนยัน) ·
+  LAPDEE88 ไม่ใช่เว็บหวย prompt ไม่มีคำว่า `เว็บหวย` → ไม่ต้องทำอะไร
+- ไม่มีหน้า preset ค้างจาก uploader ส่วนที่ 5 (grep `TODO(rebrand)` = 0)
+- component inventory ที่หลุดจากการใช้งาน (`NavbarStyle8`, `FooterStyle3`,
+  `Announcement4`, `LatestWinners3`, `Faq2`, ตระกูล CyberCut/FloatingBadge/Special)
+  ยังมีชื่อ PAY69 อยู่ข้างใน — **drift ที่คาดไว้ ไม่ได้ลบและไม่ได้แก้**
+- `banner2.png` / `banner3.png` / `banner.png` ยังอยู่ใน `src/assets` ตั้งใจไม่ลบ ·
+  glob `banner*` แบบ eager ยัง emit ลง dist โดยไม่มีหน้าไหนอ้างถึง (พฤติกรรมเดิม)
+- **`login.astro` / `register.astro` hardcode ฟอนต์ Oswald** ที่หัวแบรนด์ และโหลด Oswald
+  ทั้งสอง branch ของ `fontHref` → เป็นฟอนต์ที่ **เหมือนกันทุกแบรนด์** = ร่องรอยเชื่อมโยง
+  ข้ามเว็บที่การหมุนฟอนต์หลักแก้ไม่ถึง · ไม่ได้แตะรอบนี้เพราะเปลี่ยนแล้วดีไซน์เปลี่ยน —
+  บันทึกไว้ให้พิจารณาเป็นงานแยก
+- JSON-LD ใน `ทดลองเล่น.astro` ยังเป็น array เปล่าไม่มี `@context`/`@type` (ของเดิม)
+- **ไม่ deploy · ไม่ `git push` · ไม่ `git commit`** ตามคำสั่ง — หยุดที่ build + verify
