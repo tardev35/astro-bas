@@ -2512,7 +2512,7 @@ const PAGE = /* html */ `<!doctype html>
         <div class="row">
           <label class="switch warn"><input type="checkbox" id="rbFast" /><span class="slider"></span></label>
           <label for="rbFast">Fast mode</label>
-          <span class="badge warn" id="rbFastBadge" hidden>ค่าใช้จ่าย 2 เท่า</span>
+          <span class="badge warn" id="rbFastBadge" hidden>6 RoBots</span>
         </div>
       </div>
       <div class="field">
