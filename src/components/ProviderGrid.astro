@@ -22,7 +22,7 @@ const providers = [
       providers.map((game) => (
         <div
           class={`group relative flex cursor-pointer flex-col items-center justify-center overflow-hidden rounded-2xl border border-red-500/25 bg-gradient-to-b ${game.color} p-5 shadow-lg backdrop-blur-md transition-all duration-300 hover:-translate-y-2 hover:border-red-400 hover:shadow-[0_10px_30px_rgba(220,38,38,0.45)]`}>
-          <div class="absolute inset-0 bg-white/5 opacity-0 transition-opacity duration-300 group-hover:opacity-100" />
+          <div class="pointer-events-none absolute inset-0 bg-white/5 opacity-0 transition-opacity duration-300 group-hover:opacity-100" />
 
           <div class="absolute top-2 right-2 z-10 rounded-full bg-gradient-to-r from-red-400 to-red-600 px-2 py-0.5 text-[9px] font-black tracking-wide whitespace-nowrap text-white shadow-sm transition-transform duration-300 group-hover:scale-110">
             {game.tag}
