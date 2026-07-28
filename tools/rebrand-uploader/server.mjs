@@ -1015,6 +1015,7 @@ const runState = {
   id: null,
   status: "idle", // idle | running | stopping | done | error | stopped
   dry: false,
+  fast: false,       // fast mode was REQUESTED for this run
   child: null,
   prompt: "",
   startedAt: 0,
@@ -1023,6 +1024,8 @@ const runState = {
   stopReason: null,
   sessionId: null,
   model: null,
+  speed: null,       // what the API actually served ("fast" | "standard")
+  fastState: null,   // what the CLI accepted ("on" | "off")
   numTurns: 0,
   costUsd: null,
   toolCount: 0,
@@ -1145,12 +1148,21 @@ function handleCliMessage(msg) {
     case "result":
       runState.numTurns = msg.num_turns ?? runState.numTurns;
       runState.costUsd = typeof msg.total_cost_usd === "number" ? msg.total_cost_usd : null;
+      // Two different questions, so both are kept: fast_mode_state says the CLI
+      // took the setting, usage.speed says what the API actually served. They can
+      // disagree — fast mode has its own availability window and rate limits, so
+      // an accepted "on" can still be served at standard speed.
+      runState.fastState = typeof msg.fast_mode_state === "string" ? msg.fast_mode_state : null;
+      runState.speed = typeof msg.usage?.speed === "string" ? msg.usage.speed : null;
       pushEvent("result", {
         subtype: msg.subtype || "",
         text: typeof msg.result === "string" ? msg.result.trim() : "",
         durationMs: msg.duration_ms ?? null,
         numTurns: runState.numTurns,
         costUsd: runState.costUsd,
+        fast: runState.fast,
+        fastState: runState.fastState,
+        speed: runState.speed,
       });
       break;
   }
@@ -1182,7 +1194,7 @@ function finishRun(code, signal) {
   runState.clients.clear();
 }
 
-function startRun({ brand, url, notes, dry }) {
+function startRun({ brand, url, notes, dry, fast }) {
   if (isActive()) throw new Error("มีงาน rebrand กำลังรันอยู่แล้ว — รอให้จบหรือกดหยุดก่อน");
   const prompt = dry ? DRY_PROMPT : buildRebrandPrompt({ brand, url, notes });
 
@@ -1193,11 +1205,30 @@ function startRun({ brand, url, notes, dry }) {
     "--forward-subagent-text",   // surface both parallel agents in the log
     "--permission-mode", "bypassPermissions",
   ];
+  // Fast mode has no CLI flag — it is the `fastMode` *setting* (a sibling of
+  // `model` and `effortLevel`), and `--settings` takes a JSON string that is
+  // merged on top of the user's own settings. Passing it per-run instead of
+  // writing ~/.claude/settings.json is what keeps the toggle scoped to this run:
+  // nothing to clean up if the uploader is killed mid-rebrand.
+  //
+  // Verify it landed via the result event's `fastState`, not by assuming: under
+  // -p an unparseable/unknown settings payload is SILENTLY ignored, so a typo
+  // here would degrade to a normal-speed run with no error anywhere.
+  //
+  // `--model opus` is NOT redundant here, however much it looks it. Measured on
+  // this repo: the same run with `--settings {"fastMode":true}` reports
+  // fast_mode_state=off without the flag and =on with it — even though both
+  // resolve to claude-opus-5 either way (the model comes from the user's
+  // settings.json, which the --settings layer appears to displace). Fast mode is
+  // Opus-only, so asking for fast already implies Opus; dropping this flag to
+  // tidy up silently gives back a standard-speed run.
+  if (fast) args.push("--settings", JSON.stringify({ fastMode: true }), "--model", "opus");
 
   Object.assign(runState, {
     id: randomUUID(),
     status: "running",
     dry: !!dry,
+    fast: !!fast,
     prompt,
     startedAt: Date.now(),
     endedAt: 0,
@@ -1205,6 +1236,8 @@ function startRun({ brand, url, notes, dry }) {
     stopReason: null,
     sessionId: null,
     model: null,
+    speed: null,
+    fastState: null,
     numTurns: 0,
     costUsd: null,
     toolCount: 0,
@@ -1231,6 +1264,7 @@ function startRun({ brand, url, notes, dry }) {
   pushEvent("start", {
     text: (dry ? "[ทดสอบท่อ] " : "") + prompt,
     dry: !!dry,
+    fast: !!fast,
     id: runState.id,
     startedAt: runState.startedAt,
   });
@@ -1311,6 +1345,9 @@ function runSnapshot() {
     id: runState.id,
     status: runState.status,
     dry: runState.dry,
+    fast: runState.fast,
+    fastState: runState.fastState,
+    speed: runState.speed,
     prompt: runState.prompt,
     startedAt: runState.startedAt || null,
     endedAt: runState.endedAt || null,
@@ -2009,9 +2046,16 @@ const PAGE = /* html */ `<!doctype html>
   .switch input:checked + .slider { background: #0b2b40; border-color: var(--accent); }
   .switch input:checked + .slider::before { transform: translateX(18px); background: var(--accent); }
   .switch input:focus-visible + .slider { box-shadow: 0 0 0 3px rgba(56,189,248,0.16); }
+  .switch:has(input:disabled) { cursor: not-allowed; }
+  .switch input:disabled + .slider { opacity: .45; }
   .badge { font-size: 10px; font-weight: 700; padding: 2px 8px; border-radius: 999px; }
   .badge.new { color: var(--ok); background: rgba(74,222,128,0.12); border: 1px solid rgba(74,222,128,0.3); }
   .badge.exists { color: var(--faint); background: rgba(148,163,184,0.1); border: 1px solid var(--line); }
+  /* Amber, not accent-cyan: this badge exists to make a doubled bill hard to
+     switch on without noticing, so it must not look like the other toggles. */
+  .badge.warn { color: #fbbf24; background: rgba(251,191,36,0.12); border: 1px solid rgba(251,191,36,0.32); }
+  .switch.warn input:checked + .slider { background: #3a2c07; border-color: #fbbf24; }
+  .switch.warn input:checked + .slider::before { background: #fbbf24; }
   .np-body { display: flex; flex-direction: column; gap: 7px; margin-top: 8px; }
   .np-body[hidden] { display: none; }
 
@@ -2079,6 +2123,7 @@ const PAGE = /* html */ `<!doctype html>
   #rbLog .l.meta { color: var(--faint); }
   #rbLog .l.bad { color: var(--err); }
   #rbLog .l.good { color: var(--ok); }
+  #rbLog .l.warn { color: #fbbf24; }
   #rbLog .l .who { color: var(--accent-2); font-weight: 700; }
   #rbFileBox { font-size: 11.5px; color: var(--muted); }
   #rbFileBox summary { cursor: pointer; color: var(--accent); }
@@ -2462,6 +2507,13 @@ const PAGE = /* html */ `<!doctype html>
         <div class="row"><label>คำสั่งที่จะรัน</label><button type="button" id="rbCopy" class="ghost">📋 Copy คำสั่ง</button></div>
         <textarea class="metadesc" id="rbPrompt" rows="3" readonly spellcheck="false"></textarea>
         <span class="status" id="rbHint">Copy ไว้วางเองใน Claude Code ก็ได้ หรือกด "เริ่ม Rebrand" ให้ระบบยิงให้เลย</span>
+      </div>
+      <div class="field">
+        <div class="row">
+          <label class="switch warn"><input type="checkbox" id="rbFast" /><span class="slider"></span></label>
+          <label for="rbFast">Fast mode</label>
+          <span class="badge warn" id="rbFastBadge" hidden>ค่าใช้จ่าย 2 เท่า</span>
+        </div>
       </div>
       <div class="field">
         <div class="row">
@@ -2883,6 +2935,8 @@ const PAGE = /* html */ `<!doctype html>
   const rbNotes = document.getElementById('rbNotes');
   const rbPrompt = document.getElementById('rbPrompt');
   const rbCopy = document.getElementById('rbCopy');
+  const rbFast = document.getElementById('rbFast');
+  const rbFastBadge = document.getElementById('rbFastBadge');
   const rbFire = document.getElementById('rbFire');
   const rbStop = document.getElementById('rbStop');
   const rbPill = document.getElementById('rbPill');
@@ -2938,6 +2992,11 @@ const PAGE = /* html */ `<!doctype html>
   }
   [rbBrand, rbUrl, rbNotes].forEach((el) => el.addEventListener('input', refreshPrompt));
 
+  // Deliberately NOT persisted (no localStorage): the toggle doubles the bill, so
+  // it has to be switched on for the run in front of you, not inherited from a
+  // run someone else fired last week. A page reload always lands on OFF.
+  rbFast.addEventListener('change', () => { rbFastBadge.hidden = !rbFast.checked; });
+
   function running() { return rbPill.dataset.status === 'running' || rbPill.dataset.status === 'stopping'; }
 
   // Files chosen in the form but not yet sent. The Rebrand button stays locked
@@ -2956,6 +3015,9 @@ const PAGE = /* html */ `<!doctype html>
     rbFire.disabled = busy || !promptOk || pending || !briefStaged;
     rbStop.disabled = !busy;
     document.getElementById('rbDry').disabled = busy;
+    // Speed is fixed at spawn time, so a mid-run toggle would change nothing but
+    // would leave the switch disagreeing with the run it is sitting next to.
+    rbFast.disabled = busy;
     // While an agent is reading src/assets, re-staging files underneath it would
     // hand it a half-swapped brand — so uploads are locked for the duration.
     uploadAllBtn.disabled = busy;
@@ -3086,7 +3148,17 @@ const PAGE = /* html */ `<!doctype html>
         if (ev.numTurns) bits.push(ev.numTurns + ' turns');
         if (ev.durationMs) bits.push(fmtElapsed(ev.durationMs));
         if (typeof ev.costUsd === 'number') bits.push('$' + ev.costUsd.toFixed(2));
+        if (ev.speed === 'fast') bits.push('fast');
         rbMeta.textContent = bits.join(' · ');
+        // Say so when fast was asked for but not served — otherwise the operator
+        // reads a slow run as "fast mode is broken" instead of "quota was full",
+        // and there is no other place that difference is visible.
+        if (ev.fast && ev.speed && ev.speed !== 'fast') {
+          rbLine('warn', 'ขอ Fast mode ไว้ แต่รอบนี้ API ให้ความเร็วปกติ (' + esc(ev.speed) + ')'
+            + (ev.fastState === 'on'
+              ? ' — ตัวตั้งค่าถูกรับแล้ว (fast_mode_state=on) แต่ไม่ได้ถูกจัดให้รันเร็ว เช่นโควตา fast เต็มหรืออยู่ในช่วง cooldown · ไม่ถูกคิดเงินเพิ่ม'
+              : ' — ตัวตั้งค่าไม่ถูกรับ (fast_mode_state=' + esc(String(ev.fastState)) + ')'));
+        }
         if (ev.text) rbLine('good', esc(ev.text));
         break;
       }
@@ -3174,6 +3246,9 @@ const PAGE = /* html */ `<!doctype html>
           'จะแก้ <b>ไฟล์จริง</b> ใน <code>src/</code> ของโปรเจกต์นี้',
           'กินเวลาหลายสิบนาที — <b>ห้ามปิดหน้าต่าง cmd</b> ระหว่างรัน (ปิดแท็บเบราว์เซอร์ได้)',
           docxNote,
+          // Last chance to notice: the toggle sits above the button, so someone
+          // who left it on from the previous run would otherwise never re-read it.
+          ...(rbFast.checked ? ['เปิด <b>Fast mode</b> ไว้ — งานนี้จะ <b>คิดเงิน 2 เท่า</b>'] : []),
         ],
         code: rbPrompt.value,
         ok: '▶ เริ่ม Rebrand',
@@ -3188,11 +3263,11 @@ const PAGE = /* html */ `<!doctype html>
       const res = await fetch('/rebrand/start' + (dry ? '?dry=1' : ''), {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ brand: rbBrand.value, url: rbUrl.value, notes: rbNotes.value }),
+        body: JSON.stringify({ brand: rbBrand.value, url: rbUrl.value, notes: rbNotes.value, fast: rbFast.checked }),
       });
       const j = await res.json();
       if (!res.ok || !j.ok) throw new Error(j.error || ('HTTP ' + res.status));
-      addLog(dry ? 'เริ่มทดสอบท่อ' : 'เริ่ม rebrand แล้ว', true);
+      addLog((dry ? 'เริ่มทดสอบท่อ' : 'เริ่ม rebrand แล้ว') + (rbFast.checked ? ' (Fast mode — คิดเงิน 2 เท่า)' : ''), true);
       attach(0);
     } catch (e) {
       clearInterval(rbTicker);
@@ -3239,9 +3314,13 @@ const PAGE = /* html */ `<!doctype html>
         rbReset();
         setPill(run.status);
         rbStartedAt = run.startedAt || Date.now();
+        // Mirror the in-flight run's setting rather than the default-off markup,
+        // so the reattached page doesn't claim a fast run is running at 1x.
+        rbFast.checked = !!run.fast;
+        rbFastBadge.hidden = !run.fast;
         startTicker();
         attach(0);
-        addLog('มีงาน rebrand ค้างอยู่ — ต่อ log กลับมาแล้ว', true);
+        addLog('มีงาน rebrand ค้างอยู่ — ต่อ log กลับมาแล้ว' + (run.fast ? ' (Fast mode)' : ''), true);
       }
     } catch { /* server just started; nothing to reattach */ }
   })();
@@ -3812,6 +3891,7 @@ const server = http.createServer(async (req, res) => {
         url: body.url,
         notes: body.notes,
         dry: url.searchParams.get("dry") === "1",
+        fast: body.fast === true,
       });
       res.writeHead(200, { "Content-Type": "application/json" });
       res.end(JSON.stringify({ ok: true, run }));
