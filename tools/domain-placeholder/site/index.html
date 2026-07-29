@@ -1,0 +1,35 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <!-- The whole point of this page. It only works because robots.txt lets
+         crawlers in: a blocked page can never be read, so its noindex is never
+         seen, and the bare URL can still be indexed from the certificate
+         transparency log. Do not "harden" this by adding Disallow: / — that
+         produces the exact outcome this page exists to prevent. -->
+    <meta name="robots" content="noindex, nofollow" />
+    <meta name="googlebot" content="noindex, nofollow" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Coming soon</title>
+    <style>
+      html {
+        height: 100%;
+        background: #101114;
+      }
+      body {
+        margin: 0;
+        min-height: 100%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-family: system-ui, sans-serif;
+        color: #8b8f98;
+        font-size: 15px;
+        letter-spacing: 0.02em;
+      }
+    </style>
+  </head>
+  <body>
+    <main>Coming soon</main>
+  </body>
+</html>

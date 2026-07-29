@@ -269,6 +269,14 @@ Set `name` to something derived from the brand — lowercase, no spaces,
 e.g. brand `MAHORANLOTTO` → `name = "mahoranlotto"`. It must not match any
 name a previous brand used.
 
+**One exception, and it inverts the rule: if this domain was already parked**
+with the placeholder page (`tools/domain-placeholder/`), the Worker for it
+already exists and the name **must match the parked one exactly** — that
+overwrite is what keeps the Custom Domain and DNS untouched. Inventing a fresh
+name there produces a second Worker while the domain keeps serving "Coming
+soon", with no error anywhere. Ask the operator which name was parked rather
+than guessing; `npx wrangler deployments list --name <name>` confirms it.
+
 **Without an explicit real URL, leave all three alone**, exactly as with
 `site:` above. A name that still reads as the previous brand is expected
 drift on a content-only rebrand — the operator has not deployed anything
