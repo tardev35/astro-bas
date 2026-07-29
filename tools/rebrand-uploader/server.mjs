@@ -1200,12 +1200,12 @@ function finishRun(code, signal) {
 // often — 2026-07-29 measured `on`/`standard` on four probes and one 35-minute
 // rebrand — and only the second one is worth waiting out a rebrand for.
 //
-// Every flag here is a cost decision, not decoration. With the default context
-// (tool definitions + CLAUDE.md + skills) this probe costs $0.33 a shot; the
-// stripped-down version writes 7.4k cache tokens once at $0.075, and every
-// later probe is a cache READ at $0.0038. So: keep this array and the prompt
-// BYTE-IDENTICAL. Change one character and every probe pays the cache write
-// again instead of reading — 20x the cost, for nothing.
+// Every flag here earns its place. With the default context (tool definitions +
+// CLAUDE.md + skills) the probe drags ~32k tokens along; stripped down it writes
+// 7.4k cache tokens once and every later probe is a cache READ of that same
+// prefix. So: keep this array and the prompt BYTE-IDENTICAL. Change one
+// character and every probe pays the full cache write again instead of reading,
+// roughly 20x the usage for the same four-second answer.
 const PROBE_ARGS = [
   "-p", "ok",
   "--output-format", "json",
@@ -2123,8 +2123,8 @@ const PAGE = /* html */ `<!doctype html>
   .badge { font-size: 10px; font-weight: 700; padding: 2px 8px; border-radius: 999px; }
   .badge.new { color: var(--ok); background: rgba(74,222,128,0.12); border: 1px solid rgba(74,222,128,0.3); }
   .badge.exists { color: var(--faint); background: rgba(148,163,184,0.1); border: 1px solid var(--line); }
-  /* Amber, not accent-cyan: this badge exists to make a doubled bill hard to
-     switch on without noticing, so it must not look like the other toggles. */
+  /* Amber, not accent-cyan: fast mode draws on its own quota and is not always
+     granted, so the toggle must not read as an ordinary always-works switch. */
   .badge.warn { color: #fbbf24; background: rgba(251,191,36,0.12); border: 1px solid rgba(251,191,36,0.32); }
   .switch.warn input:checked + .slider { background: #3a2c07; border-color: #fbbf24; }
   .switch.warn input:checked + .slider::before { background: #fbbf24; }
@@ -2584,7 +2584,7 @@ const PAGE = /* html */ `<!doctype html>
         <div class="row">
           <label class="switch warn"><input type="checkbox" id="rbFast" /><span class="slider"></span></label>
           <label for="rbFast">Fast mode</label>
-          <span class="badge warn" id="rbFastBadge" hidden>6 RoBots</span>
+          <span class="badge warn" id="rbFastBadge" hidden>โควตาแยกต่างหาก</span>
         </div>
         <span class="status" id="rbFastCheck"></span>
       </div>
@@ -3066,9 +3066,10 @@ const PAGE = /* html */ `<!doctype html>
   }
   [rbBrand, rbUrl, rbNotes].forEach((el) => el.addEventListener('input', refreshPrompt));
 
-  // Deliberately NOT persisted (no localStorage): the toggle doubles the bill, so
-  // it has to be switched on for the run in front of you, not inherited from a
-  // run someone else fired last week. A page reload always lands on OFF.
+  // Deliberately NOT persisted (no localStorage): fast mode draws on a separate
+  // quota that is not always granted, so it has to be an explicit choice for the
+  // run in front of you — not something inherited from a run someone else fired
+  // last week and never looked at again. A page reload always lands on OFF.
   //
   // usage.speed — the only field that says whether fast was actually *served* —
   // arrives with the result message, i.e. after the 35-minute wait has already
@@ -3270,7 +3271,6 @@ const PAGE = /* html */ `<!doctype html>
         const bits = [];
         if (ev.numTurns) bits.push(ev.numTurns + ' turns');
         if (ev.durationMs) bits.push(fmtElapsed(ev.durationMs));
-        if (typeof ev.costUsd === 'number') bits.push('$' + ev.costUsd.toFixed(2));
         if (ev.speed === 'fast') bits.push('fast');
         rbMeta.textContent = bits.join(' · ');
         // Say so when fast was asked for but not served — otherwise the operator
@@ -3279,7 +3279,7 @@ const PAGE = /* html */ `<!doctype html>
         if (ev.fast && ev.speed && ev.speed !== 'fast') {
           rbLine('warn', 'ขอ Fast mode ไว้ แต่รอบนี้ API ให้ความเร็วปกติ (' + esc(ev.speed) + ')'
             + (ev.fastState === 'on'
-              ? ' — ตัวตั้งค่าถูกรับแล้ว (fast_mode_state=on) แต่ไม่ได้ถูกจัดให้รันเร็ว เช่นโควตา fast เต็มหรืออยู่ในช่วง cooldown · '
+              ? ' — ตัวตั้งค่าถูกรับแล้ว (fast_mode_state=on) แต่ไม่ได้ถูกจัดให้รันเร็ว เช่นโควตา fast เต็มหรืออยู่ในช่วง cooldown'
               : ' — ตัวตั้งค่าไม่ถูกรับ (fast_mode_state=' + esc(String(ev.fastState)) + ')'));
         }
         if (ev.text) rbLine('good', esc(ev.text));
