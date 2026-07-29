@@ -3279,7 +3279,7 @@ const PAGE = /* html */ `<!doctype html>
         if (ev.fast && ev.speed && ev.speed !== 'fast') {
           rbLine('warn', 'ขอ Fast mode ไว้ แต่รอบนี้ API ให้ความเร็วปกติ (' + esc(ev.speed) + ')'
             + (ev.fastState === 'on'
-              ? ' — ตัวตั้งค่าถูกรับแล้ว (fast_mode_state=on) แต่ไม่ได้ถูกจัดให้รันเร็ว เช่นโควตา fast เต็มหรืออยู่ในช่วง cooldown · ไม่ถูกคิดเงินเพิ่ม'
+              ? ' — ตัวตั้งค่าถูกรับแล้ว (fast_mode_state=on) แต่ไม่ได้ถูกจัดให้รันเร็ว เช่นโควตา fast เต็มหรืออยู่ในช่วง cooldown · '
               : ' — ตัวตั้งค่าไม่ถูกรับ (fast_mode_state=' + esc(String(ev.fastState)) + ')'));
         }
         if (ev.text) rbLine('good', esc(ev.text));
@@ -3394,7 +3394,7 @@ const PAGE = /* html */ `<!doctype html>
       });
       const j = await res.json();
       if (!res.ok || !j.ok) throw new Error(j.error || ('HTTP ' + res.status));
-      addLog((dry ? 'เริ่มทดสอบท่อ' : 'เริ่ม rebrand แล้ว') + (rbFast.checked ? ' (Fast mode — คิดเงิน 2 เท่า)' : ''), true);
+      addLog((dry ? 'เริ่มทดสอบท่อ' : 'เริ่ม rebrand แล้ว') + (rbFast.checked ? ' (Fast mode)' : ''), true);
       attach(0);
     } catch (e) {
       clearInterval(rbTicker);
