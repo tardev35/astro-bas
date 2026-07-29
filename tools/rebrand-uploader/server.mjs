@@ -1194,6 +1194,75 @@ function finishRun(code, signal) {
   runState.clients.clear();
 }
 
+// A ~5-second answer to the one question a real run only answers at the very
+// end: is the API actually serving fast *right now*? `fast_mode_state` says the
+// CLI took the setting; `usage.speed` says what was served. They disagree
+// often — 2026-07-29 measured `on`/`standard` on four probes and one 35-minute
+// rebrand — and only the second one is worth waiting out a rebrand for.
+//
+// Every flag here is a cost decision, not decoration. With the default context
+// (tool definitions + CLAUDE.md + skills) this probe costs $0.33 a shot; the
+// stripped-down version writes 7.4k cache tokens once at $0.075, and every
+// later probe is a cache READ at $0.0038. So: keep this array and the prompt
+// BYTE-IDENTICAL. Change one character and every probe pays the cache write
+// again instead of reading — 20x the cost, for nothing.
+const PROBE_ARGS = [
+  "-p", "ok",
+  "--output-format", "json",
+  "--model", "opus",                                  // fast mode is Opus-only
+  "--settings", JSON.stringify({ fastMode: true }),
+  "--tools", "",                                      // no tool definitions in the prompt
+  "--disable-slash-commands",                         // no skills either
+  "--system-prompt", "Reply with the single word: ok",
+];
+
+function probeFastMode() {
+  return new Promise((resolve) => {
+    let child;
+    try {
+      child = spawn(CLAUDE_BIN, PROBE_ARGS, {
+        cwd: ROOT,
+        windowsHide: true,
+        shell: false,
+        stdio: ["ignore", "pipe", "pipe"],
+      });
+    } catch (err) {
+      resolve({ ok: false, error: "รัน " + CLAUDE_BIN + " ไม่ได้: " + err.message });
+      return;
+    }
+
+    let out = "";
+    let settled = false;
+    const finish = (value) => {
+      if (settled) return;
+      settled = true;
+      clearTimeout(timer);
+      try { child.kill(); } catch { /* already gone */ }
+      resolve(value);
+    };
+    // Generous, because a probe that hangs must not hold the button hostage:
+    // failing the check is fine (the UI just says "เช็กไม่ได้"), hanging is not.
+    const timer = setTimeout(() => finish({ ok: false, error: "เช็กไม่ทันใน 60 วินาที" }), 60000);
+
+    child.stdout.on("data", (b) => { out += b; });
+    child.on("error", (err) => finish({ ok: false, error: err.message }));
+    child.on("close", () => {
+      try {
+        const j = JSON.parse(out);
+        finish({
+          ok: true,
+          fastState: typeof j.fast_mode_state === "string" ? j.fast_mode_state : null,
+          speed: typeof j.usage?.speed === "string" ? j.usage.speed : null,
+          ms: j.duration_ms ?? null,
+          costUsd: typeof j.total_cost_usd === "number" ? j.total_cost_usd : null,
+        });
+      } catch {
+        finish({ ok: false, error: "อ่านผลเช็กไม่ได้" + (out.trim() ? ": " + out.trim().slice(0, 200) : "") });
+      }
+    });
+  });
+}
+
 function startRun({ brand, url, notes, dry, fast }) {
   if (isActive()) throw new Error("มีงาน rebrand กำลังรันอยู่แล้ว — รอให้จบหรือกดหยุดก่อน");
   const prompt = dry ? DRY_PROMPT : buildRebrandPrompt({ brand, url, notes });
@@ -2037,6 +2106,9 @@ const PAGE = /* html */ `<!doctype html>
     outline: none; border-color: var(--accent); box-shadow: 0 0 0 3px rgba(56,189,248,0.16);
   }
   .field .status { font-size: 11.5px; min-height: 15px; color: var(--muted); }
+  .field .status.ok { color: var(--ok); }
+  .field .status.warn { color: #fbbf24; }
+  .field .status.bad { color: var(--err); }
 
   /* toggle switch + status badge (ส่วนที่ 5 — optional pages) */
   .switch { position: relative; display: inline-flex; width: 42px; height: 24px; flex: none; cursor: pointer; }
@@ -2514,6 +2586,7 @@ const PAGE = /* html */ `<!doctype html>
           <label for="rbFast">Fast mode</label>
           <span class="badge warn" id="rbFastBadge" hidden>6 RoBots</span>
         </div>
+        <span class="status" id="rbFastCheck"></span>
       </div>
       <div class="field">
         <div class="row">
@@ -2937,6 +3010,7 @@ const PAGE = /* html */ `<!doctype html>
   const rbCopy = document.getElementById('rbCopy');
   const rbFast = document.getElementById('rbFast');
   const rbFastBadge = document.getElementById('rbFastBadge');
+  const rbFastCheck = document.getElementById('rbFastCheck');
   const rbFire = document.getElementById('rbFire');
   const rbStop = document.getElementById('rbStop');
   const rbPill = document.getElementById('rbPill');
@@ -2995,7 +3069,56 @@ const PAGE = /* html */ `<!doctype html>
   // Deliberately NOT persisted (no localStorage): the toggle doubles the bill, so
   // it has to be switched on for the run in front of you, not inherited from a
   // run someone else fired last week. A page reload always lands on OFF.
-  rbFast.addEventListener('change', () => { rbFastBadge.hidden = !rbFast.checked; });
+  //
+  // usage.speed — the only field that says whether fast was actually *served* —
+  // arrives with the result message, i.e. after the 35-minute wait has already
+  // been spent. So the toggle asks the same question up front in ~5 seconds, and
+  // the answer is repeated in the confirm dialog, where the money is committed.
+  // (No backticks in this block: it lives inside the PAGE template literal.)
+  let fastProbe = null;    // last probe result
+  let fastProbeAt = 0;     // when it was taken — availability drifts through the day
+  let fastProbing = null;  // in-flight probe, so two fast clicks share one spawn
+  const FAST_PROBE_TTL = 3 * 60 * 1000;
+
+  function showFastProbe(p) {
+    if (!p) { rbFastCheck.textContent = ''; rbFastCheck.className = 'status'; return; }
+    if (!p.ok) {
+      rbFastCheck.className = 'status bad';
+      rbFastCheck.textContent = '✕ เช็กไม่ได้: ' + p.error;
+    } else if (p.speed === 'fast') {
+      rbFastCheck.className = 'status ok';
+      rbFastCheck.textContent = '✓ เช็กแล้ว ตอนนี้ได้ fast จริง';
+    } else {
+      rbFastCheck.className = 'status warn';
+      rbFastCheck.textContent = '⚠ ตอนนี้ระบบไม่ได้จัด fast ให้ (speed=' + (p.speed || '?') + ') — เปิดไว้ก็จะได้ความเร็วปกติ';
+    }
+  }
+
+  function probeFast() {
+    if (fastProbing) return fastProbing;
+    rbFastCheck.className = 'status';
+    rbFastCheck.textContent = 'กำลังเช็กว่าตอนนี้ fast ใช้ได้จริงไหม…';
+    fastProbing = fetch('/rebrand/fastcheck')
+      .then((r) => r.json())
+      .catch((e) => ({ ok: false, error: e.message }))
+      .then((p) => { fastProbe = p; fastProbeAt = Date.now(); showFastProbe(p); return p; })
+      .finally(() => { fastProbing = null; });
+    return fastProbing;
+  }
+
+  function fastVerdictText() {
+    if (!fastProbe) return '';
+    if (!fastProbe.ok) return ' — เช็กสถานะไม่ได้ (' + esc(fastProbe.error) + ')';
+    return fastProbe.speed === 'fast'
+      ? ' — เช็กแล้ว <span class="cf-ok">ตอนนี้ได้ fast จริง</span>'
+      : ' — <b>เช็กแล้วตอนนี้ไม่ได้ fast</b> (speed=' + esc(String(fastProbe.speed || '?')) + ') จะได้ความเร็วปกติ';
+  }
+
+  rbFast.addEventListener('change', () => {
+    rbFastBadge.hidden = !rbFast.checked;
+    if (rbFast.checked) probeFast();
+    else { fastProbe = null; fastProbeAt = 0; showFastProbe(null); }
+  });
 
   function running() { return rbPill.dataset.status === 'running' || rbPill.dataset.status === 'stopping'; }
 
@@ -3239,6 +3362,10 @@ const PAGE = /* html */ `<!doctype html>
           docxNote = 'content.docx ที่ staged ไว้: <span class="cf-ok">' + new Date(st.docx.mtime).toLocaleString('th-TH') + '</span>';
         }
       } catch { /* keep the warning */ }
+      // Re-check rather than trust a reading from when the toggle was flipped:
+      // fast availability moves during the day, and this is the last moment the
+      // operator can still back out for free.
+      if (rbFast.checked && (!fastProbe || Date.now() - fastProbeAt > FAST_PROBE_TTL)) await probeFast();
       const go = await askConfirm({
         title: 'เริ่ม rebrand จริงหรือไม่?',
         sub: 'Claude จะลงมือแก้โปรเจกต์นี้ทันทีเมื่อกดตกลง',
@@ -3248,7 +3375,7 @@ const PAGE = /* html */ `<!doctype html>
           docxNote,
           // Last chance to notice: the toggle sits above the button, so someone
           // who left it on from the previous run would otherwise never re-read it.
-          ...(rbFast.checked ? ['เปิด <b>Fast mode</b> ไว้ — งานนี้จะ <b>คิดเงิน 2 เท่า</b>'] : []),
+          ...(rbFast.checked ? ['เปิด <b>Fast mode</b> ไว้' + fastVerdictText()] : []),
         ],
         code: rbPrompt.value,
         ok: '▶ เริ่ม Rebrand',
@@ -3881,6 +4008,19 @@ const server = http.createServer(async (req, res) => {
   if (req.method === "GET" && url.pathname === "/rebrand/status") {
     res.writeHead(200, { "Content-Type": "application/json" });
     res.end(JSON.stringify({ ok: true, run: runSnapshot(), docx: await stagedDocxInfo() }));
+    return;
+  }
+  if (req.method === "GET" && url.pathname === "/rebrand/fastcheck") {
+    // Refused mid-run on purpose: the answer would arrive too late to act on,
+    // and spawning a second claude beside a rebrand only muddies the log.
+    if (isActive()) {
+      res.writeHead(409, { "Content-Type": "application/json" });
+      res.end(JSON.stringify({ ok: false, error: "มีงานรันอยู่ — เช็กได้หลังงานจบ" }));
+      return;
+    }
+    const probe = await probeFastMode();
+    res.writeHead(probe.ok ? 200 : 502, { "Content-Type": "application/json" });
+    res.end(JSON.stringify(probe));
     return;
   }
   if (req.method === "POST" && url.pathname === "/rebrand/start") {
