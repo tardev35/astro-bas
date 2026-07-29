@@ -2,107 +2,94 @@
 import MainLayout from "../layouts/MainLayout.astro";
 import ContentBox from "../components/ContentBoxHuay.astro";
 import Navfoot from "../components/Navfoot.astro";
-import Announcement from "../components/Announcement4.astro";
+import Announcement from "../components/Announcement5.astro";
 
 import { Picture } from "astro:assets";
 
+// slide4.png is a leftover from the previous brand (its logo is burned into the
+// artwork) — the file stays in src/assets as inventory but must not render.
 import pro1 from "../assets/slide1.png";
 import pro2 from "../assets/slide2.png";
 import pro3 from "../assets/slide3.png";
-import pro4 from "../assets/slide4.png";
 ---
 
 <MainLayout
-  title="โปรโมชั่น PAY69 ฝากปุ๊บเพิ่ม 5% เครดิตฟรีกดรับเอง และกิจกรรมล่ารางวัล"
-  description="รวมโปรโมชั่น PAY69 ตั้งแต่ฝากปุ๊บเพิ่ม 5% เครดิตฟรีกดรับเอง ถอนไม่จำกัด ไปจนถึงกิจกรรมเปิดกล่อง เปิดดวง และล่า Hidden พร้อมเงื่อนไข ยอดเทิร์น เพดานถอน และวันหมดอายุที่ควรอ่านก่อนกดรับสิทธิ์">
+  title="BUNNY555 โปรโมชั่น รับโปรโมชั่นสุดคุ้ม ทะยานสู่ความสำเร็จ" description="อัปเดตสิทธิพิเศษล่าสุดจาก BUNNY555 จัดเต็มเพื่อสมาชิกทุกคน รับโปรโมชั่นสุดคุ้ม ได้ง่ายๆ ผ่านระบบออโต้ ยกระดับทุนของคุณให้ก้าวกระโดดไวขึ้น">
   <Announcement />
 
-  <ContentBox>
-    <h1 class="mb-5 bg-gradient-to-r from-white via-[#f2dbb4] to-[#d4a24a] bg-clip-text text-3xl font-black tracking-widest text-transparent uppercase drop-shadow-sm">โปรโมชั่น PAY69</h1>
+  <ContentBox title="โปรโมชั่น BUNNY555" as="h1">
+    <div>
+      <h2 class="mb-4 text-2xl font-bold text-pink-200">คืนยอดเสีย 15% สมาชิกใหม่รับเพิ่ม 100% และเครดิตฟรีจากฝากแรก</h2>
 
-    <h2 class="mb-4 text-2xl font-bold text-amber-200">ฝากปุ๊บเพิ่ม 5% และเครดิตฟรีกดรับเอง ต้องดูเงื่อนไขอะไรก่อนกดรับ</h2>
+      <p class="mb-5 text-left text-base leading-relaxed text-pink-50/85">
+        สิทธิพิเศษที่ <strong class="text-pink-200">BUNNY555</strong> จัดเต็มให้สมาชิกทุกคนถูกวางไว้ครบตั้งแต่ก้าวแรก ทั้งคืนยอดเสีย 15% ทุกวัน โบนัสสมาชิกใหม่รับเพิ่ม 100% ตั้งแต่ครั้งแรกที่สมัคร และสิทธิ์ลุ้นรับเครดิตฟรีเพิ่มจากยอดฝากแรก ทุกแคมเปญคำนวณมาเพื่อให้ทุนของคุณก้าวกระโดดไวขึ้นอย่างคุ้มค่าที่สุด
+      </p>
 
-    <p class="mb-5 text-left text-base leading-relaxed text-amber-50/85">
-      โปรโมชั่นที่ <strong class="text-amber-200">PAY69</strong> นำเสนอบนหน้าเว็บมีทั้งฝากปุ๊บเพิ่ม 5% เครดิตฟรีแบบกดรับเอง และการถอนที่ไม่จำกัด ก่อนกดรับสิทธิ์ควรตรวจว่าเปอร์เซ็นต์คิดจากยอดใด รับได้กี่ครั้ง และรองรับเกมประเภทไหนบ้าง เพราะแต่ละแคมเปญตั้งเงื่อนไขไม่เหมือนกัน
-    </p>
+      <p class="mb-5 text-left text-base leading-relaxed text-pink-50/85">
+        ก่อนกดรับสิทธิ์ควรดูว่าเปอร์เซ็นต์คิดจากยอดใด รับได้กี่ครั้งต่อรอบ และรองรับเกมจากค่ายไหนบ้าง เพราะแต่ละแคมเปญตั้งเงื่อนไขไม่เหมือนกัน การอ่านรายละเอียดล่วงหน้าเพียงไม่กี่วินาทีช่วยให้คุณเลือกโปรที่ตรงกับสไตล์การเล่นของตัวเองได้แม่นยำและได้ความคุ้มค่าสูงสุด
+      </p>
 
-    <p class="mb-5 text-left text-base leading-relaxed text-amber-50/85">
-      ส่วนที่สำคัญกว่าตัวเลขบนแบนเนอร์คือยอดเทิร์น เพดานถอน และเวลาหมดอายุ โบนัสที่ดูเยอะอาจไม่คุ้ม หากต้องเล่นต่อยาวจนจำไม่ได้ว่าตอนแรกเข้ามาทำอะไร การอ่านเงื่อนไขล่วงหน้าช่วยลดปัญหาถอนไม่ได้หรือมียอดเทิร์นค้างอยู่ในระบบ
-    </p>
+      <h2 class="mt-10 mb-4 text-2xl font-bold text-pink-200">กดรับสิทธิ์เองผ่านระบบออโต้ ยอดเทิร์นและเงื่อนไขที่ควรอ่านก่อน</h2>
 
-    <h2 class="mt-10 mb-4 text-2xl font-bold text-amber-200">กิจกรรมเปิดกล่อง เปิดดวง และล่า Hidden นับเป็นโปรโมชั่นแบบไหน</h2>
+      <p class="mb-5 text-left text-base leading-relaxed text-pink-50/85">
+        ทุกโปรโมชั่นของ BUNNY555 กดรับได้ด้วยตนเองผ่านหน้าระบบอัตโนมัติ ไม่ต้องรอแอดมินยืนยันและไม่ต้องส่งสลิปให้เสียเวลา ระบบประมวลผลไวจนสิทธิ์เข้าแดชบอร์ดในเสี้ยววินาที ทำให้คุณกลับไปโฟกัสกับเกมที่กำลังเล่นได้ต่อเนื่อง ลื่นไหล ไม่มีจังหวะสะดุดกลางทาง
+      </p>
 
-    <p class="mb-5 text-left text-base leading-relaxed text-amber-50/85">
-      นอกจากโบนัสเงินฝาก PAY69 ยังใช้กิจกรรมอย่างเปิดกล่อง เปิดดวง และล่า Hidden ดึงให้สมาชิกกลับมาเช็กหน้าเว็บ สิทธิ์เหล่านี้มักผูกกับช่วงเวลาและจำนวนครั้งที่จำกัด จึงควรดูว่ารอบกิจกรรมเริ่มและปิดเมื่อไหร่ ก่อนจะวางแผนเล่นตามรางวัลที่อยากได้
-    </p>
+      <p class="mb-8 text-left text-base leading-relaxed text-pink-50/85">
+        ส่วนที่สำคัญกว่าตัวเลขบนแบนเนอร์คือยอดเทิร์น เพดานถอน และวันหมดอายุของสิทธิ์ เราจึงเปิดเงื่อนไขทั้งหมดไว้อย่างโปร่งใสไม่มีข้อความแอบแฝง ตรวจให้ครบก่อนกดรับทุกครั้ง แล้วคุณจะถอนได้ราบรื่นโดยไม่ต้องกังวลว่ามียอดเทิร์นค้างอยู่ในระบบ
+      </p>
 
-    <p class="mb-8 text-left text-base leading-relaxed text-amber-50/85">
-      ก่อนร่วมกิจกรรมควรตรวจจำนวนสิทธิ์ วันหมดอายุ ยอดเทิร์น และเกมที่รองรับ เพราะคำว่า “รับฟรี” มักมีเพื่อนสนิทชื่อ “เงื่อนไข” เดินตามมาติด ๆ ทั้งฝั่งสล็อต กีฬา เกม Live สด และเดิมพันด้านการเงิน ก็อาจนับยอดไม่เท่ากันด้วย
-    </p>
+      <div class="mx-auto grid w-full max-w-7xl grid-cols-1 gap-6 px-4 sm:grid-cols-2 lg:grid-cols-3">
+        <Picture
+          src={pro1}
+          alt="โปรโมชั่น BUNNY555 คืนยอดเสีย 15% ทุกวัน รับคืนอัตโนมัติ"
+          loading="lazy"
+          fetchpriority="low"
+          widths={[200, 400, 600, 800]}
+          sizes="(max-width: 768px) 100vw, 33vw"
+          class="mx-auto h-auto w-full rounded-xl border border-pink-500/40 object-contain shadow-[0_10px_30px_rgba(236,72,153,0.35)] transition-transform duration-300 hover:-translate-y-1 hover:border-pink-400 hover:shadow-[0_10px_30px_rgba(236,72,153,0.5)]"
+          decoding="async"
+          formats={["avif", "webp"]}
+          fallbackFormat="webp"
+          quality={80}
+        />
 
-    <div class="mx-auto grid w-full max-w-7xl grid-cols-1 gap-6 px-4 sm:grid-cols-2 lg:grid-cols-2 xl:grid-cols-2">
-      <Picture
-        src={pro1}
-        alt="PAY69 App สมัคร เข้าระบบ และติดตามกิจกรรมผ่านมือถือ"
-        loading="lazy"
-        fetchpriority="low"
-        widths={[200, 400, 600, 800]}
-        sizes="(max-width: 768px) 100vw, 50vw"
-        class="mx-auto h-auto w-full rounded-xl border border-amber-500/40 object-contain shadow-[0_10px_30px_rgba(212,162,74,0.35)] transition-transform duration-300 hover:-translate-y-1 hover:border-amber-400 hover:shadow-[0_10px_30px_rgba(212,162,74,0.5)]"
-        decoding="async"
-        formats={["avif", "webp"]}
-        fallbackFormat="webp"
-        quality={80}
-      />
+        <Picture
+          src={pro2}
+          alt="โปรโมชั่น BUNNY555 สมาชิกใหม่รับเพิ่ม 100% ตั้งแต่ครั้งแรกที่สมัคร"
+          loading="lazy"
+          fetchpriority="low"
+          widths={[200, 400, 600, 800]}
+          sizes="(max-width: 768px) 100vw, 33vw"
+          class="mx-auto h-auto w-full rounded-xl border border-rose-500/40 object-contain shadow-[0_10px_30px_rgba(190,24,93,0.35)] transition-transform duration-300 hover:-translate-y-1 hover:border-rose-400 hover:shadow-[0_10px_30px_rgba(190,24,93,0.5)]"
+          decoding="async"
+          formats={["avif", "webp"]}
+          fallbackFormat="webp"
+          quality={80}
+        />
 
-      <Picture
-        src={pro2}
-        alt="กิจกรรม PAY69 เปิดกล่อง เปิดดวง และล่า Hidden ลุ้นรางวัล"
-        loading="lazy"
-        fetchpriority="low"
-        widths={[200, 400, 600, 800]}
-        sizes="(max-width: 768px) 100vw, 50vw"
-        class="mx-auto h-auto w-full rounded-xl border border-violet-500/40 object-contain shadow-[0_10px_30px_rgba(124,58,237,0.35)] transition-transform duration-300 hover:-translate-y-1 hover:border-violet-400 hover:shadow-[0_10px_30px_rgba(124,58,237,0.5)]"
-        decoding="async"
-        formats={["avif", "webp"]}
-        fallbackFormat="webp"
-        quality={80}
-      />
+        <Picture
+          src={pro3}
+          alt="โปรโมชั่น BUNNY555 ฝากแรกลุ้นรับเครดิตฟรีเพิ่ม ไม่จำกัดบาท"
+          loading="lazy"
+          fetchpriority="low"
+          widths={[200, 400, 600, 800]}
+          sizes="(max-width: 768px) 100vw, 33vw"
+          class="mx-auto h-auto w-full rounded-xl border border-pink-500/40 object-contain shadow-[0_10px_30px_rgba(236,72,153,0.35)] transition-transform duration-300 hover:-translate-y-1 hover:border-pink-400 hover:shadow-[0_10px_30px_rgba(236,72,153,0.5)]"
+          decoding="async"
+          formats={["avif", "webp"]}
+          fallbackFormat="webp"
+          quality={80}
+        />
+      </div>
 
-      <Picture
-        src={pro3}
-        alt="PAY69 เกม Live สด และเดิมพันด้านการเงินในระบบเดียว"
-        loading="lazy"
-        fetchpriority="low"
-        widths={[200, 400, 600, 800]}
-        sizes="(max-width: 768px) 100vw, 50vw"
-        class="mx-auto h-auto w-full rounded-xl border border-violet-500/40 object-contain shadow-[0_10px_30px_rgba(124,58,237,0.35)] transition-transform duration-300 hover:-translate-y-1 hover:border-violet-400 hover:shadow-[0_10px_30px_rgba(124,58,237,0.5)]"
-        decoding="async"
-        formats={["avif", "webp"]}
-        fallbackFormat="webp"
-        quality={80}
-      />
-
-      <Picture
-        src={pro4}
-        alt="ค่าน้ำ PAY69 สำหรับสายกีฬา ตลาดเดิมพันและเวลาปิดรับ"
-        loading="lazy"
-        fetchpriority="low"
-        widths={[200, 400, 600, 800]}
-        sizes="(max-width: 768px) 100vw, 50vw"
-        class="mx-auto h-auto w-full rounded-xl border border-amber-500/40 object-contain shadow-[0_10px_30px_rgba(212,162,74,0.35)] transition-transform duration-300 hover:-translate-y-1 hover:border-amber-400 hover:shadow-[0_10px_30px_rgba(212,162,74,0.5)]"
-        decoding="async"
-        formats={["avif", "webp"]}
-        fallbackFormat="webp"
-        quality={80}
-      />
-    </div>
-    <div class="mt-12 flex justify-center pb-4">
-      <a
-        href="/register"
-        class="flex items-center justify-center rounded-lg border border-amber-200/60 bg-gradient-to-r from-[#f7e3bd] via-[#e0b877] to-[#b8823a] px-10 py-3.5 text-lg font-black text-[#1a1130] shadow-[0_10px_30px_rgba(212,162,74,0.35)] transition-transform hover:scale-105 hover:shadow-[0_10px_30px_rgba(124,58,237,0.55)]">
-        รับโปรโมชั่นทันที
-      </a>
+      <div class="mt-12 flex justify-center pb-4">
+        <a
+          href="/register"
+          class="flex items-center justify-center rounded-lg border border-pink-200/60 bg-gradient-to-r from-[#fce7f3] via-[#f9a8d4] to-[#db2777] px-10 py-3.5 text-lg font-black text-[#241019] shadow-[0_10px_30px_rgba(236,72,153,0.35)] transition-transform hover:scale-105 hover:shadow-[0_10px_30px_rgba(190,24,93,0.55)]">
+          รับโปรโมชั่นทันที
+        </a>
+      </div>
     </div>
   </ContentBox>
 

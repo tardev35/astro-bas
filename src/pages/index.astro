@@ -1,75 +1,91 @@
 ---
 import MainLayout from "../layouts/MainLayout.astro";
-import Announcement from "../components/Announcement4.astro";
+import Announcement from "../components/Announcement5.astro";
 import ContentBox from "../components/ContentBox.astro";
-import ContentBoxCyberCut from "../components/ContentBoxCyberCut.astro";
-import ContentBoxFloatingBadge from "../components/ContentBoxFloatingBadge.astro";
-import ContentBoxSevenThreeCyberCut from "../components/ContentBoxSevenThreeCyberCut.astro";
-import ContentBoxSevenThreeFloatingBadge from "../components/ContentBoxSevenThreeFloatingBadge.astro";
-import ContentBoxSpecial from "../components/ContentBoxSpecial.astro";
-import ContentBoxTwoCyberCut from "../components/ContentBoxTwoCyberCut.astro";
+import ContentBoxPremium from "../components/ContentBoxPremium.astro";
+import ContentBoxNeumorphism from "../components/ContentBoxNeumorphism.astro";
+import ContentBoxSevenThreePremium from "../components/ContentBoxSevenThreePremium.astro";
+import ContentBoxSevenThreeNeumorphism from "../components/ContentBoxSevenThreeNeumorphism.astro";
+import FeatureHighlights from "../components/FeatureHighlights.astro";
 import LoginRtpSection from "../components/LoginRtpSection.astro";
 import ProviderGrid from "../components/ProviderGrid.astro";
 import GameRankingBoard from "../components/GameRankingBoard.astro";
 import ReviewCardSumo2 from "../components/ReviewCardSumo2.astro";
-import LatestWinners from "../components/LatestWinners3.astro";
+import LatestWinners from "../components/LatestWinnersPremium.astro";
 import SmoothCarousel from "../components/SmoothCarousel.astro";
-import Faq from "../components/Faq2.astro";
+import Faq from "../components/Faq4.astro";
 import Navfoot from "../components/Navfoot.astro";
 
 import { Picture } from "astro:assets";
 import { orderForBrand } from "../lib/brandProfile";
-import imgHidden from "../assets/slide2.png";
-import imgOdds from "../assets/slide4.png";
+import imgStability from "../assets/slide2.png";
+import imgPromotion from "../assets/slide1.png";
 
 const currentPath = Astro.url.pathname;
 const homePage = Astro.url.origin;
 const logoUrl = homePage + "/logo.webp";
 
-const pageTitle = "PAY69 โลกเกมครบทุกสาย สล็อต กีฬา ไลฟ์สด และกิจกรรมล่ารางวัล";
-const pageDescription = "จุดเด่น PAY69 ตั้งแต่กิจกรรมเปิดกล่อง ล่า Hidden เกมไลฟ์สด ค่าน้ำกีฬา ไปจนถึงแอปและเงื่อนไขโปรที่ควรอ่านก่อนกดรับ";
+const pageTitle = "BUNNY555 เว็บตรงอันดับ 1 ระบบเสถียร สมัครง่าย รับโปรโมชั่นสุดคุ้ม";
+const pageDescription = "BUNNY555 เว็บตรงอันดับ 1 ก้าวกระโดดสู่ความมั่งคั่ง ขับเคลื่อนด้วย ระบบเสถียร ขั้นสุด ลื่นไหล สมัครง่าย ในคลิกเดียว พร้อมสิทธิ์ รับโปรโมชั่นสุดคุ้ม";
+
+const providerHighlights = [
+  {
+    icon: "🎨",
+    title: "PG Soft แอนิเมชันลื่นไหล กราฟิกสดใส โบนัสแตกไว",
+    description: "ค่ายซอฟต์แวร์ที่โดดเด่นด้านการออกแบบภาพ 3D ที่ดูมีชีวิตชีวาและไหลลื่น เข้ากับความคล่องตัวของระบบเราได้อย่างไร้ที่ติ รอบโบนัสออกแบบมาให้ก้าวเข้าสู่รางวัลใหญ่ได้อย่างรวดเร็ว",
+    accent: "pink" as const,
+  },
+  {
+    icon: "⚡",
+    title: "Pragmatic Play แจกรางวัลรัว ฟีเจอร์ทันสมัย ตอบสนองฉับไว",
+    description: "ส่งมอบประสบการณ์ความสนุกที่เน้นผลลัพธ์รวดเร็ว กลไกการจ่ายเงินถูกเซ็ตมาให้มีความยุติธรรมและออกรางวัลอย่างต่อเนื่อง สร้างความตื่นเต้นในทุกจังหวะของการประมวลผล",
+    accent: "rose" as const,
+  },
+  {
+    icon: "🃏",
+    title: "JOKER Gaming นวัตกรรมคลาสสิก อัปเกรดใหม่ ไหลลื่นทุกอุปกรณ์",
+    description: "ผสานความคลาสสิกเข้ากับเทคโนโลยีสมัยใหม่ โดดเด่นด้านเสถียรภาพของเซิร์ฟเวอร์ที่รองรับการใช้งานหนักๆ ได้สบาย ให้คุณเก็บเกี่ยวผลตอบแทนได้อย่างไร้ขีดจำกัด",
+    accent: "pink" as const,
+  },
+];
 
 const faqs = [
   {
-    q: "PAY69 มีเกมหมวดไหนให้เลือกบ้าง",
-    a: "หมวดหลักของ PAY69 ครอบคลุมสล็อต กีฬา เกม Live สด และเดิมพันด้านการเงิน โดยแต่ละหมวดทำงานคนละแบบ สล็อตใช้รอบสปิน เกมสดเล่นตามรอบโต๊ะและภาพถ่ายทอดแบบเรียลไทม์ กีฬาขึ้นกับเหตุการณ์แข่งขัน ส่วนเดิมพันด้านการเงินอิงความเคลื่อนไหวของราคา จึงไม่ควรใช้วิธีเลือกแบบเดียวกันทั้งหมด",
+    q: "การเริ่มต้นใช้งานบนแพลตฟอร์มนี้มีความรวดเร็วแค่ไหน?",
+    a: "ระบบของเราออกแบบมาให้ สมัครง่าย ใช้เวลาเพียงไม่กี่วินาที คุณก็สามารถล็อกอินเข้าสู่แดชบอร์ดเพื่อเริ่มต้นใช้งานได้ทันที",
   },
   {
-    q: "กิจกรรมเปิดกล่อง เปิดดวง และล่า Hidden ของ PAY69 คืออะไร",
-    a: "เป็นระบบ Gamification ที่ให้สมาชิกกลับมามีส่วนร่วมกับหน้าเว็บ ทั้งการเปิดกล่อง เปิดดวง ล่า Hidden และเครดิตฟรีแบบกดรับเอง ก่อนร่วมกิจกรรมควรตรวจจำนวนสิทธิ์ วันหมดอายุ ยอดเทิร์น และเกมที่รองรับให้ครบ เพราะคำว่ารับฟรีมักมาพร้อมเงื่อนไขเสมอ",
+    q: "ทำไม สล็อตเว็บตรง ถึงมีประสิทธิภาพการเชื่อมต่อที่ดีกว่า?",
+    a: "เพราะเราใช้นวัตกรรมเซิร์ฟเวอร์ระดับโลก ทำให้ ระบบเสถียร ขั้นสุด ไร้ปัญหาการหลุดหรือกระตุกระหว่างการใช้งาน",
   },
   {
-    q: "สายกีฬาควรดูอะไรก่อนกดยืนยันบิลบน PAY69",
-    a: "PAY69 นำเสนอค่าน้ำเป็นจุดขายสำหรับสายกีฬา ก่อนกดยืนยันควรดูทั้งราคา ตลาดเดิมพัน เวลาปิดรับ และประเภทบิล เช่น เต็มเวลา ครึ่งแรก หรือสเต็ป เพราะราคาสามารถเปลี่ยนตามเวลาและสถานการณ์ แม้ชื่อทีมจะเหมือนเดิมก็ตาม",
+    q: "โบนัสและสิทธิพิเศษต่างๆ มีเงื่อนไขที่ซับซ้อนหรือไม่?",
+    a: "ไม่มีเงื่อนไขแอบแฝง BUNNY555 ให้คุณ รับโปรโมชั่นสุดคุ้ม ได้ด้วยตนเองผ่านหน้าระบบออโต้ เพื่อความสะดวกและโปร่งใส",
   },
   {
-    q: "โปรฝากเพิ่ม 5% และเครดิตฟรีกดรับเองคุ้มหรือไม่",
-    a: "หน้าเว็บนำเสนอทั้งฝากเพิ่ม 5% เครดิตฟรีกดรับเอง และการถอนที่ไม่จำกัด ก่อนรับสิทธิ์ควรตรวจว่าเปอร์เซ็นต์คิดจากยอดใด รับได้กี่ครั้ง และรองรับเกมประเภทไหน ส่วนที่สำคัญกว่าตัวเลขบนแบนเนอร์คือยอดเทิร์น เพดานถอน และเวลาหมดอายุ",
-  },
-  {
-    q: "PAY69 App จำเป็นต้องติดตั้งหรือไม่",
-    a: "PAY69 App เชื่อมกับขั้นตอนสมัคร เข้าระบบ ติดตามกิจกรรม และจัดการบัญชีผ่านมือถือ จึงมีบทบาทมากกว่าการเป็นทางเข้าสำรอง ก่อนติดตั้งควรตรวจแหล่งดาวน์โหลด ชื่อไฟล์ และเวอร์ชันอุปกรณ์ และหลีกเลี่ยงไฟล์ที่ส่งมาทางข้อความส่วนตัว",
+    q: "มีการรองรับการใช้งานผ่านโทรศัพท์มือถือหรือไม่?",
+    a: "แพลตฟอร์มรองรับทุกอุปกรณ์อย่างสมบูรณ์แบบ ทั้ง iOS และ Android ให้คุณทำกำไรได้อย่าง ลื่นไหล ในทุกที่ทุกเวลา",
   },
 ];
 
 const webPageSchema = {
   "@context": "https://schema.org",
   "@type": "WebPage",
-  name: "PAY69",
+  name: "BUNNY555",
   description: pageDescription,
   url: homePage + currentPath,
 };
 const webSiteSchema = {
   "@context": "https://schema.org",
   "@type": "WebSite",
-  name: "PAY69",
-  alternateName: ["PAY69", "PAY69 โลกเกมครบทุกสาย สล็อต กีฬา ไลฟ์สด และกิจกรรมล่ารางวัล"],
-  url: "https://pay69-brand.com/",
+  name: "BUNNY555",
+  alternateName: ["BUNNY555", "BUNNY555 เว็บตรงอันดับ 1 ระบบเสถียร สมัครง่าย รับโปรโมชั่นสุดคุ้ม"],
+  url: "https://bunny555-game.com/",
 };
 const orgSchema = {
   "@context": "https://schema.org",
   "@type": "Organization",
-  name: "PAY69",
+  name: "BUNNY555",
   logo: logoUrl,
   url: homePage,
 };
@@ -83,154 +99,101 @@ const allSchemas = orderForBrand([webPageSchema, orgSchema, webSiteSchema], Astr
 
   <Announcement />
 
-  <ContentBoxCyberCut as="h1" title="PAY69 พาเข้าโลกเกมหลายสไตล์ ตั้งแต่สล็อต กีฬา ไปจนถึงกิจกรรมล่ารางวัล">
+  <ContentBoxPremium as="h1" title="BUNNY555 เว็บตรงอันดับ 1 ระบบเสถียร สมัครง่าย รับโปรโมชั่นสุดคุ้ม">
+    <p>
+      ทะยานสู่เป้าหมายด้วยความรวดเร็วกับ <strong class="text-pink-200">BUNNY555</strong> เว็บตรงอันดับ 1 ที่พร้อมพาคุณก้าวกระโดดสู่ความมั่งคั่งอย่างเหนือระดับ
+      นำเสนอเอกลักษณ์เฉพาะตัวผ่านงานดีไซน์ สะท้อนความคล่องตัวและพรีเมียมขั้นสุด เราพัฒนานวัตกรรมที่ทำให้ ระบบเสถียร ลื่นไหลไม่มีสะดุด มอบประสบการณ์ที่ สมัครง่าย ในคลิกเดียว
+      พร้อมให้คุณกอบโกยความคุ้มค่าด้วยสิทธิ์ รับโปรโมชั่นสุดคุ้ม ตลอดการใช้งาน
+    </p>
+  </ContentBoxPremium>
+
+  <ContentBox as="h2" title="BUNNY555 รวมค่ายเกมชั้นนำ ก้าวกระโดดสู่ความมั่งคั่ง ลื่นไหล">
     <div>
       <p>
-        <strong class="text-amber-200">PAY69</strong> ไม่ได้วางหน้าเว็บให้เป็นเพียงชั้นวางสล็อต แต่รวมกีฬา เกม Live เดิมพันด้านการเงิน แอปมือถือ และกิจกรรมล่ารางวัลไว้ในพื้นที่เดียว
-        ภาพหน้าแรกจึงเต็มไปด้วยตัวละครแนวอวกาศ กีฬา แฟนตาซี และการผจญภัย
+        แพลตฟอร์มของเราถูกพัฒนามาเพื่อผู้ที่ชื่นชอบความปราดเปรียวและแม่นยำ ด้วยการรวบรวมซอฟต์แวร์คุณภาพจากทั่วโลกมาไว้ในที่เดียว ทุกการประมวลผลถูกปรับจูนให้ตอบสนองไวที่สุด
+        ให้คุณเพลิดเพลินกับภาพกราฟิกคมชัดและโอกาสกวาดรางวัลที่รวดเร็วดั่งใจ ไม่ต้องเผชิญกับปัญหาภาพค้างหรือระบบหน่วงอีกต่อไป
       </p>
-      <p class="mt-4">
-        จุดขายไม่ได้มีแค่ “เกมเยอะ” แต่คือการทำให้สมาชิกมีหลายอย่างให้สำรวจ ตั้งแต่เปิดกล่อง ล่า Hidden ไปจนถึงรับสิทธิ์ผ่านหน้าเว็บ เพียงแต่อย่าตื่นเต้นจนลืมอ่านเงื่อนไข เดี๋ยวได้รางวัลแต่ถอนแล้วเรื่องยาว
-      </p>
-    </div>
-  </ContentBoxCyberCut>
-
-  <ContentBoxFloatingBadge as="h2" title="เปิดเว็บ PAY69 แล้วเจออะไร ทำไมเหมือนยกโลกเกมมาไว้ในเว็บเดียว">
-    <div>
-      <p>
-        หน้าแรกของ <strong class="text-amber-200">PAY69</strong> ใช้ตัวละครหลายแนวเพื่อสื่อว่ามีเกมมากกว่าหนึ่งประเภท ทั้งสล็อต กีฬา เกมสด และกิจกรรมพิเศษ
-        ภาพรวมจึงใกล้เคียงศูนย์รวมความบันเทิงมากกว่าเว็บที่มีแต่ปุ่มเลือกเกมเรียงกัน
-      </p>
-      <p class="mt-4">การออกแบบช่วยให้แต่ละหมวดดูมีเรื่องราว แต่ก่อนเลือกควรดูประเภทเกม กติกา และรูปแบบเดิมพันให้เข้าใจ ภาพ Hero ดูอลังการได้ แต่อย่าให้ความอลังการเลือกเกมแทนเรา</p>
-    </div>
-  </ContentBoxFloatingBadge>
-
-  <ContentBoxSevenThreeCyberCut titleright="เปิดกล่อง เปิดดวง และล่า Hidden ทำไมผู้ใช้ต้องกลับมาเช็กหน้าเว็บ">
-    <div slot="left" class="flex h-full flex-col justify-center">
-      <Picture
-        src={imgHidden}
-        loading="lazy"
-        fetchpriority="low"
-        widths={[200, 400, 600, 800]}
-        sizes="(max-width: 768px) 100vw, 30vw"
-        decoding="async"
-        formats={["avif", "webp"]}
-        fallbackFormat="webp"
-        quality={80}
-        alt="PAY69 กิจกรรมเปิดกล่อง เปิดดวง และล่า Hidden พร้อมเครดิตฟรีแบบกดรับเอง"
-        class="mx-auto h-auto w-full rounded-2xl border-2 border-amber-400/40 shadow-[0_10px_30px_rgba(212,162,74,0.35)]"
-      />
-    </div>
-    <div slot="right">
-      <p>
-        กิจกรรมเปิดกล่อง เปิดดวง ล่า Hidden และเครดิตฟรีแบบกดรับเอง ทำให้ <strong class="text-amber-200">PAY69</strong> ใช้ระบบ Gamification ดึงผู้ใช้กลับมามีส่วนร่วม
-        ไม่ได้ปล่อยให้หน้าเว็บทำหน้าที่แค่พาเข้าเกมแล้วจบ
-      </p>
-      <p class="mt-4">ก่อนร่วมกิจกรรมควรตรวจจำนวนสิทธิ์ วันหมดอายุ ยอดเทิร์น และเกมที่รองรับ เพราะคำว่า “รับฟรี” มักมีเพื่อนสนิทชื่อ “เงื่อนไข” เดินตามมาติด ๆ</p>
-    </div>
-  </ContentBoxSevenThreeCyberCut>
-
-  <ContentBoxSevenThreeFloatingBadge title="ค่าน้ำ PAY69 มีอะไรให้สายกีฬาดูมากกว่าชื่อทีม">
-    <div slot="left" class="flex h-full flex-col justify-center">
-      <Picture
-        src={imgOdds}
-        loading="lazy"
-        fetchpriority="low"
-        widths={[200, 400, 600, 800]}
-        sizes="(max-width: 768px) 100vw, 30vw"
-        decoding="async"
-        formats={["avif", "webp"]}
-        fallbackFormat="webp"
-        quality={80}
-        alt="ค่าน้ำ PAY69 สำหรับสายกีฬา พร้อมตลาดเดิมพัน เวลาปิดรับ และประเภทบิล"
-        class="mx-auto h-auto w-full rounded-2xl border-2 border-amber-400/40 shadow-[0_10px_30px_rgba(212,162,74,0.35)]"
-      />
-    </div>
-    <div slot="right">
-      <p>
-        <strong class="text-amber-200">PAY69</strong> รองรับการเดิมพันกีฬาและมีการนำเสนอค่าน้ำเป็นจุดขาย สายบอลควรดูทั้งราคา ตลาดเดิมพัน เวลาปิดรับ และประเภทบิล เช่น เต็มเวลา ครึ่งแรก หรือสเต็ป
-        ก่อนกดยืนยัน
-      </p>
-      <p class="mt-4">ชื่อทีมอาจเหมือนเดิม แต่ราคาสามารถเปลี่ยนตามเวลาและสถานการณ์ อย่ากดเพราะเห็นทีมรักอย่างเดียว ไม่อย่างนั้นอาจเชียร์ถูกทีม แต่ถือบิลผิดตลาดแบบเจ็บเงียบ ๆ</p>
-    </div>
-  </ContentBoxSevenThreeFloatingBadge>
-
-  <ContentBox as="h2" title="จากเกม Live สด ถึงเดิมพันด้านการเงิน PAY69 มีหมวดอะไรบ้าง">
-    <div>
-      <p>
-        หมวดหลักของ <strong class="text-amber-200">PAY69</strong> ครอบคลุมสล็อต กีฬา เกม Live สด และเดิมพันด้านการเงิน โดยแต่ละประเภททำงานต่างกัน สล็อตใช้รอบสปิน
-        ส่วนเกมสดเล่นตามรอบโต๊ะและภาพถ่ายทอดแบบเรียลไทม์
-      </p>
-      <p class="mt-4">
-        กีฬาขึ้นอยู่กับเหตุการณ์แข่งขัน ขณะที่เดิมพันด้านการเงินอิงความเคลื่อนไหวของราคา จึงไม่ควรใช้วิธีเลือกแบบเดียวกันทั้งหมด รองเท้าแตะใส่ได้หลายที่ แต่ไม่จำเป็นต้องใส่ลงสนามบอล
-      </p>
+      <FeatureHighlights items={providerHighlights} />
     </div>
   </ContentBox>
 
   <ProviderGrid />
 
-  <GameRankingBoard />
-
-  <ContentBoxSpecial as="h2" title="ฝากปุ๊บเพิ่ม 5% และเครดิตฟรีกดรับเอง คุ้มจริงหรือแค่ตัวเลขสวย">
-    <p slot="left">
-      หน้าเว็บนำเสนอจุดขายอย่างฝากเพิ่ม 5% เครดิตฟรีกดรับเอง และการถอนที่ไม่จำกัด ก่อนรับสิทธิ์ควรตรวจว่าเปอร์เซ็นต์คิดจากยอดใด รับได้กี่ครั้ง และรองรับเกมประเภทไหน
-    </p>
+  <ContentBoxSevenThreePremium titleright="นวัตกรรม ระบบเสถียร ขั้นสุด ประมวลผลไว ไร้การสะดุด">
+    <div slot="left" class="flex h-full flex-col justify-center">
+      <Picture
+        src={imgStability}
+        loading="lazy"
+        fetchpriority="low"
+        widths={[200, 400, 600, 800]}
+        sizes="(max-width: 768px) 100vw, 30vw"
+        decoding="async"
+        formats={["avif", "webp"]}
+        fallbackFormat="webp"
+        quality={80}
+        alt="BUNNY555 นวัตกรรม Cloud Server ระบบเสถียรขั้นสุด ประมวลผลไว ไร้การสะดุด"
+        class="mx-auto h-auto w-full rounded-2xl border-2 border-pink-400/40 shadow-[0_10px_30px_rgba(236,72,153,0.35)]"
+      />
+    </div>
     <p slot="right">
-      ส่วนที่สำคัญกว่าตัวเลขบนแบนเนอร์คือยอดเทิร์น เพดานถอน และเวลาหมดอายุ โบนัสที่ดูเยอะอาจไม่คุ้ม หากต้องเล่นต่อยาวจนจำไม่ได้ว่าตอนแรกเข้ามาทำอะไร
+      สถาปัตยกรรมดิจิทัลของเราถูกสร้างขึ้นด้วยเทคโนโลยี Cloud Server ที่ทันสมัยที่สุด เพื่อให้การเชื่อมต่อทุกวินาทีเป็นไปอย่างราบรื่น ไม่ว่าจะมีผู้ใช้งานพร้อมกันมากเพียงใด
+      การทำงานก็ยังคงลื่นไหลและรักษาประสิทธิภาพไว้ได้อย่างสมบูรณ์แบบ นี่คือความตั้งใจที่จะมอบประสบการณ์ที่ดีที่สุดให้แก่สมาชิกทุกคนที่ก้าวเข้ามา
     </p>
-  </ContentBoxSpecial>
+  </ContentBoxSevenThreePremium>
 
-  <SmoothCarousel />
-
-  <LatestWinners />
-
-  <ContentBoxTwoCyberCut titleleft="คู่มือภาพของ PAY69 ช่วยสมาชิกใหม่ตรงไหน" titleright="PAY69 App เป็นทางเข้าสำรอง หรือจำเป็นต่อการใช้งาน">
-    <div slot="left">
-      <p>
-        Beginner Guide ของ <strong class="text-amber-200">PAY69</strong> ใช้ภาพอธิบายตั้งแต่เข้าเว็บหรือแอป กดสมัคร ตั้งชื่อผู้ใช้ และกำหนดรหัสผ่าน
-        ช่วยให้ผู้เริ่มต้นมองเห็นตำแหน่งปุ่มและทำตามลำดับได้ง่ายขึ้น
-      </p>
-      <p class="mt-4">
-        อย่างไรก็ตาม ต้องตรวจข้อมูลก่อนยืนยันและตั้งรหัสผ่านที่เดายาก ไม่ควรใช้รหัสเดียวกับโซเชียลหรืออีเมล ส่วน OTP เก็บไว้กับตัว ต่อให้คนขอพูดเพราะแค่ไหนก็ห้ามแจก
-      </p>
-    </div>
-    <div slot="right">
-      <p>
-        <strong class="text-amber-200">PAY69</strong> App เชื่อมกับขั้นตอนสมัคร เข้าระบบ ติดตามกิจกรรม และจัดการบัญชีผ่านมือถือ จึงมีบทบาทมากกว่าการเป็นทางเข้าสำรองสำหรับวันที่เปิดเว็บไม่สะดวก
-      </p>
-      <p class="mt-4">ก่อนติดตั้งควรตรวจแหล่งดาวน์โหลด ชื่อไฟล์ และเวอร์ชันอุปกรณ์ หลีกเลี่ยงไฟล์จากข้อความส่วนตัว เพราะแอปปลอมสมัยนี้แต่งตัวเก่ง บางครั้งหน้าตาดีกว่าของจริงเสียอีก</p>
-    </div>
-  </ContentBoxTwoCyberCut>
+  <ContentBoxNeumorphism as="h2" title="สมัครง่าย ในคลิกเดียวกับ BUNNY555 สะดวกรวดเร็วที่สุด">
+    <p>
+      ลืมขั้นตอนการลงทะเบียนที่ยุ่งยากและเสียเวลาไปได้เลย เราได้นำเทคโนโลยี AI มาช่วยจัดการระบบฐานข้อมูล ทำให้การเริ่มต้นใช้งานเป็นเรื่องง่ายดาย
+      เพียงไม่กี่ขั้นตอนคุณก็สามารถเข้าถึงแดชบอร์ดส่วนตัวได้ทันที ออกแบบมาเพื่อลดทอนความซับซ้อนและตอบโจทย์ไลฟ์สไตล์ของคนยุคใหม่ที่ต้องการความคล่องตัวขั้นสุดบนแพลตฟอร์มของ
+      <strong class="text-pink-200">BUNNY555</strong>
+    </p>
+  </ContentBoxNeumorphism>
 
   <LoginRtpSection />
 
   <div class="mx-auto mb-10 flex flex-nowrap justify-center gap-3 px-4 sm:gap-6">
     <a
       href="/login"
-      class="group relative flex flex-1 items-center justify-center rounded-full bg-gradient-to-r from-[#f7e3bd] via-[#e0b877] to-[#b8823a] px-4 py-3 text-sm font-black whitespace-nowrap text-[#1a1130] shadow-[0_5px_20px_rgba(212,162,74,0.45)] transition-all duration-300 hover:-translate-y-1 hover:scale-105 hover:shadow-[0_8px_25px_rgba(212,162,74,0.65)] sm:flex-none sm:px-10 sm:py-3.5 sm:text-base">
+      class="group relative flex flex-1 items-center justify-center rounded-full bg-gradient-to-r from-[#fce7f3] via-[#f9a8d4] to-[#db2777] px-4 py-3 text-sm font-black whitespace-nowrap text-[#241019] shadow-[0_5px_20px_rgba(236,72,153,0.45)] transition-all duration-300 hover:-translate-y-1 hover:scale-105 hover:shadow-[0_8px_25px_rgba(236,72,153,0.65)] sm:flex-none sm:px-10 sm:py-3.5 sm:text-base">
       เข้าสู่ระบบ
     </a>
 
     <a
       href="/register"
-      class="group relative flex flex-1 items-center justify-center rounded-full border border-violet-400/60 bg-[#150a24]/80 px-4 py-3 text-sm font-black whitespace-nowrap text-amber-200 backdrop-blur-sm transition-all duration-300 hover:scale-105 hover:border-amber-300 hover:bg-[#241040] hover:shadow-[0_0_15px_rgba(124,58,237,0.55)] sm:flex-none sm:px-10 sm:py-3.5 sm:text-base">
+      class="group relative flex flex-1 items-center justify-center rounded-full border border-rose-400/60 bg-[#1c0b12]/80 px-4 py-3 text-sm font-black whitespace-nowrap text-pink-200 backdrop-blur-sm transition-all duration-300 hover:scale-105 hover:border-pink-300 hover:bg-[#3a1122] hover:shadow-[0_0_15px_rgba(190,24,93,0.55)] sm:flex-none sm:px-10 sm:py-3.5 sm:text-base">
       สมัครสมาชิก
     </a>
   </div>
 
-  <ContentBox as="h2" title="สรุป PAY69 เด่นที่เกมเยอะ หรือมีกิจกรรมให้กลับมาทุกวัน">
-    <div>
-      <p>
-        <strong class="text-amber-200">PAY69</strong> เด่นจากการรวมสล็อต กีฬา เกม Live เดิมพันด้านการเงิน กิจกรรมเปิดกล่อง ล่า Hidden และแอปมือถือไว้ในระบบเดียว
-        จึงมีหลายจุดให้สมาชิกเลือกใช้งานตามความสนใจ
-      </p>
-      <p class="mt-4">
-        แต่ก่อนเริ่มควรตรวจค่าน้ำ ยอดเทิร์น เพดานถอน และวันหมดอายุให้ครบ เกมมีหลายหมวดเป็นข้อดี ขอแค่อย่าเปิดพร้อมกันทุกอย่างจนจาก “โลกเกมหลายสไตล์” กลายเป็น “งงหลายหน้า” ก็พอ
-      </p>
+  <ContentBoxSevenThreeNeumorphism titleright="BUNNY555 มอบสิทธิ์ รับโปรโมชั่นสุดคุ้ม ยกระดับความสำเร็จ">
+    <div slot="left" class="flex h-full flex-col justify-center">
+      <Picture
+        src={imgPromotion}
+        loading="lazy"
+        fetchpriority="low"
+        widths={[200, 400, 600, 800]}
+        sizes="(max-width: 768px) 100vw, 30vw"
+        decoding="async"
+        formats={["avif", "webp"]}
+        fallbackFormat="webp"
+        quality={80}
+        alt="BUNNY555 มอบสิทธิ์ รับโปรโมชั่นสุดคุ้ม ผ่านระบบอัตโนมัติ"
+        class="mx-auto h-auto w-full rounded-2xl border-2 border-pink-400/40 shadow-[0_10px_30px_rgba(236,72,153,0.35)]"
+      />
     </div>
-  </ContentBox>
+    <p slot="right">
+      นอกเหนือจากความรวดเร็วของระบบแล้ว เรายังเตรียมสิทธิพิเศษมากมายเพื่อเป็นทุนสนับสนุนให้คุณก้าวสู่เป้าหมายได้ไวขึ้น โบนัสและแคมเปญต่างๆ ถูกคำนวณมาอย่างดีเพื่อให้มีความคุ้มค่าสูงสุด
+      คุณสามารถกดรับสิทธิ์ได้ด้วยตนเองผ่านระบบอัตโนมัติ เป็นการเพิ่มศักยภาพในการทำกำไรให้ทะยานสูงขึ้นไปอีกขั้นอย่างมั่นคง
+    </p>
+  </ContentBoxSevenThreeNeumorphism>
 
-  <Faq title="คำถามที่พบบ่อยเกี่ยวกับ PAY69" faqs={faqs} />
+  <SmoothCarousel />
+
+  <LatestWinners />
+
+  <Faq title="คำถามที่พบบ่อยเกี่ยวกับ BUNNY555" faqs={faqs} />
+
+  <GameRankingBoard />
 
   <ReviewCardSumo2 />
 

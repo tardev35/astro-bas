@@ -6,9 +6,9 @@ import { Picture } from "astro:assets";
 import slide1 from "../assets/slide1.png";
 import slide2 from "../assets/slide2.png";
 import slide3 from "../assets/slide3.png";
-import slide4 from "../assets/slide4.png";
 
-const images = [slide1, slide2, slide3, slide4];
+// slide4.png ยังอยู่ในโฟลเดอร์แต่เป็นภาพของแบรนด์เก่า (มีโลโก้เดิมกลางภาพ) จึงไม่ import มาใช้
+const images = [slide1, slide2, slide3];
 const displayImages = [...images, ...images, ...images];
 ---
 
@@ -20,8 +20,8 @@ const displayImages = [...images, ...images, ...images];
           <div class="swiper-slide">
             <Picture
               src={img}
-              alt={`PAY69 กิจกรรมเปิดกล่อง ล่า Hidden เกม Live สด ค่าน้ำกีฬา และแอปมือถือ ภาพที่ ${index + 1}`}
-              class="block w-full rounded-xl border border-amber-400/40 object-contain object-cover shadow-[0_5px_15px_rgba(212,162,74,0.28)]"
+              alt={`BUNNY555 โปรโมชั่นสุดคุ้ม สมัครง่ายในคลิกเดียว ระบบเสถียรขั้นสุด ภาพที่ ${index + 1}`}
+              class="block w-full rounded-xl border border-pink-400/40 object-contain object-cover shadow-[0_5px_15px_rgba(236,72,153,0.28)]"
               width={img.width}
               height={img.height}
               loading={index < 2 ? "eager" : "lazy"}

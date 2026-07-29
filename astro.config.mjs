@@ -19,7 +19,7 @@ export default defineConfig({
     "/line": "https://tinyurl.com/suhng",
   },
 
-  site: "https://pay69-brand.com",
+  site: "https://bunny555-game.com",
   integrations: [
     sitemap({
       // /login, /register and /line are forwarding pages that all ship

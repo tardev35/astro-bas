@@ -2188,3 +2188,159 @@ LoginRtpSection + ปุ่ม CTA ต่อท้าย #7+#8 (สมัคร/
 - JSON-LD ใน `ทดลองเล่น.astro` เป็น array เปล่าไม่มี `@context`/`@type` (ของเดิม) —
   agent C รายงานไว้ ไม่ได้อยู่ในสโคปรอบนี้
 - **ไม่ deploy · ไม่ `git push` · ไม่ `git commit`** ตามคำสั่ง — หยุดที่ build + verify
+
+---
+
+## 2026-07-28 — รีแบรนด์ PAY69 → BUNNY555 (3-agent ขนาน)
+
+**เป้าหมาย:** เปิดตัวแบรนด์ **BUNNY555** บน template เดิม (โดเมนจริง
+`https://bunny555-game.com/`) — คำสั่งยิงตรงจาก uploader พร้อมวรรค
+"หยุดที่ build + verify เท่านั้น ห้าม deploy และห้าม git push" → **จบที่ Phase 6 ไม่ deploy
+ไม่ push ไม่ commit**
+
+### แบรนด์ + พาเลตต์
+
+โลโก้เป็นตัวอักษร **ชมพู + เลข 555 ขาวมุก** บนดำสนิท แบนเนอร์/สไลด์เป็นชมพูนีออนล้วน
+(`palette.json` วัด `logo.webp` vivid ได้ `#f49fb3` / `#f4829e` / `#fc7da5`; dominant ของ
+banner/slide เป็นดำ `#020101` = พื้นหลัง ไม่ใช่ accent) → **ชมพู (pink) เป็นสีหลัก + rose
+เข้มเป็นสีรอง + ขาวมุกเป็นคู่สี** ตัดขาดจาก PAY69 (ทอง amber + ม่วง violet) ชัดเจน
+
+ค่าหลัก: ชมพูอ่อน `#fbcfe8` · ชมพูหลัก `#f472b6`/`#ec4899` · ชมพูเข้ม `#db2777`/`#be185d` ·
+rose ลึก `#9f1239`/`#881337`/`#4c0519` · พื้น `#0a0305` · การ์ด `#170a10` · ผิวยก `#241019`
+
+`bg.json` ถูก uploader ตั้งเป็น `{"mode":"color","color":"#de3765"}` มาแล้ว — **ไม่ได้แตะ**
+เว้นไว้ไม่แตะ: LINE เขียว `#00B900`, จุด live/success สีเขียว, สีโลโก้ธนาคาร/ค่ายเกมจริง
+
+### เนื้อหา (docx 5 หัวข้อ — H1 ×1 + H2 ×4 + **H3 ×3 ใต้ H2 #2**)
+
+รอบนี้ docx **มี H3 จริง** (ต่างจาก PAY69/UFAYES ที่เป็น H2 ล้วน) → ใช้ข้อยกเว้นที่ playbook
+อนุญาต: H3 ทั้ง 3 ตัว (PG Soft / Pragmatic Play / JOKER Gaming) เข้า
+`FeatureHighlights.astro` เป็น `items` prop **ไม่ได้ hand-roll icon-card ใน index**
+
+แมป 1:1 ตามลำดับเอกสาร ทุกหัวข้อได้ **ครบทั้ง 2 ย่อหน้าแบบ verbatim**:
+H1 เข้า `ContentBoxPremium` · #2 `ContentBox` + `FeatureHighlights` · #3
+`ContentBoxSevenThreePremium` (ภาพ slide2 = สมาชิกใหม่รับเพิ่ม 100%) · #4
+`ContentBoxNeumorphism` · #5 `ContentBoxSevenThreeNeumorphism` (ภาพ slide1 = คืนยอดเสีย 15%)
+แล้วปิดท้ายด้วย `Faq4` (4 ข้อ ส่งผ่าน prop)
+
+widget ที่ไม่ใช่ docx วางแทรกเฉพาะจุดที่สังกัดหัวข้อจริง: `ProviderGrid` ต่อท้าย #2 (หมวดค่ายเกม) ·
+`LoginRtpSection` + ปุ่ม CTA ต่อท้าย #4 (สมัคร/ล็อกอิน) · `SmoothCarousel` +
+`LatestWinnersPremium` ต่อท้าย #5 (โบนัส/ถอน) · `GameRankingBoard` + `ReviewCardSumo2` ปิดท้าย
+
+`content.txt` รอบนี้ **มีส่วน SUB-PAGES (Title & Meta) ครบ 5 หน้า** → หน้าย่อยใช้ Title/Meta
+ตรงตัวจาก docx ไม่ได้แต่งเอง (หน้า `บทความ` มี Title/Meta ใน docx แต่ไม่มีไฟล์เพจจริง →
+ข้าม ไม่ได้สร้างหน้าใหม่ เพราะ operator ไม่ได้เปิด toggle มา)
+
+**ภาพ:** `banner1` = hero · `slide2` + `slide1` = SevenThree 2 บล็อก (เพดานของ playbook) ·
+`slide1` = og:image · `slide3` ใช้เฉพาะใน SmoothCarousel/promotion · **ไม่มี `banner2+` ที่ใช้ได้
+รอบนี้** (ของเก่าทั้งคู่) → ไม่ได้ใส่ภาพประกอบใน ContentBox คอลัมน์เดียว
+
+### วิธีแบ่งงาน (P0 → P3)
+
+- **P0** orchestrator แตก docx + อ่านภาพ + เลือก variant + เขียน brand spec ไฟล์เดียว
+  (นอก repo ที่ `%TEMP%` เพื่อไม่ให้ Tailwind สแกนเจอ class ในนั้น) ให้ทุก agent อ่านร่วมกัน
+- **P1** orchestrator retheme **shared chrome เองก่อน fan-out**: `MainLayout` ·
+  `NavbarStyle10` · `FooterPremium` · `Navfoot` · `Announcement5` · `ContentBox` ·
+  `ContentBoxHuay` (2 ตัวหลังคือ component ที่ ≥2 หน้าใน `src/pages/` import) +
+  `brandProfile.ts` · `astro.config.mjs` · `wrangler.toml` · `site.webmanifest`
+- **P2** 3 agent ไฟล์ไม่ทับกันเลย — A: `index.astro` + 14 component ที่มีแต่ index ใช้ ·
+  B: `promotion` + `login` + `register` · C: `contact-us` + `ทดลองเล่น` + `ทางเข้า`
+- **P3** orchestrator merge + build + verify + แก้บั๊กที่เจอเอง (ไม่ส่ง agent กลับเข้า shared set)
+
+### variant ที่ใช้รอบนี้ (before → after)
+
+| ตระกูล | จาก (PAY69) | เป็น (BUNNY555) |
+|---|---|---|
+| Navbar | NavbarStyle8 | NavbarStyle10 |
+| Footer | FooterStyle3 | FooterPremium |
+| Announcement | Announcement4 | Announcement5 |
+| LatestWinners | LatestWinners3 | LatestWinnersPremium |
+| Faq | Faq2 | Faq4 |
+| ContentBox mix | CyberCut + FloatingBadge + Special + ตัวธรรมดา + TwoCyberCut | Premium + Neumorphism + ตัวธรรมดา + SevenThreePremium + SevenThreeNeumorphism + **FeatureHighlights** |
+| BRAND_FONT | google-sans | kanit |
+
+ไม่มีตระกูลไหนที่ใช้ตัวเดิมซ้ำ · `ContentBoxTwoPremium` retheme ไว้แล้วแต่ **ไม่ได้ import**
+เพราะไม่มีหัวข้อ docx ให้ลง (ไม่ปล่อย import ค้าง)
+
+### บั๊ก/ของค้างที่เจอ (เหตุผลที่ห้ามข้าม verify)
+
+1. **`slide4.png` เป็นภาพเก่าที่มีโลโก้ PAY69 เบิ้มอยู่กลางภาพ แต่ยัง render อยู่ 2 ที่** —
+   `SmoothCarousel.astro` (หน้าแรก) และ `promotion.astro` เช็ก mtime เทียบกับชุด asset จริง
+   (06:01 vs 14:29) + เปิดภาพดูยืนยัน → ถอด import ออกจากทั้งสองไฟล์ **ไม่ลบไฟล์ทิ้ง**
+   หน้าโปรโมชั่นปรับกริดจาก 2 คอลัมน์เป็น `lg:grid-cols-3` ให้ 3 ภาพลงพอดี ไม่เหลือช่องโหว่
+2. **`Faq4` เป็น FAQ hardcode ของแบรนด์ MARANGS777 (ไม่รับ props เลย)** → เขียนใหม่ให้รับ
+   `title`/`faqs` แบบเดียวกับ Faq2/Faq3 · `<style>` ยัง hardcode `font-family: "kanit"` ทับ
+   ระบบฟอนต์ของ `brandProfile.ts` → เปลี่ยนเป็น `var(--font-sans)`
+3. **`Faq4` เอา `<h3>` มาใช้เป็นหัวข้อ section** ทั้งที่หัวข้อ section อื่นทุกตัวเป็น `<h2>` —
+   จับได้ตอน extract heading จาก HTML ที่ render จริง (ได้ h2×4 h3×4) → แก้เป็น `<h2>`
+   ให้ระดับหัวข้อสม่ำเสมอ (หลังแก้: h1×1 h2×5 h3×3) · ใส่ `aria-hidden` ให้ glyph `>_`
+   หน้าคำถามด้วย ตามแบบที่เคยทำกับ `ContentBoxSevenThreeCyberCut`
+4. **`ทดลองเล่น.astro` มี JSON-LD เป็น array เปล่าไม่มี `@context`/`@type`** (ของค้างจากรอบก่อน
+   ที่บันทึกไว้ว่ายังไม่ได้แก้) → รอบนี้แก้เป็น `ItemList` ที่ถูกต้อง (`ListItem` → `VideoGame`
+   พร้อม `publisher` เป็น Organization BUNNY555)
+5. **`login`/`register` ซ่อนสีเก่าไว้ใน `<style>` เป็น hex/rgba ดิบ** ที่ grep utility class
+   ของ Tailwind ไม่เจอ — รวมถึง CSS var ชื่อหลอก `--brand-violet: #7c3aed` (ประกาศไว้แต่ไม่มี
+   ที่ไหนเรียกใช้) → กวาดครบทั้ง `rgba(212,162,74,X)` และ `rgba(124,58,237,X)` ทุกจุด
+6. **`LatestWinnersPremium` ยังอ่านว่า `GROW268`/`sumo`** ในหัวข้อ + DOM id `feed-sumo-hud`
+   และมี `ttbLogo` ที่ import แต่ไม่ได้ใช้ → กวาดชื่อแบรนด์ + เปลี่ยน id + เอา TTB เข้า pool ธนาคาร
+
+### URL จริง (3 ไฟล์ตาม playbook)
+
+- `astro.config.mjs` `site:` → `https://bunny555-game.com`
+- `index.astro` `webSiteSchema.url` → `"https://bunny555-game.com/"` (string literal ไม่ตาม `site:` เอง)
+- `wrangler.toml` `name` → `pay69` → **`bunny555`** (ถ้าปล่อยไว้ `wrangler deploy` ครั้งหน้าจะ
+  ทับ Worker ของ PAY69 ทิ้ง) · `account_id` **ไม่แตะ** · `workers_dev = false` +
+  `not_found_handling` อยู่ครบ
+- `public/site.webmanifest` → ชื่อ + `theme_color` `#ec4899` + `background_color` `#0a0305`
+- ⚠️ แบนเนอร์/สไลด์พิมพ์ `WWW.BUNNY555.COM` ไว้ในภาพ — **ไม่ได้ใช้โดเมนจากในภาพ** ใช้
+  `bunny555-game.com` ตามที่ operator สั่งเท่านั้น (playbook ห้ามเดาโดเมนจากภาพ)
+- `robots.txt` ไม่ได้แตะ — generate จาก `site:` ผ่าน `src/pages/robots.txt.ts` เอง
+
+### Verify (build 2 ครั้ง: ครั้งแรก + อีกครั้งหลังแก้บั๊กข้อ 3)
+
+- `npm run build` → **7 page สำเร็จ 0 fail**
+- route ที่ออก = `/` `/contact-us` `/promotion` `/login` `/register` `/line` `/ทดลองเล่น`
+  `/ทางเข้า` — **ไม่มี `/ตรวจหวย` และ `/แนวทาง`** ถูกต้องสำหรับแบรนด์สล็อต/คาสิโน
+- `PAY69` → **0 hit ทั่วทั้ง `dist/`** (รวม webmanifest + sitemap) · แบรนด์เก่าอื่นอีก 8 ชื่อ
+  (`GROW268` `GSYBET` `MARANGS777` `CASHOT123` `UFAYES` `SUMO` `MAHORANLOTTO` `BRAZIL999`) → 0 ทั้งหมด
+- โทนเก่าใน `class="…"` → **0** ทั้ง amber/violet/purple/indigo/yellow · ชมพูใหม่ติด 394 จุด
+- `<!--` → **0 ทั้ง 8 ไฟล์ html**
+- `undefined` / `NaN` / `[object Object]` → **0**
+- heading `index.html` = **h1×1 · h2×5 · h3×3** · ดึง heading จาก HTML จริงมาเทียบ checklist
+  → **ครบ 5 หัวข้อ เรียงตรงตาม docx** · h3×3 = FeatureHighlights เท่านั้น · หน้าย่อยทุกหน้า
+  h1×1 h2×2 h3×0
+- สุ่มเช็กประโยคย่อหน้า **ที่สอง** ของทุกหัวข้อ + Q/A ของ FAQ → เจอครบ 17/17 probe
+  (กันเคสสรุปย่อหน้า/ตัดเนื้อหาหาย)
+- hero `<img>` = `banner1.*` จริง · `slide4`/`banner2`/`banner3`/`banner.` → **0 hit ทุกหน้า**
+- `og:image` + `twitter:image` = asset ที่ hash แล้วของ `slide1` บนโดเมนใหม่ (ไม่ใช่ path ใน `public/`)
+- FAQ render ครบ **4 ข้อ** (นับ `class="faq-trigger"` ไม่ใช่ selector ใน `<script>`)
+- ฟอนต์หมุนไป kanit จริง: preload `kanit-v17-*.woff2` ครบ 4 ไฟล์ · request ไป
+  `fonts.googleapis.com` = **0**
+- `login`/`register` ship `noindex, follow` · `/line` ship `noindex` — ตามเดิม ไม่ได้เปลี่ยน
+- sitemap เหลือ 5 URL หน้าจริง ทุกอันเป็นโดเมนใหม่ · `robots.txt` Sitemap ชี้โดเมนใหม่
+- `npm run preview` → `/` `/promotion` `/contact-us` `/login` `/register` ตอบ **200** ทุกหน้า
+  และ `PAY69` ในหน้าที่เสิร์ฟจริง = 0
+- ไม่มี `*FloatingBadge` ถูกใช้รอบนี้ → ข้ามเคสบั๊ก badge ล้นจอ/ทับเนื้อหา
+- ไม่มี `<p>` ในหน้าเพจที่โดนบีบด้วย `mx-auto`/`max-w-*` → 0
+
+### นอกสโคป / ไม่ได้แตะ
+
+- **หน้าหวยปิดอยู่ถูกต้องแล้ว** — `ตรวจหวย.astro` + `แนวทาง.astro` จอดใน `src/pages-disabled/`
+  และ navbar/footer ที่ active (`NavbarStyle10`/`FooterPremium`) ไม่มีลิงก์ไปหาเลย (grep ยืนยัน) ·
+  BUNNY555 เป็นเว็บสล็อต prompt ก็ไม่มีคำว่า `เว็บหวย` → ไม่ต้องทำอะไร เนื้อหาข้างในยังเป็น
+  MAHORANLOTTO = dormant inventory
+- ไม่มีหน้า preset ค้างจาก uploader ส่วนที่ 5 (grep `TODO(rebrand)` = 0) · docx มี Title/Meta
+  ของหน้า `บทความ` มาด้วยแต่ operator ไม่ได้เปิด toggle → **ไม่ได้สร้างหน้าใหม่**
+- `slide4.png` / `banner2.png` / `banner3.png` / `banner.png` ยังอยู่ใน `src/assets` ตั้งใจไม่ลบ ·
+  หมายเหตุเดิมยังใช้ได้: glob `banner*` ใน `MainLayout` เป็น `eager` เลย emit `_astro/banner2.*`
+  ลง dist ทั้งที่ไม่มีหน้าไหนอ้างถึง — เป็นพฤติกรรมเดิมของ template ไม่ได้แก้ (playbook สั่งให้คง
+  ลำดับการเลือก banner ไว้) แค่กินพื้นที่ ไม่ได้ render ผิด
+- `login`/`register` **ไม่ได้ใส่ `<meta name="description">`** ที่เดิมก็ไม่มี — ทั้งคู่เป็นหน้า
+  forwarding ที่ ship `noindex` และ playbook ห้ามเติม tag ที่ "ดูเหมือนหาย" เข้า head ของ template
+- component inventory ครบทุกไฟล์ **ไม่ได้ลบตัวไหนเลย** (`Announcement4`, `Faq2`,
+  `LatestWinners3`, `NavbarStyle8`, `FooterStyle3`, `ContentBoxCyberCut`,
+  `ContentBoxFloatingBadge`, `ContentBoxSevenThree*CyberCut/FloatingBadge`, `ContentBoxSpecial`,
+  `ContentBoxTwoCyberCut`) — ยังเป็นสีทอง/ม่วงของ PAY69 ตามคาด เป็น drift ที่ตั้งใจ
+- repo ไม่ prettier-clean มาตั้งแต่ baseline (`index.astro`, `promotion.astro`, `ContentBox.astro`
+  ก็ warn) → ไม่ได้ reformat ให้หลุดแถวกับไฟล์อื่น
+- **ไม่ deploy · ไม่ `git push` · ไม่ `git commit`** ตามคำสั่ง — หยุดที่ build + verify
