@@ -85,7 +85,7 @@ const demoListSchema = {
     <div class="mb-5 grid grid-cols-2 gap-5 sm:grid-cols-2 md:grid-cols-4">
       {
         demoGames.map((game) => (
-          <div class="group relative flex flex-col gap-4 overflow-hidden rounded-xl">
+          <div class="group/game relative mx-auto w-full max-w-[400px] overflow-hidden rounded-xl">
             <Picture
               src={game.src}
               alt={game.alt}
@@ -93,7 +93,7 @@ const demoListSchema = {
               fetchpriority="low"
               widths={[200, 400, 600]}
               sizes="(max-width: 768px) 100vw, 25vw"
-              class="mx-auto h-auto w-full max-w-[400px] object-cover shadow-[0_10px_30px_rgba(168,132,44,0.18)] transition-transform duration-300 group-hover:scale-105"
+              class="block h-auto w-full object-cover shadow-[0_10px_30px_rgba(168,132,44,0.18)] transition-transform duration-300 group-hover/game:scale-105"
               decoding="async"
               formats={["avif", "webp"]}
               fallbackFormat="webp"
@@ -104,7 +104,7 @@ const demoListSchema = {
               target="_blank"
               rel="noopener noreferrer"
               aria-label={`ทดลองเล่น ${game.alt}`}
-              class="absolute inset-0 flex items-center justify-center bg-[#241c0c]/70 opacity-0 transition-opacity duration-300 group-hover:opacity-100">
+              class="absolute inset-0 flex items-center justify-center bg-[#241c0c]/70 opacity-0 transition-opacity duration-300 group-hover/game:opacity-100 focus-visible:opacity-100">
               <span class="rounded-full border border-[#c9a227]/60 bg-gradient-to-r from-[#f4dfa3] via-[#d9b45c] to-[#a97f2a] px-6 py-2 font-bold text-[#231a06] shadow-[0_10px_30px_rgba(168,132,44,0.30)] transition-transform hover:scale-110">เล่นเลย</span>
             </a>
           </div>
