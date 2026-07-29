@@ -15,10 +15,10 @@ const fontHref = usesGoogleFonts
 <html lang="th" style={`--font-sans: ${fontStack};`}>
   <head>
     <meta charset="utf-8" />
-    <title>สมัครสมาชิก LAPDEE88 | กำลังเชื่อมต่อไปหน้าสมัครอัตโนมัติ</title>
+    <title>สมัครสมาชิก WINUP888 | กำลังเชื่อมต่อไปหน้าสมัครอัตโนมัติ</title>
     <meta
       name="description"
-      content="หน้าเชื่อมต่อสมัครสมาชิก LAPDEE88 สมัครด้วยเบอร์โทรและ OTP ระบบออโต้ ฝากขั้นต่ำ 1 บาท กำลังพาไปยังหน้าสมัครอย่างปลอดภัย"
+      content="หน้าเชื่อมต่อสมัครสมาชิก WINUP888 คาสิโนบนมือถือระบบ HTML5 รวมสล็อต บาคาร่า และเกม Live สด กำลังพาไปยังหน้าสมัครสมาชิกอย่างปลอดภัย"
     />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
@@ -34,24 +34,28 @@ const fontHref = usesGoogleFonts
     <link href={fontHref} rel="stylesheet" />
 
     <style>
+      /* WINUP888 is a LIGHT brand — ivory/white surfaces, champagne gold and
+         platinum accents, dark-brown ink. Every value below is a real colour,
+         so read the value, not the variable name, before reusing one. */
       :root {
-        --dark-bg: #0b0906;
-        --panel-bg: rgba(28, 22, 9, 0.6);
-        --brand-gold: #e0bd72;
-        --brand-gold-deep: #b1873a;
-        --brand-champagne: #f6e4b4;
-        --text-white: #f9fafb;
-        --text-muted: #e2d5b6;
+        --page-bg: #fffdf7;
+        --panel-bg: rgba(250, 244, 230, 0.95);
+        --brand-gold: #d9b45c;
+        --brand-gold-deep: #a97f2a;
+        --brand-champagne: #f4dfa3;
+        --brand-platinum: #9a9da1;
+        --text-ink: #3a2e18;
+        --text-muted: #6b5836;
       }
 
       body {
         margin: 0;
         font-family: var(--font-sans);
-        color: var(--text-white);
+        color: var(--text-ink);
 
         background:
-          radial-gradient(circle at 50% 10%, rgba(212, 175, 90, 0.35) 0%, transparent 50%),
-          radial-gradient(circle at 50% 92%, rgba(177, 140, 90, 0.22) 0%, transparent 55%), var(--dark-bg);
+          radial-gradient(circle at 50% 10%, rgba(168, 132, 44, 0.18) 0%, transparent 55%),
+          radial-gradient(circle at 50% 92%, rgba(207, 208, 210, 0.35) 0%, transparent 55%), var(--page-bg);
         display: flex;
         min-height: 100vh;
         flex-direction: column;
@@ -65,11 +69,11 @@ const fontHref = usesGoogleFonts
         max-width: 450px;
         padding: 3.5rem;
         background: var(--panel-bg);
-        border: 1px solid rgba(212, 175, 90, 0.35);
+        border: 1px solid rgba(201, 162, 39, 0.4);
         border-radius: 2rem;
         box-shadow:
-          0 1rem 4rem rgba(0, 0, 0, 0.8),
-          0 0 2rem rgba(212, 175, 90, 0.35);
+          0 1rem 3rem rgba(168, 132, 44, 0.18),
+          0 0 2rem rgba(168, 132, 44, 0.25);
         text-align: center;
         backdrop-filter: blur(10px);
       }
@@ -78,13 +82,13 @@ const fontHref = usesGoogleFonts
         font-family: "Oswald", sans-serif;
         font-size: 1.5rem;
         font-weight: 700;
-        background: linear-gradient(180deg, #ffffff 0%, #f1e6cf 40%, var(--brand-gold) 75%, var(--brand-gold-deep) 100%);
+        background: linear-gradient(180deg, #7a5a12 0%, #b8912f 45%, var(--brand-gold-deep) 78%, #8a6a1f 100%);
         -webkit-background-clip: text;
         background-clip: text;
         color: transparent;
         letter-spacing: 0.3em;
         margin-bottom: 2rem;
-        filter: drop-shadow(0 0 1rem rgba(212, 175, 90, 0.8));
+        filter: drop-shadow(0 1px 1px rgba(168, 132, 44, 0.25));
       }
 
       .sophisticated-loader {
@@ -100,30 +104,30 @@ const fontHref = usesGoogleFonts
       .orb {
         width: 40px;
         height: 40px;
-        background: radial-gradient(circle, var(--brand-gold) 0%, var(--brand-gold-deep) 85%);
+        background: radial-gradient(circle, var(--brand-champagne) 0%, var(--brand-gold) 45%, var(--brand-gold-deep) 100%);
         border-radius: 50%;
-        box-shadow: 0 0 3rem rgba(212, 175, 90, 0.9);
+        box-shadow: 0 0 2rem rgba(168, 132, 44, 0.35);
         animation: pulse 2s ease-in-out infinite;
       }
 
       .ring {
         position: absolute;
         border-radius: 50%;
-        border: 3px solid rgba(212, 175, 90, 0.18);
+        border: 3px solid rgba(168, 132, 44, 0.2);
         animation: spin linear infinite;
       }
 
       .ring-1 {
         width: 100%;
         height: 100%;
-        border-top-color: var(--brand-champagne);
+        border-top-color: var(--brand-gold-deep);
         animation-duration: 4s;
       }
 
       .ring-2 {
         width: 80%;
         height: 80%;
-        border-bottom-color: rgba(177, 135, 58, 0.9);
+        border-bottom-color: var(--brand-platinum);
         animation-duration: 6s;
         animation-direction: reverse;
       }
@@ -140,11 +144,11 @@ const fontHref = usesGoogleFonts
         0%,
         100% {
           transform: scale(1);
-          box-shadow: 0 0 3rem rgba(212, 175, 90, 0.9);
+          box-shadow: 0 0 2rem rgba(168, 132, 44, 0.35);
         }
         50% {
           transform: scale(1.15);
-          box-shadow: 0 0 4.5rem rgba(212, 175, 90, 1);
+          box-shadow: 0 0 3rem rgba(168, 132, 44, 0.5);
         }
       }
 
@@ -154,8 +158,8 @@ const fontHref = usesGoogleFonts
         font-weight: 700;
         letter-spacing: 0.1em;
         text-transform: uppercase;
-        color: var(--text-white);
-        text-shadow: 0 0 1rem rgba(255, 255, 255, 0.3);
+        color: var(--text-ink);
+        text-shadow: 0 1px 1px rgba(168, 132, 44, 0.25);
         margin: 0;
       }
       .status-text .p {
@@ -168,7 +172,7 @@ const fontHref = usesGoogleFonts
   </head>
   <body>
     <div class="premium-loading-container">
-      <div class="brand-identity">LAPDEE88</div>
+      <div class="brand-identity">WINUP888</div>
 
       <div class="sophisticated-loader">
         <div class="orb"></div>
@@ -178,7 +182,7 @@ const fontHref = usesGoogleFonts
 
       <div class="status-text">
         <h1 class="h1">CREATING SECURE ACCOUNT SESSION...</h1>
-        <p class="p">กำลังพาไปหน้าสมัครสมาชิก LAPDEE88 🔒</p>
+        <p class="p">กำลังพาไปหน้าสมัครสมาชิก WINUP888 🔒</p>
       </div>
     </div>
 

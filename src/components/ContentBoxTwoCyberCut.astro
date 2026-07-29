@@ -5,16 +5,16 @@ const hasIntro = Astro.slots.has("default");
 
 <section class="mx-auto mb-6 w-full max-w-7xl px-4 font-sans">
   <div
-    class="relative isolate w-full border border-amber-400/40 bg-[#120c22]/90 p-8 text-white/90 shadow-[0_0_25px_rgba(212,162,74,0.18)] backdrop-blur-md transition-all duration-300 hover:border-amber-300 hover:shadow-[0_0_40px_rgba(212,162,74,0.32)]"
+    class="relative isolate w-full border border-amber-600/25 bg-[#fffdf7]/92 p-8 text-[#3a2e18] shadow-[0_10px_30px_rgba(168,132,44,0.18)] backdrop-blur-md transition-all duration-300 hover:border-amber-600/50 hover:shadow-[0_15px_40px_rgba(168,132,44,0.30)]"
     style="clip-path: polygon(30px 0, 100% 0, 100% calc(100% - 30px), calc(100% - 30px) 100%, 0 100%, 0 30px);">
-    <div class="absolute top-0 left-0 -z-10 h-[2px] w-24 bg-gradient-to-r from-amber-300 to-transparent"></div>
-    <div class="absolute right-0 bottom-0 -z-10 h-[2px] w-24 bg-gradient-to-l from-violet-500 to-transparent"></div>
-    <div class="absolute top-0 left-0 -z-10 h-16 w-[2px] bg-gradient-to-b from-amber-300 to-transparent"></div>
-    <div class="absolute right-0 bottom-0 -z-10 h-16 w-[2px] bg-gradient-to-t from-violet-500 to-transparent"></div>
+    <div class="absolute top-0 left-0 -z-10 h-[2px] w-24 bg-gradient-to-r from-[#a97f2a] to-transparent"></div>
+    <div class="absolute right-0 bottom-0 -z-10 h-[2px] w-24 bg-gradient-to-l from-[#9a9da1] to-transparent"></div>
+    <div class="absolute top-0 left-0 -z-10 h-16 w-[2px] bg-gradient-to-b from-[#a97f2a] to-transparent"></div>
+    <div class="absolute right-0 bottom-0 -z-10 h-16 w-[2px] bg-gradient-to-t from-[#9a9da1] to-transparent"></div>
 
     {
       title && (
-        <h2 class="mb-4 bg-gradient-to-r from-white via-amber-100 to-amber-300 bg-clip-text text-center text-2xl leading-normal font-black tracking-widest text-transparent uppercase drop-shadow-sm">
+        <h2 class="mb-4 bg-gradient-to-r from-[#7a5a12] via-[#b8912f] to-[#8a6a1f] bg-clip-text text-center text-2xl leading-normal font-black tracking-widest text-transparent uppercase">
           {title}
         </h2>
       )
@@ -22,29 +22,29 @@ const hasIntro = Astro.slots.has("default");
 
     {
       hasIntro && (
-        <div class="mb-8 text-left text-base leading-relaxed text-amber-100/80">
+        <div class="mb-8 text-left text-base leading-relaxed text-[#3a2e18]">
           <slot />
         </div>
       )
     }
 
     <div class="grid grid-cols-1 gap-8 md:grid-cols-2">
-      <article class="relative flex flex-col gap-4 text-left text-base leading-relaxed text-amber-100/80">
+      <article class="relative flex flex-col gap-4 text-left text-base leading-relaxed text-[#3a2e18]">
         {
           titleleft && (
-            <h2 class="flex items-center gap-2 border-b border-amber-400/30 pb-2 text-xl leading-normal font-black tracking-widest text-amber-200 uppercase">
-              <span class="inline-block h-2 w-2 shrink-0 bg-[#d4a24a] shadow-[0_0_5px_rgba(212,162,74,0.85)]" /> {titleleft}
+            <h2 class="flex items-center gap-2 border-b border-amber-600/25 pb-2 text-xl leading-normal font-black tracking-widest text-[#8a6410] uppercase">
+              <span class="inline-block h-2 w-2 shrink-0 bg-[#c9a227] shadow-[0_0_5px_rgba(201,162,39,0.7)]" /> {titleleft}
             </h2>
           )
         }
         <slot name="left" />
       </article>
 
-      <article class="relative flex flex-col gap-4 text-left text-base leading-relaxed text-amber-100/80 md:border-l md:border-amber-400/30 md:pl-8">
+      <article class="relative flex flex-col gap-4 text-left text-base leading-relaxed text-[#3a2e18] md:border-l md:border-amber-600/25 md:pl-8">
         {
           titleright && (
-            <h2 class="flex items-center gap-2 border-b border-amber-400/30 pb-2 text-xl leading-normal font-black tracking-widest text-amber-200 uppercase">
-              <span class="inline-block h-2 w-2 shrink-0 bg-[#7c3aed] shadow-[0_0_5px_rgba(124,58,237,0.85)]" /> {titleright}
+            <h2 class="flex items-center gap-2 border-b border-amber-600/25 pb-2 text-xl leading-normal font-black tracking-widest text-[#8a6410] uppercase">
+              <span class="inline-block h-2 w-2 shrink-0 bg-[#9a9da1] shadow-[0_0_5px_rgba(154,157,161,0.8)]" /> {titleright}
             </h2>
           )
         }

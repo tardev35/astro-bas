@@ -2331,3 +2331,183 @@ slide4 (เนื้อหาซ้ำ slide3) · slide1 ใช้เป็น O
   บันทึกไว้ให้พิจารณาเป็นงานแยก
 - JSON-LD ใน `ทดลองเล่น.astro` ยังเป็น array เปล่าไม่มี `@context`/`@type` (ของเดิม)
 - **ไม่ deploy · ไม่ `git push` · ไม่ `git commit`** ตามคำสั่ง — หยุดที่ build + verify
+
+## 2026-07-29 — รีแบรนด์ LAPDEE88 → WINUP888 (คาสิโนมือถือ, **ธีมสว่างไอวอรี-ทอง**)
+
+**เป้าหมาย:** เปิดตัวแบรนด์ WINUP888 บน template เดิม พร้อมโดเมนจริง
+`https://winup888-brand.com` · รันแบบขนาน 3 agent ตาม playbook · หยุดที่ build + verify
+(ไม่ deploy ไม่ push ตามคำสั่งที่ยิงมาจาก uploader)
+
+### อินพุตแบรนด์
+
+- brief: `src/assets/content.txt` (uploader extract ไว้แล้ว) — Title/Description +
+  **H1 x1, H2 x8** (ไม่มี H3 เลย ต่างจากแบรนด์ก่อนที่มี H3 ของ FAQ)
+- ภาพชุดใหม่ mtime 2026-07-29 09:19: `logo.webp` `banner1.png` `bg.png` `slide1-4.png`
+- `palette.json` รอบนี้ **อ่านแล้วชวนเข้าใจผิด** — ทั้ง dominant และ vivid คืนค่าขาว/ครีม
+  (`#ffffff` `#fdfbe4` `#f5f1ec`) เพราะอาร์ตเวิร์กพื้นสว่างเกือบทั้งภาพ
+  ต้องเปิดรูปดูเองถึงเห็นว่าสีแบรนด์จริงคือ **ทอง** (`#dbc28c` `#f2e4a4` โผล่ท้าย list)
+
+### สิ่งที่ต่างจากทุกแบรนด์ก่อนหน้า: พลิกเป็น **ธีมสว่าง**
+
+logo = มังกรทองบนพื้นขาว · banner/slide = ผู้หญิงชุดทอง พื้นไหมขาว-ทอง ·
+`bg.png` = ไหมสีงาช้าง-ทอง-แพลตินัม **สว่างเกือบทั้งภาพ**
+ทุกแบรนด์ก่อนหน้าเป็นทอง/นีออนบนพื้นดำ ถ้าคงการ์ดสีดำไว้จะเป็นรูโหว่ทาบบนพื้นสว่าง
+→ รอบนี้ **กลับขั้วพื้นผิว** ทั้งเว็บ: การ์ดไอวอรี ตัวอักษรน้ำตาลเข้ม ทองแชมเปญเป็น accent
+เสริมแพลตินัม/เงินเป็นสีที่สอง (มาจากริบบิ้นเงินใน bg กับ banner)
+
+### พาเลตที่ใช้
+
+พื้นการ์ด `#fffdf7` → รอง `#faf4e6` → แถบ nav/footer `#fdfaf1` / `#f7f0de` ·
+ตัวอักษร `#3a2e18` → รอง `#6b5836` → จาง `#8a7550` ·
+ทอง `#c9a227` / เข้ม `#a97f2a` / อ่อน `#f4dfa3` / gradient หัวข้อ `#7a5a12` → `#b8912f` → `#8a6a1f` ·
+ปุ่มทอง `#f4dfa3` → `#d9b45c` → `#a97f2a` ตัวอักษร `#231a06` · แพลตินัม `#cfd0d2` / `#9a9da1` ·
+เงา `rgba(168,132,44,0.18)` hover `0.30` (เลิกใช้เงาดำ `rgba(0,0,0,0.8)` เพราะบนไอวอรีดูเหมือนคราบ)
+
+**ล้างทิ้งหมด:** พื้นมืดทุกตัว (`#12100a` `#0b0906` `#1c1609` `#140f05` `#150a24` `#1a1130`
+`#0a0714` `#001a33` `#000a14` `#01120a` `#021207` `#062b15` `#2a0808`), ทองเก่าของ LAPDEE88
+(`rgba(212,175,90,…)`), ม่วง/violet, ฟ้า/cyan ของ NavbarStyle3 เดิม, เขียว emerald, แดง/rose ·
+**คงไว้:** LINE `#00B900`, จุดเขียว live, สีแบรนด์ธนาคารจริง,
+ชิปเล็กพื้นเข้ม `#241c0c` (ใช้เฉพาะป้ายเล็กเพื่อคอนทราสต์)
+
+### การหมุน variant (ตามกฎ playbook — ห้ามซ้ำแบรนด์ก่อนหน้า)
+
+| family | LAPDEE88 (เดิม) | WINUP888 (ใหม่) |
+|---|---|---|
+| Navbar | NavbarStyle9 | **NavbarStyle3** (pill ลอย + เมนูมือถือเต็มจอ) |
+| Footer | FooterPremium | **FooterCyber** (clip-path เฉียง) |
+| Announcement | Announcement (ธรรมดา) | **AnnouncementPremium** |
+| LatestWinners | LatestWinnersPremium | **LatestWinners2** |
+| Faq | Faq3 | **Faq4** |
+| ContentBox mix | Premium + Neumorphism + ธรรมดา + TwoPremium + SevenThreePremium/Neumorphism | **CyberCut + FloatingBadge + Special + ธรรมดา + TwoCyberCut + SevenThreeCyberCut/FloatingBadge** |
+| ฟอนต์ | kanit | **google-sans** |
+
+ไม่มี family ไหนที่ต้องใช้ variant ซ้ำของเดิม
+
+### วิธีทำงาน (ขนาน 3 agent, แบ่งตามไฟล์ ไม่ทับกัน)
+
+- **P0/P1 — orchestrator ทำเอง:** อ่าน brief/ภาพ, เลือก variant, เขียน brand spec
+  (วางไว้ **นอก repo** ที่ `~/.claude/projects/<proj>/winup888-brand-spec.md` เพราะ
+  Tailwind 4 สแกนไฟล์ md ใน repo แล้วชื่อคลาสในสเปกจะกลายเป็น CSS ตายจริง)
+  แล้ว retheme **shared chrome** ให้เสร็จก่อนแตก agent = `MainLayout` + `NavbarStyle3` +
+  `FooterCyber` + `Navfoot` + `AnnouncementPremium` + `ContentBox` + `ContentBoxHuay`
+  (คำนวณสดจาก import ของหน้าเพจ: Navfoot/ticker 5 หน้า, ContentBox 3 หน้า,
+  ContentBoxHuay 2 หน้า) + `brandProfile.ts` + config 3 ไฟล์ + webmanifest
+  · `BankStrip` ตรวจแล้ว **ไม่ต้องแก้** (โลโก้ธนาคารเป็นสี semantic)
+- **Agent A:** `index.astro` + 14 component ที่มีแต่หน้าแรก render
+- **Agent B:** `promotion` + `ทดลองเล่น` + `contact-us`
+- **Agent C:** `ทางเข้า` + `login` + `register`
+- แบ่ง B/C ตามปริมาณงานเขียนจริง ไม่ใช่จำนวนไฟล์ — login/register เป็นฝาแฝดกัน
+  แก้ครั้งเดียวใช้ได้ทั้งคู่ จึงจับคู่กับหน้าที่สั้นที่สุด
+
+### ไฟล์ที่แก้
+
+**โดเมน/ตัวตนแบรนด์ (3 ไฟล์ตาม playbook + manifest)**
+- `astro.config.mjs` `site:` → `https://winup888-brand.com`
+- `index.astro` `webSiteSchema.url` → `"https://winup888-brand.com/"` (string literal)
+- `wrangler.toml` `name` → `winup888` (ไล่ log ทุกแบรนด์แล้วไม่ซ้ำ → ไม่ทับ Worker เจ้าอื่น) ·
+  `account_id` **ไม่แตะ** · `workers_dev = false` + `not_found_handling` ครบ
+- `public/site.webmanifest` → WINUP888 + theme `#c9a227` / bg `#fffdf7`
+- `robots.txt` ไม่ได้แตะ — generate จาก `site:` ผ่าน `src/pages/robots.txt.ts`
+
+**Shared chrome** — `MainLayout.astro` (สลับ import navbar/footer, title/desc/ogSiteName,
+apple-mobile-web-app-title, alt ของ hero) · `NavbarStyle3` · `FooterCyber` · `Navfoot` ·
+`AnnouncementPremium` · `ContentBox` · `ContentBoxHuay` · `brandProfile.ts` (ฟอนต์)
+
+**หน้าแรก + component เฉพาะหน้าแรก (15 ไฟล์)** — `index.astro`, `ContentBoxCyberCut`,
+`ContentBoxFloatingBadge`, `ContentBoxSpecial`, `ContentBoxSevenThreeCyberCut`,
+`ContentBoxSevenThreeFloatingBadge`, `ContentBoxTwoCyberCut`, `ContentBoxTwo`,
+`LoginRtpSection`, `ProviderGrid`, `GameRankingBoard`, `LatestWinners2`, `SmoothCarousel`,
+`Faq4`, `ReviewCardSumo2`
+
+**หน้าย่อย (6 ไฟล์)** — `promotion`, `ทดลองเล่น`, `contact-us`, `ทางเข้า`, `login`, `register` ·
+ทั้ง 5 หน้าที่ใช้ ticker สลับจาก `Announcement` → `AnnouncementPremium` เรียกแบบเปล่า
+ให้รับ default message ของแบรนด์
+
+### การแมป docx → slot (ตามลำดับเอกสาร)
+
+1 H1 → ContentBoxCyberCut · 2 → ContentBoxFloatingBadge · 3 (ค่ายสล็อต/โหมดทดลอง) →
+SevenThreeCyberCut + **slide4** แล้วตามด้วย ProviderGrid · 4 (บาคาร่า/Live สด) →
+SevenThreeFloatingBadge + **slide2** · 5 (เมนูยอดนิยม/เกมใหม่) → ContentBox แล้วตามด้วย
+GameRankingBoard · 6 (บาคาร่า-รูเล็ต-แบล็คแจ็ค) → ContentBoxSpecial ·
+7+8 (สมัคร-ล็อกอิน / ฝากถอน) → ContentBoxTwoCyberCut สองคอลัมน์ แล้วตามด้วย
+LoginRtpSection → LatestWinners2 · 9 (สรุป) → ContentBoxCyberCut · FAQ → Faq4 ·
+widget ที่ไม่ใช่ docx (ปุ่ม login/register, carousel, review card) วางท้าย
+
+**slide ที่ใช้:** slide4 + slide2 (SevenThree 2 บล็อกตามเพดาน) · **ไม่ได้ใช้บนหน้าแรก:**
+slide1 (เป็น og:image) กับ slide3 (ในภาพมีการ์ด "หวย" ไม่ตรงแนวแบรนด์คาสิโน)
+ทั้งคู่ยังโผล่ใน SmoothCarousel/promotion ที่วนทั้งชุด
+
+### บั๊ก/กับดักที่เจอรอบนี้
+
+1. **`palette.json` ชี้ทางผิดเพราะอาร์ตเวิร์กพื้นสว่าง** — ทั้งสอง list คืนขาว/ครีม
+   ต้องเปิดรูปดูเองถึงจะรู้ว่าแบรนด์เป็นทอง และต้องพลิกทั้งเว็บเป็นธีมสว่าง
+   (เคสแรกของ template นี้) → บันทึกไว้ว่าเลขจาก sharp ใช้ "จัดอันดับ" ได้ แต่ "ตีความ" แทนตาไม่ได้
+2. **`banner2.png` เป็นของเก่าอีกแล้ว** — mtime 07-28 (ชุด LAPDEE88) ขณะที่ชุดใหม่คือ 07-29
+   → เข้าเกณฑ์ inventory เก่า ข้ามไป · `banner3.png` (07-23) กับ `banner.png` (07-23)
+   เก่ากว่านั้นอีก · รอบนี้จึงไม่มีบล็อกภาพประกอบคอลัมน์เดียว (เป็นรอบที่ 2 ติดกัน)
+3. **`NavbarStyle3` hardcode ชื่อฟอนต์ kanit ใน style is:global** — บั๊กเดียวกับที่เจอใน
+   NavbarStyle9 รอบก่อน แปลว่ากับดักนี้กระจายอยู่หลาย variant → เปลี่ยนเป็น `var(--font-sans)`
+   (ถ้าไม่แก้ google-sans จะไม่มีผลเลยเพราะ is:global ทับทั้งเว็บ)
+4. **`Faq4` ไม่รับ props เลย** — hardcode หัวข้อของ MARANGS777 ไว้ในแท็ก h3 พร้อมคำถาม
+   2 ข้อที่เป็นมุกแก้ข่าว และธีมม่วง/แดง → เขียนใหม่ให้รับ `title`/`faqs`
+   แบบเดียวกับ Faq2/Faq3, เปลี่ยนหัวข้อเป็น h2, คงรูปทรง clip-path เฉียงไว้
+5. **`ContentBoxSevenThreeFloatingBadge` เรียกด้วย `titleright` → ป้ายลอยไม่ render**
+   แต่การ์ดยังกันที่ว่างด้านบนไว้ให้ป้าย ~112px (มือถือ) / 96px (จอใหญ่) กลายเป็นช่องว่าง
+   เปล่า ๆ และเสียจุดเด่นเดียวของ variant ที่เลือกมา → **เจอตอน verify** เพราะนับป้ายลอย
+   ใน HTML ได้ 1 อันทั้งที่การ์ดแบบนี้มี 2 ใบ → แก้เป็น `title` แล้ว build ใหม่
+   **บทเรียน: ตระกูล FloatingBadge ต้องส่ง `title` ไม่ใช่ `titleleft`/`titleright`**
+6. **`ทดลองเล่น.astro` JSON-LD เป็น array เปล่าไม่มี `@context`/`@type`** (ค้างมาหลายแบรนด์
+   บันทึกไว้ตั้งแต่รอบ LAPDEE88 ว่า "ของเดิม") → รอบนี้ห่อเป็น `ItemList` ที่ถูกต้องแล้ว
+7. **CSS var ใน login/register ตั้งชื่อไม่ตรงค่า** (`--dark-bg`, `--text-white` ที่ต้องกลาย
+   เป็นสีสว่าง) → เปลี่ยนชื่อเป็น `--page-bg` / `--text-ink` พร้อมพลิกค่า ไม่ให้รอบหน้าหลงอีก
+
+### Verify (build ครั้งเดียว + build ซ้ำ 1 ครั้งหลังแก้บั๊กข้อ 5)
+
+- `npm run build` → **7 page สำเร็จ 0 fail**
+- route ที่ออก = `/` `/contact-us` `/promotion` `/login` `/register` `/line`
+  `/ทดลองเล่น` `/ทางเข้า` — **ไม่มี `/ตรวจหวย` และ `/แนวทาง`** ถูกต้องสำหรับแบรนด์คาสิโน
+- `LAPDEE88` + แบรนด์เก่าอีก 15 ชื่อ (PAY69/UFAYES/GSYBET/CASHOT123/PABLO666/GROW268/
+  BESTCLUB88/MARANGS777/Teenoi168/FUNNEMO/MAFIA168/VEGUS24R/…) → **0 hit ทั่วทั้ง dist**
+- โดเมนเก่าทุกตัว → **0 hit** · canonical/schema/robots/sitemap ชี้ `winup888-brand.com` ครบ
+- โทนสีเก่า (purple/violet/cyan/blue/red/rose/emerald/teal/indigo) ในแอตทริบิวต์ class จริง
+  → **0 ทุกหน้า** · พื้นมืดเก่าใน class และใน inline style → **0**
+- ตัวอักษรซีดที่อาจจมบนการ์ดสว่าง → เหลือเฉพาะบนปุ่ม LINE เขียวกับชิปเข้มเล็ก **ตรวจทีละจุด
+  ว่าพื้นหลังเข้มจริงทั้งหมด** (14 จุด ผ่านทั้งหมด)
+- คอมเมนต์ HTML → **0 ทั้ง 8 ไฟล์ html**
+- `undefined` / `NaN` / `[object Object]` → **0**
+- heading `index.html` = **h1 x1 · h2 x9 · h3 x0** · ดึง heading จาก HTML ที่ render จริงมา
+  diff กับ checklist ของ docx → **ครบ 9 หัวข้อ ข้อความตรงเป๊ะ เรียงตรงตามเอกสาร**
+  · หน้าย่อยที่ใช้ MainLayout ทุกหน้า h1 x1 h2 x2 h3 x0
+- **เนื้อความ 18 ย่อหน้าของ docx อยู่ครบแบบ verbatim ทั้ง 18** (เทียบสตริงจริงกับ HTML
+  ที่ render แล้ว ไม่ใช่แค่นับหัวข้อ)
+- เคลมของแบรนด์เก่า → `ฝากขั้นต่ำ 1 บาท` 0 · `ระบบออโต้` 0 · `TrueMoney` 0 · `RTP` 0 ·
+  `2569` 0 · `Volatility` 0 · (`เว็บตรง` 1 ครั้ง = คำในเนื้อ docx เอง ไม่ใช่ของเก่า)
+- FAQ render ครบ 5 ข้อ
+- hero img = `banner1.*` จริง · `banner2` / `banner3` / `banner.png` → **0 hit ใน dist**
+- `og:image` + `twitter:image` = asset ที่ hash แล้วของ `slide1` (ไม่ใช่ path ใน public)
+- ฟอนต์: มีลิงก์ `fonts.googleapis.com` · preload `kanit-*.woff2` → **0** · ตัวแปรฟอนต์บน
+  html = Google Sans
+- **ป้ายลอยของตระกูล FloatingBadge render ครบ 2 อัน ไม่มีคลาสห้ามตัดบรรทัด** · คำนวณระยะ
+  แล้วหัวข้อยาวจริงพับ 2-3 บรรทัดยังไม่ทับเนื้อหา (ที่ว่างด้านบนเหลือ ~67px บนมือถือ)
+- ย่อหน้าที่โดนบีบความกว้าง → 1 จุด ตรวจแล้วเป็น **คำโปรยใต้หัวข้อ section ของ
+  GameRankingBoard** (UI label จัดกึ่งกลาง) = ข้อยกเว้นที่ playbook อนุญาต ไม่ใช่ย่อหน้าเนื้อหา
+
+### นอกสโคป / ไม่ได้แตะ
+
+- **หน้าหวยปิดอยู่ถูกต้องแล้ว** — `ตรวจหวย.astro` + `แนวทาง.astro` จอดใน
+  `src/pages-disabled/` · navbar/footer ที่ active ไม่มีลิงก์ไปหา (grep dist ยืนยัน 0) ·
+  WINUP888 ไม่ใช่เว็บหวย prompt ไม่มีคำว่า `เว็บหวย` → ไม่ต้องทำอะไร
+- ไม่มีหน้า preset ค้างจาก uploader ส่วนที่ 5 (grep `TODO(rebrand)` = 0)
+- component inventory ที่หลุดจากการใช้งาน (`NavbarStyle9`, `FooterPremium`,
+  `Announcement`, `LatestWinnersPremium`, `Faq3`, ตระกูล Premium/Neumorphism)
+  ยังมีชื่อ LAPDEE88 อยู่ข้างใน — **drift ที่คาดไว้ ไม่ได้ลบและไม่ได้แก้**
+- `banner2.png` / `banner3.png` / `banner.png` ยังอยู่ใน `src/assets` ตั้งใจไม่ลบ
+- **`src/assets/gamedemo7-18.webp` เป็นอาร์ตเวิร์กตกทอด** มีโลโก้ค่ายฝังในภาพ
+  (AskmeSlot, SlotXO, Skywind, SBOBET, JILI, JOKER, …) ซึ่งมีแค่ PG Soft ที่อยู่ในลิสต์ค่าย
+  ของ docx WINUP888 · alt ต้องบรรยายภาพจริงจึงคงชื่อค่ายไว้ — ถ้าอยากให้ตรง docx
+  ต้องเปลี่ยนไฟล์รูป ไม่ใช่แก้โค้ด · บันทึกไว้เป็นงานแยก
+- **`login.astro` / `register.astro` ยัง hardcode ฟอนต์ Oswald** ที่หัวแบรนด์ (บันทึกไว้ตั้งแต่
+  รอบ LAPDEE88) — ยังไม่ได้แก้รอบนี้ เพราะเปลี่ยนแล้วดีไซน์เปลี่ยน
+- `@font-face` ของ Kanit ใน `global.css` ยัง ship อยู่แม้แบรนด์นี้ใช้ google-sans —
+  ตาม playbook ที่ระบุว่าสลับฟอนต์แก้บรรทัดเดียวใน `brandProfile.ts` เท่านั้น
+- **ไม่ deploy · ไม่ `git push` · ไม่ `git commit`** ตามคำสั่ง — หยุดที่ build + verify

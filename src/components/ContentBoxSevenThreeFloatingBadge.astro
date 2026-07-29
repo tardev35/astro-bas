@@ -3,13 +3,15 @@ const { title, titleleft, titleright } = Astro.props;
 ---
 
 <section class="my-10 flex w-full justify-center px-4 font-sans">
-  <div class="relative isolate w-full max-w-7xl rounded-2xl border-2 border-amber-400/40 bg-gradient-to-b from-[#1a1130] to-[#0a0714] p-8 pt-28 shadow-[0_10px_40px_rgba(0,0,0,0.5)] md:pt-24">
-    <div class="pointer-events-none absolute -right-10 -bottom-16 -z-10 h-40 w-40 rounded-full bg-[#4c1d95]/45 blur-[60px]"></div>
+  <div
+    class="relative isolate w-full max-w-7xl rounded-2xl border-2 border-amber-600/25 bg-gradient-to-b from-[#fffdf7]/95 to-[#faf4e6]/95 p-8 pt-28 shadow-[0_10px_30px_rgba(168,132,44,0.18)] md:pt-24">
+    <div class="pointer-events-none absolute -right-10 -bottom-16 -z-10 h-40 w-40 rounded-full bg-[#cfd0d2]/50 blur-[60px]"></div>
+    <div class="pointer-events-none absolute -top-16 -left-10 -z-10 h-40 w-40 rounded-full bg-amber-300/25 blur-[60px]"></div>
 
     {
       title && (
-        <div class="absolute -top-6 left-1/2 w-[92%] max-w-2xl -translate-x-1/2 rounded-lg border-2 border-amber-400/50 bg-[#150a24] px-4 py-2.5 text-center shadow-[0_5px_15px_rgba(212,162,74,0.35)] sm:px-8">
-          <h2 class="bg-gradient-to-r from-amber-100 via-amber-200 to-amber-400 bg-clip-text text-base leading-normal font-black tracking-widest text-transparent uppercase sm:text-xl md:text-2xl">
+        <div class="absolute -top-6 left-1/2 w-[92%] max-w-2xl -translate-x-1/2 rounded-lg border-2 border-amber-600/30 bg-[#fffdf7] px-4 py-2.5 text-center shadow-[0_10px_30px_rgba(168,132,44,0.18)] sm:px-8">
+          <h2 class="bg-gradient-to-r from-[#7a5a12] via-[#b8912f] to-[#8a6a1f] bg-clip-text text-base leading-normal font-black tracking-widest text-transparent uppercase sm:text-xl md:text-2xl">
             {title}
           </h2>
         </div>
@@ -17,13 +19,13 @@ const { title, titleleft, titleright } = Astro.props;
     }
 
     <div class="grid grid-cols-1 gap-10 md:grid-cols-[3fr_7fr] md:items-center">
-      <article class="flex flex-col gap-4 text-left text-base leading-relaxed text-amber-50/85">
-        {titleleft && <h2 class="text-2xl leading-normal font-bold text-amber-200 drop-shadow-[0_0_5px_rgba(212,162,74,0.5)]">{titleleft}</h2>}
+      <article class="flex flex-col gap-4 text-left text-base leading-relaxed text-[#3a2e18]">
+        {titleleft && <h2 class="text-2xl leading-normal font-bold text-[#8a6410]">{titleleft}</h2>}
         <slot name="left" />
       </article>
 
-      <article class="flex flex-col gap-4 text-left text-base leading-relaxed text-amber-50/85 md:border-l md:border-amber-400/30 md:pl-10">
-        {titleright && <h2 class="text-2xl leading-normal font-bold text-amber-200 drop-shadow-[0_0_5px_rgba(212,162,74,0.5)]">{titleright}</h2>}
+      <article class="flex flex-col gap-4 text-left text-base leading-relaxed text-[#3a2e18] md:border-l md:border-amber-600/25 md:pl-10">
+        {titleright && <h2 class="text-2xl leading-normal font-bold text-[#8a6410]">{titleright}</h2>}
         <slot name="right" />
       </article>
     </div>

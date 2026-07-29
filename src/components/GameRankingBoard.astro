@@ -8,12 +8,12 @@ import img5 from "../assets/providers/game5.avif";
 import img6 from "../assets/providers/game6.avif";
 
 const games = [
-  { rank: 1, name: "Mahjong Ways 2", type: "PG SLOT • ความผันผวนปานกลาง", rtp: 98.7, players: 5124, img: img1 },
-  { rank: 2, name: "Fortune Tiger", type: "PG SLOT • ความผันผวนปานกลาง", rtp: 98.1, players: 3842, img: img2 },
-  { rank: 3, name: "Roma Deluxe", type: "XOSLOT • ความผันผวนปานกลาง–สูง", rtp: 97.8, players: 3517, img: img3 },
-  { rank: 4, name: "Gates of Olympus", type: "สล็อต • ความผันผวนสูง", rtp: 97.3, players: 2905, img: img4 },
-  { rank: 5, name: "บาคาร่า ห้องไลฟ์", type: "คาสิโนสด • ความผันผวนต่ำ", rtp: 96.9, players: 2431, img: img5 },
-  { rank: 6, name: "รูเล็ต และเสือมังกร", type: "คาสิโนสด • ความผันผวนต่ำ", rtp: 96.5, players: 2108, img: img6 },
+  { rank: 1, name: "Mahjong Ways 2", type: "PG Soft • สล็อต", menus: ["ยอดนิยม", "รายการโปรด"], players: 5124, img: img1 },
+  { rank: 2, name: "Gates of Olympus", type: "Pragmatic Play • สล็อต", menus: ["ยอดนิยม", "เล่นล่าสุด"], players: 3842, img: img2 },
+  { rank: 3, name: "Immortal Romance", type: "Microgaming • สล็อต", menus: ["ยอดนิยม", "โหมดทดลอง"], players: 3517, img: img3 },
+  { rank: 4, name: "Starburst", type: "NetEnt • สล็อต", menus: ["เกมใหม่", "โหมดทดลอง"], players: 2905, img: img4 },
+  { rank: 5, name: "Gonzo's Quest Megaways", type: "Red Tiger • สล็อต", menus: ["เกมใหม่", "รายการโปรด"], players: 2431, img: img5 },
+  { rank: 6, name: "บาคาร่า ห้อง Live สด", type: "Evolution • เกม Live สด 24 ชม.", menus: ["ยอดนิยม", "เล่นล่าสุด"], players: 2108, img: img6 },
 ];
 
 const medal = (rank: number) => (rank === 1 ? "🥇" : rank === 2 ? "🥈" : rank === 3 ? "🥉" : null);
@@ -21,10 +21,10 @@ const medal = (rank: number) => (rank === 1 ? "🥇" : rank === 2 ? "🥈" : ran
 
 <section class="mx-auto w-full max-w-[1300px] px-4 py-8 font-sans">
   <div class="mb-8 flex w-full flex-col items-center justify-center gap-2 text-center">
-    <span class="text-2xl drop-shadow-[0_0_10px_rgba(212,175,90,0.7)]">🏆</span>
-    <p class="bg-gradient-to-r from-white via-amber-100 to-amber-400 bg-clip-text text-2xl font-black tracking-widest text-transparent uppercase drop-shadow-sm">เกมยอดนิยมประจำสัปดาห์ของ LAPDEE88</p>
-    <p class="max-w-2xl text-sm text-amber-50/60">ค่า RTP และความผันผวนแตกต่างกันตามมาตรฐานของแต่ละค่าย ข้อมูลนี้ใช้ประกอบการเลือกเกมของผู้เริ่มต้นเท่านั้น</p>
-    <div class="mt-2 h-[3px] w-24 rounded-full bg-gradient-to-r from-transparent via-amber-400 to-transparent"></div>
+    <span class="text-2xl">🏆</span>
+    <p class="bg-gradient-to-r from-[#7a5a12] via-[#b8912f] to-[#8a6a1f] bg-clip-text text-2xl font-black tracking-widest text-transparent uppercase">เมนูเกมยอดนิยมและเกมใหม่ของ WINUP888</p>
+    <p class="max-w-2xl text-sm text-[#6b5836]">เมนูยอดนิยม เกมใหม่ รายการโปรด และเล่นล่าสุด ช่วยให้กลับไปหาเกมเดิมหรือลองเกมใหม่ได้เร็วขึ้น รายชื่อเกมในแต่ละหมวดเปลี่ยนแปลงได้ตามช่วงเวลา</p>
+    <div class="mt-2 h-[3px] w-24 rounded-full bg-gradient-to-r from-transparent via-[#c9a227] to-transparent"></div>
   </div>
 
   <div class="flex flex-col gap-3">
@@ -35,23 +35,19 @@ const medal = (rank: number) => (rank === 1 ? "🥇" : rank === 2 ? "🥈" : ran
           <article
             class={`group relative flex items-center gap-3 overflow-hidden rounded-2xl border p-3 backdrop-blur-md transition-all duration-300 hover:-translate-y-0.5 sm:gap-5 sm:p-4 ${
               top
-                ? "border-amber-300/50 bg-gradient-to-r from-[#241a09]/90 via-[#12100a]/90 to-[#12100a]/90 shadow-[0_10px_30px_rgba(212,175,90,0.18)]"
-                : "border-amber-400/25 bg-[#12100a]/85 shadow-[0_5px_20px_rgba(0,0,0,0.8)] hover:border-amber-300/50 hover:shadow-[0_10px_30px_rgba(212,175,90,0.25)]"
+                ? "border-amber-600/50 bg-gradient-to-r from-[#faf4e6]/95 via-[#fffdf7]/92 to-[#fffdf7]/92 shadow-[0_15px_40px_rgba(168,132,44,0.30)]"
+                : "border-amber-600/25 bg-[#fffdf7]/92 shadow-[0_10px_30px_rgba(168,132,44,0.18)] hover:border-amber-600/50 hover:shadow-[0_15px_40px_rgba(168,132,44,0.30)]"
             }`}>
-            <div class="pointer-events-none absolute top-1/2 -left-10 h-24 w-24 -translate-y-1/2 rounded-full bg-amber-600/15 blur-[40px] transition-all duration-500 group-hover:bg-amber-400/20" />
+            <div class="pointer-events-none absolute top-1/2 -left-10 h-24 w-24 -translate-y-1/2 rounded-full bg-amber-300/25 blur-[40px] transition-all duration-500 group-hover:bg-amber-400/30" />
 
             <div class="relative z-10 flex w-8 shrink-0 flex-col items-center justify-center sm:w-12">
-              {medal(g.rank) ? (
-                <span class="text-2xl drop-shadow-[0_0_8px_rgba(212,175,90,0.55)] sm:text-3xl">{medal(g.rank)}</span>
-              ) : (
-                <span class="text-xl font-black text-amber-200/70 sm:text-2xl">#{g.rank}</span>
-              )}
+              {medal(g.rank) ? <span class="text-2xl sm:text-3xl">{medal(g.rank)}</span> : <span class="text-xl font-black text-[#a07c1f] sm:text-2xl">#{g.rank}</span>}
             </div>
 
-            <div class={`relative z-10 h-14 w-14 shrink-0 overflow-hidden rounded-xl border sm:h-16 sm:w-16 ${top ? "border-amber-300/50" : "border-amber-400/30"}`}>
+            <div class={`relative z-10 h-14 w-14 shrink-0 overflow-hidden rounded-xl border sm:h-16 sm:w-16 ${top ? "border-amber-600/50" : "border-amber-600/25"}`}>
               <Picture
                 src={g.img}
-                alt={`${g.name} เกมยอดนิยมภายใน LAPDEE88`}
+                alt={`${g.name} เกมในเมนูยอดนิยมของ WINUP888`}
                 formats={["avif", "webp"]}
                 fallbackFormat="webp"
                 loading="lazy"
@@ -64,22 +60,21 @@ const medal = (rank: number) => (rank === 1 ? "🥇" : rank === 2 ? "🥈" : ran
 
             <div class="relative z-10 min-w-0 flex-1">
               <div class="flex items-center gap-2">
-                <p class="truncate text-base font-black text-white sm:text-lg">{g.name}</p>
-                {top && <span class="hidden shrink-0 rounded-full border border-amber-300/40 bg-amber-300/10 px-2 py-0.5 text-[9px] font-black tracking-wider text-amber-200 sm:inline">TOP RTP</span>}
+                <p class="truncate text-base font-black text-[#3a2e18] sm:text-lg">{g.name}</p>
+                {top && <span class="hidden shrink-0 rounded-full bg-[#241c0c] px-2 py-0.5 text-[9px] font-black tracking-wider text-amber-100 sm:inline">ยอดนิยมสูงสุด</span>}
               </div>
-              <p class="truncate text-[11px] text-amber-50/50 sm:text-xs">{g.type}</p>
+              <p class="truncate text-[11px] text-[#8a7550] sm:text-xs">{g.type}</p>
 
-              <div class="mt-2 flex items-center gap-2">
-                <div class="h-1.5 flex-1 overflow-hidden rounded-full bg-[#050403]">
-                  <div class={`h-full rounded-full ${top ? "bg-gradient-to-r from-[#f6e4b4] to-[#e0bd72]" : "bg-gradient-to-r from-[#b1873a] to-[#e0bd72]"}`} style={`width:${g.rtp}%`} />
-                </div>
-                <span class={`shrink-0 text-xs font-black tabular-nums ${top ? "text-amber-200" : "text-amber-100"}`}>{g.rtp}%</span>
+              <div class="mt-2 flex flex-wrap items-center gap-1.5">
+                {g.menus.map((m) => (
+                  <span class="rounded-full border border-amber-600/25 bg-[#faf4e6] px-2.5 py-0.5 text-[10px] font-bold text-[#8a6410]">{m}</span>
+                ))}
               </div>
             </div>
 
             <div class="relative z-10 hidden shrink-0 flex-col items-end gap-1 sm:flex">
-              <span class="flex items-center gap-1.5 text-[11px] text-amber-50/50">
-                <span class="h-1.5 w-1.5 animate-pulse rounded-full bg-green-400 shadow-[0_0_6px_rgba(74,222,128,0.7)]" />
+              <span class="flex items-center gap-1.5 text-[11px] text-[#8a7550]">
+                <span class="h-1.5 w-1.5 animate-pulse rounded-full bg-green-500 shadow-[0_0_6px_rgba(34,197,94,0.6)]" />
                 <span class="tabular-nums" data-players data-base={g.players}>
                   {g.players.toLocaleString("en-US")}
                 </span>{" "}
@@ -89,10 +84,10 @@ const medal = (rank: number) => (rank === 1 ? "🥇" : rank === 2 ? "🥈" : ran
                 href="/register"
                 class={`rounded-full px-4 py-1.5 text-xs font-black transition-transform hover:scale-105 ${
                   top
-                    ? "bg-gradient-to-r from-[#f6e4b4] via-[#e0bd72] to-[#b1873a] text-[#140f05] shadow-[0_4px_15px_rgba(212,175,90,0.45)]"
-                    : "border border-amber-400/50 bg-[#1c1609]/70 text-amber-100 hover:border-amber-200 hover:text-white"
+                    ? "bg-gradient-to-r from-[#f4dfa3] via-[#d9b45c] to-[#a97f2a] text-[#231a06] shadow-[0_10px_30px_rgba(168,132,44,0.18)]"
+                    : "border border-[#c9a227]/60 bg-[#fffdf7] text-[#8a6410] hover:border-amber-600/50 hover:bg-[#faf4e6]"
                 }`}>
-                เล่นเลย
+                เข้าดูเกม
               </a>
             </div>
           </article>

@@ -2,7 +2,7 @@
 import MainLayout from "../layouts/MainLayout.astro";
 import ContentBox from "../components/ContentBox.astro";
 import Navfoot from "../components/Navfoot.astro";
-import Announcement from "../components/Announcement.astro";
+import Announcement from "../components/AnnouncementPremium.astro";
 
 import { Picture } from "astro:assets";
 import image1 from "../assets/gamedemo7.webp";
@@ -19,20 +19,21 @@ import image11 from "../assets/gamedemo17.webp";
 import image12 from "../assets/gamedemo18.webp";
 
 const demoGames = [
-  { id: 1, src: image1, alt: "ทดลองเล่นเกม AskmeSlot ที่ LAPDEE88", link: "/register" },
-  { id: 2, src: image2, alt: "ทดลองเล่นเกมยอดนิยมที่ LAPDEE88", link: "/register" },
-  { id: 3, src: image3, alt: "ทดลองเล่นเกม SlotXO ที่ LAPDEE88", link: "/register" },
-  { id: 4, src: image4, alt: "ทดลองเล่นเกม Skywind Group ที่ LAPDEE88", link: "/register" },
-  { id: 5, src: image5, alt: "ทดลองเล่นเกม PG Soft ที่ LAPDEE88", link: "/register" },
-  { id: 6, src: image6, alt: "ทดลองเล่นเกม SBOBET ที่ LAPDEE88", link: "/register" },
-  { id: 7, src: image7, alt: "ทดลองเล่นเกม Sexy Slot ที่ LAPDEE88", link: "/register" },
-  { id: 8, src: image8, alt: "ทดลองเล่นเกม JILI ที่ LAPDEE88", link: "/register" },
-  { id: 9, src: image9, alt: "ทดลองเล่นเกม Ask Me Bet ที่ LAPDEE88", link: "/register" },
-  { id: 10, src: image10, alt: "ทดลองเล่นเกมใหม่ที่ LAPDEE88", link: "/register" },
-  { id: 11, src: image11, alt: "ทดลองเล่นเกม JOKER ที่ LAPDEE88", link: "/register" },
-  { id: 12, src: image12, alt: "ทดลองเล่นเกม AFB Gaming ที่ LAPDEE88", link: "/register" },
+  { id: 1, src: image1, alt: "ทดลองเล่นเกม AskmeSlot ที่ WINUP888", link: "/register" },
+  { id: 2, src: image2, alt: "ทดลองเล่นเกมยอดนิยมที่ WINUP888", link: "/register" },
+  { id: 3, src: image3, alt: "ทดลองเล่นเกม SlotXO ที่ WINUP888", link: "/register" },
+  { id: 4, src: image4, alt: "ทดลองเล่นเกม Skywind Group ที่ WINUP888", link: "/register" },
+  { id: 5, src: image5, alt: "ทดลองเล่นเกม PG Soft ที่ WINUP888", link: "/register" },
+  { id: 6, src: image6, alt: "ทดลองเล่นเกม SBOBET ที่ WINUP888", link: "/register" },
+  { id: 7, src: image7, alt: "ทดลองเล่นเกม Sexy Slot ที่ WINUP888", link: "/register" },
+  { id: 8, src: image8, alt: "ทดลองเล่นเกม JILI ที่ WINUP888", link: "/register" },
+  { id: 9, src: image9, alt: "ทดลองเล่นเกม Ask Me Bet ที่ WINUP888", link: "/register" },
+  { id: 10, src: image10, alt: "ทดลองเล่นเกมใหม่ที่ WINUP888", link: "/register" },
+  { id: 11, src: image11, alt: "ทดลองเล่นเกม JOKER ที่ WINUP888", link: "/register" },
+  { id: 12, src: image12, alt: "ทดลองเล่นเกม AFB Gaming ที่ WINUP888", link: "/register" },
 ];
-const homePage = Astro.url.origin;
+const homePage = "https://winup888-brand.com";
+const pageUrl = homePage + "/" + encodeURIComponent("ทดลองเล่น");
 const gameList = [
   { name: "AskmeSlot", image: homePage + image1.src },
   { name: "Popular Game", image: homePage + image2.src },
@@ -47,20 +48,38 @@ const gameList = [
   { name: "JOKER", image: homePage + image11.src },
   { name: "AFB Gaming", image: homePage + image12.src },
 ];
+
+const demoListSchema = {
+  "@context": "https://schema.org",
+  "@type": "ItemList",
+  name: "ทดลองเล่นเกมของ WINUP888",
+  alternateName: "WINUP888 โหมดทดลองสล็อตบนมือถือ",
+  url: pageUrl,
+  itemListElement: gameList.map((game, index) => ({
+    "@type": "ListItem",
+    position: index + 1,
+    item: {
+      "@type": "Game",
+      name: game.name,
+      image: game.image,
+      url: pageUrl,
+    },
+  })),
+};
 ---
 
-<script type="application/ld+json" set:html={JSON.stringify(gameList)} />
+<script type="application/ld+json" set:html={JSON.stringify(demoListSchema)} />
 <MainLayout
-  title="ทดลองเล่น LAPDEE88 โหมดทดลองสล็อตฟรี ไม่ใช้เงินจริง ดูเกมก่อนเล่นจริง"
-  description="ทดลองเล่นเกมฟรีของ LAPDEE88 ในโหมดทดลองที่ไม่ใช้เงินจริง ใช้ดูรูปแบบเกม ฟีเจอร์ รอบโบนัส และความผันผวนของสล็อตหลายค่ายก่อนตัดสินใจเล่นจริง พร้อมวิธีอ่านค่า RTP กับ Volatility และสิ่งที่ควรรู้ก่อนข้ามไปคาสิโนสด">
+  title="ทดลองเล่น WINUP888 โหมดทดลองสล็อตบนมือถือ ดูเกมก่อนตัดสินใจเล่นจริง"
+  description="ทดลองเล่นเกมของ WINUP888 ในโหมดทดลองที่ไม่ใช้เงินจริง ใช้ดูปุ่มเดิมพัน ฟีเจอร์ และจังหวะเกมของสล็อตหลายค่ายบนมือถือระบบ HTML5 ก่อนตัดสินใจเล่นจริง พร้อมสิ่งที่ควรเช็กก่อนข้ามไปบาคาร่า รูเล็ต และเกม Live สด">
   <Announcement />
 
-  <ContentBox title="ทดลองเล่นเกมฟรีของ LAPDEE88 ลองก่อนได้ ไม่ต้องใช้เงินจริง">
-    <h2 class="mb-6 bg-gradient-to-r from-white via-amber-100 to-amber-400 bg-clip-text text-2xl leading-normal font-bold text-transparent">โหมดทดลองของ LAPDEE88 มีไว้ทำอะไร และควรดูค่าอะไรของเกม</h2>
+  <ContentBox title="ทดลองเล่นเกมของ WINUP888 ลองก่อนได้ ไม่ต้องใช้เงินจริง">
+    <h2 class="mb-6 bg-gradient-to-r from-[#7a5a12] via-[#b8912f] to-[#8a6a1f] bg-clip-text text-2xl leading-normal font-bold text-transparent">โหมดทดลองของ WINUP888 มีไว้ทำอะไร และควรดูอะไรก่อนเลือกเกม</h2>
 
-    <p class="mb-8 text-left text-base leading-relaxed text-amber-50/85">
-      LAPDEE88 รวมสล็อตจากหลายค่ายและคาสิโนสดไว้ในระบบเดียว โหมดทดลองจึงมีไว้ให้กดดูรูปแบบเกมก่อนว่าหน้าตาเป็นอย่างไร มีไลน์จ่ายกี่แบบ ฟีเจอร์พิเศษทำงานตอนไหน และรอบโบนัสมาบ่อยแค่ไหน โดยไม่ต้องใช้เงินจริงและไม่มีการได้เสียใด ๆ ก่อนเลือกเกมควรดูทั้งผู้ให้บริการ ค่า RTP และ Volatility
-      ควบคู่กัน เพราะ RTP ใช้อธิบายอัตราจ่ายคืนในระยะยาว ส่วน Volatility บอกความถี่และขนาดของรางวัลที่จะเจอระหว่างทาง เหมาะกับสมาชิกใหม่ที่ยังไม่คุ้นกับปุ่มปรับเดิมพันหรือระบบสปินอัตโนมัติ และอยากเทียบเกมหลายค่ายให้จบในรอบเดียวก่อนตัดสินใจว่าจะเอาเกมไหนไปเล่นจริง
+    <p class="mb-8 text-left text-base leading-relaxed text-[#3a2e18]">
+      WINUP888 รวมสล็อตหลายค่ายและเกม Live สดไว้ในระบบเดียวผ่าน HTML5 บนมือถือ โหมดทดลองจึงมีไว้ให้กดดูรูปแบบเกมก่อนว่าหน้าตาเป็นอย่างไร ปุ่มปรับเดิมพันอยู่ตรงไหน ฟีเจอร์พิเศษทำงานตอนไหน และจังหวะเกมถูกใจหรือเปล่า โดยไม่ต้องใช้เงินจริงและไม่มีการได้เสียใด ๆ
+      เหมาะกับสมาชิกใหม่ที่ยังไม่คุ้นกับหน้าเกมและอยากเทียบเกมหลายค่ายให้จบในรอบเดียวก่อนตัดสินใจว่าจะเอาเกมไหนไปเล่นจริง ระหว่างไล่ดูยังใช้เมนูยอดนิยม เกมใหม่ รายการโปรด และเกมที่เพิ่งเล่น ช่วยกลับมาหาเกมเดิมได้เร็วขึ้นโดยไม่ต้องไล่เปิดทุกหน้า
     </p>
 
     <div class="mb-5 grid grid-cols-2 gap-5 sm:grid-cols-2 md:grid-cols-4">
@@ -74,7 +93,7 @@ const gameList = [
               fetchpriority="low"
               widths={[200, 400, 600]}
               sizes="(max-width: 768px) 100vw, 25vw"
-              class="mx-auto h-auto w-full max-w-[400px] object-cover shadow-xl transition-transform duration-300 group-hover:scale-105"
+              class="mx-auto h-auto w-full max-w-[400px] object-cover shadow-[0_10px_30px_rgba(168,132,44,0.18)] transition-transform duration-300 group-hover:scale-105"
               decoding="async"
               formats={["avif", "webp"]}
               fallbackFormat="webp"
@@ -85,24 +104,24 @@ const gameList = [
               target="_blank"
               rel="noopener noreferrer"
               aria-label={`ทดลองเล่น ${game.alt}`}
-              class="absolute inset-0 flex items-center justify-center bg-[#0b0906]/70 opacity-0 transition-opacity duration-300 group-hover:opacity-100">
-              <span class="rounded-full border border-amber-200/60 bg-gradient-to-r from-[#f6e4b4] via-[#e0bd72] to-[#b1873a] px-6 py-2 font-bold text-[#140f05] shadow-[0_10px_30px_rgba(212,175,90,0.5)] transition-transform hover:scale-110">เล่นเลย</span>
+              class="absolute inset-0 flex items-center justify-center bg-[#241c0c]/70 opacity-0 transition-opacity duration-300 group-hover:opacity-100">
+              <span class="rounded-full border border-[#c9a227]/60 bg-gradient-to-r from-[#f4dfa3] via-[#d9b45c] to-[#a97f2a] px-6 py-2 font-bold text-[#231a06] shadow-[0_10px_30px_rgba(168,132,44,0.30)] transition-transform hover:scale-110">เล่นเลย</span>
             </a>
           </div>
         ))
       }
     </div>
 
-    <h2 class="mt-8 mb-6 bg-gradient-to-r from-white via-amber-100 to-amber-400 bg-clip-text text-2xl leading-normal font-bold text-transparent">โหมดทดลองบอกอะไรได้ และบอกอะไรไม่ได้</h2>
+    <h2 class="mt-8 mb-6 bg-gradient-to-r from-[#7a5a12] via-[#b8912f] to-[#8a6a1f] bg-clip-text text-2xl leading-normal font-bold text-transparent">โหมดทดลองบอกอะไรได้ และบอกอะไรไม่ได้</h2>
 
-    <p class="mb-4 text-left text-base leading-relaxed text-amber-50/85">
-      โหมดทดลองบอกได้ว่าเกมเล่นอย่างไร ฟีเจอร์อยู่ตรงไหน และจังหวะเกมถูกใจหรือเปล่า แต่เครดิตในโหมดนี้เป็นยอดสมมติ ถอนไม่ได้ และไม่ได้การันตีผลตอนเล่นจริง ค่า RTP ที่สูงก็ไม่ได้แปลว่าเกมต้องจ่ายทันที ผู้ที่มีงบจำกัดควรเลือกเดิมพันต่ำและความผันผวนที่เหมาะกับทุน
-      อย่าเห็นคำว่าแตกง่ายแล้วคิดว่าเครื่องกำลังรอเราอยู่ ส่วนใครที่ตั้งใจจะรับโบนัสหลังเล่นจริง ให้ตรวจยอดฝากขั้นต่ำ เทิร์นโอเวอร์ ระยะเวลา และเพดานถอนก่อน เพราะบางเกมที่สนุกในโหมดทดลอง อาจไม่ได้อยู่ในรายชื่อเกมที่ร่วมรายการและนับยอดให้
+    <p class="mb-4 text-left text-base leading-relaxed text-[#3a2e18]">
+      โหมดทดลองบอกได้ว่าเกมเล่นอย่างไร ฟีเจอร์อยู่ตรงไหน และรอบเกมเร็วช้าแค่ไหน แต่เครดิตในโหมดนี้เป็นยอดสมมติ ถอนไม่ได้ และผลที่ออกมาไม่ได้แปลว่าเกมจริงจะให้ผลแบบเดียวกัน โหมดนี้มีไว้ศึกษาระบบ ไม่ใช่ไว้ดูดวงผ่านหน้าจอ
+      ผู้ที่มีงบจำกัดควรเลือกเดิมพันต่ำและกำหนดขอบเขตการเล่นของตัวเองไว้ล่วงหน้า อย่าเห็นคำว่าแตกง่ายแล้วคิดว่าเครื่องกำลังรอเราอยู่ และควรเผื่อใจไว้ด้วยว่าไม่ใช่ทุกเกมจะเปิดโหมดทดลองไว้ให้กดลองก่อนเสมอไป
     </p>
 
-    <p class="mb-2 text-left text-base leading-relaxed text-amber-50/85">
-      ถ้าอยากขยับไปคาสิโนสดอย่างบาคาร่า รูเล็ต หรือเสือมังกร ให้เผื่อว่าเกมกลุ่มนี้เล่นตามรอบโต๊ะพร้อมภาพถ่ายทอดสด จึงควรตรวจขั้นต่ำ กติกา และความเสถียรของอินเทอร์เน็ตก่อนเข้าเล่น หากหน้าเกมโหลดไม่สมบูรณ์หรือค้างกลางคัน ไม่ควรกดยืนยันซ้ำทันที ให้ตรวจประวัติรายการก่อนเพื่อกันการเดิมพันซ้ำโดยไม่ตั้งใจ
-      และควรเข้าเกมผ่านหน้าเว็บทางเข้าจริงของ LAPDEE88 เท่านั้น ไม่ใช่ลิงก์ที่ส่งต่อกันมาในข้อความส่วนตัว
+    <p class="mb-2 text-left text-base leading-relaxed text-[#3a2e18]">
+      ถ้าอยากขยับไปเกม Live สดอย่างบาคาร่า รูเล็ต หรือแบล็คแจ็คจากค่ายอย่าง Evolution, SA Gaming, Sexy Gaming และ Pragmatic Play ให้เผื่อไว้ว่าเกมกลุ่มนี้เล่นตามรอบโต๊ะพร้อมภาพถ่ายทอดสด จึงควรตรวจขั้นต่ำโต๊ะ กติกา และความเสถียรของอินเทอร์เน็ตก่อนเข้าเล่น หากหน้าเกมโหลดไม่สมบูรณ์หรือค้างกลางคัน ไม่ควรกดยืนยันซ้ำทันที ให้ตรวจประวัติรายการก่อนเพื่อกันการเดิมพันซ้ำโดยไม่ตั้งใจ
+      และควรเข้าเกมผ่านหน้าเว็บทางเข้าจริงของ WINUP888 เท่านั้น ไม่ใช่ลิงก์ที่ส่งต่อกันมาในข้อความส่วนตัว
     </p>
   </ContentBox>
 
