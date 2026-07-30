@@ -3,11 +3,24 @@ import MainLayout from "../layouts/MainLayout.astro";
 import ContentBox from "../components/ContentBox.astro";
 import Navfoot from "../components/Navfoot.astro";
 import Announcement from "../components/Announcement6.astro";
+import { pageGraph } from "../lib/schema";
+
+const pageDescription =
+  "ทางเข้า UFAG8 เว็บกีฬาและแทงบอลออนไลน์ พร้อมวิธีตรวจชื่อโดเมน โลโก้ และการเชื่อมต่อ HTTPS ก่อนกรอกเบอร์โทรกับรหัสผ่าน รวมถึงเมนูที่ควรอยู่ครบหลังเข้าสู่ระบบ";
+
+const graph = pageGraph(Astro, {
+  name: "ทางเข้า UFAG8 แบบไหนควรเช็กก่อนกรอกข้อมูล",
+  description: pageDescription,
+  breadcrumb: [
+    { name: "หน้าแรก", path: "/" },
+    { name: "ทางเข้า", path: "/ทางเข้า" },
+  ],
+});
 ---
 
-<MainLayout
-  title="ทางเข้า UFAG8 เว็บกีฬา ตรวจโดเมนและ HTTPS ก่อนกรอกเบอร์โทร"
-  description="ทางเข้า UFAG8 เว็บกีฬาและแทงบอลออนไลน์ พร้อมวิธีตรวจชื่อโดเมน โลโก้ และการเชื่อมต่อ HTTPS ก่อนกรอกเบอร์โทรกับรหัสผ่าน รวมถึงเมนูที่ควรอยู่ครบหลังเข้าสู่ระบบ">
+<MainLayout title="ทางเข้า UFAG8 เว็บกีฬา ตรวจโดเมนและ HTTPS ก่อนกรอกเบอร์โทร" description={pageDescription}>
+  <script type="application/ld+json" set:html={graph} />
+
   <Announcement />
 
   <ContentBox title="ทางเข้า UFAG8 แบบไหนควรเช็กก่อนกรอกข้อมูล" as="h1">

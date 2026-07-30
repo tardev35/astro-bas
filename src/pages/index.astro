@@ -17,13 +17,9 @@ import Faq from "../components/Faq2.astro";
 import Navfoot from "../components/Navfoot.astro";
 
 import { Picture } from "astro:assets";
-import { orderForBrand } from "../lib/brandProfile";
+import { pageGraph } from "../lib/schema";
 import imgMarkets from "../assets/slide3.png";
 import imgOdds from "../assets/slide2.png";
-
-const currentPath = Astro.url.pathname;
-const homePage = Astro.url.origin;
-const logoUrl = homePage + "/logo.webp";
 
 const pageTitle = "UFAG8 เว็บกีฬา แทงบอลออนไลน์ รวมตลาดบอลและเกมหลายประเภท";
 const pageDescription =
@@ -52,32 +48,19 @@ const faqs = [
   },
 ];
 
-const webPageSchema = {
-  "@context": "https://schema.org",
-  "@type": "WebPage",
-  name: "UFAG8",
+// The homepage carries the FAQ, so its WebPage node is also an FAQPage — same
+// `faqs` array the Faq component renders, so the markup and the structured data
+// cannot describe different questions.
+const graph = pageGraph(Astro, {
+  name: pageTitle,
   description: pageDescription,
-  url: homePage + currentPath,
-};
-const webSiteSchema = {
-  "@context": "https://schema.org",
-  "@type": "WebSite",
-  name: "UFAG8",
-  alternateName: ["UFAG8", pageTitle],
-  url: "https://ufg8-brand.com/",
-};
-const orgSchema = {
-  "@context": "https://schema.org",
-  "@type": "Organization",
-  name: "UFAG8",
-  logo: logoUrl,
-  url: homePage,
-};
-const allSchemas = orderForBrand([webPageSchema, orgSchema, webSiteSchema], Astro.site, "jsonld");
+  faqs,
+  website: { alternateName: [pageTitle] },
+});
 ---
 
 <MainLayout title={pageTitle} description={pageDescription}>
-  <script type="application/ld+json" set:html={JSON.stringify(allSchemas)} />
+  <script type="application/ld+json" set:html={graph} />
 
   <Announcement
     message="⚽ UFAG8 เว็บกีฬา รวมแทงบอลตามลีก คู่แข่งขัน และช่วงเวลาไว้ในบัญชีเดียว • ตลาดแฮนดิแคป สูง–ต่ำ และ 1X2 • บอลก่อนแข่งและบอลสด • บิลเดี่ยวและบิลสเต็ป • สมัครด้วยเบอร์โทรภายในประมาณ 5 นาที • ตรวจคู่แข่งขัน ตลาด และราคาให้ตรงกันก่อนยืนยันบิลทุกครั้ง"

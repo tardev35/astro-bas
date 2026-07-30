@@ -4,7 +4,8 @@ import Bg from "../assets/bg.png";
 import bgConfig from "../assets/bg.json";
 import ogImage from "../assets/slide1.png";
 import "../styles/global.css";
-import { brandProfile, fontStack, usesGoogleFonts } from "../lib/brandProfile";
+import { BRAND_NAME, brandProfile, fontStack, usesGoogleFonts } from "../lib/brandProfile";
+import { canonicalFor } from "../lib/schema";
 import Navbar from "../components/NavbarStyle11.astro";
 import Footer from "../components/FooterStyle3.astro";
 
@@ -25,10 +26,14 @@ const {
 const bgMode = (bgConfig as { mode?: string }).mode ?? "image";
 const bgCss = bgMode === "color" ? `background-color:${(bgConfig as { color?: string }).color};` : bgMode === "gradient" ? `background-image:${(bgConfig as { css?: string }).css};` : null;
 
-const currentPath = Astro.url.pathname;
-const canonicalURL = new URL(currentPath, Astro.site);
+// canonicalFor() is the same function every JSON-LD URL goes through, so the
+// canonical and the structured data cannot drift apart (see src/lib/schema.ts).
+// Do not replace it with new URL(Astro.url.pathname, Astro.site) — that is what
+// used to be here, and it disagreed with the JSON-LD about the trailing slash
+// on every page.
+const canonicalURL = canonicalFor(Astro);
 const ogImageURL = new URL(ImageOg, Astro.site);
-const ogSiteName = "UFAG8";
+const ogSiteName = BRAND_NAME;
 
 const profile = brandProfile(Astro.site);
 

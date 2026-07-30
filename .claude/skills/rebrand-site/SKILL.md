@@ -427,6 +427,12 @@ the same one:
   the *same four paths on every brand that uses it*, which is a sharper
   cross-brand match than anything visual. Rotating the font breaks that
   set in half.
+- **Brand name** — set `BRAND_NAME` in `src/lib/brandProfile.ts` to the new
+  brand, right under `BRAND_FONT`. Also one line. It feeds `og:site_name`,
+  every JSON-LD `name`, and the whole of `terms.astro`/`privacy.astro`, so
+  those files never hardcode a brand and never rot into the previous one.
+  Miss it and the site builds perfectly while telling Google it belongs to
+  the brand before this one.
 
 If a family genuinely has no better-fitting alternative for this brand's
 mood and you must reuse the previous variant, say so explicitly in the
@@ -825,6 +831,15 @@ turning them off is an action, not an absence of one:**
 
 Record the on/off decision in the workspec either way.
 
+**`terms.astro` and `privacy.astro` are NOT in that decision.** They ship on
+every brand, are never parked, and are never rewritten. They are brand-neutral
+by construction — every brand-specific word in them comes from `BRAND_NAME`, so
+setting that one line retitles both pages. Every footer variant links to them,
+and `tools/verify-build.mjs` fails the build if either route is missing, so
+parking one turns into a red build rather than a pair of dead legal links.
+Do not add them to the uploader's `PRESET_PAGES`: that registry is a set of
+on/off toggles, and these have no "off".
+
 **Preset pages (`บทความ.astro`, `about-us.astro`) follow the same rule, with a
 different trigger.** They are created by the uploader's ส่วนที่ 5 toggle, not by
 a keyword, and like the lottery pages nothing removes them again — so a page one
@@ -960,6 +975,50 @@ grep -rl "\bX\.astro" src/pages/ src/components/
 This matters beyond bookkeeping: "rendered vs inventory" decides which
 files get the retheme, and mislabelling a live component as inventory
 ships the previous brand's colours to production.
+
+### Structured data — call the builder, never write JSON-LD by hand
+
+Every indexable page gets its JSON-LD from `pageGraph()` in
+`src/lib/schema.ts`. One call, in the frontmatter:
+
+```ts
+const graph = pageGraph(Astro, {
+  name: "…",            // usually the page's H1
+  description: "…",     // the SAME string passed to MainLayout's description=
+  breadcrumb: [         // every page EXCEPT the homepage
+    { name: "หน้าแรก", path: "/" },
+    { name: "ทางเข้า", path: "/ทางเข้า" },
+  ],
+  faqs,                 // only if the page renders an FAQ — same array
+});
+```
+```astro
+<script type="application/ld+json" set:html={graph} />
+```
+
+**Never type a domain, and never build a URL with `+`.** Not
+`Astro.url.origin + path`, not `"https://" + brand`, not
+`encodeURIComponent(...)`. Every URL in the graph comes from `abs()`, which is
+the only function that knows the trailing-slash and Thai-encoding rules. Before
+this existed, all three pages that had JSON-LD claimed a URL that did not match
+their own `<link rel=canonical>` — to a parser that is not a typo, it is markup
+describing a *different page*.
+
+`pageGraph` already fills in `@id` cross-references, `inLanguage`, `isPartOf`,
+`publisher`, and the `Organization`/`WebSite` nodes. Do not add them by hand and
+do not "tidy" the `@id` fragments or the node order — both are varied per brand
+by the same hash that varies the `<head>`, for the same reason (see the comment
+block at the top of `schema.ts`).
+
+For anything beyond a plain page, pass the extras rather than hand-rolling:
+`org: { contactPoints: [...] }` for a contact page, `extra: [itemList(ctx, …)]`
+for a listing page. **Never add `Review`, `AggregateRating`, or `sameAs`** —
+the reviews on these sites are written characters, so marking them up is
+fabricated structured data on a YMYL page, and `sameAs` would publish the
+cross-brand link `brandProfile.ts` exists to prevent.
+
+`tools/verify-build.mjs` fails the build if a page's JSON-LD does not parse, and
+warns if any self-referential URL disagrees with the canonical.
 
 ## Phase 4 — Fix stale asset references (the actual bug class this skill exists for)
 

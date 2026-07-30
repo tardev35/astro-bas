@@ -10,11 +10,25 @@ import pro1 from "../assets/slide1.png";
 import pro2 from "../assets/slide2.png";
 import pro3 from "../assets/slide3.png";
 import pro4 from "../assets/slide4.png";
+import { pageGraph } from "../lib/schema";
+
+const pageDescription =
+  "แนวทางอ่านโปรโมชั่น UFAG8 เว็บกีฬาและแทงบอลออนไลน์ ตั้งแต่เงื่อนไขก่อนกดรับสิทธิ์ ตลาดที่นับยอด ความต่างของบอลก่อนแข่งกับบอลสด และสิ่งที่ควรตรวจก่อนยืนยันบิล";
+
+const graph = pageGraph(Astro, {
+  name: "โปรโมชั่น UFAG8",
+  description: pageDescription,
+  breadcrumb: [
+    { name: "หน้าแรก", path: "/" },
+    { name: "โปรโมชั่น", path: "/promotion" },
+  ],
+  primaryImagePath: pro1.src,
+});
 ---
 
-<MainLayout
-  title="โปรโมชั่น UFAG8 เว็บกีฬา แทงบอลออนไลน์ เงื่อนไขที่ควรอ่านก่อนกดรับสิทธิ์"
-  description="แนวทางอ่านโปรโมชั่น UFAG8 เว็บกีฬาและแทงบอลออนไลน์ ตั้งแต่เงื่อนไขก่อนกดรับสิทธิ์ ตลาดที่นับยอด ความต่างของบอลก่อนแข่งกับบอลสด และสิ่งที่ควรตรวจก่อนยืนยันบิล">
+<MainLayout title="โปรโมชั่น UFAG8 เว็บกีฬา แทงบอลออนไลน์ เงื่อนไขที่ควรอ่านก่อนกดรับสิทธิ์" description={pageDescription}>
+  <script type="application/ld+json" set:html={graph} />
+
   <Announcement />
 
   <ContentBox title="โปรโมชั่น UFAG8" as="h1">

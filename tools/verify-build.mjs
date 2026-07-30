@@ -237,6 +237,22 @@ if (!fs.existsSync(path.join(DIST, "404.html"))) {
   error("dist/", "no 404.html — src/pages/404.astro is missing or was renamed");
 }
 
+// Pages that ship on every brand, no exceptions.
+//
+// The rebrand procedure has a step for parking a sub-page the current brand did
+// not ask for (it moves to src/pages-disabled/), and terms/privacy look exactly
+// like candidates for it: sub-pages, present, not mentioned in the brief. They
+// are not candidates. Every footer variant links to them, and a legal link that
+// 404s is worse than one that was never there.
+//
+// They are also deliberately NOT registered in the uploader's PRESET_PAGES —
+// that registry exists to toggle pages on and off, and these have no "off".
+for (const route of ["terms", "privacy"]) {
+  if (!fs.existsSync(path.join(DIST, route, "index.html"))) {
+    error("dist/", `no /${route}/ — src/pages/${route}.astro was parked or deleted; it ships on every brand`);
+  }
+}
+
 for (const file of pages) {
   const html = fs.readFileSync(file, "utf8");
   const where = file;
@@ -392,7 +408,7 @@ for (const file of pages) {
   // makes Google treat the markup as describing a different page.
   const ldBlocks = [...html.matchAll(/<script[^>]*application\/ld\+json[^>]*>([\s\S]*?)<\/script>/g)];
   if (ldBlocks.length === 0) {
-    warn(where, "indexable page with no JSON-LD at all", "3");
+    error(where, "indexable page with no JSON-LD at all");
   }
   for (const block of ldBlocks) {
     let data;
@@ -436,7 +452,7 @@ for (const file of pages) {
     };
     visit(data);
     for (const s of selfish) {
-      warn(where, `JSON-LD self-URL disagrees with canonical — ${s} vs ${canonical}`, "3");
+      error(where, `JSON-LD self-URL disagrees with canonical — ${s} vs ${canonical}`);
     }
   }
 
@@ -447,7 +463,7 @@ for (const file of pages) {
     if (!/เงื่อนไข|นโยบาย|ความเป็นส่วนตัว/.test(text)) continue;
     const href = attr(`<a${m[1]}>`, "href");
     if (!href || href === "#" || href === "/" || href === "") {
-      warn(where, `legal link "${text}" points at ${href || "(nothing)"}`, "3");
+      error(where, `legal link "${text}" points at ${href || "(nothing)"}`);
     }
   }
 

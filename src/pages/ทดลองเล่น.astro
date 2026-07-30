@@ -5,6 +5,7 @@ import Navfoot from "../components/Navfoot.astro";
 import Announcement from "../components/Announcement6.astro";
 
 import { Picture } from "astro:assets";
+import { itemList, pageGraph, schemaCtx } from "../lib/schema";
 import image1 from "../assets/gamedemo7.webp";
 import image2 from "../assets/gamedemo8.webp";
 import image3 from "../assets/gamedemo9.webp";
@@ -32,46 +33,49 @@ const demoGames = [
   { id: 11, src: image11, alt: "ทดลองเล่นเกม JOKER ที่ UFAG8", link: "/register" },
   { id: 12, src: image12, alt: "ทดลองเล่นเกม AFB Gaming ที่ UFAG8", link: "/register" },
 ];
-const homePage = "https://ufg8-brand.com";
-const pageUrl = homePage + "/" + encodeURIComponent("ทดลองเล่น");
+// Names in list order, paired with the images already imported above. The URL
+// each one resolves to is schema.ts's problem now, not this file's — the
+// previous version pasted a hand-built page URL onto all 12 entries and got the
+// trailing slash and the Thai encoding wrong on every one of them.
 const gameList = [
-  { name: "AskmeSlot", image: homePage + image1.src },
-  { name: "Popular Game", image: homePage + image2.src },
-  { name: "SlotXO", image: homePage + image3.src },
-  { name: "Skywind Group", image: homePage + image4.src },
-  { name: "PG Soft", image: homePage + image5.src },
-  { name: "SBOBET", image: homePage + image6.src },
-  { name: "Sexy Slot", image: homePage + image7.src },
-  { name: "JILI", image: homePage + image8.src },
-  { name: "Ask Me Bet", image: homePage + image9.src },
-  { name: "New Game", image: homePage + image10.src },
-  { name: "JOKER", image: homePage + image11.src },
-  { name: "AFB Gaming", image: homePage + image12.src },
+  { name: "AskmeSlot", imagePath: image1.src },
+  { name: "Popular Game", imagePath: image2.src },
+  { name: "SlotXO", imagePath: image3.src },
+  { name: "Skywind Group", imagePath: image4.src },
+  { name: "PG Soft", imagePath: image5.src },
+  { name: "SBOBET", imagePath: image6.src },
+  { name: "Sexy Slot", imagePath: image7.src },
+  { name: "JILI", imagePath: image8.src },
+  { name: "Ask Me Bet", imagePath: image9.src },
+  { name: "New Game", imagePath: image10.src },
+  { name: "JOKER", imagePath: image11.src },
+  { name: "AFB Gaming", imagePath: image12.src },
 ];
 
-const demoListSchema = {
-  "@context": "https://schema.org",
-  "@type": "ItemList",
+const ctx = schemaCtx(Astro);
+const graph = pageGraph(Astro, {
+  type: "CollectionPage",
   name: "ทดลองเล่นเกมของ UFAG8",
-  alternateName: "UFAG8 เว็บกีฬา โหมดทดลองเล่นเกมบนมือถือก่อนเดิมพันจริง",
-  url: pageUrl,
-  itemListElement: gameList.map((game, index) => ({
-    "@type": "ListItem",
-    position: index + 1,
-    item: {
-      "@type": "Game",
-      name: game.name,
-      image: game.image,
-      url: pageUrl,
-    },
-  })),
-};
+  description: "ทดลองเล่นเกมของ UFAG8 เว็บกีฬาและแทงบอลออนไลน์ ใช้เปิดดูหน้าเกมและระบบก่อนเดิมพันด้วยเงินจริง พร้อมแนวทางอ่านตลาดบอลและจุดที่ควรตรวจก่อนยืนยันบิลทุกครั้ง",
+  breadcrumb: [
+    { name: "หน้าแรก", path: "/" },
+    { name: "ทดลองเล่น", path: "/ทดลองเล่น" },
+  ],
+  extra: [
+    itemList(ctx, {
+      name: "ทดลองเล่นเกมของ UFAG8",
+      alternateName: "UFAG8 เว็บกีฬา โหมดทดลองเล่นเกมบนมือถือก่อนเดิมพันจริง",
+      itemType: "Game",
+      items: gameList,
+    }),
+  ],
+});
 ---
 
 <MainLayout
   title="ทดลองเล่น UFAG8 เว็บกีฬา ลองระบบและหน้าเกมก่อนเดิมพันจริง"
   description="ทดลองเล่นเกมของ UFAG8 เว็บกีฬาและแทงบอลออนไลน์ ใช้เปิดดูหน้าเกมและระบบก่อนเดิมพันด้วยเงินจริง พร้อมแนวทางอ่านตลาดบอลและจุดที่ควรตรวจก่อนยืนยันบิลทุกครั้ง">
-  <script type="application/ld+json" set:html={JSON.stringify(demoListSchema)} />
+  <script type="application/ld+json" set:html={graph} />
 
   <Announcement />
 
