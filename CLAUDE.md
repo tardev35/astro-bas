@@ -7,7 +7,8 @@
 ```sh
 npm install              # ติดตั้ง dependencies
 npm run dev               # เปิด dev server ที่ localhost:8888
-npm run build              # build ไปที่ ./dist/ (รวมถึงเช็ก type/content ของ Astro ด้วย)
+npm run build              # build ไปที่ ./dist/ (เช็ก type/content ของ Astro + รัน verify ต่อท้ายอัตโนมัติ)
+npm run verify             # เกทคุณภาพบน dist/ (อ่านอย่างเดียว) — `postbuild` เรียกให้เองอยู่แล้ว
 npm run preview            # รัน production build ที่ build แล้วมาดูตัวอย่าง
 npm run astro -- check      # รัน diagnostics ของ Astro (type-check ไฟล์ .astro)
 npx prettier --write .       # จัด format (มี prettier-plugin-astro + prettier-plugin-tailwindcss ติดตั้งไว้แล้ว แต่ยังไม่ได้ผูกเป็น npm script)

@@ -1035,6 +1035,28 @@ pointing at a `public/` path during a rebrand, repoint it to the
    previous brand means the next `wrangler deploy` overwrites that brand's
    live Worker and takes its site down. Nothing else in the build catches
    this, because the site builds perfectly either way.
+1b. **`npm run build` also runs `node tools/verify-build.mjs` (a `postbuild`
+   script), and a non-zero exit there fails the build.** Read its output —
+   the rules it enforces are not repeated in this document, and it is the
+   only check for several of them:
+
+   - **ERRORS block.** Off-domain URLs (a previous brand's domain surviving
+     in a component), `href` to a route that does not exist (inherited from
+     whichever `Navbar*`/`Footer*` variant you switched to), a second `<h1>`,
+     a missing `alt`, JSON-LD that does not parse, a canonical on the wrong
+     host, a meta description over 200 characters, and the `wrangler.toml`
+     name/domain mismatch above. Fix them; do not work around them.
+   - **WARNINGS do not block** and are tagged with the improvement phase that
+     owns them. They are pre-existing and expected — **do not go fix them
+     during a rebrand.** Chasing a warning mid-rebrand means editing files
+     outside the brief.
+   - It also prints the `h1`/`h2` inventory per page. Diff that against the
+     docx checklist here rather than grepping for headings by hand; the
+     script cannot read the brief, so this part is still your job.
+
+   The script lives outside every file a rebrand rewrites, on purpose. If a
+   new class of bug shows up twice, add a check to it instead of adding a
+   paragraph here — a rule that exits non-zero cannot be skimmed.
 2. Start `npm run dev`, `curl` the built pages, and grep the rendered
    HTML:
    - old brand name must not appear anywhere in the response body

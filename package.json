@@ -5,6 +5,8 @@
   "scripts": {
     "dev": "astro dev --host 127.0.0.1 --port 8888",
     "build": "astro build",
+    "postbuild": "node tools/verify-build.mjs",
+    "verify": "node tools/verify-build.mjs",
     "preview": "astro preview",
     "astro": "astro",
     "rebrand:upload": "node tools/rebrand-uploader/server.mjs",
