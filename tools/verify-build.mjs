@@ -335,11 +335,18 @@ for (const file of pages) {
     }
   }
 
-  for (const m of html.matchAll(/<script(\s[^>]*)?>/g)) {
-    if (!m[1]) {
-      // Astro's define:vars forces is:inline, which strips type/async/defer and
-      // leaves a parser-blocking script in the middle of the document.
-      warn(where, "<script> with no attributes — parser-blocking (define:vars forces is:inline)", "5");
+  // Astro's define:vars forces is:inline, which strips type/async/defer and
+  // leaves a parser-blocking script in the middle of the document.
+  //
+  // Indexable pages only. /login and /register are noindex forwarding stubs
+  // whose entire content is a spinner and a setTimeout redirect — they use
+  // define:vars to receive the affiliate URL, that redirect is deliberate, and
+  // blocking a parser that has nothing left to parse costs nothing.
+  if (indexable) {
+    for (const m of html.matchAll(/<script(\s[^>]*)?>/g)) {
+      if (!m[1]) {
+        error(where, "<script> with no attributes — parser-blocking (define:vars forces is:inline)");
+      }
     }
   }
 

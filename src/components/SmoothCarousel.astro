@@ -1,6 +1,4 @@
 ---
-import "swiper/css";
-
 import { Picture } from "astro:assets";
 
 import slide1 from "../assets/slide1.png";
@@ -8,20 +6,58 @@ import slide2 from "../assets/slide2.png";
 import slide3 from "../assets/slide3.png";
 import slide4 from "../assets/slide4.png";
 
+// This used to be Swiper: 158,890 bytes of JavaScript (86,801 of it modules the
+// config never touched) to slide four pictures sideways forever. It is a CSS
+// animation now — the same technique Announcement6 already uses for its ticker —
+// and the component ships no JavaScript at all.
+//
+// Three things improved along with the byte count:
+//   * it can be paused. Swiper ran with `delay: 0` and
+//     `disableOnInteraction: false`, so nothing a visitor did stopped it.
+//   * it respects prefers-reduced-motion, which Swiper's JS-driven transform
+//     could not.
+//   * the slides are plain markup, so a crawler and a screen reader see all of
+//     them instead of whatever Swiper's cloned-slide DOM happened to expose.
 const images = [slide1, slide2, slide3, slide4];
-const displayImages = [...images, ...images, ...images];
+
+// Three copies: one on screen, one scrolling in, one covering the reset. The
+// animation shifts by exactly one copy, so the loop has no visible seam.
+const COPIES = 3;
+const slides = Array.from({ length: COPIES }, () => images).flat();
+
+const altFor = (index: number) =>
+  `UFAG8 เว็บกีฬา รวมแทงบอลตามลีก ตลาดแฮนดิแคป สูง–ต่ำ และ 1X2 พร้อมบอลก่อนแข่งและบอลสด ภาพที่ ${index + 1}`;
 ---
 
-<div class="mx-auto w-full max-w-[1301px] overflow-hidden px-4 py-5">
-  <div class="swiper mySwiper">
-    <div class="swiper-wrapper">
-      {
-        displayImages.map((img, index) => (
-          <div class="swiper-slide">
+<div class="marquee mx-auto w-full max-w-[1301px] overflow-hidden px-4 py-5">
+  <!-- A pause control that costs nothing visually: the checkbox is reachable by
+       keyboard and announced by screen readers, and its label only becomes
+       visible once it has focus. Mouse users get the :hover pause below. -->
+  <input id="carousel-pause" type="checkbox" class="peer sr-only" />
+  <label
+    for="carousel-pause"
+    class="sr-only cursor-pointer peer-focus-visible:not-sr-only peer-focus-visible:mb-3 peer-focus-visible:inline-block peer-focus-visible:rounded-full peer-focus-visible:border peer-focus-visible:border-[#dcb96b]/60 peer-focus-visible:px-4 peer-focus-visible:py-2 peer-focus-visible:text-sm peer-focus-visible:font-bold">
+    หยุด / เล่นสไลด์ภาพ
+  </label>
+
+  <div class="marquee-track flex">
+    {
+      slides.map((img, index) => {
+        // The last two copies are the same four pictures again, so they are
+        // hidden from assistive technology — otherwise the same sentence is
+        // announced twelve times.
+        //
+        // They still carry alt text rather than alt="": Astro's <Picture> drops
+        // the attribute entirely when it is empty, and an <img> with NO alt is
+        // the one case a screen reader falls back to reading the file name.
+        // Since the wrapper is aria-hidden, the text is never announced anyway.
+        const isDuplicate = index >= images.length;
+        return (
+          <div class="marquee-slide" aria-hidden={isDuplicate ? "true" : undefined}>
             <Picture
               src={img}
-              alt={`UFAG8 เว็บกีฬา รวมแทงบอลตามลีก ตลาดแฮนดิแคป สูง–ต่ำ และ 1X2 พร้อมบอลก่อนแข่งและบอลสด ภาพที่ ${index + 1}`}
-              class="block w-full rounded-xl border border-[#dcb96b]/25 object-contain object-cover shadow-[0_10px_30px_rgba(220,185,107,0.18)]"
+              alt={altFor(index % images.length)}
+              class="block w-full rounded-xl border border-[#dcb96b]/25 object-cover shadow-[0_10px_30px_rgba(220,185,107,0.18)]"
               width={img.width}
               height={img.height}
               loading={index < 2 ? "eager" : "lazy"}
@@ -34,83 +70,65 @@ const displayImages = [...images, ...images, ...images];
               quality={60}
             />
           </div>
-        ))
-      }
-    </div>
+        );
+      })
+    }
   </div>
 </div>
 
-<script>
-  let swiperLoaded = false;
-
-  async function initSwiper() {
-    if (swiperLoaded) return;
-    swiperLoaded = true;
-
-    try {
-      const [{ default: Swiper }, { Autoplay }] = await Promise.all([import("swiper"), import("swiper/modules")]);
-
-      new Swiper(".mySwiper", {
-        modules: [Autoplay],
-        loop: true,
-        spaceBetween: 12,
-        speed: 8000,
-        autoplay: {
-          delay: 0,
-          disableOnInteraction: false,
-        },
-        slidesPerView: 2,
-        breakpoints: {
-          768: {
-            slidesPerView: 3,
-            spaceBetween: 16,
-          },
-        },
-        init: false,
-      }).init();
-    } catch (e) {
-      console.error("Swiper failed to load", e);
-    }
-  }
-
-  function triggerSwiper() {
-    if (window.requestIdleCallback) {
-      requestIdleCallback(() => initSwiper(), { timeout: 2000 });
-    } else {
-      setTimeout(initSwiper, 2000);
-    }
-  }
-
-  window.addEventListener("load", triggerSwiper);
-  document.addEventListener("astro:page-load", triggerSwiper);
-
-  ["mouseover", "keydown", "touchmove", "touchstart"].forEach((event) => {
-    window.addEventListener(event, initSwiper, { once: true, passive: true });
-  });
-</script>
 <style>
-  .swiper-wrapper {
-    transition-timing-function: linear !important;
-  }
-
-  .swiper:not(.swiper-initialized) .swiper-wrapper {
-    display: flex;
-    overflow: hidden;
-    gap: 12px;
-  }
-
-  .swiper:not(.swiper-initialized) .swiper-slide {
-    flex: 0 0 calc((100% - 12px) / 2);
-    width: calc((100% - 12px) / 2);
+  /* --shift is one full copy of the image set: four slides plus the four gaps
+     between them, measured against the track's width (which is the container's
+     width — the slides overflow it, which is the point). Getting this wrong by
+     a pixel is what makes a marquee visibly jump on every loop. */
+  .marquee {
+    --gap: 12px;
+    --per-view: 2;
+    --shift: calc(-200% - 24px);
   }
 
   @media (min-width: 768px) {
-    .swiper:not(.swiper-initialized) .swiper-wrapper {
-      gap: 16px;
+    .marquee {
+      --gap: 16px;
+      --per-view: 3;
+      --shift: calc(-133.3333% - 21.3333px);
     }
-    .swiper:not(.swiper-initialized) .swiper-slide {
-      flex: 0 0 calc((100% - 32px) / 3);
-      width: calc((100% - 32px) / 3);
+  }
+
+  .marquee-track {
+    gap: var(--gap);
+    width: 100%;
+    animation: carousel-scroll 32s linear infinite;
+    will-change: transform;
+  }
+
+  .marquee-slide {
+    flex: 0 0 calc((100% - (var(--per-view) - 1) * var(--gap)) / var(--per-view));
+  }
+
+  @keyframes carousel-scroll {
+    from {
+      transform: translateX(0);
+    }
+    to {
+      transform: translateX(var(--shift));
+    }
+  }
+
+  .marquee:hover .marquee-track,
+  .marquee:focus-within .marquee-track,
+  .marquee > input:checked ~ .marquee-track {
+    animation-play-state: paused;
+  }
+
+  /* `animation: none` rather than a paused state, and not just the global
+     reduced-motion rule in global.css: that rule collapses the duration to
+     0.01ms, which would snap the strip to its END position instead of leaving
+     it where it started. Killing the animation outright is the correct
+     behaviour here. */
+  @media (prefers-reduced-motion: reduce) {
+    .marquee-track {
+      animation: none;
     }
   }
 </style>

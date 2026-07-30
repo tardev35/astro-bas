@@ -1,13 +1,11 @@
 ---
+import { isActivePath } from "../lib/nav";
 import { Picture } from "astro:assets";
 const images = import.meta.glob<{ default: ImageMetadata }>("../assets/logo.{png,webp,jpg}", { eager: true });
 const imagePaths = Object.keys(images);
 const mainLogo = imagePaths.length > 0 ? images[imagePaths[0]].default : null;
 const currentPath = Astro.url.pathname;
-const isActive = (path: string) => {
-  if (path === "/") return currentPath === "/";
-  return currentPath.startsWith(path);
-};
+const isActive = (path: string) => isActivePath(currentPath, path);
 ---
 
 <div class="hidden w-full border-b border-amber-600/30 bg-gradient-to-r from-[#100b03] via-[#3a2703] to-[#100b03] px-4 py-1.5 font-sans text-xs font-bold text-amber-100/80 lg:block">

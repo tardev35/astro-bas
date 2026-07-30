@@ -976,6 +976,53 @@ This matters beyond bookkeeping: "rendered vs inventory" decides which
 files get the retheme, and mislabelling a live component as inventory
 ships the previous brand's colours to production.
 
+### Behaviour lives in `src/lib/`, not in a component `<script>`
+
+Four things moved out of components into `src/lib/` because a rebrand rewrites
+components and does not touch `src/lib/`. When you retheme one of these, change
+its markup and its classes — **do not move the logic back inline.**
+
+| module | used by | what it guards |
+|---|---|---|
+| `nav.ts` — `isActivePath()` | every `Navbar*` variant | percent-encoded Thai routes and trailing slashes |
+| `liveCounter.ts` | `GameRankingBoard` | off-screen, background tab, reduced-motion |
+| `winnersFeed.ts` | `LatestWinnersCyber` | same, plus server-rendered first rows |
+| — (CSS only) | `SmoothCarousel` | replaced Swiper entirely |
+
+Concretely:
+
+- **Never write `isActive` by hand in a navbar.** All 16 variants used to carry
+  the same three-line copy, and all 16 were wrong: `Astro.url.pathname` is
+  percent-encoded, so on `/ทดลองเล่น` and `/ทางเข้า` no menu item highlighted at
+  all. Write
+  `const isActive = (path: string) => isActivePath(currentPath, path);` and
+  import `isActivePath` from `../lib/nav`.
+- **Never use `define:vars` on an indexable page.** It forces `is:inline`, which
+  strips `type`/`async`/`defer` and leaves a parser-blocking script mid-document.
+  Pass data as `<script type="application/json">` and read it from a normal
+  bundled `<script>`. `verify-build.mjs` fails the build on an attribute-less
+  `<script>` in any indexable page. (`login.astro`/`register.astro` are exempt
+  and stay as they are — they are noindex redirect stubs.)
+- **Never render a feed container empty and fill it from JS.** Server-render the
+  first rows; JS replaces them. An empty container is invisible to crawlers,
+  empty with JS off, and shifts the layout the moment it fills.
+- **Never start a `setInterval`/recursive `setTimeout` without guards.** Anything
+  that animates on a timer must stop when off screen, when the tab is hidden,
+  and under `prefers-reduced-motion`. `GameRankingBoard`'s counters sit in a
+  `hidden sm:flex` container, so an unguarded loop wakes the main thread on every
+  phone to retype text nobody can see.
+- **Do not reintroduce Swiper.** `SmoothCarousel` is a CSS animation now; Swiper
+  was 158,890 bytes of JavaScript to slide four pictures, could not be paused,
+  and ignored `prefers-reduced-motion`. The package is still in `package.json`
+  but nothing imports it. If a brand needs a real interactive carousel, that is
+  a deliberate decision to make out loud, not a default to fall back into.
+
+One Astro trap found doing this: **`<Picture alt="">` drops the `alt` attribute
+from the output entirely.** An `<img>` with no `alt` is worse than a decorative
+one — screen readers fall back to reading the filename — so give it real alt
+text and hide the wrapper with `aria-hidden="true"` instead. The build gate
+catches this.
+
 ### Two files the build generates — leave both alone
 
 **`src/styles/_sources.generated.css`** is rewritten by `tools/gen-tw-sources.mjs`

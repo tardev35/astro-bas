@@ -1,4 +1,5 @@
 ---
+import { isActivePath } from "../lib/nav";
 import { Picture } from "astro:assets";
 
 const images = import.meta.glob<{ default: ImageMetadata }>("../assets/logo.*", { eager: true });
@@ -7,10 +8,7 @@ const targetPath = imagePaths.find((path) => path.endsWith(".webp")) || imagePat
 const mainLogo = targetPath ? images[targetPath].default : null;
 
 const currentPath = Astro.url.pathname;
-const isActive = (path: string) => {
-  if (path === "/") return currentPath === "/";
-  return currentPath.startsWith(path);
-};
+const isActive = (path: string) => isActivePath(currentPath, path);
 ---
 
 <header class="sticky top-0 z-[100] w-full font-sans">

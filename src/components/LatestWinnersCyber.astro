@@ -4,6 +4,7 @@ import scbLogo from "../assets/banks/scb.png";
 import krungsriLogo from "../assets/banks/krungsri.png";
 import ktbLogo from "../assets/banks/ktb.png";
 import ttbLogo from "../assets/banks/ttb.png";
+import { randomAmount, randomUser } from "../lib/winnersFeed";
 
 const bankPool = [
   { name: "KBank", color: "bg-[#1155cc]", icon: kbankLogo.src },
@@ -12,10 +13,22 @@ const bankPool = [
   { name: "KTB", color: "bg-[#0ea5e9]", icon: ktbLogo.src },
   { name: "TTB", color: "bg-[#1279be]", icon: ttbLogo.src },
 ];
+
+// The first rows are rendered on the server. They used to be built by an inline
+// script, which left the container empty in the HTML: nothing for a crawler to
+// read, nothing at all without JS, and a guaranteed layout shift the moment the
+// script ran. Now the page ships with rows and JS only replaces them.
+const initialRows = Array.from({ length: 5 }, (_, i) => ({
+  bank: bankPool[i % bankPool.length],
+  user: randomUser(),
+  amount: randomAmount(),
+  pending: i % 3 === 1,
+}));
 ---
 
-<div class="mx-auto w-full max-w-[1300px] p-4 font-sans">
-  <div
+<div class="mx-auto w-full max-w-[1300px] p-4">
+  <section
+    aria-label="รายการฝาก-ถอนล่าสุด"
     class="relative border-r-4 border-l-4 border-[#dcb96b] bg-[#0c0b09]/85 px-4 py-8 shadow-[0_0_30px_rgba(220,185,107,0.2)] md:p-10"
     style="clip-path: polygon(20px 0, calc(100% - 20px) 0, 100% 20px, 100% calc(100% - 20px), calc(100% - 20px) 100%, 20px 100%, 0 calc(100% - 20px), 0 20px);">
     <div class="absolute top-0 left-0 h-[1px] w-full bg-gradient-to-r from-transparent via-[#dcb96b] to-transparent"></div>
@@ -26,74 +39,71 @@ const bankPool = [
       <span class="animate-pulse border border-[#b9bcc4]/50 px-2 py-1 text-xs font-bold tracking-widest text-[#d7dae1]">ONLINE</span>
     </div>
 
-    <div id="feed-cyber-hud" class="relative z-10 flex flex-col gap-3"></div>
-  </div>
+    <div data-winners-feed class="relative z-10 flex flex-col gap-3">
+      {
+        initialRows.map((row) => (
+          <div data-winner-row class="winner-row origin-left transform transition-all duration-500 ease-out">
+            <div class="flex items-center justify-between border-l-2 border-[#b9bcc4] bg-gradient-to-r from-[#7a5f22]/30 to-transparent p-3 backdrop-blur-sm transition-colors hover:bg-[#7a5f22]/50">
+              <div class="flex items-center gap-4">
+                <div data-winner-bank class={`flex h-8 w-8 items-center justify-center border border-white/10 bg-black/50 mix-blend-screen ${row.bank.color}`}>
+                  <img data-winner-icon src={row.bank.icon} alt="" width="20" height="20" loading="lazy" decoding="async" class="h-5 w-5 object-contain grayscale" />
+                </div>
+                <div class="font-mono text-sm text-[#efeade]">
+                  USR_ID: <span data-winner-user class="font-bold text-[#f2dca4]">{row.user}</span>
+                </div>
+              </div>
+              <div class="flex items-center gap-6">
+                <div data-winner-status class={`winner-status font-mono text-[10px] tracking-widest ${row.pending ? "is-pending" : "is-verified"}`}>
+                  {row.pending ? "[PROCESSING]" : "[VERIFIED]"}
+                </div>
+                <div class="font-mono text-xl font-black text-[#dcb96b] drop-shadow-[0_0_8px_rgba(220,185,107,0.5)]">
+                  <span data-winner-amount>{row.amount}</span> <span class="text-xs text-[#ac893a]">THB</span>
+                </div>
+              </div>
+            </div>
+          </div>
+        ))
+      }
+    </div>
+
+    <script type="application/json" data-winners-banks set:html={JSON.stringify(bankPool)} />
+  </section>
 </div>
 
-<script define:vars={{ bankPool }}>
-  const feed = document.getElementById("feed-cyber-hud");
-  const getRandomStr = (len, chars) =>
-    Array.from({ length: len })
-      .map(() => chars.charAt(Math.floor(Math.random() * chars.length)))
-      .join("");
-  const getAmount = () => (Math.floor(Math.random() * (95000 - 15000 + 1)) + 15000).toLocaleString("en-US");
+<script>
+  // Not `define:vars` — that forces is:inline, which strips type/async/defer
+  // and leaves a parser-blocking script in the middle of the document. The bank
+  // list arrives as inert JSON above instead, and this module is bundled and
+  // deferred like any other.
+  import { startWinnersFeed } from "../lib/winnersFeed";
 
-  const createHTML = () => {
-    const bank = bankPool[Math.floor(Math.random() * bankPool.length)];
-    const user = `${getRandomStr(2, "abcdefghijklmnopqrstuvwxyz")}***${getRandomStr(4, "0123456789")}`;
-    const isPending = Math.random() > 0.6;
-
-    const statusClass = isPending ? "text-[#bcb6a6] border-[#6f7480] animate-pulse" : "text-green-400 border-green-500/50";
-    const statusText = isPending ? "[PROCESSING]" : "[VERIFIED]";
-
-    return `
-      <div class="winner-row origin-left transform scale-x-95 opacity-0 transition-all duration-500 ease-out">
-        <div class="flex items-center justify-between border-l-2 border-[#b9bcc4] bg-gradient-to-r from-[#7a5f22]/30 to-transparent p-3 backdrop-blur-sm transition-colors hover:bg-[#7a5f22]/50">
-          <div class="flex items-center gap-4">
-            <div class="flex h-8 w-8 items-center justify-center bg-black/50 border border-white/10 ${bank.color} mix-blend-screen">
-              <img src="${bank.icon}" alt="bank" class="h-5 w-5 object-contain grayscale" />
-            </div>
-            <div class="font-mono text-sm text-[#efeade]">
-              USR_ID: <span class="font-bold text-[#f2dca4]">${user}</span>
-            </div>
-          </div>
-          <div class="flex items-center gap-6">
-            <div class="font-mono text-[10px] tracking-widest ${statusClass}">${statusText}</div>
-            <div class="font-mono text-xl font-black text-[#dcb96b] drop-shadow-[0_0_8px_rgba(220,185,107,0.5)]">
-              ${getAmount()} <span class="text-xs text-[#ac893a]">THB</span>
-            </div>
-          </div>
-        </div>
-      </div>
-    `;
-  };
-
-  const trigger = () => {
-    const tempDiv = document.createElement("div");
-    tempDiv.innerHTML = createHTML();
-    const newEl = tempDiv.firstElementChild;
-    feed.prepend(newEl);
-    setTimeout(() => {
-      newEl.classList.remove("scale-x-95", "opacity-0");
-      newEl.classList.add("scale-x-100", "opacity-100");
-    }, 50);
-    if (feed.children.length > 5) {
-      const last = feed.lastElementChild;
-      last.classList.remove("scale-x-100", "opacity-100");
-      last.classList.add("scale-x-95", "opacity-0");
-      setTimeout(() => last.remove(), 500);
-    }
-  };
-  for (let i = 0; i < 5; i++) {
-    trigger();
-  }
-  setInterval(trigger, 4000);
+  startWinnersFeed();
 </script>
+
 <style>
-  .font-sans {
-    font-family: var(--font-sans);
-  }
   .font-mono {
     font-family: monospace;
+  }
+
+  /* The two status colours are classes rather than inline strings so the JS
+     never has to know what this brand's palette is. */
+  .winner-status.is-pending {
+    color: #bcb6a6;
+    border-color: #6f7480;
+  }
+  .winner-status.is-verified {
+    color: oklch(79.2% 0.209 151.711);
+    border-color: color-mix(in oklab, oklch(72.3% 0.219 149.579) 50%, transparent);
+  }
+
+  .winner-row.is-entering {
+    transform: scaleX(0.95);
+    opacity: 0;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .winner-row {
+      transition: none;
+    }
   }
 </style>

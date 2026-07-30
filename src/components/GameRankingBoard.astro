@@ -105,21 +105,12 @@ const medal = (rank: number) => (rank === 1 ? "🥇" : rank === 2 ? "🥈" : ran
 
 
 <script>
-  const nf = new Intl.NumberFormat("en-US");
+  // Guards for visibility, background tabs and reduced-motion live in
+  // src/lib/liveCounter.ts — a file no rebrand rewrites. Do not reinstate a
+  // bare setTimeout loop here; the counters sit inside a `hidden sm:flex`
+  // container, so an unguarded one wakes the main thread on every phone to
+  // update text nobody can see.
+  import { startLiveCounters } from "../lib/liveCounter";
 
-  document.querySelectorAll<HTMLElement>("[data-players]").forEach((el) => {
-    const base = Number(el.dataset.base) || 0;
-    let current = base;
-
-    const tick = () => {
-      const drift = Math.round((Math.random() - 0.5) * base * 0.02);
-      const pull = Math.round((base - current) * 0.15);
-      current = Math.max(1, current + drift + pull);
-      el.textContent = nf.format(current);
-
-      setTimeout(tick, 1500 + Math.random() * 2000);
-    };
-
-    setTimeout(tick, Math.random() * 2000);
-  });
+  startLiveCounters();
 </script>
