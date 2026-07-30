@@ -1054,9 +1054,23 @@ pointing at a `public/` path during a rebrand, repoint it to the
      shared component (provider card, footer column, image-block
      title prop) is still hardcoding the wrong tag — grep the dist
      HTML around each hit to find which component to fix.
-3. Stop the dev server when done (best effort — `pkill`/`taskkill`
-   often aren't available in this sandbox; a leftover background dev
-   server on port 4321 is harmless, don't fight it).
+3. Stop the dev server when done — **by PID or by port, never by image
+   name**. `taskkill /F /IM node.exe` kills every node process on the
+   machine: the dev server, the uploader server that launched this run,
+   and this agent's own CLI (the CLI runs on node), so the run dies
+   mid-phase and the uploader cannot even report why. That happened on
+   the 2026-07-30 SUDYOD888 run and cost the whole Phase 6 entry.
+   On Windows, scope it to the port `npm run dev` actually uses (8888
+   here, not Astro's default 4321):
+
+   ```powershell
+   $c = Get-NetTCPConnection -LocalPort 8888 -State Listen -ErrorAction SilentlyContinue
+   if ($c) { Stop-Process -Id $c.OwningProcess -Force }
+   ```
+
+   This is best effort. If the scoped kill fails or the cmdlet is
+   unavailable, leave the dev server running and move on — a leftover
+   dev server is harmless. Never widen the kill to make it succeed.
 
 ## Phase 6 — Update the workspec
 
