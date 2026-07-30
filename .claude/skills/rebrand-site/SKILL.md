@@ -861,7 +861,29 @@ pages' `<MainLayout title/description>` before handing the rebrand to you.
 earlier had none), nothing special happens and nothing is blocked: you
 still set every page's `<title>`/`description` here exactly as always,
 inferring them from the docx's main title/H1/H2 the same way you did for
-GROW268.** Either way this full phase runs — the sweep for brand name,
+GROW268.**
+
+**Length rule for any `description` you write yourself: 150–160
+characters.** A description the docx supplies is used verbatim — those
+are already written to length — but the ones you infer have run long
+every time: on UFAG8 the four sub-pages came out at 234 / 251 / 270 /
+337 characters, roughly double, because each one kept appending another
+clause (`ทั้งแฮนดิแคป สูง–ต่ำ และ 1X2`, `บิลเดี่ยวกับบิลสเต็ป`, …) until
+the whole page outline was in the tag. Google truncates around 155, so
+everything past that is invisible; write one sentence that says what the
+page is for and stop. Same target for the home page.
+
+Count **characters, not bytes** — Thai is 3 bytes per character in UTF-8,
+so `wc -c` reads about 3× the real length and will send you chasing a
+problem that is not there. Check the built output, since that is what
+ships:
+
+```sh
+grep -o '<meta name="description" content="[^"]*"' dist/**/*.html |
+  while read -r l; do printf '%s %s\n' "$(printf '%s' "$l" | wc -m)" "$l"; done
+```
+
+Either way this full phase runs — the sweep for brand name,
 hue, chrome consistency, and stale assets across *every* `src/pages/*.astro`
 is mandatory regardless of whether the uploader pre-filled the 4 sub-page
 titles. (The uploader anchors only on the `<MainLayout>` tag and leaves
