@@ -128,7 +128,14 @@ async function toWebp(buf, dir, base, opts) {
 // base64 data URI inside a minimal SVG so favicon.svg still refreshes with the
 // new brand instead of keeping the previous one. (A real .svg upload is written
 // through untouched — see the favicon slot.)
-async function rasterToSvg(buf, size = 512) {
+// 128, not 512: this wrapper base64s a PNG, and base64 costs ~4 bytes per 3, so
+// the size here lands almost squared on the file. At 512 the generated
+// favicon.svg measured 210,922 bytes — larger than the hero image — and it is
+// linked in every page's <head> as type="image/svg+xml", which Chrome prefers
+// over the .ico and .png siblings. A favicon is drawn at 16-32 CSS px; 128
+// still covers 2-3x DPR and macOS's larger tab icons, at roughly 1/16th the
+// bytes.
+async function rasterToSvg(buf, size = 128) {
   const png = await sharp(buf)
     .resize(size, size, { fit: "contain", background: { r: 0, g: 0, b: 0, alpha: 0 } })
     .png()
