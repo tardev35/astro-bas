@@ -1,14 +1,18 @@
 ---
+export interface Props {
+  titleleft?: string;
+  titleright?: string;
+}
 const { titleleft, titleright } = Astro.props;
 ---
 
 <section class="relative z-10 mx-auto mb-10 w-full max-w-[1400px] px-4 font-sans">
   <div class="grid grid-cols-1 gap-6 md:grid-cols-2 lg:gap-8">
-    <article class="flex flex-col gap-4 text-left text-base leading-relaxed text-[#3a2e18]">
+    <article class="flex flex-col gap-4 text-left text-base leading-relaxed text-[#e6e3d8]">
       {
         titleleft && (
-          <p class="flex items-center gap-3 border-b border-amber-600/25 pb-3 text-xl leading-normal font-black tracking-widest text-[#8a6410] uppercase">
-            <span class="flex h-9 w-9 shrink-0 items-center justify-center rounded-lg border border-amber-600/30 bg-gradient-to-br from-[#f4dfa3] via-[#d9b45c] to-[#a97f2a] text-sm text-[#231a06] shadow-[0_5px_15px_rgba(168,132,44,0.25)]">
+          <p class="flex items-center gap-3 border-b border-[#e2c05f]/25 pb-3 text-xl leading-normal font-black tracking-widest text-[#f0d68c] uppercase">
+            <span class="flex h-9 w-9 shrink-0 items-center justify-center rounded-lg border border-[#e2c05f]/40 bg-gradient-to-br from-[#f7e3a4] via-[#e2c05f] to-[#c39a34] text-sm text-[#0a1024] shadow-[0_5px_15px_rgba(226,192,95,0.28)]">
               🔐
             </span>
             {titleleft}
@@ -18,11 +22,11 @@ const { titleleft, titleright } = Astro.props;
       <slot name="left" />
     </article>
 
-    <article class="flex flex-col gap-4 text-left text-base leading-relaxed text-[#3a2e18]">
+    <article class="flex flex-col gap-4 text-left text-base leading-relaxed text-[#e6e3d8]">
       {
         titleright && (
-          <p class="flex items-center gap-3 border-b border-amber-600/25 pb-3 text-xl leading-normal font-black tracking-widest text-[#8a6410] uppercase">
-            <span class="flex h-9 w-9 shrink-0 items-center justify-center rounded-lg border border-[#cfd0d2] bg-gradient-to-br from-[#e9eaec] via-[#c6c8cb] to-[#9a9da1] text-sm text-[#2b2b2d] shadow-[0_5px_15px_rgba(168,132,44,0.25)]">
+          <p class="flex items-center gap-3 border-b border-[#e2c05f]/25 pb-3 text-xl leading-normal font-black tracking-widest text-[#f0d68c] uppercase">
+            <span class="flex h-9 w-9 shrink-0 items-center justify-center rounded-lg border border-[#2b3a6f] bg-gradient-to-br from-[#2a3f8f] via-[#1e2f74] to-[#0b132f] text-sm text-[#f7e3a4] shadow-[0_5px_15px_rgba(30,47,116,0.45)]">
               🎲
             </span>
             {titleright}

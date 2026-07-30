@@ -1,18 +1,24 @@
 ---
-const { titleleft, titleright } = Astro.props;
+export interface Props {
+  title?: string;
+  titleleft?: string;
+  titleright?: string;
+}
+const { title, titleleft, titleright } = Astro.props;
+const rightHeading = titleright ?? title;
 ---
 
-<section class="mx-auto mb-8 w-full max-w-[1400px] px-4 font-sans">
+<section class="relative z-10 mx-auto mb-8 w-full max-w-[1400px] px-4 font-sans">
   <div
-    class="w-full rounded-[25px] bg-[#12100a] p-8 shadow-[10px_10px_20px_#050403,-10px_-10px_20px_#1c1609] transition-all duration-300 hover:shadow-[15px_15px_30px_#030201,-15px_-15px_30px_#2a2110]">
-    <div class="grid grid-cols-1 gap-8 md:grid-cols-[3fr_7fr]">
-      <article class="flex flex-col gap-4 text-left text-base leading-relaxed text-amber-50/85">
-        {titleleft && <h2 class="text-2xl leading-normal font-black text-amber-100">{titleleft}</h2>}
+    class="w-full rounded-[25px] border border-[#2b3a6f]/70 bg-[#111c45] p-8 shadow-[10px_10px_20px_#050912,-10px_-10px_20px_#1b2c69] transition-all duration-300 hover:shadow-[15px_15px_30px_#03060f,-15px_-15px_30px_#22357d]">
+    <div class="grid grid-cols-1 gap-8 md:grid-cols-[3fr_7fr] md:items-center">
+      <article class="flex flex-col gap-4 text-left text-base leading-relaxed text-[#e6e3d8]">
+        {titleleft && <h2 class="text-2xl leading-normal font-black text-[#f0d68c]">{titleleft}</h2>}
         <slot name="left" />
       </article>
 
-      <article class="flex flex-col gap-4 text-left text-base leading-relaxed text-amber-50/85 md:border-l md:border-amber-400/25 md:pl-8">
-        {titleright && <h2 class="text-2xl leading-normal font-black text-amber-100">{titleright}</h2>}
+      <article class="flex flex-col gap-4 text-left text-base leading-relaxed text-[#e6e3d8] md:border-l md:border-[#2b3a6f] md:pl-8">
+        {rightHeading && <h2 class="text-2xl leading-normal font-black text-[#f0d68c]">{rightHeading}</h2>}
         <slot name="right" />
       </article>
     </div>

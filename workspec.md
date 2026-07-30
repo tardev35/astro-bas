@@ -2511,3 +2511,170 @@ slide1 (เป็น og:image) กับ slide3 (ในภาพมีการ�
 - `@font-face` ของ Kanit ใน `global.css` ยัง ship อยู่แม้แบรนด์นี้ใช้ google-sans —
   ตาม playbook ที่ระบุว่าสลับฟอนต์แก้บรรทัดเดียวใน `brandProfile.ts` เท่านั้น
 - **ไม่ deploy · ไม่ `git push` · ไม่ `git commit`** ตามคำสั่ง — หยุดที่ build + verify
+
+---
+
+## 2026-07-30 — รีแบรนด์ + รีธีม PRODED888 (จาก WINUP888)
+
+**เป้าหมาย** — เปิดตัวแบรนด์ PRODED888 บน template เดิม: ชื่อใหม่, พาเลตต์ใหม่,
+เนื้อหาใหม่จาก docx, โดเมนจริง `https://proded888-brand.com` (operator ให้มาชัดเจน)
+รันแบบขนานตาม playbook · **หยุดที่ build + verify — ไม่ deploy ไม่ push ไม่ commit**
+
+### อินพุตแบรนด์
+
+- `src/assets/content.txt` (uploader แตกจาก docx ให้แล้ว) — H1 x1, H2 x9, H3 x0
+  ไม่มีส่วน SUB-PAGES (Title & Meta) → title/desc ของหน้าย่อยเขียนเองทั้งหมด
+- `src/assets/palette.json` + อ่านภาพจริง: โลโก้เป็นริบบิ้น**น้ำเงินรอยัล + ตัวอักษรทอง
+  + มงกุฎทอง** บนพื้น**ดำอมน้ำเงิน** → แบรนด์สองเฉด (ทองเป็น accent, น้ำเงินเป็นโครง)
+- ชุดภาพใหม่ลงวันที่ 2026-07-30 10:06: `logo.webp`, `banner1.png`, `slide1-4.png`,
+  `bg.png` (`bg.json` mode = image)
+
+### พาเลตต์ (ก่อน → หลัง)
+
+WINUP888 เป็นธีม**สว่าง (ไอวอรี/ครีม) + ทอง + โครมเงิน** — PRODED888 **พลิกพื้นเป็นมืด**:
+ทองบนน้ำเงินกรมท่า/ดำ ซึ่งเป็นการเปลี่ยนที่เห็นชัดที่สุดของรอบนี้
+
+| บทบาท | ค่า |
+|---|---|
+| ทองสว่าง / ทองหลัก / ทองเข้ม | `#f7e3a4` / `#e2c05f` / `#c39a34` |
+| น้ำเงินรอยัล / กลาง / เข้ม | `#1e2f74` / `#152351` / `#0b132f` |
+| พื้นหน้าเว็บ / การ์ด / การ์ดยก | `#050912` / `#0b1330` / `#111c45` |
+| เส้นคั่น / ตัวอักษรเนื้อหา / ตัวอักษรบนปุ่มทอง | `#2b3a6f` / `#e6e3d8` / `#0a1024` |
+
+เงาทอง `rgba(226,192,95,…)` (คงค่า alpha เดิมทุกจุด) · **คงไว้ไม่แตะ**: เขียว LINE
+`#00B900`, สีจริงของโลโก้ธนาคารใน BankStrip, จุด live/success สีเขียว
+
+### โดเมนจริง — แก้ครบ 3 ไฟล์
+
+| ไฟล์ | เปลี่ยน |
+|---|---|
+| `astro.config.mjs` | `site:` → `https://proded888-brand.com` |
+| `src/pages/index.astro` | `webSiteSchema.url` (string literal ที่ไม่ตามค่า site) |
+| `wrangler.toml` | `name` → `proded888` (ไม่ซ้ำแบรนด์ไหน · ไม่แตะ `account_id`) |
+
+`robots.txt` ตามค่า site เองผ่าน `src/pages/robots.txt.ts` (ยืนยันไม่มีไฟล์ static
+ใน public มาทับ) · `workers_dev = false` และ `not_found_handling` คงเดิม
+
+### การหมุน variant (before → after) — ห้ามซ้ำตัวที่แบรนด์ก่อนใช้
+
+| family | WINUP888 (ออก) | PRODED888 (เข้า) |
+|---|---|---|
+| Navbar | NavbarStyle3 | **NavbarStyle6** (รางซ้ายลอย + โลโก้ notch) |
+| Footer | FooterCyber | **FooterStyle2** |
+| Announcement | AnnouncementPremium | **Announcement3** |
+| LatestWinners | LatestWinners2 | **LatestWinners4** |
+| Faq | Faq4 | **Faq** (ตัว plain) |
+| ContentBox mix | CyberCut + FloatingBadge + Special + TwoCyberCut | **Premium x3 + Neumorphism x2 + plain x1 + TwoPremium + SevenThreePremium + SevenThreeNeumorphism** |
+| ฟอนต์ | google-sans | **kanit** (`BRAND_FONT` บรรทัดเดียวใน `brandProfile.ts`) |
+
+**เลี่ยงทั้งตระกูลรอบนี้**: ทุกตัว CyberCut, ทุกตัว FloatingBadge, และ ContentBoxSpecial
+(เป็นลุคของแบรนด์ที่ออกไป) → ผลพลอยได้คือไม่ต้องเจอกับดัก badge ล้นจอของ FloatingBadge เลย
+
+### ผังหน้าแรก — 10 หัวข้อ docx เรียงตามเอกสาร + widget แทรกท้ายหัวข้อที่เกี่ยว
+
+1. H1 รีวิวคืนยอดเสีย/ฝากถอนออโต้ → ContentBoxPremium
+2. H2 เส้นทางฝาก เล่น ถอน รับเงินคืน → ContentBoxNeumorphism
+3. H2 คืนยอดเสียคิดจากยอดส่วนไหน → ContentBox
+4. H2 โปรเด็ด/โบนัส/คืนยอดเสีย ใช้ร่วมกันได้ไหม → ContentBoxPremium
+5. H2 สล็อต คาสิโนสด กีฬา นับคืนยอดเสียเหมือนกันไหม → ContentBoxSevenThreePremium
+   + **slide1** (ภาพโลโก้ค่ายเกม) → ต่อด้วย ProviderGrid, GameRankingBoard
+6. H2 ฝากถอนออโต้รองรับช่องทางใดบ้าง → ContentBoxSevenThreeNeumorphism
+   + **slide3** (PromptPay/TrueMoney/ออโต้ 24 ชม.) → ต่อด้วย LatestWinners
+7. + 8. H2 สลิปการถอน | H2 สมัครสมาชิก → ContentBoxTwoPremium (ซ้ายก่อนขวาใน DOM)
+   → ต่อด้วย LoginRtpSection
+9. H2 ทางเข้าควรเช็กอะไรก่อนล็อกอิน → ContentBoxNeumorphism → ต่อด้วยปุ่ม CTA เข้าระบบ/สมัคร
+10. H2 สรุป → ContentBoxPremium → ปิดท้ายด้วย SmoothCarousel, Faq, ReviewCardSumo2, Navfoot
+
+**สไลด์ที่ใช้ 2 ใบ (slide1, slide3) · ไม่ใช้ slide2 + slide4** — SevenThree จำกัด 2 บล็อก
+และสองใบที่เหลือสื่อสารซ้ำกับ slide3 · **ไม่มีภาพประกอบจาก banner2+ รอบนี้** เพราะ
+`banner2.png` (2026-07-28) กับ `banner3.png` (2026-07-23) เป็นของค้างจากแบรนด์ก่อน
+ไม่ใช่ชุดอัปโหลดรอบนี้ (`banner.png` เช่นกัน)
+
+### โครงงานขนาน (4 agent, ไฟล์ไม่ทับกันเลย)
+
+- **P0/P1 orchestrator ทำเอง** — อ่าน docx/palette/ภาพ, เลือก variant, เขียน brand spec
+  ไว้ **นอก repo** (โฟลเดอร์ temp ของระบบ) เพราะ Tailwind 4 สแกนไฟล์ .md ในโปรเจกต์
+  แล้ว retheme shared chrome ให้เสร็จก่อนแตก agent: `MainLayout`, `NavbarStyle6`,
+  `FooterStyle2`, `Navfoot`, `Announcement3`, `ContentBox`, `ContentBoxHuay` +
+  `brandProfile.ts`, `astro.config.mjs`, `wrangler.toml`, `site.webmanifest`
+- **A1** — `index.astro` + ContentBoxPremium/Neumorphism/SevenThreePremium/
+  SevenThreeNeumorphism/TwoPremium/LoginRtpSection/ContentBoxTwo
+- **A2** — ProviderGrid, GameRankingBoard, ReviewCardSumo2, LatestWinners4,
+  SmoothCarousel, Faq
+- **B** — promotion, contact-us, ทางเข้า · **C** — ทดลองเล่น, login, register
+
+แยก A ออกเป็น A1/A2 เพราะโซนหน้าแรกมี 14 ไฟล์ ถ้าไม่แยกจะกลายเป็นหางที่ทุกคนต้องรอ
+(playbook อนุญาตให้เพิ่ม agent ตามกฎเดิมเมื่อโซนหนึ่งหนักเกิน) · BankStrip ไม่ต้องแตะ
+เพราะเป็นโลโก้ธนาคารจริง ไม่ใช่สีแบรนด์
+
+### บั๊ก / ประเด็นที่เจอและแก้
+
+- **JSON-LD หลุดออกไปนอก `<html>`** — `contact-us.astro` และ `ทดลองเล่น.astro` วาง
+  แท็ก script ไว้**ก่อน** `<MainLayout>` ทำให้ build ออกมาเป็น doctype แล้วต่อด้วย script
+  ก่อนถึง `<html>` (ตำแหน่งที่ไม่ถูกตามสเปก แม้ Google ยังอ่านได้) → ย้ายเข้าไปข้างใน
+  MainLayout ให้เหมือน `index.astro` แล้ว build ซ้ำยืนยัน ทั้ง 8 หน้าเป็น doctype
+  ต่อด้วย `<html>` ตรงทุกหน้า · เป็นของค้างเดิม ไม่ใช่ของใหม่รอบนี้
+- **คลาสหมุนไอคอนที่เขียนเองใน Faq ชนกับ utility ชื่อเดียวกันของ Tailwind 4**
+  (คุณสมบัติ CSS ของ utility ทับกับที่คอมโพเนนต์เขียนเอง → ไอคอนบวกไม่หมุนอย่างที่ตั้งใจ)
+  → เปลี่ยนชื่อคลาสให้ไม่ชนกัน
+- **ไอคอน Font Awesome ใน Faq ที่ไม่มีใครโหลด FA เข้าโปรเจกต์เลย** → เปลี่ยนเป็นตัวอักษร
+- ถอด `font-family` ที่ hardcode ชื่อฟอนต์ออกจาก NavbarStyle6 (ตัวนี้เป็น global ด้วย)
+  และ FooterStyle2 → ใช้ตัวแปรฟอนต์กลางที่ layout ใส่ไว้บน html
+- NavbarStyle6/FooterStyle2/Announcement3/LatestWinners4/Faq หยิบมาจาก inventory จึงยังเป็น
+  สีของแบรนด์เก่าคนละตัว (เขียว MAFIA168 / แดง CASHOT123 / ทอง GROW268 / เลือดหมู
+  CASHOT123 / เหลือง-ดำ Teenoi168) — retheme ทั้งไฟล์ + เปลี่ยนชื่อแบรนด์ก่อนต่อเข้าระบบ
+- `Announcement3` มี default message เป็นสโลแกน + โดเมนของ GROW268 → เขียนใหม่เป็นของ
+  PRODED888 (หน้าย่อยเรียกแบบไม่ส่ง prop จึงต้องพึ่ง default ตัวนี้) · หน้าแรกส่ง message เอง
+- `Faq` (plain) เดิมไม่รับ prop เลย hardcode FAQ ของ Teenoi168 + หัวข้อเป็นระดับ 3 →
+  เพิ่ม props `title` / `faqs` และเปลี่ยนหัวข้อเป็นระดับ 2
+- หน้า promotion/contact-us ใช้ ContentBoxHuay อยู่ (ตัวเดียวกับที่ WINUP888 ใช้) →
+  สลับเป็น ContentBoxPremium ให้ตรงชุด variant ของรอบนี้ (prop เหมือนกัน และการ์ดไม่ได้
+  จัดเรียงลูกแบบยืดหยุ่น จึงรับหลาย element ใน slot ได้เหมือนเดิม)
+
+### การ verify ที่รันจริง (build 1 ครั้ง + 1 ครั้งหลังแก้บั๊ก)
+
+- `npm run build` → **7 หน้า สำเร็จ 0 fail** ทั้งสองรอบ
+- route ที่ออกมา: `/`, `/promotion`, `/contact-us`, `/ทางเข้า`, `/ทดลองเล่น`, `/login`,
+  `/register`, `/line` → **ไม่มี `/ตรวจหวย` และ `/แนวทาง`** ถูกต้องสำหรับแบรนด์สล็อต
+  · ไม่มีหน้า preset บทความ/about-us
+- `WINUP888` ทั้ง dist → **0** · คอมเมนต์ HTML → **0 ทั้ง 8 ไฟล์**
+  · `undefined`/`NaN`/`[object Object]` → **0** · placeholder TODO ของ uploader → **0**
+- **พาเลตต์เก่าในมาร์กอัปจริง** (ตัด style ที่ bundle ออกก่อน แล้วส่องเฉพาะค่าใน attribute
+  class กับ inline style) → เหลือ **9 จุด และเป็นสีเขียวทั้งหมด**: จุด live เต้น 7 จุด +
+  ป้าย live 1 จุดในหน้าแรก และปุ่ม "ติดต่อผ่าน Line Official" 1 ปุ่ม = สีที่ playbook
+  สั่งให้คงไว้ ไม่ใช่สีแบรนด์เก่าที่หลงเหลือ (ค่าเก่าที่ยังพบใน style ก้อนที่ bundle มาจาก
+  component inventory ที่ Tailwind สแกนเจอ = noise ที่คาดไว้แล้ว ไม่ใช่บั๊ก)
+- **heading** `index.html` = **h1 x1 · h2 x10 · h3-h6 x0** · ดึงหัวข้อจาก HTML ที่ render
+  จริงมา diff กับ checklist ของ docx แบบเทียบสตริงตรงตัว → **ตรงครบ 10 หัวข้อ ทั้งข้อความ
+  และลำดับ** ส่วนที่เกินมา 1 คือหัวข้อ FAQ ต่อท้ายตามที่ออกแบบไว้
+  · หน้าย่อยทุกหน้า h1 x1 และ h3-h6 x0 (promotion/contact-us/ทางเข้า h2 x2, ทดลองเล่น h2 x3)
+- FAQ render ครบ 5 ข้อ · hero = `banner1.*` จริง · `banner2`/`banner3`/`banner.png`
+  และ slide ที่เป็นไฟล์ดิบ → **0 hit ใน dist**
+- `og:image` ชี้ asset ที่ hash แล้วของ `slide1` (ไม่ใช่ path ใน public)
+- ฟอนต์: อ้าง `kanit-*.woff2` 8 จุด · `fonts.googleapis` **0** → ยืนยันว่าสลับเป็น kanit จริง
+  และไฟล์ woff2 ทั้ง 4 ตัวมีอยู่ใน `public/fonts` พร้อม `@font-face` ครบใน global.css
+- sitemap = 5 URL บนโดเมนใหม่ ตัด `/login` `/register` `/line` ออกถูกต้อง
+  · robots.txt ที่ generate ชี้ sitemap โดเมนใหม่
+
+### นอกสโคป / ไม่ได้แตะ
+
+- **หน้าหวยปิดอยู่แล้ว** — `ตรวจหวย.astro` + `แนวทาง.astro` อยู่ใน `src/pages-disabled/`
+  ตั้งแต่ก่อนเริ่ม และ navbar/footer ที่เลือกใหม่ไม่มีลิงก์ไปหาทั้งคู่ (grep ทั้ง src ยืนยัน)
+  → PRODED888 เป็นแบรนด์สล็อต ไม่มีคำว่าเว็บหวยใน prompt จึงคงสถานะปิดไว้ ไม่ต้องทำอะไร
+- ตัว inventory ที่หลุดจากการใช้งานรอบนี้ (`NavbarStyle3`, `FooterCyber`,
+  `AnnouncementPremium`, `LatestWinners2`, `Faq4`, ตระกูล CyberCut/FloatingBadge,
+  ContentBoxSpecial, `ContentBoxHuay`) ยังเป็นสี/เนื้อหาของแบรนด์ก่อน — **drift ที่คาดไว้
+  ไม่ลบและไม่แก้** เก็บเป็นของสำรองแบรนด์ถัดไป
+- `banner2.png` / `banner3.png` / `banner.png` และ slide2/slide4 ยังอยู่ใน
+  `src/assets` ตั้งใจไม่ลบ
+- `GameRankingBoard` เปลี่ยนชื่อค่าย/เกมให้ตรงลิสต์ใน docx (ตัด NetEnt/Red Tiger/
+  Betsoft/Yggdrasil ที่ brief ไม่มีออก) แต่ **thumbnail `providers/game*.avif` เป็นภาพ
+  generic ที่ใช้ซ้ำทุกแบรนด์** ชื่อกับภาพจึงอาจไม่ตรงเป๊ะ — เป็นความหลวมที่มีมาก่อนแล้ว
+  (แบรนด์ก่อนก็ตั้งชื่ออื่นบนภาพชุดเดิม) ยังไม่แก้ ถ้าจะให้ตรงต้องเปลี่ยนไฟล์ภาพ
+- `alt` ของ `gamedemo7-18.webp` ยังอ้างค่ายตามที่เห็นในภาพจริง (AskmeSlot, SlotXO,
+  Skywind, SBOBET, JOKER, …) ซึ่งบางค่ายไม่อยู่ในลิสต์ 5 ค่ายของ docx — บรรยายภาพตาม
+  ความจริงถูกต้องกว่าบิดให้ตรง brief จึงคงไว้
+- `login.astro` / `register.astro` ยัง hardcode ฟอนต์ Oswald เฉพาะหัวแบรนด์ (ค้างมาตั้งแต่
+  รอบ LAPDEE88) — โหลดถูกต้องทั้งสองสาขาของ flag ฟอนต์ จึงไม่แก้รอบนี้
+- redirect affiliate + noindex ของ login/register ไม่ถูกแตะตามกฎ
+- **ไม่ deploy · ไม่ `git push` · ไม่ `git commit`** ตามคำสั่ง — หยุดที่ build + verify

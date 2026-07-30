@@ -5,8 +5,8 @@ import bgConfig from "../assets/bg.json";
 import ogImage from "../assets/slide1.png";
 import "../styles/global.css";
 import { brandProfile, fontStack, usesGoogleFonts } from "../lib/brandProfile";
-import Navbar from "../components/NavbarStyle3.astro";
-import Footer from "../components/FooterCyber.astro";
+import Navbar from "../components/NavbarStyle6.astro";
+import Footer from "../components/FooterStyle2.astro";
 
 const bannerImages = import.meta.glob<{ default: ImageMetadata }>("../assets/banner*.{png,webp,jpg,jpeg}", { eager: true });
 const bannerPaths = Object.keys(bannerImages);
@@ -16,8 +16,8 @@ const mainBannerPath = preferredBannerPath ?? webpBannerPath ?? bannerPaths[0];
 const mainBanner = mainBannerPath ? bannerImages[mainBannerPath].default : null;
 
 const {
-  title = "WINUP888 คาสิโนบนมือถือ รวมสล็อต บาคาร่า และเกม Live สด 24 ชม.",
-  description = "WINUP888 คาสิโนบนมือถือผ่านระบบ HTML5 รวมสล็อต บาคาร่า เกม Live สด โหมดทดลอง ค่ายเกม และเมนูสมาชิกที่เข้าถึงได้ตลอด 24 ชม.",
+  title = "PRODED888 เว็บตรงสล็อต คืนยอดเสีย ฝากถอนออโต้ พร้อมโปรเด็ด",
+  description = "รีวิว PRODED888 เว็บตรงสล็อต พร้อมคืนยอดเสีย ฝากถอนออโต้ รองรับ PromptPay และ TrueMoney รวมเกมกว่า 1,000 รายการ พร้อมจุดที่ควรเช็กก่อนรับโปร",
   robots = "index, follow",
   ImageOg = ogImage.src,
 } = Astro.props;
@@ -28,7 +28,7 @@ const bgCss = bgMode === "color" ? `background-color:${(bgConfig as { color?: st
 const currentPath = Astro.url.pathname;
 const canonicalURL = new URL(currentPath, Astro.site);
 const ogImageURL = new URL(ImageOg, Astro.site);
-const ogSiteName = "WINUP888";
+const ogSiteName = "PRODED888";
 
 const profile = brandProfile(Astro.site);
 
@@ -75,7 +75,7 @@ const profile = brandProfile(Astro.site);
 
           {block === "appmeta" && (
             <Fragment>
-              {profile.showAppTitle && <meta name="apple-mobile-web-app-title" content="winup888" />}
+              {profile.showAppTitle && <meta name="apple-mobile-web-app-title" content="proded888" />}
               <link rel="manifest" href="/site.webmanifest" />
             </Fragment>
           )}
@@ -117,7 +117,7 @@ const profile = brandProfile(Astro.site);
         background-attachment: fixed;
         background-repeat: no-repeat;
         margin: 0;
-        background-color: #ffffff;
+        background-color: #050912;
         font-weight: 400;
         font-family: var(--font-sans) !important;
       }
@@ -148,7 +148,7 @@ const profile = brandProfile(Astro.site);
     <div class="mb-2.5 flex w-full items-center justify-center">
       <Image
         src={mainBanner!}
-        alt="WINUP888 คาสิโนบนมือถือ รวมสล็อต บาคาร่า รูเล็ต แบล็คแจ็ค และเกม Live สดในระบบเดียว"
+        alt="PRODED888 เว็บตรงสล็อต คืนยอดเสีย ฝากถอนออโต้ รวมสล็อต คาสิโนสด กีฬา หวย และไก่ชนในบัญชีเดียว"
         loading="eager"
         fetchpriority="high"
         widths={[412, 768, 1900]}

@@ -1,76 +1,75 @@
 ---
 import MainLayout from "../layouts/MainLayout.astro";
-import Announcement from "../components/AnnouncementPremium.astro";
+import Announcement from "../components/Announcement3.astro";
 import ContentBox from "../components/ContentBox.astro";
-import ContentBoxCyberCut from "../components/ContentBoxCyberCut.astro";
-import ContentBoxFloatingBadge from "../components/ContentBoxFloatingBadge.astro";
-import ContentBoxSpecial from "../components/ContentBoxSpecial.astro";
-import ContentBoxSevenThreeCyberCut from "../components/ContentBoxSevenThreeCyberCut.astro";
-import ContentBoxSevenThreeFloatingBadge from "../components/ContentBoxSevenThreeFloatingBadge.astro";
-import ContentBoxTwoCyberCut from "../components/ContentBoxTwoCyberCut.astro";
+import ContentBoxPremium from "../components/ContentBoxPremium.astro";
+import ContentBoxNeumorphism from "../components/ContentBoxNeumorphism.astro";
+import ContentBoxSevenThreePremium from "../components/ContentBoxSevenThreePremium.astro";
+import ContentBoxSevenThreeNeumorphism from "../components/ContentBoxSevenThreeNeumorphism.astro";
+import ContentBoxTwoPremium from "../components/ContentBoxTwoPremium.astro";
 import LoginRtpSection from "../components/LoginRtpSection.astro";
 import ProviderGrid from "../components/ProviderGrid.astro";
 import GameRankingBoard from "../components/GameRankingBoard.astro";
 import ReviewCardSumo2 from "../components/ReviewCardSumo2.astro";
-import LatestWinners from "../components/LatestWinners2.astro";
+import LatestWinners from "../components/LatestWinners4.astro";
 import SmoothCarousel from "../components/SmoothCarousel.astro";
-import Faq from "../components/Faq4.astro";
+import Faq from "../components/Faq.astro";
 import Navfoot from "../components/Navfoot.astro";
 
 import { Picture } from "astro:assets";
 import { orderForBrand } from "../lib/brandProfile";
-import imgSlots from "../assets/slide4.png";
-import imgLive from "../assets/slide2.png";
+import imgProviders from "../assets/slide1.png";
+import imgAuto from "../assets/slide3.png";
 
 const currentPath = Astro.url.pathname;
 const homePage = Astro.url.origin;
 const logoUrl = homePage + "/logo.webp";
 
-const pageTitle = "WINUP888 คาสิโนบนมือถือ รวมสล็อต บาคาร่า และเกม Live สด 24 ชม.";
+const pageTitle = "PRODED888 เว็บตรงสล็อต คืนยอดเสีย ฝากถอนออโต้ พร้อมโปรเด็ด";
 const pageDescription =
-  "WINUP888 คาสิโนบนมือถือผ่านระบบ HTML5 รวมสล็อต บาคาร่า เกม Live สด โหมดทดลอง ค่ายเกม และเมนูสมาชิกที่เข้าถึงได้ตลอด 24 ชม.";
+  "รีวิว PRODED888 เว็บตรงสล็อต พร้อมคืนยอดเสีย ฝากถอนออโต้ รองรับ PromptPay และ TrueMoney รวมเกมกว่า 1,000 รายการ พร้อมจุดที่ควรเช็กก่อนรับโปร";
 
 const faqs = [
   {
-    q: "WINUP888 เล่นผ่านมือถือต้องติดตั้งแอปหรือไม่",
-    a: "ระบบมือถือของ WINUP888 ใช้ HTML5 เปิดผ่านเบราว์เซอร์ได้เลย รองรับทั้ง Android, iOS และ Windows โดยเมนูเกมและฟังก์ชันสมาชิกใกล้เคียงกับหน้าเว็บบนคอมพิวเตอร์ ควรเลือกอินเทอร์เน็ตที่เสถียร โดยเฉพาะตอนเข้าเกม Live สดและตอนทำธุรกรรม",
+    q: "คืนยอดเสีย PRODED888 คิดจากยอดส่วนไหน",
+    a: "ข้อมูลต้นแบบระบุสิทธิ์คืนยอดเสียตามระดับสมาชิก เช่น VIP Gold 5% และ VIP Diamond 10% แต่ต้องตรวจว่าคำนวณจากยอดเสียสุทธิหรือยอดเดิมพันที่ระบบรับรอง อีกจุดที่ต้องดูคือเกมที่ร่วมรายการ เทิร์นของเครดิตคืน และเพดานรับต่อรอบ เปอร์เซ็นต์ดูง่าย แต่ฐานคำนวณต่างกัน ผลลัพธ์ก็เปลี่ยนทันที",
   },
   {
-    q: "โหมดทดลองของสล็อต WINUP888 ใช้ดูอะไรได้บ้าง",
-    a: "บางเกมมีโหมดทดลองให้ดูปุ่มเดิมพัน ฟีเจอร์ และจังหวะเกมก่อนใช้เงินจริง เหมาะกับการทำความคุ้นเคยกับระบบเกม แต่ผลจากโหมดทดลองไม่ได้บอกว่าเกมจริงจะจ่ายเหมือนกัน จึงไม่ควรใช้เป็นเครื่องมือคาดเดาผล",
+    q: "โปรเด็ด โบนัสต้อนรับ และคืนยอดเสียของ PRODED888 ใช้ร่วมกันได้หรือไม่",
+    a: "เว็บต้นแบบนำเสนอทั้งโบนัสต้อนรับสูงสุด 100% โบนัสฝากรายวัน คืนยอดเสีย และสิทธิ์ VIP แต่แต่ละโปรมีเงื่อนไขแยกกัน ก่อนรับให้เช็กยอดฝาก เทิร์น เกมที่นับ เพดานถอน และสิทธิ์ซ้อนโปร เพราะบางโบนัสเพิ่มทุนแต่ตัดแคชแบ็ก โปรไม่ใช่บุฟเฟต์ ตักครบทุกถาดอาจคิดเงินคนละราคา",
   },
   {
-    q: "เกม Live สดของ WINUP888 มาจากผู้ให้บริการรายใดบ้าง",
-    a: "หมวดเกม Live สดมีบาคาร่า รูเล็ต และแบล็คแจ็คจากผู้ให้บริการหลายราย เช่น Evolution, SA Gaming, Sexy Gaming และ Pragmatic Play แต่ละค่ายมีหน้าตาและรูปแบบโต๊ะต่างกัน ก่อนเข้าเล่นควรดูขั้นต่ำโต๊ะ กติกา และรอบเดิมพันให้ครบ",
+    q: "ฝากถอนออโต้ PRODED888 รองรับช่องทางใดบ้าง",
+    a: "ข้อมูลต้นแบบระบุว่ารองรับ PromptPay, TrueMoney Wallet, K PLUS, SCB Easy และธนาคารไทยหลายแห่ง พร้อมระบบอัตโนมัติที่เปิดให้ทำรายการตลอด 24 ชั่วโมง เว็บไซต์ระบุค่าเฉลี่ยฝากประมาณ 30 วินาที และถอนราว 1-3 นาที แต่ไม่ใช่เวลารับประกัน หากเครดิตยังไม่เข้าให้ตรวจสถานะและสลิปก่อนโอนซ้ำ",
   },
   {
-    q: "ลืมรหัสผ่าน WINUP888 ต้องทำอย่างไรให้ปลอดภัย",
-    a: "หน้าเว็บมือถือมีเมนูสมัครสมาชิก เข้าสู่ระบบ และลืมรหัสผ่าน พร้อมช่องทางช่วยเหลือกรณีเข้าใช้งานบัญชีไม่ได้ ควรใช้ระบบกู้คืนบนเว็บไซต์โดยตรง ตั้งรหัสผ่านไม่ซ้ำกับบัญชีอื่น และไม่ส่งรหัสผ่านหรือ OTP ให้บุคคลอื่นไม่ว่ากรณีใด",
+    q: "สลิปการถอน PRODED888 ใช้ตรวจข้อมูลอะไร",
+    a: "สลิปการถอนใช้ตรวจยอด เวลา ช่องทางรับเงิน และหมายเลขอ้างอิงของรายการ ซึ่งเป็นข้อมูลสำคัญเมื่อสถานะถอนยังประมวลผลหรือยอดยังไม่เข้าบัญชี ระหว่างดำเนินการไม่ควรกดถอนซ้ำหรือเปลี่ยนบัญชีรับเงิน และควรเก็บสลิปกับเลขรายการไว้ให้ครบ เพราะหลักฐานหนึ่งภาพช่วยงานได้มากกว่าข้อความ เงินไม่เข้า สิบบรรทัด",
   },
   {
-    q: "ก่อนฝากถอนและยืนยันบัญชีผ่านมือถือควรเช็กอะไร",
-    a: "ควรตรวจยอด ช่องทาง บัญชีรับเงิน และสถานะรายการให้ครบ โดยเฉพาะชื่อบัญชีที่ควรตรงกับข้อมูลสมาชิกเพื่อป้องกันปัญหาในขั้นตอนตรวจสอบ หากรายการยังประมวลผลอยู่ไม่ควรกดซ้ำทันที เพราะธุรกรรมหนึ่งรายการอาจงอกเป็นสองรายการได้",
+    q: "ทางเข้าเว็บตรง PRODED888 ควรเช็กอะไรก่อนล็อกอิน",
+    a: "ผลค้นหามีหลายโดเมนใช้ชื่อ PRODED888 และนำเสนอโปรโมชั่นไม่เหมือนกัน ก่อนล็อกอินควรตรวจชื่อโดเมน HTTPS และที่มาของลิงก์ทุกครั้ง อย่าตัดสินจากโลโก้คล้ายเพียงอย่างเดียว หากเว็บขอให้ติดตั้งไฟล์ ส่งรหัสผ่านผ่านแชต หรือโอนไปบัญชีที่ไม่ตรงกับระบบ ให้หยุดตรวจสอบก่อน ความรีบเหมาะกับการโหลดหน้าเว็บ ไม่เหมาะกับการส่งข้อมูลสำคัญ",
   },
 ];
 
 const webPageSchema = {
   "@context": "https://schema.org",
   "@type": "WebPage",
-  name: "WINUP888",
+  name: "PRODED888",
   description: pageDescription,
   url: homePage + currentPath,
 };
 const webSiteSchema = {
   "@context": "https://schema.org",
   "@type": "WebSite",
-  name: "WINUP888",
-  alternateName: ["WINUP888", "WINUP888 คาสิโนบนมือถือ รวมสล็อต บาคาร่า และเกม Live สด 24 ชม."],
-  url: "https://winup888-brand.com/",
+  name: "PRODED888",
+  alternateName: ["PRODED888", "PRODED888 เว็บตรงสล็อต คืนยอดเสีย ฝากถอนออโต้ พร้อมโปรเด็ด"],
+  url: "https://proded888-brand.com/",
 };
 const orgSchema = {
   "@context": "https://schema.org",
   "@type": "Organization",
-  name: "WINUP888",
+  name: "PRODED888",
   logo: logoUrl,
   url: homePage,
 };
@@ -83,135 +82,172 @@ const allSchemas = orderForBrand([webPageSchema, orgSchema, webSiteSchema], Astr
   <script type="application/ld+json" set:html={JSON.stringify(allSchemas)} />
 
   <Announcement
-    message="💎 WINUP888 คาสิโนบนมือถือระบบ HTML5 รวมสล็อต PG Soft • Pragmatic Play • NetEnt • Betsoft พร้อมบาคาร่า รูเล็ต แบล็คแจ็ค และเกม Live สดจาก Evolution • SA Gaming เปิดให้เข้าเล่นตลอด 24 ชม."
+    message="👑 PRODED888 เว็บตรงสล็อต รวมสล็อต บาคาร่า คาสิโนสด กีฬา หวย ไก่ชน และโป๊กเกอร์ กว่า 1,000 เกมจาก PG Soft • JILI • Pragmatic Play • Evolution • Microgaming พร้อมคืนยอดเสีย VIP Gold 5% • VIP Diamond 10% และฝากถอนออโต้ 24 ชม."
   />
 
-  <ContentBoxCyberCut as="h1" title="WINUP888 คาสิโนบนมือถือ เล่นสล็อต บาคาร่า และเกม Live สดในระบบเดียว">
+  <ContentBoxPremium as="h1" title="PRODED888 เว็บตรงสล็อต รีวิวคืนยอดเสีย ฝากถอนออโต้ และโปรเด็ด">
     <div>
       <p>
-        <strong class="text-[#8a6410]">WINUP888</strong> จัดหน้าเกมให้รองรับการใช้งานผ่านมือถือและแท็บเล็ตด้วยระบบ HTML5 โดยรวมสล็อต บาคาร่า รูเล็ต แบล็คแจ็ค และเกม Live สดไว้ในหน้าเดียว
-        ผู้ใช้จึงเลือกเกมและจัดการบัญชีได้โดยไม่ต้องกลับไปเปิดคอมทุกครั้ง
+        <strong class="text-[#f0d68c]">PRODED888</strong> รวมสล็อต คาสิโนสด กีฬา หวย และไก่ชนไว้ในบัญชีเดียว พร้อมระบบฝากถอนออโต้ที่รองรับช่องทางการเงินของไทย
+        โดยข้อมูลต้นแบบระบุว่ามีเกมมากกว่า 1,000 รายการ
       </p>
       <p class="mt-3">
-        ภายในระบบยังมีเกมยอดนิยม เกมใหม่ รายการโปรด และเกมที่เพิ่งเล่น ช่วยลดเวลาค้นหาได้พอสมควร เกมมีให้เลือกเยอะเป็นเรื่องดี แต่อย่าเปิดทุกหมวดพร้อมกันจนมือถือทำงานหนักกว่าเจ้าของ
+        จุดขายหลักคือคืนยอดเสีย โบนัสต้อนรับ และสิทธิ์ตามระดับสมาชิก แต่โปรตัวใหญ่ไม่ได้แปลว่าเงื่อนไขตัวเล็กจะหายไป ควรตรวจยอดฝาก เทิร์น และเพดานถอนก่อนรับทุกครั้ง
       </p>
     </div>
-  </ContentBoxCyberCut>
+  </ContentBoxPremium>
 
-  <ContentBoxFloatingBadge as="h2" title="WINUP888บนมือถือใช้งานต่างจากหน้าเว็บบนคอมอย่างไร">
+  <ContentBoxNeumorphism as="h2" title="เว็บตรง PRODED888 วางเส้นทางฝาก เล่น ถอน และรับเงินคืนอย่างไร">
     <div>
-      <p>ระบบมือถือของ WINUP888 ใช้ HTML5 รองรับ Android, iOS และ Windows โดยเปิดผ่านเบราว์เซอร์ได้ พร้อมเมนูเกมและฟังก์ชันสมาชิกใกล้เคียงกับหน้าเว็บบนคอมพิวเตอร์</p>
-      <p class="mt-3">ข้อดีคือใช้งานได้สะดวกจากหลายอุปกรณ์ แต่ควรเลือกอินเทอร์เน็ตที่เสถียร โดยเฉพาะเกม Live สดและการทำธุรกรรม หน้าค้างตอนดูเกมยังพอทน หน้าค้างตอนกดยืนยันเงินนี่อีกเรื่อง</p>
+      <p>
+        เว็บตรง PRODED888 จัดขั้นตอนเป็นสมัคร ฝากเงิน เลือกเกม ถอนเงิน และรับสิทธิ์คืนยอดเสีย สมาชิกจึงเห็นลำดับการใช้งานชัด ไม่ต้องเดินหาเมนูเหมือนเล่นเกมล่าสมบัติ
+      </p>
+      <p class="mt-3">
+        คืนยอดเสียจะเกิดหลังมีรายการเล่นตามเงื่อนไข จึงต้องตรวจรอบคำนวณ เกมที่นับ และช่วงเวลากดรับก่อนเริ่ม ปุ่มยังอยู่ไม่ได้แปลว่าสิทธิ์ยังรอเสมอไป
+      </p>
     </div>
-  </ContentBoxFloatingBadge>
+  </ContentBoxNeumorphism>
 
-  <ContentBoxSevenThreeCyberCut titleright="สล็อต WINUP888 รวมค่ายอะไร และโหมดทดลองช่วยเลือกเกมได้แค่ไหน">
-    <div slot="left" class="flex h-full flex-col justify-center">
-      <Picture
-        src={imgSlots}
-        loading="lazy"
-        fetchpriority="low"
-        widths={[200, 400, 600, 800]}
-        sizes="(max-width: 768px) 100vw, 30vw"
-        decoding="async"
-        formats={["avif", "webp"]}
-        fallbackFormat="webp"
-        quality={80}
-        alt="ค่ายสล็อตที่แสดงบนหน้า WINUP888 เช่น PG Soft Pragmatic Play NetEnt และ Betsoft"
-        class="mx-auto h-auto w-full rounded-2xl border border-amber-600/25 shadow-[0_10px_30px_rgba(168,132,44,0.18)]"
-      />
-    </div>
-    <div slot="right">
-      <p>หน้าต้นแบบแสดงสล็อตจากหลายค่าย เช่น PG Soft, Pragmatic Play, Microgaming, NetEnt, Red Tiger, Betsoft และ Yggdrasil พร้อมเกมยอดนิยมและเกมใหม่ให้เลือกแยกหมวด</p>
-      <p class="mt-3">บางเกมมีโหมดทดลองสำหรับดูปุ่มเดิมพัน ฟีเจอร์ และจังหวะเกมก่อนใช้เงินจริง แต่ผลทดลองไม่ได้บอกว่าเกมจริงจะจ่ายเหมือนกัน โหมดนี้เอาไว้ศึกษาระบบ ไม่ใช่ดูดวงผ่านหน้าจอ</p>
-    </div>
-  </ContentBoxSevenThreeCyberCut>
-
-  <ProviderGrid />
-
-  <ContentBoxSevenThreeFloatingBadge title="บาคาร่าและเกม Live สด 24 ชม. มีอะไรให้เลือกบ้าง">
-    <div slot="left" class="flex h-full flex-col justify-center">
-      <Picture
-        src={imgLive}
-        loading="lazy"
-        fetchpriority="low"
-        widths={[200, 400, 600, 800]}
-        sizes="(max-width: 768px) 100vw, 30vw"
-        decoding="async"
-        formats={["avif", "webp"]}
-        fallbackFormat="webp"
-        quality={80}
-        alt="หมวดเกม Live สดของ WINUP888 ทั้งบาคาร่า รูเล็ต แบล็คแจ็ค และโต๊ะดีลเลอร์สด"
-        class="mx-auto h-auto w-full rounded-2xl border border-amber-600/25 shadow-[0_10px_30px_rgba(168,132,44,0.18)]"
-      />
-    </div>
-    <div slot="right">
-      <p>หมวดเกม Live สดมีทั้งบาคาร่า รูเล็ต และแบล็คแจ็คจากผู้ให้บริการหลายราย เช่น Evolution, SA Gaming, Sexy Gaming และ Pragmatic Play โดยแต่ละค่ายมีหน้าตาและรูปแบบโต๊ะต่างกัน</p>
-      <p class="mt-3">ก่อนเข้าเล่นควรดูขั้นต่ำโต๊ะ กติกา และรอบเดิมพันให้ครบ คำว่า Live สดช่วยให้บรรยากาศสมจริงขึ้น แต่ดีลเลอร์ยิ้มให้ไม่ได้แปลว่ารอบนั้นกำลังเข้าข้างเรา</p>
-    </div>
-  </ContentBoxSevenThreeFloatingBadge>
-
-  <ContentBox as="h2" title="เมนูยอดนิยม เกมใหม่ และเล่นล่าสุดช่วยหาเกมเร็วขึ้นอย่างไร">
+  <ContentBox as="h2" title="คืนยอดเสีย PRODED888 คิดจากยอดส่วนไหน">
     <div>
-      <p>เว็บตรง WINUP888 แยกเกมยอดนิยม เกมใหม่ล่าสุด รายการโปรด และเกมที่เพิ่งเล่น ทำให้สมาชิกกลับไปหาเกมเดิมหรือทดลองเกมใหม่ได้โดยไม่ต้องไล่ดูทุกหน้า</p>
-      <p class="mt-3">เมนูยอดนิยมช่วยดูเกมที่ถูกเลือกบ่อย ส่วนรายการล่าสุดช่วยประหยัดเวลาสำหรับคนจำชื่อเกมไม่ได้ ซึ่งถือว่ามีประโยชน์ เพราะบางชื่อยาวจนอ่านจบ เกมก็เกือบปิดรอบแล้ว</p>
+      <p>
+        ข้อมูลต้นแบบระบุสิทธิ์คืนยอดเสียตามระดับสมาชิก เช่น VIP Gold 5% และ VIP Diamond 10% แต่ต้องตรวจว่าคำนวณจากยอดเสียสุทธิหรือยอดเดิมพันที่ระบบรับรอง
+      </p>
+      <p class="mt-3">
+        อีกจุดที่ต้องดูคือเกมที่ร่วมรายการ เทิร์นของเครดิตคืน และเพดานรับต่อรอบ เปอร์เซ็นต์ดูง่าย แต่ฐานคำนวณต่างกัน ผลลัพธ์ก็เปลี่ยนทันที
+      </p>
     </div>
   </ContentBox>
 
-  <GameRankingBoard />
-
-  <ContentBoxSpecial as="h2" title="บาคาร่า รูเล็ต และแบล็คแจ็คต่างกันตรงไหน">
-    <div slot="left" class="min-w-0 flex-1">
-      <p>บาคาร่าเน้นเลือกฝั่งผู้เล่น เจ้ามือ หรือเสมอ ส่วนรูเล็ตเลือกหมายเลข สี หรือกลุ่มตัวเลข ขณะที่แบล็คแจ็คใช้การตัดสินใจจากแต้มไพ่และการจั่วเพิ่ม</p>
+  <ContentBoxPremium as="h2" title="โปรเด็ด โบนัสต้อนรับ และคืนยอดเสีย ใช้ร่วมกันได้หรือไม่">
+    <div>
+      <p>
+        เว็บต้นแบบนำเสนอทั้งโบนัสต้อนรับสูงสุด 100% โบนัสฝากรายวัน คืนยอดเสีย และสิทธิ์ VIP แต่แต่ละโปรมีเงื่อนไขแยก ไม่ได้จับมือเดินเข้าบัญชีพร้อมกันทุกตัว
+      </p>
+      <p class="mt-3">
+        ก่อนรับให้เช็กยอดฝาก เทิร์น เกมที่นับ เพดานถอน และสิทธิ์ซ้อนโปร บางโบนัสเพิ่มทุนแต่ตัดแคชแบ็ก โปรไม่ใช่บุฟเฟต์ ตักครบทุกถาดอาจคิดเงินคนละราคา
+      </p>
     </div>
-    <div slot="right" class="min-w-0 flex-1">
-      <p>แม้อยู่ในหมวดคาสิโนสดเหมือนกัน แต่วิธีเล่นและความเสี่ยงไม่เหมือนกัน ควรอ่านกติกาของแต่ละเวอร์ชันก่อนเข้าโต๊ะ ไม่ใช่เห็นโต๊ะสีสวยแล้วฝากชะตาไว้กับปุ่มแรกที่เจอ</p>
-    </div>
-  </ContentBoxSpecial>
+  </ContentBoxPremium>
 
-  <ContentBoxTwoCyberCut titleleft="สมัคร WINUP888 ล็อกอิน และลืมรหัสผ่านผ่านมือถือทำอย่างไร" titleright="ฝากถอนและยืนยันบัญชีผ่านมือถือควรเช็กอะไร">
-    <div slot="left">
-      <p>หน้าเว็บมือถือมีเมนู สมัครสมาชิก WINUP888 เข้าสู่ระบบ และลืมรหัสผ่าน พร้อมช่องทางช่วยเหลือสำหรับกรณีที่เข้าใช้งานบัญชีไม่ได้ ผู้สมัครควรใช้ข้อมูลที่ตรวจสอบได้และตั้งรหัสผ่านไม่ซ้ำกับบัญชีอื่น</p>
-      <p class="mt-3">หากลืมรหัสควรใช้ระบบกู้คืนบนเว็บไซต์โดยตรง ไม่ส่งรหัสผ่านหรือ OTP ให้บุคคลอื่น เลข 888 อาจดูมงคล แต่ไม่ได้ช่วยป้องกันบัญชีหากตั้งรหัสเป็น 123456</p>
+  <ContentBoxSevenThreePremium titleright="สล็อต คาสิโนสด และกีฬาใน PRODED888 นับคืนยอดเสียเหมือนกันหรือไม่">
+    <div slot="left" class="flex h-full flex-col justify-center">
+      <Picture
+        src={imgProviders}
+        loading="lazy"
+        fetchpriority="low"
+        widths={[200, 400, 600, 800]}
+        sizes="(max-width: 768px) 100vw, 30vw"
+        decoding="async"
+        formats={["avif", "webp"]}
+        fallbackFormat="webp"
+        quality={80}
+        alt="ค่ายเกมที่แสดงบนหน้า PRODED888 เช่น PG Soft JILI Pragmatic Play Evolution และ Microgaming"
+        class="mx-auto h-auto w-full rounded-2xl border border-[#e2c05f]/25 shadow-[0_10px_30px_rgba(226,192,95,0.18)]"
+      />
     </div>
     <div slot="right">
-      <p>ก่อนฝากหรือถอนเงินควรตรวจยอด ช่องทาง บัญชีรับเงิน และสถานะรายการให้ครบ โดยเฉพาะชื่อบัญชีที่ควรตรงกับข้อมูลสมาชิก เพื่อป้องกันปัญหาในขั้นตอนตรวจสอบ</p>
-      <p class="mt-3">หากรายการยังประมวลผลอยู่ ไม่ควรกดซ้ำทันที เพราะธุรกรรมหนึ่งรายการอาจงอกเป็นสองรายการได้ ความเร็วเป็นเรื่องดี แต่ความรีบมักชวนฝ่ายบริการลูกค้ามาทำงานเพิ่ม</p>
+      <p>
+        PRODED888 รวมสล็อต บาคาร่า คาสิโนสด กีฬา หวย ไก่ชน และโป๊กเกอร์ พร้อมค่ายอย่าง PG Soft, JILI, Pragmatic Play, Evolution และ Microgaming ไว้ในระบบเดียว
+      </p>
+      <p class="mt-3">
+        อย่างไรก็ตาม แต่ละหมวดอาจนับยอดคืนต่างกัน สล็อตมักอิงยอดหมุน คาสิโนอาจยกเว้นบางโต๊ะ ส่วนกีฬามักรอบิลตัดสินผล ใช้บัญชีเดียวกัน แต่กติกาไม่ได้เป็นฝาแฝด
+      </p>
     </div>
-  </ContentBoxTwoCyberCut>
+  </ContentBoxSevenThreePremium>
 
-  <LoginRtpSection />
+  <ProviderGrid />
+
+  <GameRankingBoard />
+
+  <ContentBoxSevenThreeNeumorphism titleright="ฝากถอนออโต้ PRODED888 รองรับช่องทางใดบ้าง">
+    <div slot="left" class="flex h-full flex-col justify-center">
+      <Picture
+        src={imgAuto}
+        loading="lazy"
+        fetchpriority="low"
+        widths={[200, 400, 600, 800]}
+        sizes="(max-width: 768px) 100vw, 30vw"
+        decoding="async"
+        formats={["avif", "webp"]}
+        fallbackFormat="webp"
+        quality={80}
+        alt="ช่องทางฝากถอนออโต้ของ PRODED888 ทั้ง PromptPay TrueMoney Wallet และระบบอัตโนมัติ 24 ชั่วโมง"
+        class="mx-auto h-auto w-full rounded-2xl border border-[#e2c05f]/25 shadow-[0_10px_30px_rgba(226,192,95,0.18)]"
+      />
+    </div>
+    <div slot="right">
+      <p>
+        ข้อมูลต้นแบบระบุว่ารองรับ PromptPay, TrueMoney Wallet, K PLUS, SCB Easy และธนาคารไทยหลายแห่ง พร้อมระบบอัตโนมัติที่เปิดให้ทำรายการตลอด 24 ชั่วโมง
+      </p>
+      <p class="mt-3">
+        เว็บไซต์ระบุค่าเฉลี่ยฝากประมาณ 30 วินาที และถอนราว 1–3 นาที แต่ไม่ใช่เวลารับประกัน หากเครดิตยังไม่เข้า ให้ตรวจสถานะและสลิปก่อนโอนซ้ำ
+      </p>
+    </div>
+  </ContentBoxSevenThreeNeumorphism>
 
   <LatestWinners />
 
-  <div class="mx-auto mb-10 flex flex-nowrap justify-center gap-3 px-4 sm:gap-6">
+  <ContentBoxTwoPremium titleleft="สลิปการถอน PRODED888 ใช้ตรวจข้อมูลอะไร" titleright="สมัครสมาชิก PRODED888 ต้องเตรียมข้อมูลอะไร">
+    <div slot="left">
+      <p>
+        สลิปการถอนใช้ตรวจยอด เวลา ช่องทางรับเงิน และหมายเลขอ้างอิงของรายการ ซึ่งเป็นข้อมูลสำคัญเมื่อสถานะถอนยังประมวลผลหรือยอดยังไม่เข้าบัญชี
+      </p>
+      <p class="mt-3">
+        ไม่ควรกดถอนซ้ำหรือเปลี่ยนบัญชีระหว่างดำเนินการ เก็บสลิปและเลขรายการไว้ให้ครบ เพราะหลักฐานหนึ่งภาพช่วยงานได้มากกว่าข้อความ “เงินไม่เข้า” สิบบรรทัด
+      </p>
+    </div>
+    <div slot="right">
+      <p>
+        ข้อมูลต้นแบบระบุว่าการสมัครใช้ชื่อ นามสกุล เบอร์โทรศัพท์ และรหัสผ่าน โดยแบ่งขั้นตอนเป็นสมัคร เข้าระบบ ฝากเงิน และเริ่มใช้งาน พร้อมกล่าวว่าใช้เวลาไม่ถึง 2 นาที
+      </p>
+      <p class="mt-3">
+        ควรใช้เบอร์ที่รับข้อความได้จริงและตั้งรหัสผ่านไม่ซ้ำกับบัญชีอื่น ห้ามส่ง OTP หรือรหัสลับให้ใคร สมัครเร็วมีประโยชน์ แต่บัญชีหายเร็วกว่านั้นไม่ค่อยน่าประทับใจ
+      </p>
+    </div>
+  </ContentBoxTwoPremium>
+
+  <LoginRtpSection />
+
+  <ContentBoxNeumorphism as="h2" title="ทางเข้าเว็บตรง PRODED888 ควรเช็กอะไรก่อนล็อกอิน">
+    <div>
+      <p>
+        ผลค้นหามีหลายโดเมนใช้ชื่อ PRODED888 และนำเสนอโปรโมชั่นไม่เหมือนกัน ก่อนล็อกอินควรตรวจชื่อโดเมน HTTPS และที่มาของลิงก์ทุกครั้ง อย่าตัดสินจากโลโก้คล้ายเพียงอย่างเดียว
+      </p>
+      <p class="mt-3">
+        หากเว็บขอให้ติดตั้งไฟล์ ส่งรหัสผ่านผ่านแชต หรือโอนไปบัญชีที่ไม่ตรงกับระบบ ให้หยุดตรวจสอบก่อน ความรีบเหมาะกับการโหลดหน้าเว็บ ไม่เหมาะกับการส่งข้อมูลสำคัญ
+      </p>
+    </div>
+  </ContentBoxNeumorphism>
+
+  <div class="relative z-10 mx-auto mb-10 flex flex-nowrap justify-center gap-3 px-4 sm:gap-6">
     <a
       href="/login"
-      class="group relative flex flex-1 items-center justify-center rounded-full bg-gradient-to-r from-[#f4dfa3] via-[#d9b45c] to-[#a97f2a] px-4 py-3 text-sm font-black whitespace-nowrap text-[#231a06] shadow-[0_10px_30px_rgba(168,132,44,0.18)] transition-all duration-300 hover:-translate-y-1 hover:scale-105 hover:shadow-[0_15px_40px_rgba(168,132,44,0.30)] sm:flex-none sm:px-10 sm:py-3.5 sm:text-base">
+      class="group relative flex flex-1 items-center justify-center rounded-full bg-gradient-to-r from-[#f7e3a4] via-[#e2c05f] to-[#c39a34] px-4 py-3 text-sm font-black whitespace-nowrap text-[#0a1024] shadow-[0_10px_30px_rgba(226,192,95,0.24)] transition-all duration-300 hover:-translate-y-1 hover:scale-105 hover:shadow-[0_15px_40px_rgba(226,192,95,0.36)] sm:flex-none sm:px-10 sm:py-3.5 sm:text-base">
       เข้าสู่ระบบ
     </a>
 
     <a
       href="/register"
-      class="group relative flex flex-1 items-center justify-center rounded-full border border-[#c9a227]/60 bg-[#fffdf7] px-4 py-3 text-sm font-black whitespace-nowrap text-[#8a6410] backdrop-blur-sm transition-all duration-300 hover:scale-105 hover:border-amber-600/50 hover:bg-[#faf4e6] hover:shadow-[0_15px_40px_rgba(168,132,44,0.30)] sm:flex-none sm:px-10 sm:py-3.5 sm:text-base">
+      class="group relative flex flex-1 items-center justify-center rounded-full border border-[#e2c05f]/60 bg-[#111c45]/85 px-4 py-3 text-sm font-black whitespace-nowrap text-[#f0d68c] backdrop-blur-sm transition-all duration-300 hover:scale-105 hover:border-[#e2c05f] hover:bg-[#16224f] hover:shadow-[0_15px_40px_rgba(30,47,116,0.45)] sm:flex-none sm:px-10 sm:py-3.5 sm:text-base">
       สมัครสมาชิก
     </a>
   </div>
 
-  <SmoothCarousel />
-
-  <ContentBoxCyberCut as="h2" title="สรุป WINUP888 เหมาะกับผู้ใช้งานแบบไหน">
+  <ContentBoxPremium as="h2" title="สรุป PRODED888 เด่นที่เว็บตรงสล็อตหรือโปรคืนยอดเสีย">
     <div>
       <p>
-        <strong class="text-[#8a6410]">WINUP888</strong> เหมาะกับผู้ที่ต้องการเข้าถึงสล็อต บาคาร่า และเกม Live สดผ่านมือถือ พร้อมเมนูค้นหาเกม รายการโปรด โหมดทดลอง และฟังก์ชันสมาชิกในระบบเดียว
+        <strong class="text-[#f0d68c]">PRODED888</strong> เด่นจากการรวมเกมหลายหมวด ระบบฝากถอนออโต้ โบนัสสมาชิก และคืนยอดเสียไว้ในบัญชีเดียว ทำให้ผู้ใช้จัดการเกมและสิทธิ์ได้โดยไม่ต้องสลับหลายระบบ
       </p>
       <p class="mt-3">
-        จุดสำคัญคือเลือกเกมให้ตรงกับความสนใจ ตรวจขั้นต่ำและกติกาก่อนเริ่ม รวมถึงใช้อินเทอร์เน็ตที่เสถียร มือถือช่วยให้เข้าเกมได้ง่ายขึ้น แต่อย่าให้ความง่ายพานิ้วกดเร็วกว่าสมองคิด
+        ความคุ้มต้องวัดจากฐานคำนวณ เทิร์น เกมที่ร่วมรายการ และเพดานถอน ไม่ใช่ดูเปอร์เซ็นต์อย่างเดียว โปรที่ดีควรเพิ่มทางเลือก ไม่ใช่เพิ่มการบ้านหลังเล่นจบ
       </p>
     </div>
-  </ContentBoxCyberCut>
+  </ContentBoxPremium>
 
-  <Faq title="คำถามที่พบบ่อยเกี่ยวกับ WINUP888" faqs={faqs} />
+  <SmoothCarousel />
+
+  <Faq title="คำถามที่พบบ่อยเกี่ยวกับ PRODED888" faqs={faqs} />
 
   <ReviewCardSumo2 />
 
