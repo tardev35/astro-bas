@@ -28,7 +28,11 @@ export default defineConfig({
       // Search Console reports it as "Submitted URL marked noindex". These
       // three are also the only pages carrying the affiliate and LINE short
       // links, so there is nothing here to gain from the crawl either.
-      filter: (page) => !/\/(login|register|line)\/?$/.test(page),
+      // Match against the pathname, anchored at the front. The old form tested
+      // the whole URL unanchored, so a future page whose path merely ENDED in
+      // one of these words — /promotion/login, say — would have been dropped
+      // from the sitemap silently.
+      filter: (page) => !/^\/(login|register|line)\/?$/.test(new URL(page).pathname),
     }),
   ],
 });

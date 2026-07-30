@@ -94,3 +94,78 @@ body {
   font-display: swap;
   src: url('/fonts/kanit-v17-latin_thai-700.woff2') format('woff2');
 }
+
+/* ── กฎ 3 ข้อข้างล่างนี้อยู่ตรงนี้โดยตั้งใจ ───────────────────────────────────
+   ไฟล์นี้เป็นหนึ่งในไม่กี่ไฟล์ที่การรีแบรนด์ไม่เขียนทับ ส่วน component ใน
+   src/components/ ถูกสลับตัวและ retheme ใหม่ทุกรอบ (รอบละ ~19 จาก 82 ไฟล์
+   และเดาไม่ได้ว่าตัวไหน) กฎที่ต้องมีผลกับ "ทุก component ทุกแบรนด์ตลอดไป"
+   จึงต้องเขียนที่นี่ ไม่ใช่ไปไล่ใส่ทีละไฟล์ — ใส่ในไฟล์ที่ถูกทับแล้วมันหาย
+   ภายในไม่กี่ชั่วโมง */
+
+/* ── 1. เคารพ prefers-reduced-motion ──────────────────────────────────────
+   เว็บนี้มีอนิเมชันวนไม่รู้จบหลายจุดพร้อมกัน: ticker ประกาศเลื่อนแนวนอน,
+   สไลด์ที่เลื่อนตลอดเวลา, จุด live ที่ pulse, spinner ในหน้า forwarder —
+   ไม่มีจุดไหนหยุดได้เลย ซึ่งเป็นปัญหาจริงกับคนที่มีอาการเวียนศีรษะจากการ
+   เคลื่อนไหว (vestibular disorder) และผิด WCAG 2.2.2
+
+   ใช้ 0.01ms แทน `none` เพราะอนิเมชันบางตัวพึ่ง event animationend/transitionend
+   ในการทำงานต่อ ถ้าตัดทิ้งทั้งหมด event จะไม่ยิงและ UI ค้างได้ */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
+
+/* ── 2. focus ring ที่มองเห็นได้จริง ───────────────────────────────────────
+   ก่อนหน้านี้ทั้งโปรเจกต์ไม่มี :focus-visible สักที่เดียว คนที่ใช้คีย์บอร์ด
+   อย่างเดียวจึงไล่ Tab แล้วไม่รู้ว่าตัวเองอยู่ตรงไหน
+
+   ทำไมเป็นขาว + halo ดำ ไม่ใช่สีแบรนด์: สีหลักของแต่ละแบรนด์เปลี่ยนทุกรอบ
+   (ทอง/แดง/น้ำเงิน/ไอวอรี) วงแหวนสีแบรนด์จะกลืนกับปุ่มสีแบรนด์เอง คู่
+   ขาว-บน-ดำอ่านออกทั้งบนพื้นเข้มและบนปุ่มทองโดยไม่ต้องรู้ว่าแบรนด์นี้สีอะไร
+
+   ไม่ใช้ :where() เพราะต้องชนะ utility `outline-none` ที่ component เขียนไว้
+   (ตอนนี้มีที่ input ของฟอร์ม login) — :where() มี specificity 0 จะแพ้ */
+a:focus-visible,
+button:focus-visible,
+input:focus-visible,
+select:focus-visible,
+textarea:focus-visible,
+summary:focus-visible,
+[tabindex]:focus-visible {
+  outline: 2px solid #ffffff !important;
+  outline-offset: 2px;
+  box-shadow: 0 0 0 4px rgba(0, 0, 0, 0.75);
+}
+
+/* ── 3. หัวข้อ gradient ต้องไม่หายไปเฉยๆ ──────────────────────────────────
+   หัวข้อแทบทุกตัวในเว็บใช้คู่ bg-clip-text + text-transparent (สีมาจากพื้นหลัง
+   ที่ถูก clip เป็นรูปตัวอักษร) เท่ากับตัวอักษรจริงๆ โปร่งใส 100%
+
+   ผลคือในโหมด High Contrast ของ Windows หรือตอนสั่งพิมพ์ ที่เบราว์เซอร์
+   ตัดภาพพื้นหลังออก ตัวอักษรจะไม่เหลืออะไรให้เห็นเลย — ทั้ง h1 และ h2 ทุกตัว
+   บนหน้าหายหมด ไม่ใช่แค่จางลง
+
+   กฎนี้ครอบทั้ง 82 component และทุกหัวข้อที่จะเขียนใหม่ในอนาคตด้วย */
+@media (forced-colors: active) {
+  .bg-clip-text,
+  .text-transparent {
+    background-image: none !important;
+    -webkit-text-fill-color: currentColor !important;
+    color: CanvasText !important;
+  }
+}
+
+@media print {
+  .bg-clip-text,
+  .text-transparent {
+    background-image: none !important;
+    -webkit-text-fill-color: currentColor !important;
+    color: #000 !important;
+  }
+}
