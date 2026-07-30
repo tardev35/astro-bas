@@ -345,7 +345,11 @@ for (const file of pages) {
 
   const inlineStyle = (html.match(/<style[^>]*>[\s\S]*?<\/style>/g) || []).join("").length;
   if (inlineStyle > INLINE_STYLE_MAX) {
-    warn(where, `${inlineStyle.toLocaleString()} bytes of inline <style> (limit ${INLINE_STYLE_MAX.toLocaleString()})`, "4");
+    error(
+      where,
+      `${inlineStyle.toLocaleString()} bytes of inline <style> (limit ${INLINE_STYLE_MAX.toLocaleString()}) — ` +
+        `check build.inlineStylesheets in astro.config.mjs is not back to "always"`,
+    );
   }
 
   for (const m of html.matchAll(/\son(click|load|error|mouse[a-z]+|key[a-z]+|focus|blur)="/gi)) {

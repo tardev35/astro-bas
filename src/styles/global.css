@@ -1,5 +1,11 @@
 @import "tailwindcss";
 
+/* รายการ @source not ที่ generate ใหม่ทุกครั้งที่ build (ดู tools/gen-tw-sources.mjs)
+   บอก Tailwind ว่า component ตัวไหนใน src/components/ ที่แบรนด์นี้ไม่ได้ render
+   — สีที่ hardcode อยู่ในของสำรองสำหรับแบรนด์หน้าจะได้ไม่ติดมาใน stylesheet รอบนี้
+   ไฟล์นั้นถูก commit ไว้ด้วย ถ้า generator พังจะได้ไฟล์เปล่า = พฤติกรรมเดิม */
+@import "./_sources.generated.css";
+
 /* global.css */
 
 /* ทำให้ฟอนต์ของแบรนด์เป็นฟอนต์ global จริงๆ:

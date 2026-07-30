@@ -3,7 +3,9 @@
   "type": "module",
   "version": "0.0.1",
   "scripts": {
+    "predev": "node tools/gen-tw-sources.mjs",
     "dev": "astro dev --host 127.0.0.1 --port 8888",
+    "prebuild": "node tools/gen-tw-sources.mjs",
     "build": "astro build",
     "postbuild": "node tools/verify-build.mjs",
     "verify": "node tools/verify-build.mjs",

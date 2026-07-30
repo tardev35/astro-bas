@@ -976,6 +976,32 @@ This matters beyond bookkeeping: "rendered vs inventory" decides which
 files get the retheme, and mislabelling a live component as inventory
 ships the previous brand's colours to production.
 
+### Two files the build generates — leave both alone
+
+**`src/styles/_sources.generated.css`** is rewritten by `tools/gen-tw-sources.mjs`
+on every `npm run build` and `npm run dev` (npm's `prebuild`/`predev` hooks run
+it; you never invoke it yourself). It lists the components in `src/components/`
+that nothing reachable from `src/pages` or `src/layouts` renders, as
+`@source not` lines, so Tailwind stops turning the inventory's hardcoded colours
+into utility classes. Measured on UFAG8: 63 of 82 components excluded, and the
+stylesheet went from 227 kB to 79 kB.
+
+It is committed, and **it will show up in `git status` after almost every
+rebrand** — because switching which navbar/footer/announcement is active changes
+which components are reachable. That diff is correct and expected. Do not edit
+the file, and do not "fix" it back.
+
+The generator's failure mode is deliberately one-way: if anything goes wrong it
+writes an empty list, which restores Tailwind's scan-everything default. The
+worst case is a stylesheet as big as it used to be, never a missing style.
+
+**Do not add a `<style>` block containing only
+`.font-sans { font-family: var(--font-sans) }`.** Tailwind already generates
+that exact rule from the `--font-sans` theme variable, so the block changes
+nothing visually — but its presence makes Astro stamp a `data-astro-cid-*`
+attribute onto every element the component renders. 43 components carried that
+dead block; removing it dropped 502 attributes from the homepage to 114.
+
 ### Structured data — call the builder, never write JSON-LD by hand
 
 Every indexable page gets its JSON-LD from `pageGraph()` in
