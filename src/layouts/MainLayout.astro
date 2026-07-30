@@ -5,8 +5,8 @@ import bgConfig from "../assets/bg.json";
 import ogImage from "../assets/slide1.png";
 import "../styles/global.css";
 import { brandProfile, fontStack, usesGoogleFonts } from "../lib/brandProfile";
-import Navbar from "../components/NavbarStyle2.astro";
-import Footer from "../components/FooterPremiumSumo.astro";
+import Navbar from "../components/NavbarStyle11.astro";
+import Footer from "../components/FooterStyle3.astro";
 
 const bannerImages = import.meta.glob<{ default: ImageMetadata }>("../assets/banner*.{png,webp,jpg,jpeg}", { eager: true });
 const bannerPaths = Object.keys(bannerImages);
@@ -16,8 +16,8 @@ const mainBannerPath = preferredBannerPath ?? webpBannerPath ?? bannerPaths[0];
 const mainBanner = mainBannerPath ? bannerImages[mainBannerPath].default : null;
 
 const {
-  title = "SUDYOD888 รีวิวเกมสล็อต โบนัสสูงสุด 400% ฝากถอนออโต้",
-  description = "SUDYOD888 รีวิวเกมสล็อตมากกว่า 200 รายการ โบนัสสูงสุด 400% ฝากถอนออโต้ คืนยอดเสียรายสัปดาห์ ระบบแนะนำเพื่อน สมัครง่ายทุกขั้นตอน",
+  title = "UFAG8 เว็บกีฬา แทงบอลออนไลน์ รวมตลาดบอลและเกมหลายประเภท",
+  description = "รีวิว UFAG8 เว็บกีฬาและแทงบอลออนไลน์ ตั้งแต่ตลาดเดิมพัน การดูราคาบอล สมัครด้วยเบอร์โทร เข้าสู่ระบบ และจุดที่ควรเช็กก่อนยืนยันบิล",
   robots = "index, follow",
   ImageOg = ogImage.src,
 } = Astro.props;
@@ -28,7 +28,7 @@ const bgCss = bgMode === "color" ? `background-color:${(bgConfig as { color?: st
 const currentPath = Astro.url.pathname;
 const canonicalURL = new URL(currentPath, Astro.site);
 const ogImageURL = new URL(ImageOg, Astro.site);
-const ogSiteName = "SUDYOD888";
+const ogSiteName = "UFAG8";
 
 const profile = brandProfile(Astro.site);
 
@@ -75,7 +75,7 @@ const profile = brandProfile(Astro.site);
 
           {block === "appmeta" && (
             <Fragment>
-              {profile.showAppTitle && <meta name="apple-mobile-web-app-title" content="sudyod888" />}
+              {profile.showAppTitle && <meta name="apple-mobile-web-app-title" content="ufag8" />}
               <link rel="manifest" href="/site.webmanifest" />
             </Fragment>
           )}
@@ -117,7 +117,7 @@ const profile = brandProfile(Astro.site);
         background-attachment: fixed;
         background-repeat: no-repeat;
         margin: 0;
-        background-color: #080503;
+        background-color: #0a0a09;
         font-weight: 400;
         font-family: var(--font-sans) !important;
       }
@@ -148,7 +148,7 @@ const profile = brandProfile(Astro.site);
     <div class="mb-2.5 flex w-full items-center justify-center">
       <Image
         src={mainBanner!}
-        alt="SUDYOD888 รีวิวเกมสล็อต โบนัสสูงสุด 400% ฝากถอนออโต้ รวมสล็อต เกมยิงปลา และคาสิโนสดกว่า 200 เกมในบัญชีเดียว"
+        alt="UFAG8 เว็บกีฬา แทงบอลออนไลน์ รวมตลาดเดิมพัน ราคาบอล บอลสด บิลเดี่ยวและบิลสเต็ปไว้ในบัญชีเดียว"
         loading="eager"
         fetchpriority="high"
         widths={[412, 768, 1900]}

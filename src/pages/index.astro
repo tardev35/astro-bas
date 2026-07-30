@@ -1,81 +1,78 @@
 ---
 import MainLayout from "../layouts/MainLayout.astro";
-import Announcement from "../components/Announcement5.astro";
+import Announcement from "../components/Announcement6.astro";
 import ContentBox from "../components/ContentBox.astro";
-import ContentBoxCyberCut from "../components/ContentBoxCyberCut.astro";
-import ContentBoxFloatingBadge from "../components/ContentBoxFloatingBadge.astro";
+import ContentBoxPremium from "../components/ContentBoxPremium.astro";
+import ContentBoxNeumorphism from "../components/ContentBoxNeumorphism.astro";
 import ContentBoxSpecial from "../components/ContentBoxSpecial.astro";
-import ContentBoxTwoCyberCut from "../components/ContentBoxTwoCyberCut.astro";
-import ContentBoxSevenThreeCyberCut from "../components/ContentBoxSevenThreeCyberCut.astro";
-import ContentBoxSevenThreeFloatingBadge from "../components/ContentBoxSevenThreeFloatingBadge.astro";
+import ContentBoxSevenThreePremium from "../components/ContentBoxSevenThreePremium.astro";
+import ContentBoxSevenThreeNeumorphism from "../components/ContentBoxSevenThreeNeumorphism.astro";
 import LoginRtpSection from "../components/LoginRtpSection.astro";
 import ProviderGrid from "../components/ProviderGrid.astro";
 import GameRankingBoard from "../components/GameRankingBoard.astro";
 import ReviewCardSumo2 from "../components/ReviewCardSumo2.astro";
-import LatestWinners from "../components/LatestWinnersPremium.astro";
+import LatestWinners from "../components/LatestWinnersCyber.astro";
 import SmoothCarousel from "../components/SmoothCarousel.astro";
-import Faq from "../components/Faq3.astro";
+import Faq from "../components/Faq2.astro";
 import Navfoot from "../components/Navfoot.astro";
 
 import { Picture } from "astro:assets";
 import { orderForBrand } from "../lib/brandProfile";
-import imgGames from "../assets/slide3.png";
-import imgBonus from "../assets/slide2.png";
+import imgMarkets from "../assets/slide3.png";
+import imgOdds from "../assets/slide2.png";
 
 const currentPath = Astro.url.pathname;
 const homePage = Astro.url.origin;
 const logoUrl = homePage + "/logo.webp";
 
-const pageTitle = "SUDYOD888 รีวิวเกมสล็อต โบนัสสูงสุด 400% ฝากถอนออโต้";
+const pageTitle = "UFAG8 เว็บกีฬา แทงบอลออนไลน์ รวมตลาดบอลและเกมหลายประเภท";
 const pageDescription =
-  "SUDYOD888 รีวิวเกมสล็อตมากกว่า 200 รายการ โบนัสสูงสุด 400% ฝากถอนออโต้ คืนยอดเสียรายสัปดาห์ ระบบแนะนำเพื่อน สมัครง่ายทุกขั้นตอน";
+  "รีวิว UFAG8 เว็บกีฬาและแทงบอลออนไลน์ ตั้งแต่ตลาดเดิมพัน การดูราคาบอล สมัครด้วยเบอร์โทร เข้าสู่ระบบ และจุดที่ควรเช็กก่อนยืนยันบิล";
 
 const faqs = [
   {
-    q: "SUDYOD888 มีเกมอะไรอยู่ในบัญชีเดียวบ้าง",
-    a: "ภายใน SUDYOD888 มีเกมมากกว่า 200 รายการ ครอบคลุมสล็อต เกมยิงปลา และคาสิโนสด ผู้ใช้จึงเลือกเล่นหลายรูปแบบผ่านบัญชีเดียว โดยไม่ต้องจำชื่อผู้ใช้หลายชุด แต่ละหมวดมีจังหวะและกติกาต่างกัน สล็อตเน้นฟีเจอร์และรอบเกม คาสิโนสดเน้นกติกาโต๊ะ ส่วนเกมยิงปลาต้องเลือกเป้าหมายให้เหมาะ จึงควรดูรายละเอียดก่อนใช้เครดิตจริง",
+    q: "ตลาดเดิมพันฟุตบอลของ UFAG8 มีอะไรบ้าง และต้องอ่านตรงไหนก่อนกดบิล",
+    a: "ตลาดฟุตบอลทั่วไปมีทั้งแฮนดิแคป สูง–ต่ำ และ 1X2 ซึ่งใช้เงื่อนไขตัดสินต่างกัน ผู้ใช้ควรดูทั้งราคา ฝั่งเดิมพัน และประเภทตลาดก่อนยืนยันรายการ ราคาบอลยังเปลี่ยนได้ตามเวลา ข่าวผู้เล่น และสถานการณ์ก่อนแข่ง เห็นราคาแล้ววางทิ้งไว้นาน พอกดจริงอาจไม่ใช่เลขเดิม ราคาไม่ได้หนีเรา แค่มันไม่เคยหยุดเดิน",
   },
   {
-    q: "โบนัสสูงสุด 400% ของ SUDYOD888 คุ้มแค่ไหน",
-    a: "คำว่า “สูงสุด” หมายถึงแต่ละโปรโมชั่นอาจให้เครดิตไม่เท่ากัน สมาชิกควรตรวจยอดฝากที่ร่วมรายการ จำนวนเทิร์น และเกมที่ใช้โบนัสได้ ตัวเลขใหญ่ช่วยเพิ่มเครดิตได้จริง แต่เงื่อนไขถอนต่างหากที่บอกว่าคุ้มหรือไม่ เลือกโปรที่เล่นจบตามกำลัง ดีกว่ารับเยอะแล้วเครดิตนั่งพักยาวอยู่ในบัญชี",
+    q: "แทงบอลก่อนแข่งกับบอลสดบน UFAG8 ต่างกันอย่างไร",
+    a: "บอลก่อนแข่งมีเวลาให้ตรวจฟอร์ม รายชื่อผู้เล่น และสถิติย้อนหลัง ส่วนบอลสดราคาจะขยับตามสกอร์ เวลา ใบแดง และจังหวะในสนาม บอลสดจึงต้องตัดสินใจเร็วกว่า แต่เร็วไม่เท่ากับรีบ ควรดูสถานการณ์ให้ทันก่อนกด เพราะบางทีบอลกำลังบุกจริง แต่ราคาวิ่งหนีไปก่อนแล้ว",
   },
   {
-    q: "ฝากถอนออโต้ SUDYOD888 มีขั้นต่ำและเพดานเท่าไร",
-    a: "ระบบฝากรองรับการทำรายการผ่าน Mobile Banking และ True Wallet โดยเลือกยอด แล้วฝากผ่านบัญชีหรือ QR ที่ระบบแสดง และควรใช้บัญชีชื่อเดียวกับข้อมูลที่สมัครไว้ ส่วนการถอน เว็บไซต์ต้นแบบกำหนดขั้นต่ำ 100 บาท และไม่เกิน 49,000 บาทต่อรายการ ระยะเวลาจริงอาจเปลี่ยนตามธนาคารและสถานะระบบ ดังนั้นคำว่าออโต้ไม่ได้แปลว่าทุกครั้งจะเร็วเท่ากันเป๊ะ",
+    q: "บิลเดี่ยวและบิลสเต็ปของ UFAG8 ควรเลือกแบบไหน",
+    a: "บิลเดี่ยวผูกผลไว้กับการแข่งขันหนึ่งคู่ จึงตรวจตลาดและเงื่อนไขได้ง่ายกว่า ส่วนบิลสเต็ปรวมหลายคู่ไว้ในรายการเดียว โดยทุกคู่ต้องผ่านตามที่เลือก ก่อนส่งบิลสเต็ปควรตรวจจำนวนคู่ ราคา และวันแข่งขันให้ครบ เพราะผิดเพียงคู่เดียวอาจกระทบทั้งบิล เพิ่มคู่ไม่ได้แปลว่าเพิ่มความแม่น บางครั้งแค่เพิ่มงานลุ้น",
   },
   {
-    q: "คืนยอดเสีย SUDYOD888 กดรับได้ตอนไหน",
-    a: "คืนยอดเสียคำนวณจากผลได้และเสียในรอบที่กำหนด ไม่ได้คืนจากยอดเดิมพันทั้งหมด หากยอดได้มากกว่ายอดเสียในสัปดาห์นั้น ระบบจะไม่มียอดให้รับคืน สิทธิ์เปิดให้ตรวจและกดรับทุกวันอาทิตย์หลังเวลา 12.00 น. โดยมีช่วงเวลากดรับจำกัด จึงควรเช็กบัญชีตามรอบ เพราะระบบให้เวลารับสิทธิ์ แต่ไม่ได้ส่งคนมาตามถึงหน้าบ้าน",
+    q: "สมัคร UFAG8 ภายใน 5 นาทีต้องเตรียมอะไร",
+    a: "เว็บไซต์ต้นแบบระบุว่าสมัครได้ภายในประมาณ 5 นาที โดยใช้เบอร์โทรศัพท์และรหัสผ่านเป็นข้อมูลหลัก จึงควรเตรียมเบอร์ที่ใช้งานจริงและรับข้อความได้ ควรตั้งรหัสผ่านที่เดายากและไม่ใช้ซ้ำกับบัญชีอื่น หากระบบมีขั้นตอนยืนยันเพิ่มเติมให้ทำจนจบ สมัครเร็วไม่สำคัญเท่าบัญชียังอยู่กับเราในวันถัดไป",
   },
   {
-    q: "ทางเข้าเว็บตรง SUDYOD888 ควรตรวจอะไรก่อนล็อกอิน",
-    a: "ชื่อ SUDYOD888 ปรากฏอยู่ในหลายโดเมน ก่อนล็อกอินควรตรวจชื่อเว็บไซต์ HTTPS โลโก้ และแหล่งที่มาของลิงก์ให้ตรงกัน โดยเฉพาะหน้าที่ขอข้อมูลบัญชีหรือรหัสผ่าน หากเว็บเปลี่ยนชื่อกะทันหัน ขอให้ติดตั้งไฟล์แปลก หรือมีคนขอรหัสผ่านผ่านแชต ควรหยุดทำรายการทันที เช็กเพิ่มไม่กี่วินาที ดีกว่าใช้เวลาหลายชั่วโมงตามแก้บัญชี",
+    q: "ทางเข้า UFAG8 แบบไหนควรเช็กก่อนกรอกข้อมูล",
+    a: "ก่อนเข้าใช้งานควรตรวจชื่อโดเมน การเชื่อมต่อ HTTPS และแหล่งที่มาของลิงก์ให้ครบ โดยเฉพาะเมื่อผลค้นหามีชื่อใกล้เคียงปะปนกันหลายเว็บไซต์ เบอร์โทรศัพท์เป็นข้อมูลสำคัญของบัญชี จึงไม่ควรส่งรหัสผ่านหรือ OTP ให้บุคคลอื่นผ่านแชต หากเว็บเปลี่ยนไปคนละชื่อ ขอให้ติดตั้งไฟล์ หรือขอข้อมูลเกินขั้นตอนปกติ ควรหยุดก่อนกรอก เช็กไม่กี่วินาที ดีกว่าตามแก้ปัญหาหลายชั่วโมง",
   },
 ];
 
 const webPageSchema = {
   "@context": "https://schema.org",
   "@type": "WebPage",
-  name: "SUDYOD888",
+  name: "UFAG8",
   description: pageDescription,
   url: homePage + currentPath,
 };
 const webSiteSchema = {
   "@context": "https://schema.org",
   "@type": "WebSite",
-  name: "SUDYOD888",
-  alternateName: ["SUDYOD888", "SUDYOD888 รีวิวเกมสล็อต โบนัสสูงสุด 400% ฝากถอนออโต้"],
-  url: "https://sudyod888-brand.com/",
+  name: "UFAG8",
+  alternateName: ["UFAG8", pageTitle],
+  url: "https://ufg8-brand.com/",
 };
 const orgSchema = {
   "@context": "https://schema.org",
   "@type": "Organization",
-  name: "SUDYOD888",
+  name: "UFAG8",
   logo: logoUrl,
   url: homePage,
 };
-// Order carries no meaning to a JSON-LD parser, so it is varied per brand —
-// every launch of this template used to emit these three in the same sequence.
 const allSchemas = orderForBrand([webPageSchema, orgSchema, webSiteSchema], Astro.site, "jsonld");
 ---
 
@@ -83,186 +80,153 @@ const allSchemas = orderForBrand([webPageSchema, orgSchema, webSiteSchema], Astr
   <script type="application/ld+json" set:html={JSON.stringify(allSchemas)} />
 
   <Announcement
-    message="🎰 SUDYOD888 รวมเกมสล็อต เกมยิงปลา และคาสิโนสดมากกว่า 200 รายการไว้ในบัญชีเดียว • โบนัสสูงสุด 400% • สล็อตเริ่มต้น 1 บาท พร้อมโหมดทดลองบางเกม • ฝากถอนออโต้ผ่าน Mobile Banking และ True Wallet ถอนขั้นต่ำ 100 บาท ไม่เกิน 49,000 บาทต่อรายการ • คืนยอดเสียรายสัปดาห์ กดรับทุกวันอาทิตย์หลัง 12.00 น. • แนะนำเพื่อนรับคอมมิชชั่น 3–5%"
+    message="⚽ UFAG8 เว็บกีฬา รวมแทงบอลตามลีก คู่แข่งขัน และช่วงเวลาไว้ในบัญชีเดียว • ตลาดแฮนดิแคป สูง–ต่ำ และ 1X2 • บอลก่อนแข่งและบอลสด • บิลเดี่ยวและบิลสเต็ป • สมัครด้วยเบอร์โทรภายในประมาณ 5 นาที • ตรวจคู่แข่งขัน ตลาด และราคาให้ตรงกันก่อนยืนยันบิลทุกครั้ง"
   />
 
-  <ContentBoxCyberCut as="h1" title="SUDYOD888 รีวิวเกมสล็อตมาแรง ฝากถอนออโต้ คืนยอดเสีย และโปรสูงสุด 400%">
-    <div>
-      <p>
-        <strong class="text-[#ffe9a8]">SUDYOD888</strong> รวมเกมสล็อต เกมยิงปลา และคาสิโนสดมากกว่า 200 รายการไว้ในบัญชีเดียว รองรับการใช้งานผ่านมือถือและเว็บเบราว์เซอร์
-        เหมาะกับผู้เล่นที่ต้องการสลับหมวดเกมโดยไม่ต้องสมัครหลายระบบ
-      </p>
-      <p class="mt-3">
-        จุดที่สะดุดตาคือโปรสูงสุด 400% พร้อมระบบฝากถอนออโต้ คืนยอดเสียรายสัปดาห์ และแนะนำเพื่อนรับคอมมิชชั่น แต่สิทธิ์แต่ละแบบมีเงื่อนไขต่างกัน ตัวเลขใหญ่ดูง่าย
-        ส่วนตัวหนังสือเล็กต้องตั้งใจอ่านหน่อย
-      </p>
-    </div>
-  </ContentBoxCyberCut>
+  <ContentBoxPremium as="h1" title="UFAG8 เว็บกีฬา รวมแทงบอล ตลาดเดิมพัน และเกมหลายประเภทในบัญชีเดียว">
+    <p class="text-left text-base leading-relaxed text-[#efeade]">
+      <strong class="text-[#f2dca4]">UFAG8</strong> วางแกนหลักไว้ที่ฟุตบอลและการเดิมพันกีฬา พร้อมระบบสมาชิกที่ใช้เบอร์โทรศัพท์เข้าสู่ระบบ ผู้ใช้จึงเลือกตลาด ตรวจบิล
+      และจัดการบัญชีผ่านช่องทางเดียวได้สะดวกขึ้น
+    </p>
+    <p class="mt-3 text-left text-base leading-relaxed text-[#efeade]">
+      เว็บไซต์ต้นแบบระบุว่าสมัครได้ภายในประมาณ 5 นาที แต่ควรตรวจเบอร์โทร รหัสผ่าน และข้อมูลบัญชีก่อนยืนยัน สมัครเร็วเป็นเรื่องดี แต่กรอกผิดแล้วตามแก้ทีหลัง ความเร็วก็หายหมด
+    </p>
+  </ContentBoxPremium>
 
-  <ContentBoxSevenThreeCyberCut titleright="SUDYOD888 รวมเกมสล็อตและเกมอะไรไว้ในบัญชีเดียว">
-    <div slot="left" class="flex h-full flex-col justify-center">
-      <Picture
-        src={imgGames}
-        loading="lazy"
-        fetchpriority="low"
-        widths={[200, 400, 600, 800]}
-        sizes="(max-width: 768px) 100vw, 30vw"
-        decoding="async"
-        formats={["avif", "webp"]}
-        fallbackFormat="webp"
-        quality={80}
-        alt="SUDYOD888 เว็บตรงไม่ผ่านเอเย่นต์ รวมเกมมากกว่า 200 เกม ฝากถอนออโต้ โบนัสสูงสุด 400% และคืนยอดเสียรายสัปดาห์"
-        class="mx-auto h-auto w-full rounded-2xl border border-[#f5c53d]/25 shadow-[0_10px_30px_rgba(245,197,61,0.18)]"
-      />
-    </div>
-    <div slot="right">
-      <p>
-        ภายใน SUDYOD888 มีเกมมากกว่า 200 รายการ ครอบคลุมสล็อต เกมยิงปลา และคาสิโนสด ผู้ใช้จึงเลือกเล่นหลายรูปแบบผ่านบัญชีเดียว
-        โดยไม่ต้องจำชื่อผู้ใช้จนเริ่มสับสนว่าบัญชีไหนเป็นของเว็บไหน
-      </p>
-      <p class="mt-3">
-        แต่ละหมวดมีจังหวะและกติกาต่างกัน สล็อตเน้นฟีเจอร์และรอบเกม คาสิโนสดเน้นกติกาโต๊ะ ส่วนเกมยิงปลาต้องเลือกเป้าหมายให้เหมาะ จึงควรดูรายละเอียดก่อนใช้เครดิตจริง
-      </p>
-    </div>
-  </ContentBoxSevenThreeCyberCut>
+  <ContentBoxSevenThreePremium titleright="UFAG8 รวมตลาดกีฬาและแทงบอลไว้ตรงไหนบ้าง">
+    <Picture
+      slot="left"
+      src={imgMarkets}
+      loading="lazy"
+      fetchpriority="low"
+      widths={[200, 400, 600, 800]}
+      sizes="(max-width: 768px) 100vw, 30vw"
+      decoding="async"
+      formats={["avif", "webp"]}
+      fallbackFormat="webp"
+      quality={80}
+      alt="UFAG8 เว็บกีฬา สมัครผ่านเบอร์โทร ราคาบอลอ่านง่าย และเลือกบิลเดี่ยวหรือบิลสเต็ปได้ตามสไตล์"
+      class="mx-auto h-auto w-full rounded-2xl border border-[#dcb96b]/25 shadow-[0_10px_30px_rgba(220,185,107,0.18)]"
+    />
+    <p slot="right" class="text-left text-base leading-relaxed text-[#efeade]">
+      UFAG8 เน้นการเดิมพันกีฬา โดยเฉพาะฟุตบอล ซึ่งแบ่งรายการตามลีก คู่แข่งขัน และช่วงเวลา ผู้ใช้จึงเลือกดูเฉพาะแมตช์ที่สนใจได้โดยไม่ต้องไล่ค้นหาจากทุกหมวด
+    </p>
+    <p slot="right" class="text-left text-base leading-relaxed text-[#efeade]">
+      ก่อนเลือกคู่ควรตรวจชื่อทีม เวลาแข่ง และสถานะตลาดให้ตรงกัน เพราะทีมชื่อคล้าย ลีกใกล้กัน และเตะวันเดียวกัน มีสิทธิ์พาบิลไปผิดสนามได้ง่าย
+    </p>
+  </ContentBoxSevenThreePremium>
 
   <ProviderGrid />
 
-  <ContentBoxSevenThreeFloatingBadge title="โบนัสสูงสุด 400% ของ SUDYOD888 คุ้มแค่ไหน">
-    <div slot="left" class="flex h-full flex-col justify-center">
-      <Picture
-        src={imgBonus}
-        loading="lazy"
-        fetchpriority="low"
-        widths={[200, 400, 600, 800]}
-        sizes="(max-width: 768px) 100vw, 30vw"
-        decoding="async"
-        formats={["avif", "webp"]}
-        fallbackFormat="webp"
-        quality={80}
-        alt="โปรโมชั่นโบนัสสูงสุด 400% ของ SUDYOD888 พร้อมฝากผ่าน True Wallet และระบบออโต้"
-        class="mx-auto h-auto w-full rounded-2xl border border-[#f5c53d]/25 shadow-[0_10px_30px_rgba(245,197,61,0.18)]"
-      />
-    </div>
-    <div slot="right">
-      <p>
-        โบนัสสูงสุด 400% ทำให้ SUDYOD888 เด่นบนหน้าค้นหา แต่คำว่า “สูงสุด” หมายถึงแต่ละโปรโมชั่นอาจให้เครดิตไม่เท่ากัน สมาชิกควรตรวจยอดฝากที่ร่วมรายการ จำนวนเทิร์น
-        และเกมที่ใช้โบนัสได้
-      </p>
-      <p class="mt-3">
-        ตัวเลขใหญ่ช่วยเพิ่มเครดิตได้จริง แต่เงื่อนไขถอนต่างหากที่บอกว่าคุ้มหรือไม่ เลือกโปรที่เล่นจบตามกำลัง ดีกว่ารับเยอะแล้วเครดิตนั่งพักยาวอยู่ในบัญชี
-      </p>
-    </div>
-  </ContentBoxSevenThreeFloatingBadge>
+  <ContentBoxSevenThreeNeumorphism titleright="ราคาบอลและตลาดเดิมพัน UFAG8 ต้องอ่านตรงไหนก่อนกดบิล">
+    <Picture
+      slot="left"
+      src={imgOdds}
+      loading="lazy"
+      fetchpriority="low"
+      widths={[200, 400, 600, 800]}
+      sizes="(max-width: 768px) 100vw, 30vw"
+      decoding="async"
+      formats={["avif", "webp"]}
+      fallbackFormat="webp"
+      quality={80}
+      alt="ตารางราคาบอลของ UFAG8 พร้อมตลาดแฮนดิแคป สูง–ต่ำ และ 1X2 ที่อ่านง่าย"
+      class="mx-auto h-auto w-full rounded-2xl border border-[#dcb96b]/25 shadow-[0_10px_30px_rgba(220,185,107,0.18)]"
+    />
+    <p slot="right" class="text-left text-base leading-relaxed text-[#efeade]">
+      ตลาดฟุตบอลทั่วไปมีทั้งแฮนดิแคป สูง–ต่ำ และ 1X2 ซึ่งใช้เงื่อนไขตัดสินต่างกัน ผู้ใช้ควรดูทั้งราคา ฝั่งเดิมพัน และประเภทตลาดก่อนยืนยันรายการ
+    </p>
+    <p slot="right" class="text-left text-base leading-relaxed text-[#efeade]">
+      ราคาบอลเปลี่ยนได้ตามเวลา ข่าวผู้เล่น และสถานการณ์ก่อนแข่ง เห็นราคาแล้ววางทิ้งไว้นาน พอกดจริงอาจไม่ใช่เลขเดิม ราคาไม่ได้หนีเรา แค่มันไม่เคยหยุดเดิน
+    </p>
+  </ContentBoxSevenThreeNeumorphism>
 
-  <ContentBoxFloatingBadge as="h2" title="สล็อตขั้นต่ำ 1 บาทและระบบทดลองเล่นเหมาะกับใคร">
-    <div>
-      <p>
-        สล็อตที่เริ่มต้นได้ตั้งแต่ 1 บาทเหมาะกับมือใหม่ที่ต้องการลองจังหวะเกมโดยไม่ใช้ยอดสูง ส่วนโหมดทดลองช่วยให้ดูตารางจ่าย ฟรีสปิน และสัญลักษณ์พิเศษก่อนเริ่มเล่นจริง
-      </p>
-      <p class="mt-3">
-        อย่างไรก็ตาม ราคาเริ่มต้นและโหมดทดลองอาจไม่ได้มีในทุกเกม จึงควรตรวจหน้ารายละเอียดก่อนเลือก ใช้โหมดทดลองเพื่อเรียนรู้ระบบได้ แต่อย่าใช้ทายว่ารอบเงินจริงจะออกเหมือนเดิม
-      </p>
-    </div>
-  </ContentBoxFloatingBadge>
+  <ContentBoxNeumorphism as="h2" title="แทงบอลก่อนแข่งกับบอลสดบน UFAG8 ต่างกันอย่างไร">
+    <p class="text-left text-base leading-relaxed text-[#efeade]">
+      บอลก่อนแข่งมีเวลาให้ตรวจฟอร์ม รายชื่อผู้เล่น และสถิติย้อนหลัง ส่วนบอลสดราคาจะขยับตามสกอร์ เวลา ใบแดง และจังหวะในสนาม
+    </p>
+    <p class="mt-3 text-left text-base leading-relaxed text-[#efeade]">
+      บอลสดจึงต้องตัดสินใจเร็วกว่า แต่เร็วไม่เท่ากับรีบ ควรดูสถานการณ์ให้ทันก่อนกด เพราะบางทีบอลกำลังบุกจริง แต่ราคาวิ่งหนีไปก่อนแล้ว
+    </p>
+  </ContentBoxNeumorphism>
 
   <GameRankingBoard />
 
-  <ContentBoxTwoCyberCut titleleft="สมัคร SUDYOD888 ต้องเตรียมข้อมูลอะไร" titleright="ฝากถอนออโต้ SUDYOD888 ใช้งานอย่างไร">
-    <div slot="left">
-      <p>
-        ขั้นตอนสมัครใช้เบอร์โทรศัพท์ ชื่อ–นามสกุล รหัสผ่าน และบัญชีธนาคารที่ชื่อตรงกับผู้สมัคร บางช่วงอาจมี Captcha หรือขั้นตอนยืนยันข้อมูลเพิ่มเติมตามหน้าระบบ
-      </p>
-      <p class="mt-3">
-        ก่อนยืนยันควรเช็กชื่อ เลขบัญชี และเบอร์โทรให้ครบ จุดเหล่านี้ผิดเพียงตัวเดียวอาจทำให้ฝากถอนสะดุด สมัครเร็วไม่กี่นาทีดีอยู่แล้ว แต่กรอกให้ถูกตั้งแต่แรกดีกว่าเร็วแล้วกลับมาแก้
-      </p>
-    </div>
-    <div slot="right">
-      <p>
-        ระบบฝากรองรับการทำรายการผ่าน Mobile Banking และ True Wallet โดยสมาชิกเลือกยอด ฝากผ่านบัญชีหรือ QR ที่ระบบแสดง และควรใช้บัญชีชื่อเดียวกับข้อมูลที่สมัครไว้
-      </p>
-      <p class="mt-3">
-        ส่วนการถอน เว็บไซต์ต้นแบบกำหนดขั้นต่ำ 100 บาท และไม่เกิน 49,000 บาทต่อรายการ ระยะเวลาจริงอาจเปลี่ยนตามธนาคารและสถานะระบบ ดังนั้นคำว่าออโต้ไม่ได้แปลว่าทุกครั้งจะเร็วเท่ากันเป๊ะ
-      </p>
-    </div>
-  </ContentBoxTwoCyberCut>
+  <ContentBoxSpecial as="h2" title="บิลเดี่ยวและบิลสเต็ป UFAG8 ควรเลือกแบบไหน">
+    <p slot="left" class="min-w-0 text-left text-base leading-relaxed text-[#efeade]">
+      บิลเดี่ยวผูกผลไว้กับการแข่งขันหนึ่งคู่ จึงตรวจตลาดและเงื่อนไขได้ง่ายกว่า ส่วนบิลสเต็ปรวมหลายคู่ไว้ในรายการเดียว โดยทุกคู่ต้องผ่านตามที่เลือก
+    </p>
+    <p slot="right" class="min-w-0 text-left text-base leading-relaxed text-[#efeade]">
+      ก่อนส่งบิลสเต็ปควรตรวจจำนวนคู่ ราคา และวันแข่งขันให้ครบ เพราะผิดเพียงคู่เดียวอาจกระทบทั้งบิล เพิ่มคู่ไม่ได้แปลว่าเพิ่มความแม่น บางครั้งแค่เพิ่มงานลุ้น
+    </p>
+  </ContentBoxSpecial>
 
-  <ContentBox as="h2" title="คืนยอดเสีย SUDYOD888 คิดจากยอดส่วนไหน">
-    <div>
-      <p>
-        คืนยอดเสียคำนวณจากผลได้และเสียในรอบที่กำหนด ไม่ได้คืนจากยอดเดิมพันทั้งหมด หากยอดได้มากกว่ายอดเสียในสัปดาห์นั้น ระบบจะไม่มียอดให้รับคืน
-      </p>
-      <p class="mt-3">
-        สิทธิ์เปิดให้ตรวจและกดรับทุกวันอาทิตย์หลังเวลา 12.00 น. โดยมีช่วงเวลากดรับจำกัด จึงควรเช็กบัญชีตามรอบ เพราะระบบให้เวลารับสิทธิ์ แต่ไม่ได้ส่งคนมาตามถึงหน้าบ้าน
-      </p>
-    </div>
+  <ContentBox as="h2" title="บิลเดิมพัน UFAG8 ต้องตรวจข้อมูลอะไรบ้าง">
+    <p class="text-left text-base leading-relaxed text-[#efeade]">
+      ก่อนกดยืนยันควรตรวจคู่แข่งขัน ตลาด ราคา ยอดเดิมพัน และผลตอบแทนที่ระบบแสดง โดยเฉพาะบิลหลายคู่หรือรายการที่แข่งต่างวันกัน
+    </p>
+    <p class="mt-3 text-left text-base leading-relaxed text-[#efeade]">
+      หลังส่งบิลควรเก็บเลขรายการหรือภาพหน้าจอไว้ตรวจสอบภายหลัง ความจำตอนลุ้นมักมั่นใจมาก แต่พอผลออก รายละเอียดกลับหายเก่งเป็นพิเศษ
+    </p>
   </ContentBox>
 
   <LatestWinners />
 
-  <ContentBoxSpecial as="h2" title="แนะนำเพื่อนรับค่าคอมมิชชั่น 3–5% อย่างไร">
-    <p slot="left" class="min-w-0">
-      ระบบแนะนำเพื่อนแบ่งอัตราคอมมิชชั่นตามจำนวนสมาชิกที่เข้าเงื่อนไข ตั้งแต่ 3% สำหรับกลุ่มเริ่มต้น และเพิ่มได้สูงสุด 5% เมื่อจำนวนสมาชิกถึงระดับที่กำหนด
+  <ContentBoxPremium as="h2" title="สมัคร UFAG8 ภายใน 5 นาทีต้องเตรียมอะไร">
+    <p class="text-left text-base leading-relaxed text-[#efeade]">
+      เว็บไซต์ต้นแบบระบุว่าสมัครได้ภายในประมาณ 5 นาที โดยใช้เบอร์โทรศัพท์และรหัสผ่านเป็นข้อมูลหลัก จึงควรเตรียมเบอร์ที่ใช้งานจริงและรับข้อความได้
     </p>
-    <p slot="right" class="min-w-0">
-      รายได้ส่วนนี้อิงจากกิจกรรมของสมาชิกที่แนะนำ ไม่ใช่แค่จำนวนคนกดสมัคร ผู้ใช้จึงควรตรวจเงื่อนไขการนับยอดและวันอัปเดตข้อมูลก่อนสรุปว่ามีรายได้เท่าไร
+    <p class="mt-3 text-left text-base leading-relaxed text-[#efeade]">
+      ควรตั้งรหัสผ่านที่เดายากและไม่ใช้ซ้ำกับบัญชีอื่น หากระบบมีขั้นตอนยืนยันเพิ่มเติมให้ทำจนจบ สมัครเร็วไม่สำคัญเท่าบัญชียังอยู่กับเราในวันถัดไป
     </p>
-  </ContentBoxSpecial>
-
-  <ContentBoxCyberCut as="h2" title="เล่น SUDYOD888 ผ่านมือถือได้สะดวกหรือไม่">
-    <div>
-      <p>
-        เว็บไซต์รองรับการใช้งานผ่านเบราว์เซอร์บนมือถือ แท็บเล็ต และคอมพิวเตอร์ ผู้ใช้จึงเข้าสู่บัญชี เลือกเกม และตรวจรายการได้โดยไม่จำเป็นต้องดาวน์โหลดแอปทุกครั้ง
-      </p>
-      <p class="mt-3">
-        ควรใช้เบราว์เซอร์เวอร์ชันใหม่และอินเทอร์เน็ตที่เสถียร หากหน้าจอค้างให้รีเฟรชหรือตรวจสถานะรายการก่อนกดซ้ำ นิ้วกดเร็วได้ แต่ระบบธนาคารอาจไม่ได้รีบตามนิ้วเสมอไป
-      </p>
-    </div>
-  </ContentBoxCyberCut>
+  </ContentBoxPremium>
 
   <LoginRtpSection />
 
-  <ContentBox as="h2" title="ทางเข้าเว็บตรง SUDYOD888 ควรตรวจอะไร">
-    <div>
-      <p>
-        ชื่อ SUDYOD888 ปรากฏอยู่ในหลายโดเมน ก่อนล็อกอินควรตรวจชื่อเว็บไซต์ HTTPS โลโก้ และแหล่งที่มาของลิงก์ให้ตรงกัน โดยเฉพาะหน้าที่ขอข้อมูลบัญชีหรือรหัสผ่าน
-      </p>
-      <p class="mt-3">
-        หากเว็บเปลี่ยนชื่อกะทันหัน ขอให้ติดตั้งไฟล์แปลก หรือมีคนขอรหัสผ่านผ่านแชต ควรหยุดทำรายการทันที เช็กเพิ่มไม่กี่วินาที ดีกว่าใช้เวลาหลายชั่วโมงตามแก้บัญชี
-      </p>
-    </div>
+  <ContentBoxNeumorphism as="h2" title="เข้าสู่ระบบ UFAG8 ด้วยเบอร์โทรต้องระวังอะไร">
+    <p class="text-left text-base leading-relaxed text-[#efeade]">
+      เบอร์โทรศัพท์เป็นข้อมูลสำคัญของบัญชี จึงควรกรอกเฉพาะบนเว็บไซต์ที่ตรวจสอบแล้ว และไม่ส่งรหัสผ่านหรือ OTP ให้บุคคลอื่นผ่านแชต
+    </p>
+    <p class="mt-3 text-left text-base leading-relaxed text-[#efeade]">
+      หากลืมรหัสควรใช้เมนูกู้คืนจากระบบโดยตรง ไม่รับลิงก์แก้รหัสจากบัญชีแปลกหน้า เจ้าหน้าที่จริงไม่จำเป็นต้องยืมรหัสเราไปลองล็อกอินแทน
+    </p>
+  </ContentBoxNeumorphism>
+
+  <ContentBox as="h2" title="ทางเข้า UFAG8 แบบไหนควรเช็กก่อนกรอกข้อมูล">
+    <p class="text-left text-base leading-relaxed text-[#efeade]">
+      ก่อนเข้าใช้งานควรตรวจชื่อโดเมน การเชื่อมต่อ HTTPS และแหล่งที่มาของลิงก์ให้ครบ โดยเฉพาะเมื่อผลค้นหามีชื่อใกล้เคียงปะปนกันหลายเว็บไซต์
+    </p>
+    <p class="mt-3 text-left text-base leading-relaxed text-[#efeade]">
+      หากเว็บเปลี่ยนไปคนละชื่อ ขอให้ติดตั้งไฟล์ หรือขอข้อมูลเกินขั้นตอนปกติ ควรหยุดก่อนกรอก เช็กไม่กี่วินาที ดีกว่าตามแก้ปัญหาหลายชั่วโมง
+    </p>
   </ContentBox>
 
   <div class="relative z-10 mx-auto mb-10 flex flex-nowrap justify-center gap-3 px-4 sm:gap-6">
     <a
       href="/login"
-      class="group relative flex flex-1 items-center justify-center rounded-full bg-gradient-to-r from-[#ffe9a8] via-[#f5c53d] to-[#c8921e] px-4 py-3 text-sm font-black whitespace-nowrap text-[#140d06] shadow-[0_10px_30px_rgba(245,197,61,0.26)] transition-all duration-300 hover:-translate-y-1 hover:scale-105 hover:shadow-[0_15px_40px_rgba(245,197,61,0.4)] sm:flex-none sm:px-10 sm:py-3.5 sm:text-base">
+      class="group relative flex flex-1 items-center justify-center rounded-full bg-gradient-to-r from-[#f2dca4] via-[#dcb96b] to-[#ac893a] px-4 py-3 text-sm font-black whitespace-nowrap text-[#141210] shadow-[0_10px_30px_rgba(220,185,107,0.26)] transition-all duration-300 hover:-translate-y-1 hover:scale-105 hover:shadow-[0_15px_40px_rgba(220,185,107,0.4)] sm:flex-none sm:px-10 sm:py-3.5 sm:text-base">
       เข้าสู่ระบบ
     </a>
 
     <a
       href="/register"
-      class="group relative flex flex-1 items-center justify-center rounded-full border border-[#f5c53d]/60 bg-[#240709]/85 px-4 py-3 text-sm font-black whitespace-nowrap text-[#ffe9a8] backdrop-blur-sm transition-all duration-300 hover:scale-105 hover:border-[#f5c53d] hover:bg-[#7d0b12]/85 hover:shadow-[0_15px_40px_rgba(200,18,31,0.45)] sm:flex-none sm:px-10 sm:py-3.5 sm:text-base">
+      class="group relative flex flex-1 items-center justify-center rounded-full border border-[#dcb96b]/60 bg-[#15171c]/85 px-4 py-3 text-sm font-black whitespace-nowrap text-[#f2dca4] backdrop-blur-sm transition-all duration-300 hover:scale-105 hover:border-[#dcb96b] hover:bg-[#22262e]/85 hover:shadow-[0_15px_40px_rgba(185,188,196,0.45)] sm:flex-none sm:px-10 sm:py-3.5 sm:text-base">
       สมัครสมาชิก
     </a>
   </div>
 
-  <ContentBoxCyberCut as="h2" title="สรุป SUDYOD888 เด่นที่เกมหรือโปรโมชั่น">
-    <div>
-      <p>
-        <strong class="text-[#ffe9a8]">SUDYOD888</strong> มีภาพรวมเด่นจากการรวมเกมหลายหมวดไว้ในบัญชีเดียว พร้อมสล็อตเริ่มต้น 1 บาท ฝากถอนออโต้ คืนยอดเสีย และระบบแนะนำเพื่อน
-        จึงไม่ได้มีเพียงโปรโมชั่นเป็นจุดขาย
-      </p>
-      <p class="mt-3">
-        ส่วนโบนัสสูงสุด 400% เหมาะใช้เป็นตัวเลือกเสริมมากกว่าจะเป็นเหตุผลเดียวในการสมัคร ผู้ใช้ควรดูเงื่อนไขจริง ระบบที่ต้องใช้ และรูปแบบเกมที่เหมาะกับตนเองก่อนตัดสินใจ
-        เพราะโปรใหญ่ไม่ได้แปลว่าเหมาะกับทุกคนเสมอไป
-      </p>
-    </div>
-  </ContentBoxCyberCut>
+  <ContentBoxPremium as="h2" title="สรุป UFAG8 เหมาะกับสายกีฬาแบบไหน">
+    <p class="text-left text-base leading-relaxed text-[#efeade]">
+      <strong class="text-[#f2dca4]">UFAG8</strong> เหมาะกับผู้ใช้ที่เริ่มจากฟุตบอลและการเดิมพันกีฬาเป็นหลัก โดยต้องการดูตลาดก่อนแข่ง บอลสด บิลเดี่ยว และบิลสเต็ปผ่านบัญชีเดียว
+    </p>
+    <p class="mt-3 text-left text-base leading-relaxed text-[#efeade]">
+      จุดสำคัญคืออ่านตลาดให้ตรง ตรวจราคาให้ทัน และเก็บข้อมูลบิลให้ครบ เว็บช่วยรวมรายการไว้ให้ ส่วนการกดให้ถูกยังเป็นงานร่วมกันของนิ้วกับสมอง
+    </p>
+  </ContentBoxPremium>
 
   <SmoothCarousel />
 
-  <Faq title="คำถามที่พบบ่อยเกี่ยวกับ SUDYOD888" faqs={faqs} />
+  <Faq title="คำถามที่พบบ่อยเกี่ยวกับ UFAG8" faqs={faqs} />
 
   <ReviewCardSumo2 />
 

@@ -2761,3 +2761,167 @@ uploader server (ไม่ตั้งใจ), และตัว claude CLI ท
 - redirect affiliate + noindex ของ login/register ไม่ถูกแตะตามกฎ
 - `.rebrand-brandspec.md` (scratchpad ของรอบนี้) ลบทิ้งแล้วตามที่ไฟล์นั้นระบุไว้เอง
 - **ไม่ deploy** — หยุดที่ build + verify + commit + push
+
+## 2026-07-30 — รีแบรนด์ SUDYOD888 → UFAG8 (เว็บกีฬา/แทงบอล, ทอง + โครมเงิน บนดำกลาง)
+
+รอบนี้ยิงจาก uploader (ส่วนที่ 6) มาพร้อมคำสั่ง "หยุดที่ build + verify เท่านั้น
+ห้าม deploy และห้าม git push" จึงจบที่ verify ไม่ commit ไม่ push ไม่ deploy
+ทำแบบขนาน 3 agent ตาม playbook (orchestrator ทำ P0 + P1 เอง แล้วแตก A/B/C)
+
+### ชื่อแบรนด์: docx สะกดไม่ตรงกันเอง
+
+บรรทัด Title/Description ใน docx เขียน **UFGA8** แต่ H1 และทุกย่อหน้าในเนื้อหา
+รวมทั้งอาร์ตเวิร์ก (logo/banner/slide ทุกใบ) เขียน **UFAG8** — ถือว่า UFGA8 เป็น
+typo ของ brief แล้ว normalize เป็น **UFAG8** ทั้งเว็บตามที่ operator สั่งมาในพรอมป์
+โดเมนที่ได้มาเป็นการสะกดแบบที่สาม (ufg8-brand.com) ใช้ตามตัวอักษรเป๊ะ ไม่แก้
+→ verify แล้วใน dist: UFAG8 207 จุด · UFGA8 = 0 · UFG8 เดี่ยว = 0
+
+### ประเภทเว็บ: กีฬา ไม่ใช่สล็อต — เนื้อหาเปลี่ยนหมวดจริง
+
+docx รอบนี้เป็นเว็บกีฬา/แทงบอลทั้งฉบับ (ตลาดแฮนดิแคป สูง–ต่ำ 1X2, บอลก่อนแข่ง
+vs บอลสด, บิลเดี่ยว/บิลสเต็ป, สมัครด้วยเบอร์โทรราว 5 นาที) ต่างจาก SUDYOD888
+ที่เป็นสล็อต จึง **ตัดตัวเลขของแบรนด์เก่าออกทั้งชุด** เพราะไม่มีใน docx ใหม่:
+โบนัส 400% · คืนยอดเสียวันอาทิตย์ 12.00 · คอมมิชชั่น 3–5% · เกม 200+ รายการ ·
+สล็อตเริ่ม 1 บาท · ถอนขั้นต่ำ 100 / ไม่เกิน 49,000 — และไม่แต่งตัวเลขใหม่มาแทน
+
+หน้าหวย ตรวจหวย.astro / แนวทาง.astro = **ปิด** (คงอยู่ใน src/pages-disabled/)
+ถูกต้องสำหรับแบรนด์กีฬา · grep แล้วไม่มีลิงก์ href ไปสองรูตนี้ในนาวบาร์/ฟุตเตอร์ที่
+ใช้งานอยู่เลย (คำว่า "แนวทาง" ที่เจอใน description เป็นคำธรรมดา ไม่ใช่ลิงก์)
+
+### variant rotation (ก่อน → หลัง)
+
+| family | SUDYOD888 (ออก) | UFAG8 (รอบนี้) |
+|---|---|---|
+| Navbar | NavbarStyle2 | **NavbarStyle11** |
+| Footer | FooterPremiumSumo | **FooterStyle3** |
+| Announcement | Announcement5 | **Announcement6** |
+| LatestWinners | LatestWinnersPremium | **LatestWinnersCyber** |
+| Faq | Faq3 | **Faq2** |
+| ContentBox mix | CyberCut + FloatingBadge + Special + plain + TwoCyberCut + SevenThreeCyberCut + SevenThreeFloatingBadge | **Premium + Neumorphism + Special + plain + Two + SevenThreePremium + SevenThreeNeumorphism** |
+| Brand font | google-sans | **kanit** |
+
+ไม่มี family ไหนอยู่ตัวเดิม — สลับครบทุกช่อง · ตระกูล CyberCut/FloatingBadge
+ที่เป็นลายเซ็นของ SUDYOD888 ถูกถอดออกจากทุกหน้า (grep = 0 import)
+
+### พาเลตต์: ทอง + โครมเงิน (ไม่มีแดงเลย)
+
+วัดจาก palette.json + อ่านอาร์ตเวิร์กจริง — โลโก้เป็น "UFA" ทอง + "G8" เงินโครม
+บนพื้นดำ จึงอ่านเป็น **ทองหลัก + โครม/เงินเป็นสีรอง** ไม่ใช่คู่ทอง-แดงแบบเดิม
+
+ทองหลัก #dcb96b (ไล่ #f2dca4 → #dcb96b → #ac893a) · โครมรอง #b9bcc4
+(สว่าง #d7dae1, เข้ม #6f7480) · พื้น #0a0a09 · การ์ด #100f0c / #191712 ·
+พาเนลเหล็ก #15171c / #22262e · ตัวอักษร #efeade
+
+**แดงเลือดหมูของ SUDYOD888 (#c8121f / #e4222a / #240709) ถูกแมปเป็นโครม/เหล็ก
+ทั้งหมด** — verify แล้วว่าไม่มีคลาสสีแดงหรือโรสของ Tailwind เหลือใน dist เลย
+
+### ไฟล์ที่แก้ (47 ไฟล์, ไม่ลบไฟล์ใดเลย)
+
+- **ตั้งค่า/โครง (4):** astro.config.mjs (site:), wrangler.toml (name = ufg8),
+  src/lib/brandProfile.ts (BRAND_FONT → kanit), src/layouts/MainLayout.astro
+- **asset ที่ uploader วางทับ (13):** banner1.png, slide1..4.png, logo.webp,
+  bg.png, content.docx, content.txt, palette.json + favicon/manifest ใน public/
+- **public/site.webmanifest:** ยังเป็น SUDYOD888 + ทองเก่า #f5c53d →
+  แก้เป็น UFAG8 + #dcb96b / #0a0a09 (ไฟล์นี้ไม่ได้ผูกกับ agent ไหน จึงหลุดได้ง่าย)
+- **component ที่ retheme (18):** Announcement6 · ContentBox · ContentBoxNeumorphism ·
+  ContentBoxPremium · ContentBoxSevenThreeNeumorphism · ContentBoxSevenThreePremium ·
+  ContentBoxSpecial · ContentBoxTwo · Faq2 · FooterStyle3 · GameRankingBoard ·
+  LatestWinnersCyber · LoginRtpSection · NavbarStyle11 · Navfoot · ProviderGrid ·
+  ReviewCardSumo2 · SmoothCarousel
+- **หน้า (7):** index · promotion · contact-us · ทางเข้า · ทดลองเล่น · login · register
+
+### บั๊ก/กับดักที่เจอรอบนี้
+
+1. **NavbarStyle11 ใช้ h1 เป็น logo fallback** — ถ้าปล่อยไว้ทุกหน้าจะมี h1 สองตัว
+   (อีกตัวมาจาก ContentBox ของหน้า) เปลี่ยนเป็นแท็ก p แล้ว
+2. **NavbarStyle11 มี CSS พัง 2 บรรทัด** — เขียนว่า "bg: #3b82f6;" ในกฎของ
+   hamburger ตอน active ซึ่งไม่ใช่ property จริง (คงตั้งใจเขียน background)
+   ไม่มีผลอะไรกับการแสดงผล ลบออก
+3. **จงใจ "ไม่" ยุบ array ลิงก์ในนาวบาร์เป็น const** ทั้งที่ซ้ำสองชุด (desktop/mobile)
+   เพราะตัวเติมลิงก์อัตโนมัติของ uploader (ส่วนที่ 5) อ่านได้แค่รูป array inline
+   ที่ต่อด้วย .map( — ยุบเป็น const แล้วเครื่องมือจะเติมลิงก์หน้าใหม่ไม่ได้
+4. **ตัวแปร CSS ชื่อ brand-crimson ใน login/register ชื่อโกหกค่า** หลังแมปสีเป็นโครม
+   จึง rename เป็น brand-chrome ทั้งไฟล์
+5. **radial glow ล่างใน login/register** ถ้าแมป rgba(200,18,31,0.55) เป็นโครมตรงตัว
+   ที่ alpha เดิม จะกลายเป็นหมอกเทาสว่างกลบการ์ด จึงลด alpha เป็น 0.22
+   ให้อ่านเป็นเงาโครมบาง ๆ แทน
+6. **LatestWinnersCyber มี import ของโลโก้ TTB ที่ไม่ถูกใช้** ตามกฎ "ห้ามลบ import
+   ที่ไม่ใช้ ให้ต่อสายให้ใช้" จึงเพิ่ม TTB เข้า bankPool ด้วยสีแบรนด์จริง #1279be
+7. **GameRankingBoard ตั้งใจไม่แปลงเป็นลีก/คู่บอล** เพราะ thumbnail ใน
+   src/assets/providers/game1..6.avif เป็นภาพสล็อต/คาสิโน ถ้าเปลี่ยนชื่อรายการจะขัดกับภาพ
+   — คงเนื้อในไว้แล้ว frame หัวข้อว่าเป็นหมวดเสริมนอกเหนือจากตลาดกีฬา
+   (อาร์ตเวิร์ก banner ระบุ SPORT BETTING, LIVE CASINO, SLOT, LOTTO อยู่แล้ว)
+8. **LoginRtpSection คอลัมน์ขวาแปลงจากตาราง RTP สล็อต เป็นตารางอ้างอิงตลาดบอล**
+   7 แถว (แฮนดิแคป/สูง–ต่ำ/1X2/ก่อนแข่ง/บอลสด/บิลเดี่ยว/บิลสเต็ป) ทุกบรรทัดอ้างจาก docx
+9. **banner.png (ไม่มีเลข) / banner2.png (28 ก.ค.) / banner3.png (23 ก.ค.) เป็นของค้าง**
+   เก่ากว่าชุด asset รอบนี้ (30 ก.ค. 12:12) จึงไม่ใช้เป็นภาพประกอบเลยรอบนี้
+   verify แล้ว dist อ้าง banner1 20 จุด, banner2/banner3/banner. = 0
+
+### การ verify ที่รันจริง
+
+- npm run build → **7 หน้า สำเร็จ 0 fail** (build เดียวตาม build cadence)
+- route ที่ออก: /, /promotion, /contact-us, /ทางเข้า, /ทดลองเล่น, /login,
+  /register, /line — **ไม่มี** /ตรวจหวย /แนวทาง ถูกต้องสำหรับแบรนด์กีฬา
+- **ชื่อแบรนด์เก่าใน dist ทั้งหมด → 0 ทุกตัว**: SUDYOD888 · PRODED888 · WINUP888 ·
+  LAPDEE88 · PAY69 · UFAYES · GSYBET · HENGJUD365 · BRAZIL999 · MAHORANLOTTO
+- **hex เก่าใน dist**: มีอยู่ 143 จุดต่อหน้า **แต่อยู่ใน style block ที่ Tailwind gen
+  จาก inventory ที่ไม่ถูก import ทั้งนั้น** — ที่อยู่ใน attribute class = **0** และ
+  ใน attribute style = **0** ยืนยันว่าเป็น dead CSS ที่คาดไว้ ไม่ใช่ markup จริง
+  (ไฟล์ต้นทางที่ยังมี hex เก่า 10 ไฟล์ ตรวจแล้วไม่ถูก import จากที่ไหนเลย)
+- **heading**: หน้าแรก = h1 ×1 · h2 ×10 · h3 ×5 — ดึงข้อความ h1/h2 จาก dist มา diff
+  กับ checklist ของ docx (H1 ×1 + H2 ×9) แล้ว **ตรงทั้งจำนวน ข้อความ และลำดับบนลงล่าง**
+  บวกหัวข้อ FAQ อีก 1 ตัวท้ายสุด · h3 ทั้ง 5 = คำถาม FAQ ของ Faq2 (ซ้อนใต้ h2 จริง)
+  · หน้าย่อย: contact-us/promotion/ทางเข้า h1 ×1 h2 ×2 · ทดลองเล่น h1 ×1 h2 ×3
+  · login/register h1 ×1 ไม่มี h2 ถึง h6 · ไม่มี h4 ขึ้นไปที่ไหนเลย
+- **ความครบของเนื้อหา**: เขียนสคริปต์ดึงย่อหน้าทั้ง 20 ย่อหน้าจาก content.txt
+  มาเทียบกับข้อความที่ render จริง → **ครบทั้ง 20 แบบ verbatim** ไม่มีย่อหน้าไหน
+  ถูกตัด ย่อ หรือยุบรวมกัน
+- **heading ที่เป็น UI label แล้ว demote**: LatestWinnersCyber เดิมใช้ h2 ครอบ
+  ข้อความ "/// LIVE_TRANSACTIONS" ซึ่งเป็น label ล้วน → เปลี่ยนเป็นแท็ก p
+- สุขอนามัย HTML ทั้ง 8 ไฟล์: คอมเมนต์ HTML = **0** · undefined = **0** ·
+  NaN = **0** · object Object = **0** · placeholder TODO = **0**
+- og:image / twitter:image = /_astro/slide1.DQEpje1m.png (hash ของ slide1
+  รอบนี้) ไม่ใช่ path ดิบใน public/ · ref แบบ /slideN.webp = 0
+  (public/pro3.webp + public/slide3.webp เป็นของค้าง ตรวจแล้วไม่มีใครอ้าง)
+- โดเมนตรงกันทั้ง 5 ที่: site: · canonical · og:url · schema literal ·
+  robots.txt sitemap = ufg8-brand.com (ไม่มี www) · โดเมนเก่าใน dist = 0
+- wrangler.toml name = ufg8 — ไม่ชนกับชื่อของแบรนด์ไหนที่เคยใช้
+- sitemap = 5 URL บนโดเมนใหม่ ตัด /login /register /line ออกถูกต้อง
+- **ฟอนต์**: หน้าแรกอ้าง at-font-face ของ kanit-v17 + preload woff2 3 ไฟล์ ·
+  หน้า main ไม่มี fonts.googleapis เลย · **login/register ยังอ้าง Google Fonts
+  (Kanit + Oswald) ซึ่งถูกต้องตามดีไซน์** เพราะสองหน้านี้เป็น standalone ไม่ import
+  global.css เลยไม่มี kanit self-host ให้ใช้ และ ternary ใน fontHref สลับจาก
+  Google Sans เป็น Kanit ให้เองแล้วตอน BRAND_FONT เปลี่ยน (ไม่ใช่บั๊ก)
+- FAQ: 5 คำถาม render ครบ (h3 ×5)
+- **เสิร์ฟจริงด้วย astro preview (พอร์ต 8899)** ทุกรูตตอบ 200 รวมสองหน้าไทย ·
+  /ตรวจหวย/ และ /แนวทาง/ ตอบ **404** ยืนยันว่าไม่ได้ ship จริง
+- ⚠️ **กับดักตอน curl**: ถ้ายิง URL ไทยเป็น byte ดิบ preview จะตอบ **500 ทุกครั้ง**
+  (รวมรูตที่ไม่มีอยู่จริงด้วย) ต้อง percent-encode ก่อน — ไม่ใช่หน้าเสีย
+  ครั้งแรกที่เจอเกือบสรุปผิดว่าสองหน้าไทยพัง
+- ปิด preview server แบบ **scope ที่พอร์ต** (Get-NetTCPConnection -LocalPort 8899
+  แล้วส่งเข้า Stop-Process -Id) ไม่ใช้ taskkill แบบ image name ตามบทเรียนรอบ SUDYOD888
+- inventory: component บนดิสก์ **82 ไฟล์ เท่าเดิมก่อนเริ่ม** ไม่ได้ลบอะไร
+
+### นอกสโคป / ไม่ได้แตะ
+
+- inventory ที่หลุดจากการใช้งานรอบนี้ (NavbarStyle2, FooterPremiumSumo,
+  Announcement5, LatestWinnersPremium, Faq3 และตระกูล CyberCut/FloatingBadge
+  ทั้งหมด) ยังเป็นชื่อ SUDYOD888 และทอง-แดงของเดิม — **drift ที่คาดไว้ ไม่ลบไม่แก้**
+  เก็บเป็นของแบรนด์ถัดไป
+- banner.png / banner2.png / banner3.png ยังอยู่ใน src/assets ตั้งใจไม่ลบ
+- public/pro3.webp / public/slide3.webp ของค้างจากแบรนด์ก่อน ไม่มีใครอ้าง ไม่ลบ
+- slide4.png ไม่ได้ใช้เป็นภาพประกอบ section (ยังอยู่ใน SmoothCarousel + promotion)
+  เพราะ SevenThree จำกัด 2 บล็อกต่อรอบ — slide3 กับ slide2 เหมาะกับหัวข้อกว่า
+- redirect affiliate yoalink.com/22hs + noindex ของ login/register ไม่ถูกแตะตามกฎ
+- account_id ใน wrangler.toml คงค่าเดิมตามกฎ (เปลี่ยนต่อ "กลุ่ม" แบรนด์ ไม่ใช่ต่อแบรนด์)
+- โครง head ของ MainLayout ไม่จัดเรียงใหม่ ไม่เพิ่ม google-site-verification
+- **ไม่ commit ไม่ push ไม่ deploy** ตามคำสั่งที่มากับรอบนี้
+
+### ⚠️ ก่อน deploy ต้องยืนยันเรื่องเดียว
+
+wrangler.toml name ตั้งเป็น ufg8 (อนุมานจากโดเมน) **แต่ยังไม่ได้ยืนยันว่า
+ufg8-brand.com เคยถูก park ด้วย tools/domain-placeholder/ ไว้หรือยัง** —
+ถ้าเคย park ชื่อ Worker ต้องตรงกับตัวที่ park ไว้เป๊ะ ไม่งั้นจะได้ Worker ตัวที่สอง
+ขณะที่โดเมนยังเสิร์ฟหน้า "Coming soon" อยู่ โดยไม่มี error ที่ไหนเลย
+เช็กด้วยคำสั่ง wrangler deployments list ที่ระบุ name เป็น ufg8 ก่อน deploy ครั้งแรก
+(ไม่มีร่องรอยชื่อนี้ในรีโปเลย และ ufg8 ไม่ชนกับแบรนด์เก่าตัวไหน)

@@ -10,19 +10,20 @@ const bankPool = [
   { name: "SCB", color: "bg-[#4e1c80]", icon: scbLogo.src },
   { name: "Krungsri", color: "bg-[#fcd34d]", icon: krungsriLogo.src },
   { name: "KTB", color: "bg-[#0ea5e9]", icon: ktbLogo.src },
+  { name: "TTB", color: "bg-[#1279be]", icon: ttbLogo.src },
 ];
 ---
 
 <div class="mx-auto w-full max-w-[1300px] p-4 font-sans">
   <div
-    class="relative border-r-4 border-l-4 border-yellow-500 bg-[#0d0305]/80 px-4 py-8 shadow-[0_0_30px_rgba(234,179,8,0.2)] md:p-10"
+    class="relative border-r-4 border-l-4 border-[#dcb96b] bg-[#0c0b09]/85 px-4 py-8 shadow-[0_0_30px_rgba(220,185,107,0.2)] md:p-10"
     style="clip-path: polygon(20px 0, calc(100% - 20px) 0, 100% 20px, 100% calc(100% - 20px), calc(100% - 20px) 100%, 20px 100%, 0 calc(100% - 20px), 0 20px);">
-    <div class="absolute top-0 left-0 h-[1px] w-full bg-gradient-to-r from-transparent via-yellow-500 to-transparent"></div>
-    <div class="absolute bottom-0 left-0 h-[1px] w-full bg-gradient-to-r from-transparent via-red-500 to-transparent"></div>
+    <div class="absolute top-0 left-0 h-[1px] w-full bg-gradient-to-r from-transparent via-[#dcb96b] to-transparent"></div>
+    <div class="absolute bottom-0 left-0 h-[1px] w-full bg-gradient-to-r from-transparent via-[#b9bcc4] to-transparent"></div>
 
-    <div class="relative z-10 mb-8 flex items-center justify-between border-b border-yellow-500/30 pb-4">
-      <h2 class="text-xl font-black tracking-[0.2em] text-yellow-400 drop-shadow-[0_0_8px_rgba(234,179,8,0.8)]">/// LIVE_TRANSACTIONS</h2>
-      <span class="animate-pulse border border-red-500/50 px-2 py-1 text-xs font-bold tracking-widest text-red-400">ONLINE</span>
+    <div class="relative z-10 mb-8 flex items-center justify-between border-b border-[#dcb96b]/30 pb-4">
+      <p class="text-xl font-black tracking-[0.2em] text-[#dcb96b] drop-shadow-[0_0_8px_rgba(220,185,107,0.8)]">/// UFAG8_LIVE_TRANSACTIONS</p>
+      <span class="animate-pulse border border-[#b9bcc4]/50 px-2 py-1 text-xs font-bold tracking-widest text-[#d7dae1]">ONLINE</span>
     </div>
 
     <div id="feed-cyber-hud" class="relative z-10 flex flex-col gap-3"></div>
@@ -42,24 +43,24 @@ const bankPool = [
     const user = `${getRandomStr(2, "abcdefghijklmnopqrstuvwxyz")}***${getRandomStr(4, "0123456789")}`;
     const isPending = Math.random() > 0.6;
 
-    const statusClass = isPending ? "text-gray-400 border-gray-600 animate-pulse" : "text-green-400 border-green-500/50";
+    const statusClass = isPending ? "text-[#bcb6a6] border-[#6f7480] animate-pulse" : "text-green-400 border-green-500/50";
     const statusText = isPending ? "[PROCESSING]" : "[VERIFIED]";
 
     return `
       <div class="winner-row origin-left transform scale-x-95 opacity-0 transition-all duration-500 ease-out">
-        <div class="flex items-center justify-between border-l-2 border-red-500 bg-gradient-to-r from-amber-900/30 to-transparent p-3 backdrop-blur-sm transition-colors hover:bg-amber-900/50">
+        <div class="flex items-center justify-between border-l-2 border-[#b9bcc4] bg-gradient-to-r from-[#7a5f22]/30 to-transparent p-3 backdrop-blur-sm transition-colors hover:bg-[#7a5f22]/50">
           <div class="flex items-center gap-4">
             <div class="flex h-8 w-8 items-center justify-center bg-black/50 border border-white/10 ${bank.color} mix-blend-screen">
               <img src="${bank.icon}" alt="bank" class="h-5 w-5 object-contain grayscale" />
             </div>
-            <div class="font-mono text-sm text-amber-100">
-              USR_ID: <span class="font-bold text-white">${user}</span>
+            <div class="font-mono text-sm text-[#efeade]">
+              USR_ID: <span class="font-bold text-[#f2dca4]">${user}</span>
             </div>
           </div>
           <div class="flex items-center gap-6">
             <div class="font-mono text-[10px] tracking-widest ${statusClass}">${statusText}</div>
-            <div class="font-mono text-xl font-black text-yellow-400 drop-shadow-[0_0_8px_rgba(255,215,0,0.5)]">
-              ${getAmount()} <span class="text-xs text-yellow-600">THB</span>
+            <div class="font-mono text-xl font-black text-[#dcb96b] drop-shadow-[0_0_8px_rgba(220,185,107,0.5)]">
+              ${getAmount()} <span class="text-xs text-[#ac893a]">THB</span>
             </div>
           </div>
         </div>

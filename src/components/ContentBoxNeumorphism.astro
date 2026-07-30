@@ -9,11 +9,12 @@ const headingSize = HeadingTag === "h1" ? "text-3xl" : "text-2xl";
 
 <section class="relative z-10 my-6 flex w-full justify-center px-4 font-sans">
   <div
-    class="w-full max-w-[1400px] rounded-[25px] border border-[#2b3a6f]/70 bg-[#111c45] p-8 text-left text-base leading-relaxed text-[#e6e3d8] shadow-[10px_10px_20px_#050912,-10px_-10px_20px_#1b2c69]">
+    class="w-full max-w-[1400px] rounded-[25px] border border-[#4a412e]/70 bg-[#191712] p-8 text-left text-base leading-relaxed text-[#efeade] shadow-[10px_10px_20px_#050403,-10px_-10px_20px_#262218]">
     {
       title && (
-        <header class="mb-8 border-b border-[#e2c05f]/25 pb-4 text-center">
-          <HeadingTag class={`bg-gradient-to-r from-[#f7e3a4] via-[#e2c05f] to-[#c39a34] bg-clip-text ${headingSize} leading-normal font-black tracking-wide text-transparent`}>
+        <header class="mb-8 border-b border-[#dcb96b]/25 pb-4 text-center">
+          <HeadingTag
+            class={`bg-gradient-to-r from-[#f2dca4] via-[#dcb96b] to-[#ac893a] bg-clip-text ${headingSize} leading-normal font-black tracking-wide text-transparent`}>
             {title}
           </HeadingTag>
         </header>

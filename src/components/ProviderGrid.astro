@@ -1,41 +1,41 @@
 ---
-const providers = [
-  { name: "PG Soft", desc: "สล็อตแนวตั้งเล่นบนมือถือ มีเกมยอดนิยมให้เลือกหลายเกม", tag: "สล็อต", icon: "🎰" },
-  { name: "JILI", desc: "สล็อตและเกมยิงปลาจังหวะเร็ว อ่านปุ่มเดิมพันง่ายบนจอมือถือ", tag: "สล็อต + ยิงปลา", icon: "🐟" },
-  { name: "Pragmatic Play", desc: "มีทั้งสล็อตและโต๊ะ Live สดอยู่ในค่ายเดียวกัน", tag: "สล็อต + Live", icon: "🎲" },
-  { name: "Evolution", desc: "ห้องคาสิโนสด บาคาร่า รูเล็ต แบล็คแจ็ค ถ่ายสดจากสตูดิโอ", tag: "คาสิโนสด", icon: "🃏" },
-  { name: "Microgaming", desc: "ค่ายเกมเก่าแก่ ฟีเจอร์และรูปแบบเกมหลากหลาย", tag: "สล็อต", icon: "🕹️" },
-  { name: "SA Gaming", desc: "โต๊ะบาคาร่าสดหลายห้อง ดูขั้นต่ำโต๊ะได้ก่อนเข้าเล่น", tag: "คาสิโนสด", icon: "💠" },
-  { name: "Sexy Gaming", desc: "โต๊ะสดหน้าจอเรียบ ดูจังหวะแจกไพ่ได้ชัดบนมือถือ", tag: "คาสิโนสด", icon: "🎬" },
+const markets = [
+  { name: "แทงบอลก่อนแข่ง", desc: "แบ่งรายการตามลีก คู่แข่งขัน และช่วงเวลา มีเวลาตรวจฟอร์มก่อนกด", tag: "ฟุตบอล", icon: "⚽" },
+  { name: "แทงบอลสด", desc: "ราคาขยับตามสกอร์ เวลา ใบแดง และจังหวะในสนาม", tag: "ระหว่างแข่ง", icon: "⏱️" },
+  { name: "ตลาดแฮนดิแคป", desc: "ต่อ–รองระหว่างสองทีม ควรดูทั้งราคาและฝั่งเดิมพัน", tag: "ตลาดหลัก", icon: "⚖️" },
+  { name: "ตลาดสูง–ต่ำ", desc: "วัดจากจำนวนประตูรวมเทียบกับเส้นที่ระบบแสดง", tag: "ตลาดหลัก", icon: "📈" },
+  { name: "ตลาด 1X2", desc: "เลือกทีมเหย้าชนะ เสมอ หรือทีมเยือนชนะในคู่นั้น", tag: "ตลาดหลัก", icon: "🔢" },
+  { name: "บิลเดี่ยวและบิลสเต็ป", desc: "เลือกผูกผลคู่เดียว หรือรวมหลายคู่ในรายการเดียว", tag: "รูปแบบบิล", icon: "🧾" },
+  { name: "คาสิโนสดและสล็อต", desc: "หมวดเสริมนอกเหนือจากตลาดกีฬา ใช้บัญชีเดียวกัน", tag: "หมวดเสริม", icon: "🎲" },
 ];
 ---
 
 <div class="relative z-10 mx-auto mb-10 w-full max-w-[1400px] px-4 font-sans">
   <div class="mb-8 flex w-full flex-col items-center justify-center gap-2 text-center">
-    <p class="bg-gradient-to-r from-[#ffe9a8] via-[#f5c53d] to-[#c8921e] bg-clip-text text-3xl font-black tracking-widest text-transparent uppercase">
-      ค่ายเกมและคาสิโนสดที่แสดงบนหน้า <span class="text-[#f5c53d]">SUDYOD888</span>
+    <p class="bg-gradient-to-r from-[#f2dca4] via-[#dcb96b] to-[#ac893a] bg-clip-text text-3xl font-black tracking-widest text-transparent uppercase">
+      ตลาดกีฬาและหมวดเดิมพันที่แสดงบนหน้า <span class="text-[#dcb96b]">UFAG8</span>
     </p>
-    <div class="mt-2 h-[4px] w-24 rounded-full bg-gradient-to-r from-transparent via-[#f5c53d] to-transparent"></div>
+    <div class="mt-2 h-[4px] w-24 rounded-full bg-gradient-to-r from-transparent via-[#dcb96b] to-transparent"></div>
   </div>
 
   <div class="grid grid-cols-2 gap-4 sm:grid-cols-3 lg:grid-cols-4 lg:gap-5 xl:grid-cols-7">
     {
-      providers.map((game) => (
+      markets.map((market) => (
         <a
           href="/register"
-          class="group relative flex flex-col items-center justify-center overflow-hidden rounded-2xl border border-[#f5c53d]/25 bg-[#140d06]/92 p-5 shadow-[0_10px_30px_rgba(245,197,61,0.18)] backdrop-blur-md transition-all duration-300 hover:-translate-y-2 hover:border-[#f5c53d]/50 hover:bg-[#1e1409]/95 hover:shadow-[0_15px_40px_rgba(245,197,61,0.3)]">
-          <div class="pointer-events-none absolute inset-0 bg-[#f5c53d]/10 opacity-0 transition-opacity duration-300 group-hover:opacity-100" />
+          class="group relative flex flex-col items-center justify-center overflow-hidden rounded-2xl border border-[#dcb96b]/25 bg-[#100f0c]/92 p-5 shadow-[0_10px_30px_rgba(220,185,107,0.18)] backdrop-blur-md transition-all duration-300 hover:-translate-y-2 hover:border-[#dcb96b]/50 hover:bg-[#191712]/95 hover:shadow-[0_15px_40px_rgba(220,185,107,0.3)]">
+          <div class="pointer-events-none absolute inset-0 bg-[#dcb96b]/10 opacity-0 transition-opacity duration-300 group-hover:opacity-100" />
 
-          <div class="absolute top-2 right-2 z-10 rounded-full bg-gradient-to-r from-[#ffe9a8] via-[#f5c53d] to-[#c8921e] px-2 py-0.5 text-[9px] font-black tracking-wide whitespace-nowrap text-[#140d06] shadow-sm transition-transform duration-300 group-hover:scale-110">
-            {game.tag}
+          <div class="absolute top-2 right-2 z-10 rounded-full bg-gradient-to-r from-[#f2dca4] via-[#dcb96b] to-[#ac893a] px-2 py-0.5 text-[9px] font-black tracking-wide whitespace-nowrap text-[#141210] shadow-sm transition-transform duration-300 group-hover:scale-110">
+            {market.tag}
           </div>
 
-          <div class="mb-3 text-4xl transition-transform duration-300 group-hover:scale-125 group-hover:rotate-3">{game.icon}</div>
-          <p class="text-center text-sm font-black text-[#ece2cc] transition-colors group-hover:text-[#ffe9a8]">{game.name}</p>
-          <p class="mt-1 text-center text-[10px] text-[#b8ab92]">{game.desc}</p>
+          <div class="mb-3 text-4xl transition-transform duration-300 group-hover:scale-125 group-hover:rotate-3">{market.icon}</div>
+          <p class="text-center text-sm font-black text-[#efeade] transition-colors group-hover:text-[#f2dca4]">{market.name}</p>
+          <p class="mt-1 text-center text-[10px] text-[#bcb6a6]">{market.desc}</p>
 
-          <span class="relative z-10 mt-4 block w-full rounded-full border border-[#f5c53d]/25 bg-[#1e1409] py-1.5 text-center text-[11px] font-bold text-[#f5c53d] shadow-inner transition-colors duration-300 group-hover:border-[#f5c53d]/50 group-hover:bg-gradient-to-r group-hover:from-[#ffe9a8] group-hover:via-[#f5c53d] group-hover:to-[#c8921e] group-hover:text-[#140d06]">
-            เข้าดูเกม
+          <span class="relative z-10 mt-4 block w-full rounded-full border border-[#dcb96b]/25 bg-[#191712] py-1.5 text-center text-[11px] font-bold text-[#dcb96b] shadow-inner transition-colors duration-300 group-hover:border-[#dcb96b]/50 group-hover:bg-gradient-to-r group-hover:from-[#f2dca4] group-hover:via-[#dcb96b] group-hover:to-[#ac893a] group-hover:text-[#141210]">
+            เข้าดูตลาด
           </span>
         </a>
       ))
