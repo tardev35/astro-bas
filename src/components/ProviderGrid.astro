@@ -1,7 +1,7 @@
 ---
 const providers = [
   { name: "PG Soft", desc: "สล็อตแนวตั้งเล่นบนมือถือ มีเกมยอดนิยมให้เลือกหลายเกม", tag: "สล็อต", icon: "🎰" },
-  { name: "JILI", desc: "สล็อตและเกมยิงปลาจังหวะเร็ว อ่านปุ่มเดิมพันง่ายบนจอมือถือ", tag: "สล็อต", icon: "🐟" },
+  { name: "JILI", desc: "สล็อตและเกมยิงปลาจังหวะเร็ว อ่านปุ่มเดิมพันง่ายบนจอมือถือ", tag: "สล็อต + ยิงปลา", icon: "🐟" },
   { name: "Pragmatic Play", desc: "มีทั้งสล็อตและโต๊ะ Live สดอยู่ในค่ายเดียวกัน", tag: "สล็อต + Live", icon: "🎲" },
   { name: "Evolution", desc: "ห้องคาสิโนสด บาคาร่า รูเล็ต แบล็คแจ็ค ถ่ายสดจากสตูดิโอ", tag: "คาสิโนสด", icon: "🃏" },
   { name: "Microgaming", desc: "ค่ายเกมเก่าแก่ ฟีเจอร์และรูปแบบเกมหลากหลาย", tag: "สล็อต", icon: "🕹️" },
@@ -12,10 +12,10 @@ const providers = [
 
 <div class="relative z-10 mx-auto mb-10 w-full max-w-[1400px] px-4 font-sans">
   <div class="mb-8 flex w-full flex-col items-center justify-center gap-2 text-center">
-    <p class="bg-gradient-to-r from-[#f7e3a4] via-[#e2c05f] to-[#c39a34] bg-clip-text text-3xl font-black tracking-widest text-transparent uppercase">
-      ค่ายเกมและคาสิโนสดที่แสดงบนหน้า <span class="text-[#d8b558]">PRODED888</span>
+    <p class="bg-gradient-to-r from-[#ffe9a8] via-[#f5c53d] to-[#c8921e] bg-clip-text text-3xl font-black tracking-widest text-transparent uppercase">
+      ค่ายเกมและคาสิโนสดที่แสดงบนหน้า <span class="text-[#f5c53d]">SUDYOD888</span>
     </p>
-    <div class="mt-2 h-[4px] w-24 rounded-full bg-gradient-to-r from-transparent via-[#e2c05f] to-transparent"></div>
+    <div class="mt-2 h-[4px] w-24 rounded-full bg-gradient-to-r from-transparent via-[#f5c53d] to-transparent"></div>
   </div>
 
   <div class="grid grid-cols-2 gap-4 sm:grid-cols-3 lg:grid-cols-4 lg:gap-5 xl:grid-cols-7">
@@ -23,18 +23,18 @@ const providers = [
       providers.map((game) => (
         <a
           href="/register"
-          class="group relative flex flex-col items-center justify-center overflow-hidden rounded-2xl border border-amber-400/25 bg-[#0b1330]/92 p-5 shadow-[0_10px_30px_rgba(226,192,95,0.18)] backdrop-blur-md transition-all duration-300 hover:-translate-y-2 hover:border-amber-400/50 hover:bg-[#111c45]/95 hover:shadow-[0_15px_40px_rgba(226,192,95,0.30)]">
-          <div class="pointer-events-none absolute inset-0 bg-amber-300/10 opacity-0 transition-opacity duration-300 group-hover:opacity-100" />
+          class="group relative flex flex-col items-center justify-center overflow-hidden rounded-2xl border border-[#f5c53d]/25 bg-[#140d06]/92 p-5 shadow-[0_10px_30px_rgba(245,197,61,0.18)] backdrop-blur-md transition-all duration-300 hover:-translate-y-2 hover:border-[#f5c53d]/50 hover:bg-[#1e1409]/95 hover:shadow-[0_15px_40px_rgba(245,197,61,0.3)]">
+          <div class="pointer-events-none absolute inset-0 bg-[#f5c53d]/10 opacity-0 transition-opacity duration-300 group-hover:opacity-100" />
 
-          <div class="absolute top-2 right-2 z-10 rounded-full bg-gradient-to-r from-[#f7e3a4] via-[#e2c05f] to-[#c39a34] px-2 py-0.5 text-[9px] font-black tracking-wide whitespace-nowrap text-[#0a1024] shadow-sm transition-transform duration-300 group-hover:scale-110">
+          <div class="absolute top-2 right-2 z-10 rounded-full bg-gradient-to-r from-[#ffe9a8] via-[#f5c53d] to-[#c8921e] px-2 py-0.5 text-[9px] font-black tracking-wide whitespace-nowrap text-[#140d06] shadow-sm transition-transform duration-300 group-hover:scale-110">
             {game.tag}
           </div>
 
           <div class="mb-3 text-4xl transition-transform duration-300 group-hover:scale-125 group-hover:rotate-3">{game.icon}</div>
-          <p class="text-center text-sm font-black text-[#e6e3d8] transition-colors group-hover:text-[#f0d68c]">{game.name}</p>
-          <p class="mt-1 text-center text-[10px] text-white/60">{game.desc}</p>
+          <p class="text-center text-sm font-black text-[#ece2cc] transition-colors group-hover:text-[#ffe9a8]">{game.name}</p>
+          <p class="mt-1 text-center text-[10px] text-[#b8ab92]">{game.desc}</p>
 
-          <span class="relative z-10 mt-4 block w-full rounded-full border border-amber-400/25 bg-[#111c45] py-1.5 text-center text-[11px] font-bold text-[#f0d68c] shadow-inner transition-colors duration-300 group-hover:border-amber-400/50 group-hover:bg-gradient-to-r group-hover:from-[#f7e3a4] group-hover:via-[#e2c05f] group-hover:to-[#c39a34] group-hover:text-[#0a1024]">
+          <span class="relative z-10 mt-4 block w-full rounded-full border border-[#f5c53d]/25 bg-[#1e1409] py-1.5 text-center text-[11px] font-bold text-[#f5c53d] shadow-inner transition-colors duration-300 group-hover:border-[#f5c53d]/50 group-hover:bg-gradient-to-r group-hover:from-[#ffe9a8] group-hover:via-[#f5c53d] group-hover:to-[#c8921e] group-hover:text-[#140d06]">
             เข้าดูเกม
           </span>
         </a>

@@ -8,16 +8,16 @@ const { title, as: HeadingTag = "h2" } = Astro.props;
 
 <section class="relative z-10 mx-auto mb-10 w-full max-w-[1400px] px-4 font-sans">
   <div
-    class="group relative isolate w-full overflow-hidden rounded-3xl border border-amber-600/25 bg-[#fffdf7]/92 p-6 text-[#3a2e18] shadow-[0_10px_30px_rgba(168,132,44,0.18)] backdrop-blur-xl transition-all duration-500 hover:border-amber-600/50 md:p-10">
+    class="group relative isolate w-full overflow-hidden rounded-3xl border border-[#f5c53d]/25 bg-[#140d06]/92 p-6 text-[#ece2cc] shadow-[0_10px_30px_rgba(245,197,61,0.16)] backdrop-blur-xl transition-all duration-500 hover:border-[#f5c53d]/50 md:p-10">
     <div
-      class="pointer-events-none absolute top-0 left-1/2 -z-10 h-[2px] w-1/2 -translate-x-1/2 bg-gradient-to-r from-transparent via-[#c9a227] to-transparent opacity-60 transition-opacity duration-500 group-hover:opacity-100">
+      class="pointer-events-none absolute top-0 left-1/2 -z-10 h-[2px] w-1/2 -translate-x-1/2 bg-gradient-to-r from-transparent via-[#f5c53d] to-transparent opacity-60 transition-opacity duration-500 group-hover:opacity-100">
     </div>
 
     {
       title && (
-        <header class="mb-8 flex items-center gap-4 border-b border-amber-600/25 pb-4">
-          <div class="h-8 w-1.5 shrink-0 rounded-full bg-gradient-to-b from-[#e8cf8b] to-[#a97f2a] shadow-[0_0_10px_rgba(201,162,39,0.45)]" />
-          <HeadingTag class="bg-gradient-to-r from-[#7a5a12] via-[#b8912f] to-[#8a6a1f] bg-clip-text text-2xl leading-normal font-black tracking-widest text-transparent uppercase">
+        <header class="mb-8 flex items-center gap-4 border-b border-[#f5c53d]/25 pb-4">
+          <div class="h-8 w-1.5 shrink-0 rounded-full bg-gradient-to-b from-[#ffe9a8] to-[#c8921e] shadow-[0_0_10px_rgba(245,197,61,0.45)]" />
+          <HeadingTag class="bg-gradient-to-r from-[#ffe9a8] via-[#f5c53d] to-[#c8921e] bg-clip-text text-2xl leading-normal font-black tracking-widest text-transparent uppercase">
             {title}
           </HeadingTag>
         </header>
@@ -26,18 +26,18 @@ const { title, as: HeadingTag = "h2" } = Astro.props;
 
     <div class="grid grid-cols-1 gap-6 lg:grid-cols-2 lg:gap-10">
       <article
-        class="relative flex gap-4 rounded-2xl border border-amber-600/20 bg-[#faf4e6]/95 p-6 text-left text-base leading-relaxed text-[#3a2e18] transition-all duration-300 hover:-translate-y-2 hover:border-amber-600/50 hover:bg-[#f4ecd8]/90 hover:shadow-[0_15px_40px_rgba(168,132,44,0.30)]">
+        class="relative flex gap-4 rounded-2xl border border-[#f5c53d]/20 bg-[#0d0804]/95 p-6 text-left text-base leading-relaxed text-[#ece2cc] transition-all duration-300 hover:-translate-y-2 hover:border-[#f5c53d]/50 hover:bg-[#1e1409]/90 hover:shadow-[0_15px_40px_rgba(245,197,61,0.28)]">
         <div
-          class="flex h-12 w-12 shrink-0 items-center justify-center rounded-xl border border-amber-600/30 bg-gradient-to-br from-[#f4dfa3] via-[#d9b45c] to-[#a97f2a] text-2xl shadow-[0_5px_15px_rgba(168,132,44,0.25)]">
+          class="flex h-12 w-12 shrink-0 items-center justify-center rounded-xl border border-[#f5c53d]/30 bg-gradient-to-br from-[#ffe9a8] via-[#f5c53d] to-[#c8921e] text-2xl shadow-[0_5px_15px_rgba(245,197,61,0.28)]">
           🎴
         </div>
         <slot name="left" />
       </article>
 
       <article
-        class="relative flex gap-4 rounded-2xl border border-amber-600/20 bg-[#faf4e6]/95 p-6 text-left text-base leading-relaxed text-[#3a2e18] transition-all duration-300 hover:-translate-y-2 hover:border-amber-600/50 hover:bg-[#f4ecd8]/90 hover:shadow-[0_15px_40px_rgba(168,132,44,0.30)]">
+        class="relative flex gap-4 rounded-2xl border border-[#f5c53d]/20 bg-[#0d0804]/95 p-6 text-left text-base leading-relaxed text-[#ece2cc] transition-all duration-300 hover:-translate-y-2 hover:border-[#f5c53d]/50 hover:bg-[#1e1409]/90 hover:shadow-[0_15px_40px_rgba(245,197,61,0.28)]">
         <div
-          class="flex h-12 w-12 shrink-0 items-center justify-center rounded-xl border border-[#cfd0d2] bg-gradient-to-br from-[#e9eaec] via-[#c6c8cb] to-[#9a9da1] text-2xl shadow-[0_5px_15px_rgba(168,132,44,0.25)]">
+          class="flex h-12 w-12 shrink-0 items-center justify-center rounded-xl border border-[#c8121f]/50 bg-gradient-to-br from-[#e4222a] via-[#c8121f] to-[#7d0b12] text-2xl shadow-[0_5px_15px_rgba(200,18,31,0.35)]">
           🎯
         </div>
         <slot name="right" />

@@ -2678,3 +2678,86 @@ WINUP888 เป็นธีม**สว่าง (ไอวอรี/ครีม
   รอบ LAPDEE88) — โหลดถูกต้องทั้งสองสาขาของ flag ฟอนต์ จึงไม่แก้รอบนี้
 - redirect affiliate + noindex ของ login/register ไม่ถูกแตะตามกฎ
 - **ไม่ deploy · ไม่ `git push` · ไม่ `git commit`** ตามคำสั่ง — หยุดที่ build + verify
+
+## 2026-07-30 — รีแบรนด์ PRODED888 → SUDYOD888 (ทองหรู + แดงเลือดหมู บนดำอมน้ำตาล)
+
+**เป้าหมาย:** เปิดตัวแบรนด์ SUDYOD888 บน template เดิม พร้อมโดเมนจริง
+`https://sudyod888-brand.com` · รันผ่าน rebrand-uploader แบบขนานตาม playbook
+
+**หมายเหตุเรื่องบันทึกนี้ — Phase 6 เขียนย้อนหลัง:** รอบนี้ agent ที่ทำงานไม่ได้เขียน
+บันทึกเอง เพราะ process ตายก่อนถึงขั้นนี้ ตอนปิด dev server ท้าย Phase 5 มีการรัน
+`taskkill /F /IM node.exe` ซึ่งฆ่า node **ทุกตัวในเครื่อง** — ทั้ง dev server (ตั้งใจ),
+uploader server (ไม่ตั้งใจ), และตัว claude CLI ที่กำลังรันงานอยู่เอง เพราะ CLI รันบน node
+งานรีแบรนด์เสร็จครบถ้วนก่อนตาย (Phase 5 ผ่าน `0 old brand in dev response`) เหลือแค่
+ขั้นบันทึกนี้ บันทึกจึงประกอบขึ้นจาก `git diff` + `.rebrand-brandspec.md` + การ verify
+ที่รันใหม่ทั้งชุดในเซสชันแยก — ข้อไหนที่ไม่ได้ตรวจซ้ำด้วยตัวเองจะไม่ถูกเขียนลงมา
+ต้นตอคือ SKILL.md Phase 5 ข้อ 3 เขียนกว้างว่า "best effort — pkill/taskkill" โดยไม่ระบุ
+ให้เจาะจง PID/พอร์ต และอ้างพอร์ต 4321 ซึ่งไม่ใช่ของโปรเจกต์นี้ (dev ใช้ 8888) —
+แก้ข้อความในไฟล์นั้นไปพร้อมกันในคอมมิตเดียวกับบันทึกนี้แล้ว
+
+### variant rotation (ก่อน → หลัง)
+
+| family | PRODED888 (ออก) | SUDYOD888 (รอบนี้) |
+|---|---|---|
+| Navbar | NavbarStyle6 | **NavbarStyle2** |
+| Footer | FooterStyle2 | **FooterPremiumSumo** |
+| Announcement | Announcement3 | **Announcement5** |
+| LatestWinners | LatestWinners4 | **LatestWinnersPremium** |
+| Faq | Faq (plain) | **Faq3** |
+| ContentBox mix | Premium + Neumorphism + plain + TwoPremium + SevenThreePremium + SevenThreeNeumorphism | **CyberCut + FloatingBadge + Special + plain + TwoCyberCut + SevenThreeCyberCut + SevenThreeFloatingBadge** |
+| Brand font | kanit | **google-sans** |
+
+ไม่มี family ไหนอยู่ตัวเดิม — สลับครบทุกช่อง
+
+### พาเลตต์
+
+พื้นดำอมน้ำตาล `#080503` (แทน navy `#050912` ของ PRODED888) · การ์ด `#140d06` ·
+ทองหลัก `#f5c53d` (ไล่ `#ffe9a8` → `#f5c53d` → `#c8921e`) · แดงเลือดหมูรอง `#c8121f` ·
+ตัวอักษร `#ece2cc` — อ่านเป็นคู่สีทอง-แดง ทองเป็นหลัก แดงเป็นสีเน้น
+
+### ไฟล์ที่แก้ (49 ไฟล์)
+
+- **ตั้งค่า/โครง (4):** `astro.config.mjs` (`site:`), `wrangler.toml` (`name = "sudyod888"`),
+  `src/lib/brandProfile.ts` (`BRAND_FONT` → google-sans), `src/layouts/MainLayout.astro`
+- **asset ที่ uploader วางทับ (14):** `banner1.png`, `slide1..4.png`, `logo.webp`, `bg.png`,
+  `content.docx`, `content.txt`, `palette.json` + favicon/manifest ใน `public/`
+- **component ที่ retheme (19):** Announcement5 · ContentBox · ContentBoxCyberCut ·
+  ContentBoxFloatingBadge · ContentBoxSevenThreeCyberCut · ContentBoxSevenThreeFloatingBadge ·
+  ContentBoxSpecial · ContentBoxTwo · ContentBoxTwoCyberCut · Faq3 · FooterPremiumSumo ·
+  GameRankingBoard · LatestWinnersPremium · LoginRtpSection · NavbarStyle2 · Navfoot ·
+  ProviderGrid · ReviewCardSumo2 · SmoothCarousel
+- **หน้า (7):** index · promotion · contact-us · ทางเข้า · ทดลองเล่น · login · register
+
+### การ verify ที่รันจริง
+
+- `npm run build` → **7 หน้า สำเร็จ 0 fail**
+- route: `/`, `/promotion`, `/contact-us`, `/ทางเข้า`, `/ทดลองเล่น`, `/login`, `/register`,
+  `/line` — ไม่มี `/ตรวจหวย` `/แนวทาง` ถูกต้องสำหรับแบรนด์สล็อต
+- **ชื่อแบรนด์เก่าใน dist ทั้งหมด → 0**: PRODED888 · WINUP888 · UFAYES · PAY69 · LAPDEE88
+  (SUDYOD888 = 70 จุด)
+- `astro.config.mjs` `site:` / canonical / sitemap = `sudyod888-brand.com` ตรงกันทั้งสามที่
+- **heading**: `/` = h1 x1 · h2 x11 · h3 x5 — h2 สิบตัวแรกตรงกับ checklist ของ docx
+  (H1 x1 + H2 x10 ไม่มี H3) บวกหัวข้อ FAQ อีก 1 · h3 ทั้ง 5 คือคำถาม FAQ ของ Faq3
+  ซึ่งเป็น h3 เดียวที่ brandspec อนุญาต (ซ้อนใต้ h2 ของ section จริง)
+  · หน้าย่อย: contact-us/promotion/ทางเข้า h1 x1 h2 x2 · ทดลองเล่น h1 x1 h2 x3
+  · login/register h1 x1 ไม่มี h2-h6
+- สุขอนามัย HTML: คอมเมนต์ `<!--` **0** · `undefined` **0** · `NaN` **0** ·
+  `[object Object]` **0** · placeholder TODO **0** — ทั้ง 8 ไฟล์
+- **ภาพ**: hero = `banner1.*` (20 hit) · `banner2` / `banner3` → **0 hit ใน dist** ยืนยันว่า
+  ไฟล์ค้างจากแบรนด์ก่อนไม่ถูกหยิบ · slide1-4 ปรากฏใน SmoothCarousel และสองบล็อก SevenThree
+- `og:image` ชี้ asset ที่ hash แล้วของ `slide1` ไม่ใช่ path ดิบใน public
+- **ฟอนต์**: อ้าง `fonts.googleapis` (Google Sans) ตรงกับ `BRAND_FONT = "google-sans"` ·
+  `@font-face` ของ Kanit ยังถูก inline มาใน global.css 4 รายการแต่ไม่มีอะไรเรียกใช้
+  จึงไม่เกิด request — เป็น dead CSS ที่คาดไว้ ไม่ใช่บั๊ก
+- sitemap = 5 URL บนโดเมนใหม่ ตัด `/login` `/register` `/line` ออกถูกต้อง
+
+### นอกสโคป / ไม่ได้แตะ
+
+- inventory ที่หลุดจากการใช้งานรอบนี้ (`NavbarStyle6`, `FooterStyle2`, `Announcement3`,
+  `LatestWinners4`, `Faq` plain และตระกูล Premium/Neumorphism ทั้งหมด) ยังเป็นชื่อและ
+  สี navy ของ PRODED888 — **drift ที่คาดไว้ ไม่ลบและไม่แก้** เก็บเป็นของแบรนด์ถัดไป
+- `banner.png` / `banner2.png` / `banner3.png` ยังอยู่ใน `src/assets` ตั้งใจไม่ลบ
+- หน้าหวย `ตรวจหวย.astro` / `แนวทาง.astro` ยังอยู่ใน `src/pages-disabled/` ตามเดิม
+- redirect affiliate + noindex ของ login/register ไม่ถูกแตะตามกฎ
+- `.rebrand-brandspec.md` (scratchpad ของรอบนี้) ลบทิ้งแล้วตามที่ไฟล์นั้นระบุไว้เอง
+- **ไม่ deploy** — หยุดที่ build + verify + commit + push

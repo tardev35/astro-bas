@@ -2,64 +2,64 @@
 import ContentBoxTwo from "./ContentBoxTwo.astro";
 
 const gameCategories = [
-  { icon: "🎰", name: "สล็อตออนไลน์", providers: "PG Soft • Pragmatic Play • JILI", tag: "1,000+ เกม" },
-  { icon: "🃏", name: "บาคาร่า คาสิโนสด", providers: "Evolution • Microgaming", tag: "24 ชม." },
-  { icon: "⚽", name: "กีฬา", providers: "ยอดคืนมักรอบิลตัดสินผล", tag: "คืนยอดเสีย" },
-  { icon: "🎟️", name: "หวย", providers: "อยู่ในบัญชีเดียวกับสล็อต", tag: "เช็กเงื่อนไข" },
-  { icon: "🐓", name: "ไก่ชน และโป๊กเกอร์", providers: "รวมอยู่ในระบบเดียว", tag: "บัญชีเดียว" },
+  { icon: "🎰", name: "สล็อตออนไลน์", providers: "เริ่มต้นได้ตั้งแต่ 1 บาท บางเกมมีโหมดทดลอง", tag: "200+ เกม" },
+  { icon: "🐟", name: "เกมยิงปลา", providers: "เลือกเป้าหมายให้เหมาะกับกระสุนที่ใช้", tag: "บัญชีเดียว" },
+  { icon: "🃏", name: "คาสิโนสด", providers: "โต๊ะสด กติกาแตกต่างกันตามห้อง", tag: "เช็กกติกาโต๊ะ" },
+  { icon: "💸", name: "ฝากถอนออโต้", providers: "Mobile Banking และ True Wallet", tag: "ถอน 100–49,000" },
+  { icon: "🎁", name: "โบนัสและคืนยอดเสีย", providers: "โบนัสสูงสุด 400% คืนยอดเสียรายสัปดาห์", tag: "ดูเงื่อนไข" },
 ];
 
-const payChannels = ["PromptPay", "TrueMoney Wallet", "K PLUS", "SCB Easy", "ออโต้ 24 ชม."];
+const payChannels = ["Mobile Banking", "True Wallet", "ถอนขั้นต่ำ 100 บาท", "ไม่เกิน 49,000 บาท/รายการ", "ออโต้"];
 ---
 
-<ContentBoxTwo titleleft="เข้าสู่ระบบ PRODED888" titleright="หมวดเกมและช่องทางฝากถอนออโต้">
+<ContentBoxTwo titleleft="เข้าสู่ระบบ SUDYOD888" titleright="หมวดเกมและช่องทางฝากถอนออโต้">
   <div slot="left" class="flex h-full flex-col gap-4">
-    <div class="relative overflow-hidden rounded-2xl border border-[#e2c05f]/25 bg-[#0b1330]/92 p-6 shadow-[0_10px_30px_rgba(226,192,95,0.14)] backdrop-blur-md">
-      <div class="pointer-events-none absolute -top-10 -right-10 h-32 w-32 rounded-full bg-[#e2c05f]/20 blur-[50px]"></div>
+    <div class="relative overflow-hidden rounded-2xl border border-[#f5c53d]/25 bg-[#0d0804]/92 p-6 shadow-[0_10px_30px_rgba(245,197,61,0.14)] backdrop-blur-md">
+      <div class="pointer-events-none absolute -top-10 -right-10 h-32 w-32 rounded-full bg-[#f5c53d]/20 blur-[50px]"></div>
 
       <div class="relative z-10 mb-5 flex items-center gap-3">
-        <span class="flex h-11 w-11 shrink-0 items-center justify-center rounded-xl border border-[#e2c05f]/40 bg-gradient-to-br from-[#f7e3a4] via-[#e2c05f] to-[#c39a34] text-xl shadow-inner">🎮</span>
+        <span class="flex h-11 w-11 shrink-0 items-center justify-center rounded-xl border border-[#f5c53d]/40 bg-gradient-to-br from-[#ffe9a8] via-[#f5c53d] to-[#c8921e] text-xl shadow-inner">🎮</span>
         <div class="flex flex-col">
-          <p class="text-base font-black text-[#f0d68c]">ยินดีต้อนรับกลับ</p>
-          <span class="text-[11px] text-[#b9c2e0]">บัญชีเดียวใช้ได้ทั้งสล็อต คาสิโนสด กีฬา และหวยของ PRODED888</span>
+          <p class="text-base font-black text-[#f5c53d]">ยินดีต้อนรับกลับ</p>
+          <span class="text-[11px] text-[#b8ab92]">บัญชีเดียวใช้ได้ทั้งสล็อต เกมยิงปลา และคาสิโนสดของ SUDYOD888</span>
         </div>
       </div>
 
       <div class="relative z-10 flex flex-col gap-3.5">
         <div class="relative">
-          <span class="absolute top-3.5 left-4 text-[#d8b558]">👤</span>
+          <span class="absolute top-3.5 left-4 text-[#c8921e]">👤</span>
           <input
             type="text"
-            placeholder="ยูสเซอร์เนม / เบอร์โทรศัพท์"
-            class="w-full rounded-xl border border-[#2b3a6f] bg-[#111c45]/95 py-3 pr-4 pl-12 text-[#e6e3d8] transition-all outline-none placeholder:text-[#8b96bb] focus:border-[#e2c05f] focus:ring-1 focus:ring-[#e2c05f]/50"
+            placeholder="เบอร์โทรศัพท์ / ยูสเซอร์เนม"
+            class="w-full rounded-xl border border-[#8a5f14] bg-[#1e1409]/95 py-3 pr-4 pl-12 text-[#ece2cc] transition-all outline-none placeholder:text-[#8f7f63] focus:border-[#f5c53d] focus:ring-1 focus:ring-[#f5c53d]/50"
           />
         </div>
         <div class="relative">
-          <span class="absolute top-3.5 left-4 text-[#d8b558]">🔑</span>
+          <span class="absolute top-3.5 left-4 text-[#c8921e]">🔑</span>
           <input
             type="password"
             placeholder="รหัสผ่าน"
-            class="w-full rounded-xl border border-[#2b3a6f] bg-[#111c45]/95 py-3 pr-4 pl-12 text-[#e6e3d8] transition-all outline-none placeholder:text-[#8b96bb] focus:border-[#e2c05f] focus:ring-1 focus:ring-[#e2c05f]/50"
+            class="w-full rounded-xl border border-[#8a5f14] bg-[#1e1409]/95 py-3 pr-4 pl-12 text-[#ece2cc] transition-all outline-none placeholder:text-[#8f7f63] focus:border-[#f5c53d] focus:ring-1 focus:ring-[#f5c53d]/50"
           />
         </div>
 
         <div class="flex items-center justify-between px-1 text-xs">
-          <label class="flex items-center gap-2 text-[#b9c2e0]">
-            <input type="checkbox" class="h-3.5 w-3.5 rounded border-[#2b3a6f] bg-[#111c45] accent-[#e2c05f]" />
+          <label class="flex items-center gap-2 text-[#b8ab92]">
+            <input type="checkbox" class="h-3.5 w-3.5 rounded border-[#8a5f14] bg-[#1e1409] accent-[#f5c53d]" />
             จดจำฉันไว้
           </label>
-          <a href="/login" class="text-[#b9c2e0] transition-colors hover:text-[#f0d68c]">ลืมรหัสผ่าน?</a>
+          <a href="/login" class="text-[#b8ab92] transition-colors hover:text-[#ffe9a8]">ลืมรหัสผ่าน?</a>
         </div>
 
         <button
-          class="mt-1 w-full rounded-xl border border-[#e2c05f]/40 bg-gradient-to-r from-[#f7e3a4] via-[#e2c05f] to-[#c39a34] p-3.5 font-black text-[#0a1024] shadow-[0_10px_30px_rgba(226,192,95,0.24)] transition-all hover:scale-[1.02] hover:shadow-[0_15px_40px_rgba(226,192,95,0.34)]">
+          class="mt-1 w-full rounded-xl border border-[#f5c53d]/40 bg-gradient-to-r from-[#ffe9a8] via-[#f5c53d] to-[#c8921e] p-3.5 font-black text-[#140d06] shadow-[0_10px_30px_rgba(245,197,61,0.26)] transition-all hover:scale-[1.02] hover:shadow-[0_15px_40px_rgba(245,197,61,0.36)]">
           เข้าสู่ระบบ
         </button>
 
-        <div class="flex items-center gap-3 py-1 text-[11px] text-[#8b96bb]">
-          <span class="h-px flex-1 bg-[#2b3a6f]"></span>
+        <div class="flex items-center gap-3 py-1 text-[11px] text-[#8f7f63]">
+          <span class="h-px flex-1 bg-[#8a5f14]"></span>
           หรือ
-          <span class="h-px flex-1 bg-[#2b3a6f]"></span>
+          <span class="h-px flex-1 bg-[#8a5f14]"></span>
         </div>
 
         <a
@@ -70,22 +70,22 @@ const payChannels = ["PromptPay", "TrueMoney Wallet", "K PLUS", "SCB Easy", "อ
 
         <div class="mt-1 flex items-center justify-between px-1">
           <div class="flex gap-2">
-            <span class="rounded-full border border-[#e2c05f]/25 bg-[#111c45] px-2.5 py-1 text-[10px] font-bold text-[#f0d68c]">🔒 HTTPS + SSL</span>
-            <span class="rounded-full border border-[#2b3a6f] bg-[#1e2f74]/70 px-2.5 py-1 text-[10px] font-bold text-[#f7e3a4]">⚡ ฝากถอนออโต้ 24 ชม.</span>
+            <span class="rounded-full border border-[#f5c53d]/25 bg-[#1e1409] px-2.5 py-1 text-[10px] font-bold text-[#f5c53d]">🔒 HTTPS + SSL</span>
+            <span class="rounded-full border border-[#c8121f]/45 bg-[#240709]/80 px-2.5 py-1 text-[10px] font-bold text-[#ffe9a8]">⚡ ฝากถอนออโต้</span>
           </div>
-          <a href="/register" class="text-xs font-bold text-[#d8b558] transition-colors hover:text-[#f0d68c]">สมัครสมาชิกใหม่</a>
+          <a href="/register" class="text-xs font-bold text-[#c8921e] transition-colors hover:text-[#ffe9a8]">สมัครสมาชิกใหม่</a>
         </div>
       </div>
     </div>
   </div>
 
   <div slot="right" class="h-full">
-    <div class="flex h-full flex-col rounded-2xl border border-[#e2c05f]/25 bg-[#0b1330]/92 p-5 shadow-[0_10px_30px_rgba(226,192,95,0.14)] backdrop-blur-md">
+    <div class="flex h-full flex-col rounded-2xl border border-[#f5c53d]/25 bg-[#0d0804]/92 p-5 shadow-[0_10px_30px_rgba(245,197,61,0.14)] backdrop-blur-md">
       <div class="mb-5 flex items-center justify-between gap-3">
         <div>
-          <span class="text-xs font-bold tracking-wide text-[#b9c2e0]">หมวดเกมที่เปิดให้เลือกภายในบัญชีเดียว</span>
-          <div class="bg-gradient-to-r from-[#f7e3a4] via-[#e2c05f] to-[#c39a34] bg-clip-text text-3xl font-black text-transparent sm:text-4xl">
-            สล็อต • คาสิโนสด • กีฬา
+          <span class="text-xs font-bold tracking-wide text-[#b8ab92]">หมวดเกมที่เปิดให้เลือกภายในบัญชีเดียว</span>
+          <div class="bg-gradient-to-r from-[#ffe9a8] via-[#f5c53d] to-[#c8921e] bg-clip-text text-3xl font-black text-transparent sm:text-4xl">
+            สล็อต • เกมยิงปลา • คาสิโนสด
           </div>
         </div>
         <span class="flex items-center gap-1.5 self-start rounded-full border border-green-500/40 bg-green-900/40 px-2.5 py-1">
@@ -94,33 +94,33 @@ const payChannels = ["PromptPay", "TrueMoney Wallet", "K PLUS", "SCB Easy", "อ
         </span>
       </div>
 
-      <div class="mb-2 flex items-center justify-between text-[11px] font-bold tracking-widest text-[#8b96bb] uppercase">
-        <span>หมวดเกม / ผู้ให้บริการ</span>
+      <div class="mb-2 flex items-center justify-between text-[11px] font-bold tracking-widest text-[#8f7f63] uppercase">
+        <span>หมวดเกม / รายละเอียด</span>
         <span>สถานะ</span>
       </div>
 
       <div class="flex flex-1 flex-col gap-2.5">
         {
           gameCategories.map((c) => (
-            <div class="rounded-xl border border-[#2b3a6f] bg-[#111c45]/95 px-3.5 py-2.5 transition-colors hover:border-[#e2c05f]/50 hover:bg-[#16224f]">
+            <div class="rounded-xl border border-[#8a5f14] bg-[#1e1409]/95 px-3.5 py-2.5 transition-colors hover:border-[#f5c53d]/50 hover:bg-[#240709]">
               <div class="flex items-center justify-between gap-2 text-sm">
-                <span class="flex min-w-0 items-center gap-2 font-bold text-[#e6e3d8]">
+                <span class="flex min-w-0 items-center gap-2 font-bold text-[#ece2cc]">
                   <span class="w-5 shrink-0 text-center">{c.icon}</span> <span class="truncate">{c.name}</span>
                 </span>
-                <span class="shrink-0 rounded-full border border-[#e2c05f]/30 bg-[#0b132f] px-2.5 py-0.5 text-[10px] font-bold text-[#f7e3a4]">{c.tag}</span>
+                <span class="shrink-0 rounded-full border border-[#f5c53d]/30 bg-[#0d0804] px-2.5 py-0.5 text-[10px] font-bold text-[#ffe9a8]">{c.tag}</span>
               </div>
-              <div class="mt-1.5 text-[11px] tracking-wide text-[#b9c2e0]">{c.providers}</div>
+              <div class="mt-1.5 text-[11px] tracking-wide text-[#b8ab92]">{c.providers}</div>
             </div>
           ))
         }
       </div>
 
       <div class="mt-4 flex flex-wrap items-center justify-center gap-2">
-        {payChannels.map((m) => <span class="rounded-full border border-[#e2c05f]/25 bg-[#111c45] px-3 py-1 text-[10px] font-bold text-[#f0d68c]">{m}</span>)}
+        {payChannels.map((m) => <span class="rounded-full border border-[#f5c53d]/25 bg-[#1e1409] px-3 py-1 text-[10px] font-bold text-[#f5c53d]">{m}</span>)}
       </div>
 
-      <div class="mt-3 text-center text-[10px] tracking-wide text-[#8b96bb]">
-        รายชื่อค่ายเกม เงื่อนไขคืนยอดเสีย และช่องทางฝากถอนอาจเปลี่ยนแปลงตามช่วงเวลา ควรตรวจฐานคำนวณ เทิร์น และเพดานถอนบนหน้าโปรก่อนรับสิทธิ์ทุกครั้ง
+      <div class="mt-3 text-center text-[10px] tracking-wide text-[#8f7f63]">
+        หมวดเกม เงื่อนไขโบนัส และรอบคืนยอดเสียอาจเปลี่ยนแปลงตามช่วงเวลา ควรตรวจยอดฝากที่ร่วมรายการ จำนวนเทิร์น และเกมที่ใช้โบนัสได้บนหน้าโปรก่อนรับสิทธิ์ทุกครั้ง
       </div>
     </div>
   </div>

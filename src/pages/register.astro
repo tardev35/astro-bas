@@ -15,10 +15,10 @@ const fontHref = usesGoogleFonts
 <html lang="th" style={`--font-sans: ${fontStack};`}>
   <head>
     <meta charset="utf-8" />
-    <title>สมัครสมาชิก PRODED888 | กำลังเชื่อมต่อไปหน้าสมัครอัตโนมัติ</title>
+    <title>สมัครสมาชิก SUDYOD888 | กำลังเชื่อมต่อไปหน้าสมัครอัตโนมัติ</title>
     <meta
       name="description"
-      content="หน้าเชื่อมต่อสมัครสมาชิก PRODED888 เว็บตรงสล็อต คาสิโนสด กีฬา หวย และไก่ชนในบัญชีเดียว กำลังพาไปยังหน้าสมัครสมาชิกอย่างปลอดภัย"
+      content="หน้าเชื่อมต่อสมัครสมาชิก SUDYOD888 เว็บตรงสล็อต เกมยิงปลา และคาสิโนสดมากกว่า 200 รายการในบัญชีเดียว กำลังพาไปยังหน้าสมัครสมาชิกอย่างปลอดภัย"
     />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
@@ -34,18 +34,19 @@ const fontHref = usesGoogleFonts
     <link href={fontHref} rel="stylesheet" />
 
     <style>
-      /* PRODED888 is a DARK brand — near-black navy surfaces, royal-navy glow,
-         gold accents and warm ivory text. Every value below is a real colour,
-         so read the value, not the variable name, before reusing one. */
+      /* SUDYOD888 is a DARK brand — warm near-black surfaces, a wine-tinted
+         panel, crimson glow, rich gold accents and warm cream text. Every value
+         below is a real colour, so read the value, not the variable name,
+         before reusing one. */
       :root {
-        --page-bg: #050912;
-        --panel-bg: rgba(17, 28, 69, 0.95);
-        --brand-gold: #e2c05f;
-        --brand-gold-deep: #c39a34;
-        --brand-gold-light: #f7e3a4;
-        --brand-navy: #2a3f8f;
-        --text-body: #e6e3d8;
-        --text-muted: #b7b1a0;
+        --page-bg: #080503;
+        --panel-bg: rgba(36, 7, 9, 0.94);
+        --brand-gold: #f5c53d;
+        --brand-gold-deep: #c8921e;
+        --brand-gold-light: #ffe9a8;
+        --brand-crimson: #c8121f;
+        --text-body: #ece2cc;
+        --text-muted: #b8ab92;
       }
 
       body {
@@ -54,8 +55,8 @@ const fontHref = usesGoogleFonts
         color: var(--text-body);
 
         background:
-          radial-gradient(circle at 50% 10%, rgba(226, 192, 95, 0.18) 0%, transparent 55%),
-          radial-gradient(circle at 50% 92%, rgba(30, 47, 116, 0.55) 0%, transparent 55%), var(--page-bg);
+          radial-gradient(circle at 50% 10%, rgba(245, 197, 61, 0.18) 0%, transparent 55%),
+          radial-gradient(circle at 50% 92%, rgba(200, 18, 31, 0.55) 0%, transparent 55%), var(--page-bg);
         display: flex;
         min-height: 100vh;
         flex-direction: column;
@@ -69,11 +70,11 @@ const fontHref = usesGoogleFonts
         max-width: 450px;
         padding: 3.5rem;
         background: var(--panel-bg);
-        border: 1px solid rgba(226, 192, 95, 0.4);
+        border: 1px solid rgba(245, 197, 61, 0.4);
         border-radius: 2rem;
         box-shadow:
-          0 1rem 3rem rgba(226, 192, 95, 0.18),
-          0 0 2rem rgba(226, 192, 95, 0.25);
+          0 1rem 3rem rgba(245, 197, 61, 0.18),
+          0 0 2rem rgba(245, 197, 61, 0.25);
         text-align: center;
         backdrop-filter: blur(10px);
       }
@@ -82,13 +83,13 @@ const fontHref = usesGoogleFonts
         font-family: "Oswald", sans-serif;
         font-size: 1.5rem;
         font-weight: 700;
-        background: linear-gradient(180deg, var(--brand-gold-light) 0%, #f0d68c 40%, var(--brand-gold) 72%, var(--brand-gold-deep) 100%);
+        background: linear-gradient(180deg, var(--brand-gold-light) 0%, #fadb8e 40%, var(--brand-gold) 72%, var(--brand-gold-deep) 100%);
         -webkit-background-clip: text;
         background-clip: text;
         color: transparent;
         letter-spacing: 0.3em;
         margin-bottom: 2rem;
-        filter: drop-shadow(0 1px 2px rgba(226, 192, 95, 0.35));
+        filter: drop-shadow(0 1px 2px rgba(245, 197, 61, 0.35));
       }
 
       .sophisticated-loader {
@@ -106,14 +107,14 @@ const fontHref = usesGoogleFonts
         height: 40px;
         background: radial-gradient(circle, var(--brand-gold-light) 0%, var(--brand-gold) 45%, var(--brand-gold-deep) 100%);
         border-radius: 50%;
-        box-shadow: 0 0 2rem rgba(226, 192, 95, 0.35);
+        box-shadow: 0 0 2rem rgba(245, 197, 61, 0.35);
         animation: pulse 2s ease-in-out infinite;
       }
 
       .ring {
         position: absolute;
         border-radius: 50%;
-        border: 3px solid rgba(226, 192, 95, 0.2);
+        border: 3px solid rgba(245, 197, 61, 0.2);
         animation: spin linear infinite;
       }
 
@@ -127,7 +128,7 @@ const fontHref = usesGoogleFonts
       .ring-2 {
         width: 80%;
         height: 80%;
-        border-bottom-color: var(--brand-navy);
+        border-bottom-color: var(--brand-crimson);
         animation-duration: 6s;
         animation-direction: reverse;
       }
@@ -144,11 +145,11 @@ const fontHref = usesGoogleFonts
         0%,
         100% {
           transform: scale(1);
-          box-shadow: 0 0 2rem rgba(226, 192, 95, 0.35);
+          box-shadow: 0 0 2rem rgba(245, 197, 61, 0.35);
         }
         50% {
           transform: scale(1.15);
-          box-shadow: 0 0 3rem rgba(226, 192, 95, 0.5);
+          box-shadow: 0 0 3rem rgba(245, 197, 61, 0.5);
         }
       }
 
@@ -159,7 +160,7 @@ const fontHref = usesGoogleFonts
         letter-spacing: 0.1em;
         text-transform: uppercase;
         color: var(--text-body);
-        text-shadow: 0 1px 1px rgba(226, 192, 95, 0.25);
+        text-shadow: 0 1px 1px rgba(245, 197, 61, 0.25);
         margin: 0;
       }
       .status-text .p {
@@ -172,7 +173,7 @@ const fontHref = usesGoogleFonts
   </head>
   <body>
     <div class="premium-loading-container">
-      <div class="brand-identity">PRODED888</div>
+      <div class="brand-identity">SUDYOD888</div>
 
       <div class="sophisticated-loader">
         <div class="orb"></div>
@@ -182,7 +183,7 @@ const fontHref = usesGoogleFonts
 
       <div class="status-text">
         <h1 class="h1">CREATING SECURE ACCOUNT SESSION...</h1>
-        <p class="p">กำลังพาไปหน้าสมัครสมาชิก PRODED888 🔒</p>
+        <p class="p">กำลังพาไปหน้าสมัครสมาชิก SUDYOD888 🔒</p>
       </div>
     </div>
 

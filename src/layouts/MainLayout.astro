@@ -5,8 +5,8 @@ import bgConfig from "../assets/bg.json";
 import ogImage from "../assets/slide1.png";
 import "../styles/global.css";
 import { brandProfile, fontStack, usesGoogleFonts } from "../lib/brandProfile";
-import Navbar from "../components/NavbarStyle6.astro";
-import Footer from "../components/FooterStyle2.astro";
+import Navbar from "../components/NavbarStyle2.astro";
+import Footer from "../components/FooterPremiumSumo.astro";
 
 const bannerImages = import.meta.glob<{ default: ImageMetadata }>("../assets/banner*.{png,webp,jpg,jpeg}", { eager: true });
 const bannerPaths = Object.keys(bannerImages);
@@ -16,8 +16,8 @@ const mainBannerPath = preferredBannerPath ?? webpBannerPath ?? bannerPaths[0];
 const mainBanner = mainBannerPath ? bannerImages[mainBannerPath].default : null;
 
 const {
-  title = "PRODED888 เว็บตรงสล็อต คืนยอดเสีย ฝากถอนออโต้ พร้อมโปรเด็ด",
-  description = "รีวิว PRODED888 เว็บตรงสล็อต พร้อมคืนยอดเสีย ฝากถอนออโต้ รองรับ PromptPay และ TrueMoney รวมเกมกว่า 1,000 รายการ พร้อมจุดที่ควรเช็กก่อนรับโปร",
+  title = "SUDYOD888 รีวิวเกมสล็อต โบนัสสูงสุด 400% ฝากถอนออโต้",
+  description = "SUDYOD888 รีวิวเกมสล็อตมากกว่า 200 รายการ โบนัสสูงสุด 400% ฝากถอนออโต้ คืนยอดเสียรายสัปดาห์ ระบบแนะนำเพื่อน สมัครง่ายทุกขั้นตอน",
   robots = "index, follow",
   ImageOg = ogImage.src,
 } = Astro.props;
@@ -28,7 +28,7 @@ const bgCss = bgMode === "color" ? `background-color:${(bgConfig as { color?: st
 const currentPath = Astro.url.pathname;
 const canonicalURL = new URL(currentPath, Astro.site);
 const ogImageURL = new URL(ImageOg, Astro.site);
-const ogSiteName = "PRODED888";
+const ogSiteName = "SUDYOD888";
 
 const profile = brandProfile(Astro.site);
 
@@ -75,7 +75,7 @@ const profile = brandProfile(Astro.site);
 
           {block === "appmeta" && (
             <Fragment>
-              {profile.showAppTitle && <meta name="apple-mobile-web-app-title" content="proded888" />}
+              {profile.showAppTitle && <meta name="apple-mobile-web-app-title" content="sudyod888" />}
               <link rel="manifest" href="/site.webmanifest" />
             </Fragment>
           )}
@@ -117,7 +117,7 @@ const profile = brandProfile(Astro.site);
         background-attachment: fixed;
         background-repeat: no-repeat;
         margin: 0;
-        background-color: #050912;
+        background-color: #080503;
         font-weight: 400;
         font-family: var(--font-sans) !important;
       }
@@ -148,7 +148,7 @@ const profile = brandProfile(Astro.site);
     <div class="mb-2.5 flex w-full items-center justify-center">
       <Image
         src={mainBanner!}
-        alt="PRODED888 เว็บตรงสล็อต คืนยอดเสีย ฝากถอนออโต้ รวมสล็อต คาสิโนสด กีฬา หวย และไก่ชนในบัญชีเดียว"
+        alt="SUDYOD888 รีวิวเกมสล็อต โบนัสสูงสุด 400% ฝากถอนออโต้ รวมสล็อต เกมยิงปลา และคาสิโนสดกว่า 200 เกมในบัญชีเดียว"
         loading="eager"
         fetchpriority="high"
         widths={[412, 768, 1900]}
