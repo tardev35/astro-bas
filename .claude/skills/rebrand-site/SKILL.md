@@ -976,6 +976,37 @@ This matters beyond bookkeeping: "rendered vs inventory" decides which
 files get the retheme, and mislabelling a live component as inventory
 ships the previous brand's colours to production.
 
+### Images: always tell Astro how big the picture is drawn
+
+`<Image>`/`<Picture>` with no `widths` and no `sizes` ships the **source file**.
+Not a resized copy — the original. The logo went out at 1024x481 and 73,938
+bytes into a box drawn about 110x50 px; with `widths={[110, 220, 330]}` and
+`sizes="110px"` the 1x candidate is 2,700 bytes.
+
+`sizes` describes how wide the image is **drawn**, not how wide you want the
+file. The hero banner said `sizes="(max-width: 768px) 412px, 100vw"` while being
+drawn full-bleed, so a DPR-2 phone needed 824 px, found no candidate between 768
+and 1900, and downloaded the 1900w file — 97 KB for a 412 px-wide slot. It is
+`sizes="100vw"` with candidates at 412/640/828/1024/1280/1600/1900 now, and that
+phone gets 32 KB. This is the LCP element on every page; get it wrong and
+nothing else you do to the page matters much.
+
+Only the LCP image gets `loading="eager" fetchpriority="high"`. The wallpaper
+had `loading="eager" decoding="sync"` and was competing with it.
+
+**og:image** comes from `src/assets/og.png`, which the uploader writes at
+1200x630 from the slide1 upload (letterboxed on a colour sampled from the
+artwork — a centre crop of a square promo banner cuts the brand name off the
+top). `MainLayout` falls back to slide1 for brands launched before this existed.
+Do not point `og:image` at an imported asset's `.src`: that is the untouched
+original, and it was shipping a 190 KB PNG to be read by a meta tag.
+
+**`{/* comments */}` cannot sit next to a tag inside a ternary branch.** Half of
+these tags are one branch of `mainLogo ? (…) : (…)`, and adding a comment beside
+one makes the branch two expressions — the build fails with `Expected ")" but
+found "$$render"`, pointing at a line some distance away. Put the note in the
+frontmatter.
+
 ### Accessibility rules the build now enforces
 
 All five are **errors** in `tools/verify-build.mjs`, so a rebrand that

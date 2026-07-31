@@ -7,6 +7,12 @@ const imagePaths = Object.keys(images);
 const targetPath = imagePaths.find((path) => path.endsWith(".webp")) || imagePaths.find((path) => path.endsWith(".png")) || (imagePaths.length > 0 ? imagePaths[0] : null);
 const mainLogo = targetPath ? images[targetPath].default : null;
 
+// The logo <Picture> below carries widths + sizes on purpose. Without them
+// Astro has no reason to resize and ships the source file — 1024x481, 73,938
+// bytes on this brand — into a box drawn about 110x50. Three candidates cover
+// 1x/2x/3x. (The note is here because the tag sits in a ternary branch, where a
+// {/* comment */} beside it makes the branch two expressions and fails the
+// build with "Expected ) but found $$render".)
 const currentPath = Astro.url.pathname;
 const isActive = (path: string) => isActivePath(currentPath, path);
 ---
@@ -19,9 +25,12 @@ const isActive = (path: string) => isActivePath(currentPath, path);
         mainLogo ? (
           <Picture
             src={mainLogo}
-            alt="UFAG8 Logo"
+            alt="UFAG8"
             loading="eager"
             fetchpriority="high"
+            widths={[110, 220, 330]}
+            sizes="110px"
+            height={50}
             class="h-[40px] w-auto object-contain drop-shadow-[0_0_12px_rgba(220,185,107,0.55)] xl:h-[50px]"
             formats={["avif", "webp"]}
             fallbackFormat="webp"

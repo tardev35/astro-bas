@@ -393,7 +393,7 @@ for (const file of pages) {
     if (n > DESC_HARD_MAX) {
       error(where, `meta description ${n} characters — will be truncated in every SERP (max ${DESC_HARD_MAX})`);
     } else if (n < DESC_MIN || n > DESC_MAX) {
-      warn(where, `meta description ${n} characters, outside ${DESC_MIN}–${DESC_MAX}`, "7");
+      error(where, `meta description ${n} characters, outside ${DESC_MIN}–${DESC_MAX} — count CHARACTERS, not bytes`);
     }
   }
 

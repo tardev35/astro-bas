@@ -1,5 +1,5 @@
 ---
-import { Image } from "astro:assets";
+import { Image, getImage } from "astro:assets";
 import Bg from "../assets/bg.png";
 import bgConfig from "../assets/bg.json";
 import ogImage from "../assets/slide1.png";
@@ -18,11 +18,41 @@ const mainBanner = mainBannerPath ? bannerImages[mainBannerPath].default : null;
 
 const {
   title = "UFAG8 เว็บกีฬา แทงบอลออนไลน์ รวมตลาดบอลและเกมหลายประเภท",
-  description = "รีวิว UFAG8 เว็บกีฬาและแทงบอลออนไลน์ ตั้งแต่ตลาดเดิมพัน การดูราคาบอล สมัครด้วยเบอร์โทร เข้าสู่ระบบ และจุดที่ควรเช็กก่อนยืนยันบิล",
+  description = "รีวิว UFAG8 เว็บกีฬาและแทงบอลออนไลน์ ตลาดแฮนดิแคป สูง–ต่ำ และ 1X2 วิธีอ่านราคาบอล บอลก่อนแข่งกับบอลสด บิลเดี่ยวและบิลสเต็ป พร้อมจุดที่ควรเช็กก่อนยืนยันบิล",
   robots = "index, follow",
-  ImageOg = ogImage.src,
 } = Astro.props;
 
+// og:image. Two problems with what used to be here (`ImageOg = ogImage.src`):
+//
+//   * `.src` on an imported asset is the ORIGINAL file. Astro copied slide1.png
+//     into the build untouched — 190 KB of PNG — purely to be linked from a
+//     meta tag. getImage() below runs it through the same pipeline every other
+//     image uses.
+//   * every page declares twitter:card = summary_large_image, which wants a
+//     1.91:1 image around 1200x630. slide1 is a 600x600 square, so the card was
+//     rendering a small square crop of a promo banner.
+//
+// The uploader now writes src/assets/og.png at 1200x630 when slide1 is
+// uploaded. Prefer it when it exists; fall back to slide1 for a brand launched
+// before that, so this never breaks a build.
+const ogCandidates = import.meta.glob<{ default: ImageMetadata }>("../assets/og.{png,webp,jpg,jpeg}", { eager: true });
+const ogCandidatePaths = Object.keys(ogCandidates);
+const ogSource = ogCandidatePaths.length > 0 ? ogCandidates[ogCandidatePaths[0]].default : ogImage;
+
+// Width only — passing height as well would make the image service crop to that
+// exact box, which turns the square fallback into a slice of itself.
+const ogRendered = await getImage({ src: ogSource, format: "jpeg", quality: 80, width: Math.min(1200, ogSource.width) });
+const ImageOg = ogRendered.src;
+
+// The wallpaper <Image> below is decorative and deliberately lazy/async. It used
+// to be loading="eager" decoding="sync", which had the browser fetch and decode
+// a full-viewport image at the same priority as the hero banner — the actual LCP
+// element — on the one request where that competition costs most. A background
+// arriving a beat later is not something a visitor notices; a slow hero is.
+//
+// (The note lives here rather than above the tag: that tag is one branch of a
+// ternary, and a {/* comment */} beside it makes the branch two expressions,
+// which fails the build with "Expected ) but found $$render".)
 const bgMode = (bgConfig as { mode?: string }).mode ?? "image";
 const bgCss = bgMode === "color" ? `background-color:${(bgConfig as { color?: string }).color};` : bgMode === "gradient" ? `background-image:${(bgConfig as { css?: string }).css};` : null;
 
@@ -146,13 +176,14 @@ const profile = brandProfile(Astro.site);
         <Image
           src={Bg}
           alt=""
-          loading="eager"
+          loading="lazy"
+          fetchpriority="low"
           widths={[412, 768, 1024, 1900]}
           sizes="100vw"
           format="avif"
           class="fixed inset-0 -z-50 h-full w-full object-cover"
           quality="low"
-          decoding="sync"
+          decoding="async"
         />
       )
     }
@@ -160,15 +191,24 @@ const profile = brandProfile(Astro.site);
     <Navbar />
 
     <div class="mb-2.5 flex w-full items-center justify-center">
+      {/* The LCP element. sizes must describe how wide it is DRAWN, and it is
+          drawn full-bleed at every breakpoint — the old "(max-width: 768px)
+          412px" claimed 412 px on mobile, so a DPR-2 phone needed 824 and the
+          browser jumped straight past the 768 candidate to the 1900 one. That
+          is a 3x over-fetch on exactly the image that decides LCP, not a
+          blurry-image problem. More candidates below 1900 so there is
+          something sensible to land on.
+
+          decoding="sync" is gone: it blocks the main thread on decode for no
+          benefit here, since the image is already fetchpriority="high". */}
       <Image
         src={mainBanner!}
         alt="UFAG8 เว็บกีฬา แทงบอลออนไลน์ รวมตลาดเดิมพัน ราคาบอล บอลสด บิลเดี่ยวและบิลสเต็ปไว้ในบัญชีเดียว"
         loading="eager"
         fetchpriority="high"
-        widths={[412, 768, 1900]}
-        sizes="(max-width: 768px) 412px, 100vw"
+        widths={[412, 640, 828, 1024, 1280, 1600, 1900]}
+        sizes="100vw"
         class="mx-auto h-auto w-full max-w-full object-contain shadow-xl"
-        decoding="sync"
         format="avif"
         quality={60}
       />
