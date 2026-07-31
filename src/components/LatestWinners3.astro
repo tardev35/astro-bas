@@ -70,7 +70,11 @@ const initialRows = Array.from({ length: 5 }, (_, i) => ({
                 </div>
               </div>
 
-              <div data-winner-status class={`winner-status hidden shrink-0 rounded-full border px-3 py-1 text-[10px] tracking-widest md:block ${row.pending ? "is-pending" : "is-verified"}`}>
+              <div
+                data-winner-status
+                data-pending-text="[PROCESSING]"
+                data-done-text="[VERIFIED]"
+                class={`winner-status hidden shrink-0 rounded-full border px-3 py-1 text-[10px] tracking-widest md:block ${row.pending ? "is-pending" : "is-verified"}`}>
                 {row.pending ? "[PROCESSING]" : "[VERIFIED]"}
               </div>
             </div>

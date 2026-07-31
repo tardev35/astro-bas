@@ -365,11 +365,30 @@ different colors:
   never leave the default in place assuming it's generic filler.
 - `LatestWinners`/`LatestWinners2..4`/`LatestWinnersCyber`/
   `LatestWinnersPremium`/`LatestWinnersHuay` — the live withdrawal/win
-  feed. These are self-contained (own bank-logo imports, own mock-data
-  generator script) but the brand name and hue are hardcoded straight
-  into the JSX, not passed as props — swapping variants means doing the
-  full retheme + brand-name pass on the newly chosen file, same as any
-  other component in Phase 3.
+  feed. These are self-contained (own bank-logo imports) but the brand
+  name and hue are hardcoded straight into the JSX, not passed as props —
+  swapping variants means doing the full retheme + brand-name pass on the
+  newly chosen file, same as any other component in Phase 3.
+
+  **All seven now share `src/lib/winnersFeed.ts`, and none of them may go
+  back to `<script define:vars>`** — that forces `is:inline`, which the
+  gate fails on an indexable page, and it renders the feed container empty
+  in the HTML (nothing for a crawler, nothing without JS, a guaranteed
+  layout shift). The rows are server-rendered and the module only takes
+  over the rotation.
+
+  What that means when you retheme one: the row markup is yours to restyle
+  freely, but keep the `data-winner-*` hooks on the elements that carry
+  live values, and keep the initial rows coming from `brandPick`/
+  `brandFlag` rather than `Math.random()` — frontmatter runs at build time,
+  so a random call there makes two builds of the same domain differ and the
+  gate rejects it. Everything the module needs to know is a `data-*` on the
+  feed element (`data-interval`, `data-max-rows`, `data-amount-min/max`,
+  `data-pending-chance`, `data-user-style`, `data-user-digits`,
+  `data-insert`, `data-big-win-above`) or on a row element
+  (`data-pending-text`/`data-done-text` and the matching `-class` pairs).
+  Put this brand's wording and classes there; the module never learns the
+  palette.
 - `Navbar`/`NavbarStyle1..11`/`NavbarCyber`/`NavbarHuay`/
   `NavbarPremium` and `Footer`/`FooterStyle2..3`/`FooterCyber`/
   `FooterHuay`/`FooterPremium`(`Sumo`) — **unlike the families above,
