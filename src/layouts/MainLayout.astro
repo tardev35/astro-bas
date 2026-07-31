@@ -6,8 +6,8 @@ import ogImage from "../assets/slide1.png";
 import "../styles/global.css";
 import { BRAND_NAME, brandProfile, fontStack, usesGoogleFonts } from "../lib/brandProfile";
 import { canonicalFor } from "../lib/schema";
-import Navbar from "../components/NavbarStyle1.astro";
-import Footer from "../components/Footer.astro";
+import Navbar from "../components/NavbarPremium.astro";
+import Footer from "../components/FooterPremium.astro";
 
 const bannerImages = import.meta.glob<{ default: ImageMetadata }>("../assets/banner*.{png,webp,jpg,jpeg}", { eager: true });
 const bannerPaths = Object.keys(bannerImages);
@@ -17,8 +17,8 @@ const mainBannerPath = preferredBannerPath ?? webpBannerPath ?? bannerPaths[0];
 const mainBanner = mainBannerPath ? bannerImages[mainBannerPath].default : null;
 
 const {
-  title = "TUNGMA168 รีวิว ตังค์มา168 เว็บสล็อต คาสิโน โบนัส 200% ระบบออโต้",
-  description = "รีวิว TUNGMA168 หรือ ตังค์มา168 ตั้งแต่สล็อตหลายค่าย คาสิโนสด โบนัสสมาชิกใหม่ เครดิตฟรี ระบบฝากถอนออโต้ 24 ชั่วโมง มือถือ และทางเข้าที่ควรตรวจสอบก่อนสมัคร",
+  title = "MIRACLE55 รีวิวเว็บตรง สล็อต PG คาสิโนสด ฝากถอนออโต้",
+  description = "รีวิว MIRACLE55 เว็บตรงรวมสล็อต PG คาสิโนสด และกีฬาไว้ในบัญชีเดียว เช็กเกม ระบบกระเป๋าเดียว ฝากถอนออโต้ โปรโมชั่น เล่นผ่านมือถือ และทางเข้าก่อนสมัครใช้งาน",
   robots = "index, follow",
 } = Astro.props;
 
@@ -119,7 +119,7 @@ const profile = brandProfile(Astro.site);
 
           {block === "appmeta" && (
             <Fragment>
-              {profile.showAppTitle && <meta name="apple-mobile-web-app-title" content="tungma168" />}
+              {profile.showAppTitle && <meta name="apple-mobile-web-app-title" content="miracle55" />}
               <link rel="manifest" href="/site.webmanifest" />
             </Fragment>
           )}
@@ -161,7 +161,7 @@ const profile = brandProfile(Astro.site);
         background-attachment: fixed;
         background-repeat: no-repeat;
         margin: 0;
-        background-color: #100309;
+        background-color: #0a0806;
         font-weight: 400;
         font-family: var(--font-sans) !important;
       }
@@ -203,7 +203,7 @@ const profile = brandProfile(Astro.site);
           benefit here, since the image is already fetchpriority="high". */}
       <Image
         src={mainBanner!}
-        alt="แบนเนอร์ ตังค์มา168 TUNGMA168 เว็บตรงลิขสิทธิ์แท้ รวมเกมครบ สล็อต คาสิโน กีฬา หวย อันดับ 1 ของสายเกมออนไลน์ พร้อมปุ่มเข้าสู่ระบบและสมัครสมาชิก"
+        alt="แบนเนอร์ MIRACLE55 รีวิวเว็บตรงเกมครบ สล็อต คาสิโนสด โปรโมชั่น และระบบฝากถอนออโต้ เล่นง่าย ฝากไว ถอนได้จริง ใช้งานได้ทั้งมือถือและหน้าเว็บ"
         loading="eager"
         fetchpriority="high"
         widths={[412, 640, 828, 1024, 1280, 1600, 1900]}

@@ -2,17 +2,24 @@
 export interface Props {
   titleleft?: string;
   titleright?: string;
+  label?: string;
 }
-const { titleleft, titleright } = Astro.props;
+const { titleleft, titleright, label } = Astro.props;
+
+// Both column titles are deliberately <p>, not headings: they label UI panels
+// (a login form, a reference table), not docx sections, so promoting them would
+// add heading levels the brief never asked for. The section carries its own
+// accessible name instead, which is what `label` is for.
+const sectionLabel = label ?? titleleft ?? titleright ?? "ข้อมูลประกอบ";
 ---
 
-<section class="relative z-10 mx-auto mb-10 w-full max-w-[1400px] px-4 font-sans">
+<section aria-label={sectionLabel} class="relative z-10 mx-auto mb-10 w-full max-w-[1400px] px-4 font-sans">
   <div class="grid grid-cols-1 gap-6 md:grid-cols-2 lg:gap-8">
-    <article class="flex flex-col gap-4 text-left text-base leading-relaxed text-[#efeade]">
+    <article class="flex flex-col gap-4 text-left text-base leading-relaxed text-[#f4e3c8]">
       {
         titleleft && (
-          <p class="flex items-center gap-3 border-b border-[#dcb96b]/25 pb-3 text-xl leading-normal font-black tracking-widest text-[#dcb96b] uppercase">
-            <span aria-hidden="true" class="flex h-9 w-9 shrink-0 items-center justify-center rounded-lg border border-[#dcb96b]/40 bg-gradient-to-br from-[#f2dca4] via-[#dcb96b] to-[#ac893a] text-sm text-[#141210] shadow-[0_5px_15px_rgba(220,185,107,0.3)]">
+          <p class="flex items-center gap-3 border-b border-[#e8b43a]/25 pb-3 text-xl leading-normal font-black tracking-widest text-[#e8b43a] uppercase">
+            <span aria-hidden="true" class="flex h-9 w-9 shrink-0 items-center justify-center rounded-lg border border-[#e8b43a]/40 bg-gradient-to-br from-[#f7d97a] via-[#e8b43a] to-[#a9741c] text-sm text-[#1a1206] shadow-[0_5px_15px_rgba(232,180,58,0.3)]">
               🔐
             </span>
             {titleleft}
@@ -22,12 +29,12 @@ const { titleleft, titleright } = Astro.props;
       <slot name="left" />
     </article>
 
-    <article class="flex flex-col gap-4 text-left text-base leading-relaxed text-[#efeade]">
+    <article class="flex flex-col gap-4 text-left text-base leading-relaxed text-[#f4e3c8]">
       {
         titleright && (
-          <p class="flex items-center gap-3 border-b border-[#dcb96b]/25 pb-3 text-xl leading-normal font-black tracking-widest text-[#dcb96b] uppercase">
-            <span aria-hidden="true" class="flex h-9 w-9 shrink-0 items-center justify-center rounded-lg border border-[#b9bcc4]/50 bg-gradient-to-br from-[#d7dae1] via-[#b9bcc4] to-[#6f7480] text-sm text-[#141210] shadow-[0_5px_15px_rgba(185,188,196,0.4)]">
-              ⚽
+          <p class="flex items-center gap-3 border-b border-[#e8b43a]/25 pb-3 text-xl leading-normal font-black tracking-widest text-[#e8b43a] uppercase">
+            <span aria-hidden="true" class="flex h-9 w-9 shrink-0 items-center justify-center rounded-lg border border-[#a55a22]/50 bg-gradient-to-br from-[#e0b98a] via-[#a55a22] to-[#8a5a28] text-sm text-[#1a1206] shadow-[0_5px_15px_rgba(165,90,34,0.4)]">
+              🎰
             </span>
             {titleright}
           </p>

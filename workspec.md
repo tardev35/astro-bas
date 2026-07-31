@@ -3074,3 +3074,176 @@ TUNGMA168 เป็นแบรนด์สล็อต/คาสิโน ไ�
 - ไฟล์ภาพเก่าใน src/assets (banner.png banner2 banner3 และ pro3.webp/slide3.webp
   ใน public/) ไม่ได้ลบ ตามธรรมเนียมของรีโปนี้
 - prettier ในรีโปมี drift อยู่ก่อนแล้วทั้งไฟล์ที่แตะและไม่ได้แตะ ไม่ได้ไล่จัดใหม่
+
+## 2026-07-31 — รีแบรนด์ TUNGMA168 → MIRACLE55 (สล็อต/คาสิโนสด/กีฬา, ทอง + คอปเปอร์ บนดำอมน้ำตาล)
+
+### เป้าหมาย
+
+เปิดตัวแบรนด์ MIRACLE55 บน template เดิม โดเมนจริง https://miracle55-brand.com
+สั่งงานผ่าน uploader (ไฟล์ทั้งชุดลงใน src/assets แล้ว) แบบขนานตาม playbook
+และ **หยุดที่ build + verify ห้าม deploy ห้าม push** ทำแบบ 3 agent ขนาน
+(orchestrator ทำ P0 + P1 เอง แล้วแตก Agent A / B / C)
+
+### เนื้อหาจาก docx
+
+content.txt มี **H1 x1 + H2 x11** (บรรทัด 38 พิมพ์ว่า `2:` ซึ่งเป็น typo ของ `H2:`
+— นับเป็นหัวข้อที่ 12) ทุกหัวข้อมีย่อหน้าใต้หัวข้อ 2 ย่อหน้า ใส่ครบทุกย่อหน้า
+ไม่ตัด ไม่ย่อ ไม่ควบรวม และเรียงตามลำดับ docx เป๊ะ
+**ไม่มีส่วน SUB-PAGES** ใน docx → title/description ของหน้าย่อยเขียนเองทั้งหมด
+**แบรนด์นี้ไม่มีชื่อไทย** (ต่างจาก TUNGMA168/ตังค์มา168) จึงห้ามคิดคำทับศัพท์ขึ้นเอง
+
+### พาเลตต์
+
+อ่านจาก palette.json + เปิดรูปจริง: โลโก้เป็นทองบรอนซ์ (#74411d) แบนเนอร์พื้นดำ
+อมน้ำตาล (#0c0b09) ไฮไลต์แชมเปญ (#e9bda2) → เป็นแบรนด์ **ทองเฉดเดียว + คอปเปอร์
+เสริม** ไม่ใช่แบรนด์สองสี
+
+| บทบาท | hex |
+|---|---|
+| ทองอ่อน | #f7d97a |
+| ทองหลัก | #e8b43a |
+| ทองเข้ม | #a9741c |
+| คอปเปอร์ | #a55a22 |
+| คอปเปอร์อ่อน | #e0b98a |
+| ตัวอักษรเนื้อหา | #f4e3c8 |
+| พื้นการ์ด | #15110b |
+| พื้นการ์ดเข้ม | #0f0c07 |
+| พื้นหน้าเว็บ | #0a0806 |
+| ตัวอักษรบนปุ่มทอง | #1a1206 |
+
+ของเดิม TUNGMA168 เป็นชมพู #ff3d9a / #ffa6d2 / #c21a70 / #fdeaf4 + ฟ้า #22d3ee /
+#8fe8f2 — แมปทีละตัวไว้ในไฟล์ brand spec ที่ทุก agent อ่านร่วมกัน
+
+### variant ที่หมุน (before → after)
+
+| ตระกูล | จาก | เป็น |
+|---|---|---|
+| Navbar | NavbarStyle1 | **NavbarPremium** |
+| Footer | Footer (plain) | **FooterPremium** |
+| Announcement | AnnouncementCyber | **AnnouncementPremium** |
+| LatestWinners | LatestWinners3 | **LatestWinnersCyber** |
+| Faq | Faq4 | **Faq2** |
+| ContentBox mix | CyberCut + FloatingBadge เป็นหลัก | **Premium + Neumorphism + plain + Special, SevenThree x2 (Premium + Neumorphism)** |
+| ฟอนต์ | google-sans | **kanit** |
+
+**LatestWinnersCyber ไม่ใช่การเลือกอิสระ** — ทั้งตระกูลนี้มีแค่ LatestWinners3 กับ
+LatestWinnersCyber ที่เลิกใช้ define:vars แล้ว ส่วนที่เหลือ (LatestWinners,
+LatestWinners2, LatestWinners4, LatestWinnersPremium, LatestWinnersHuay) ยังใช้อยู่
+ซึ่ง verify-build.mjs จะ error บนหน้า indexable เมื่อ LatestWinners3 เป็นตัวเดิม
+จึงเหลือทางเดียวคือ LatestWinnersCyber **รอบหน้าที่จะหมุนออกจาก Cyber ต้องแปลง
+variant สักตัวให้เลิกใช้ define:vars ก่อน ไม่งั้นจะติดกับดักเดิม**
+
+### ไฟล์ที่แก้ — chrome ร่วม (orchestrator ทำเองก่อนแตก agent)
+
+MainLayout.astro (สลับ import navbar/footer, title/description, alt hero,
+สีพื้น, ชื่อใน apple-mobile-web-app-title) / NavbarPremium / FooterPremium /
+Navfoot / ContentBox / ContentBoxPremium / AnnouncementPremium
+บวก brandProfile.ts (BRAND_NAME + BRAND_FONT อย่างละบรรทัด)
+
+### ไฟล์ที่แก้ — Agent A (หน้าแรก)
+
+index.astro + ContentBoxNeumorphism / ContentBoxSpecial /
+ContentBoxSevenThreePremium / ContentBoxSevenThreeNeumorphism / ContentBoxTwo /
+LoginRtpSection / ProviderGrid / GameRankingBoard / ReviewCardSumo2 /
+LatestWinnersCyber / SmoothCarousel / Faq2
+
+### ไฟล์ที่แก้ — Agent B และ C (หน้าย่อย)
+
+B: promotion.astro / ทางเข้า.astro / ทดลองเล่น.astro (+ ตรวจ 404.astro แล้วไม่แก้)
+C: login.astro / register.astro / contact-us.astro (+ ตรวจ terms/privacy แล้วไม่แก้)
+
+### บั๊ก/กับดักที่เจอรอบนี้
+
+- **description ของ docx สั้นเกินเพดานล่าง** — ข้อความ description ที่ brief ให้มา
+  ยาว **131 ตัวอักษร** ซึ่งต่ำกว่าพื้น 150 ที่ verify-build.mjs ถือเป็น error
+  แก้โดยขยายด้วยถ้อยคำของ brief เองอีกสองวลี ("ไว้ในบัญชีเดียว", "เล่นผ่านมือถือ")
+  เป็น 154 ตัวอักษร **ไม่ได้แต่งคำใหม่นอก brief**
+- **site.webmanifest ค้างเป็นแบรนด์เก่าอีกครั้ง** (ชื่อ TUNGMA168 + theme_color
+  ชมพู #ff3d9a) — เป็นไฟล์ที่ไม่มี agent ไหนเป็นเจ้าของ orchestrator ต้องแก้เอง
+  ทุกรอบ ตอนนี้เป็น MIRACLE55 + #e8b43a + #0a0806
+- **AnnouncementPremium เป็นธีมสว่าง (ไอวอรี #fffdf7) ตกค้างจาก WINUP888** ซึ่งชน
+  กับพื้นดำของแบรนด์นี้เต็ม ๆ ต้องรีธีมเป็นโทนมืดทั้งไฟล์ ไม่ใช่แค่สลับเฉดทอง
+  (เพิ่ม prefers-reduced-motion ให้ marquee ด้วย และถอดกฎ font-family ที่ซ้ำกับที่
+  Tailwind สร้างให้อยู่แล้วออก)
+- **LatestWinnersCyber ยังมีป้ายชื่อ UFAG8 อยู่ในตัวอักษร** (แบรนด์เก่ากว่า 2 รุ่น)
+  — ยืนยันอีกครั้งว่าการหมุน variant ต้องรีธีม + กวาดชื่อแบรนด์ในไฟล์ที่เพิ่งหยิบมา
+  ก่อนต่อสาย ไม่ใช่หลังต่อสาย
+- **LoginRtpSection เดิม import ContentBoxTwoCyberCut ไม่ใช่ ContentBoxTwo** —
+  Agent A สลับเป็น ContentBoxTwo ให้ตรงกับกฎ rotation และเพิ่ม prop สำหรับใส่
+  aria-label บน section (หัวคอลัมน์ทั้งสองตั้งใจเป็นย่อหน้า ไม่ใช่ heading)
+  ContentBoxTwoCyberCut ไม่ได้แตะ ยังเป็น inventory
+- **ไอคอนในคอลัมน์ขวาของ ContentBoxTwo ยังเป็นลูกฟุตบอล** ตกค้างจาก UFAG8 ซึ่งเป็น
+  แบรนด์กีฬา — เปลี่ยนเป็นสล็อตให้ตรงหมวดของแบรนด์นี้
+- **ไอคอน SVG สีคอปเปอร์เข้มอ่านไม่ออกบนพื้นการ์ด** ในหน้าทางเข้า Agent B เลี่ยงไป
+  ใช้คอปเปอร์อ่อน #e0b98a แทน #a55a22 ซึ่งยังอยู่ในพาเลตต์
+- **PowerShell 5.1 อ่านไฟล์เป็น ANSI** ทำให้การนับความยาว description จาก dist
+  รอบแรกเพี้ยนไปราว 3 เท่า (ภาษาไทย 3 ไบต์ต่อตัวอักษร) ต้องอ่านด้วย UTF-8 ตรง ๆ
+  ถึงจะได้ตัวเลขจริง — เป็นกับดักเดียวกับที่ SKILL เตือนเรื่อง wc -c
+
+### รูปภาพ
+
+- banner1.png (31 ก.ค.) = hero — MainLayout เลือกโดยชื่อตรงอยู่แล้ว ไม่ต้องแก้ logic
+- **banner.png (30 ก.ค.), banner2.png (28 ก.ค.), banner3.png (23 ก.ค.) เป็นของเก่า
+  ค้างจากแบรนด์ก่อน ไม่ได้ใช้เลย** — ตรวจจาก mtime ไม่ใช่จากชื่อไฟล์
+- slide2 → หัวข้อ 6 กระเป๋าเดียว / slide1 → หัวข้อ 9 โปรโมชั่น (ใช้ SevenThree
+  2 บล็อกพอดีตามเพดาน) slide3 กับ slide4 ไม่ได้ใช้ในกล่องเนื้อหาหน้าแรก แต่ยังอยู่
+  ใน SmoothCarousel และใน promotion.astro
+- og.png (1200x630) มีอยู่แล้วและ MainLayout เลือกให้เอง — ผลลัพธ์ชี้ไป
+  /_astro/og.*.jpeg ถูกต้อง ไม่ใช่ path ใน public/
+- alt ของทุกสไลด์ถอดจากข้อความที่พิมพ์บนภาพจริง (เปิดรูปดูทุกใบ)
+
+### หน้าหวย
+
+MIRACLE55 เป็นแบรนด์สล็อต/คาสิโน/กีฬา ไม่ใช่เว็บหวย → ตรวจหวย.astro และ
+แนวทาง.astro ต้องปิด **ตรวจแล้วอยู่ใน src/pages-disabled/ อยู่ก่อนแล้ว** และ
+NavbarPremium กับ FooterPremium ที่หมุนมาใช้รอบนี้ก็ไม่มีลิงก์ไปหน้าทั้งสอง
+grep ทั้ง src/ แล้วเจอแค่ในตัวไฟล์ที่ปิดอยู่เอง จึงไม่ต้องทำอะไรเพิ่ม
+ยืนยันอีกชั้นตอน verify: build ออกมา 10 หน้า ไม่มี 2 route นี้
+
+ไม่มีหน้า preset (บทความ / about-us) ในรีโปรอบนี้ และผู้สั่งงานไม่ได้ขอเพิ่ม
+
+### การ verify ที่ทำจริง
+
+- npm run build รอบเดียว — 10 หน้า build ผ่าน, verify-build.mjs **0 error 0 warning**
+- heading inventory หน้าแรก: **h1 x1, h2 x12, h3 x5** (11 หัวข้อจาก docx + หัวข้อ
+  ของ Faq2 = 12 ส่วน h3 คือคำถาม FAQ 5 ข้อ ซึ่งเป็นข้อยกเว้นที่ SKILL อนุญาต)
+  ไล่เทียบกับ checklist ทีละบรรทัดแล้ว ตรงทั้งข้อความและลำดับ
+- grep dist/ ทั้งโฟลเดอร์: TUNGMA168 / ตังค์มา / tungma168 / UFAG8 = **0**
+- grep dist/ หาเฉดชมพู-ฟ้าเดิม (#ff3d9a #ffa6d2 #c21a70 #fdeaf4 #22d3ee #8fe8f2)
+  และคลาสสีชมพู/ฟ้า/ม่วงแดง = **0**
+- HTML comment ใน dist/index.html = **0**
+- ไม่มี undefined / NaN / [object Object] หลุดออกมา
+- hero ชี้ไป _astro/banner1.* ทุกตัว ไม่มีของเก่าโผล่
+- og:image = https://miracle55-brand.com/_astro/og.*.jpeg (ไม่ใช่ path ใน public/)
+- FAQ render ครบ 5 ข้อ ทั้ง details/summary และ Question ใน JSON-LD ตรงกัน
+- ความยาว description ทุกหน้า indexable อยู่ในช่วง 150–160 (154/153/158/158/156/
+  154/154) เหลือแค่ 404 ที่ 127 ซึ่งเป็น noindex จึงได้รับการยกเว้น
+- canonical ทุกหน้าอยู่บนโดเมน miracle55-brand.com (ยกเว้นหน้า /line ที่ชี้ tinyurl
+  ตามเจตนาเดิม)
+- _sources.generated.css กลับด้านถูกต้อง: component ที่เพิ่งต่อสายหลุดออกจากรายการ
+  ยกเว้นทั้งหมด ส่วนตัวเก่าที่ถอดออก (NavbarStyle1, Footer, AnnouncementCyber,
+  LatestWinners3, Faq4, ContentBoxCyberCut) เข้าไปอยู่ในรายการยกเว้นแล้ว
+- npm run preview แล้ว curl ทุก route (encode ภาษาไทยเป็น percent-encoding
+  ตามข้อควรระวังเดิม): / promotion contact-us login terms privacy ทางเข้า
+  ทดลองเล่น robots.txt = 200 ทั้งหมด, route ที่ไม่มีจริง = 404 ถูกต้อง
+- robots.txt generate จากโดเมนใหม่ sitemap ชี้ /sitemap-index.xml ถูกต้อง
+- ปิด server ด้วยการ kill ตาม port (8899) ไม่ใช่ตาม image name — การใช้
+  taskkill กับ image name node.exe เคยฆ่าตัว CLI ของ agent เองมาแล้วเมื่อ 30 ก.ค.
+
+### ไม่ได้แตะ (out of scope)
+
+- **ไม่ได้ deploy ไม่ได้ commit ไม่ได้ push** ตามที่ผู้สั่งงานระบุชัดเจน
+  งานทั้งหมดยังเป็น working tree อยู่บน branch optimize-seo
+- component variant ที่ไม่ได้ถูก import (Navbar/Footer/Announcement/Faq/
+  LatestWinners/ContentBox ตัวอื่น ๆ) ยังเป็นสีและชื่อแบรนด์เก่า — เป็น inventory
+  สำหรับแบรนด์ถัดไป ไม่ใช่ dead code
+- 404.astro ไม่ได้แก้ เพราะ brand-neutral อยู่แล้ว (ทุกอย่างมาจาก MainLayout)
+  และเป็น noindex ซึ่ง verify-build.mjs ข้ามการเช็ก description ให้อยู่แล้ว
+- terms.astro / privacy.astro ไม่ได้แก้ — ทุกคำที่เป็นชื่อแบรนด์มาจาก BRAND_NAME
+  บรรทัดเดียว ตรวจแล้วสะอาด (บังเอิญว่า TUNGMA168 กับ MIRACLE55 ยาว 9 ตัวอักษร
+  เท่ากัน ความยาว description ของสองหน้านี้จึงไม่ขยับ)
+- account_id ใน wrangler.toml ไม่ได้แตะตามกฎ — เปลี่ยนเฉพาะ name เป็น miracle55
+- ไฟล์ภาพเก่าใน src/assets (banner.png banner2 banner3 และ pro3.webp/slide3.webp
+  ใน public/) ไม่ได้ลบ ตามธรรมเนียมของรีโปนี้ — หมายเหตุว่า glob ของ banner ยัง
+  process ไฟล์เก่าเหล่านี้เข้า dist อยู่ ซึ่งเป็นเรื่องค้างเดิม ไม่ได้แก้รอบนี้
+- prettier ในรีโปมี drift อยู่ก่อนแล้วทั้งไฟล์ที่แตะและไม่ได้แตะ ไม่ได้ไล่จัดใหม่
