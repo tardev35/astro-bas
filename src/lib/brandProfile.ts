@@ -62,7 +62,7 @@ export interface BrandProfile {
 //                 อีกนับล้านที่โหลดตัวเดียวกัน และรองรับไทยครบ
 export type BrandFont = "kanit" | "google-sans";
 
-export const BRAND_FONT: BrandFont = "kanit";
+export const BRAND_FONT: BrandFont = "google-sans";
 
 // ── ชื่อแบรนด์ ─────────────────────────────────────────────────────────────
 // สลับบรรทัดเดียวนี้ตอนรีแบรนด์ เหมือน BRAND_FONT ด้านบน (ดู SKILL.md)
@@ -71,7 +71,7 @@ export const BRAND_FONT: BrandFont = "kanit";
 // terms/privacy หรือ schema helper อยู่นอกสโคปที่รีแบรนด์แตะ ถ้ามันพิมพ์ชื่อ
 // แบรนด์ไว้ตรงๆ มันจะกลายเป็นชื่อของแบรนด์ก่อนหน้าแบบเงียบๆ ภายในไม่กี่ชั่วโมง
 // และไม่มีอะไรในบิลด์จับได้ เพราะเว็บยัง build ผ่านทั้งสองแบบ
-export const BRAND_NAME = "UFAG8";
+export const BRAND_NAME = "TUNGMA168";
 
 const KANIT_STACK = '"Kanit", ui-sans-serif, system-ui, sans-serif';
 const GOOGLE_SANS_STACK = '"Google Sans", "Kanit", ui-sans-serif, system-ui, sans-serif';

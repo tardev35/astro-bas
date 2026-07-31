@@ -2925,3 +2925,152 @@ ufg8-brand.com เคยถูก park ด้วย tools/domain-placeholder/ �
 ขณะที่โดเมนยังเสิร์ฟหน้า "Coming soon" อยู่ โดยไม่มี error ที่ไหนเลย
 เช็กด้วยคำสั่ง wrangler deployments list ที่ระบุ name เป็น ufg8 ก่อน deploy ครั้งแรก
 (ไม่มีร่องรอยชื่อนี้ในรีโปเลย และ ufg8 ไม่ชนกับแบรนด์เก่าตัวไหน)
+
+## 2026-07-31 — รีแบรนด์ UFAG8 → TUNGMA168 (สล็อต/คาสิโน, ชมพูนีออน + ฟ้าเทอร์ควอยซ์)
+
+เป้าหมาย: รีแบรนด์ + รีธีมทั้งเว็บจาก UFAG8 (เว็บกีฬา/แทงบอล ทอง+โครมเงิน) เป็น
+TUNGMA168 / ตังค์มา168 (เว็บสล็อต+คาสิโน) พร้อมโดเมนจริง https://tungma168-brand.com
+รันแบบขนานตาม playbook (orchestrator + 3 subagent) หยุดที่ build + verify
+ไม่ deploy ไม่ commit ไม่ push ตามที่ผู้สั่งงานระบุ
+
+**ที่มาของงาน:** prompt จาก uploader ส่วนที่ 6 (มี clause "หยุดที่ build + verify
+เท่านั้น") ไฟล์ทั้งชุด (logo/banner1/slide1-4/bg/og/content.docx/content.txt/
+palette.json) ถูก stage มาแล้วที่ src/assets ลงวันที่ 31 ก.ค. 12:06
+
+### สลับ variant (before → after)
+
+หมุนครบทุก family ไม่ซ้ำของแบรนด์ก่อนหน้าแม้แต่ตัวเดียว
+
+- Navbar: NavbarStyle11 → **NavbarStyle1**
+- Footer: FooterStyle3 → **Footer** (ตัว plain)
+- Announcement: Announcement6 → **AnnouncementCyber**
+- LatestWinners: LatestWinnersCyber → **LatestWinners3**
+- Faq: Faq2 → **Faq4**
+- ContentBox mix: Premium+Neumorphism+plain+Special+SevenThreePremium+SevenThreeNeumorphism
+  → **CyberCut+FloatingBadge+plain+SevenThreeCyberCut+SevenThreeFloatingBadge+TwoCyberCut**
+- BRAND_FONT: kanit → **google-sans**
+- BRAND_NAME: UFAG8 → **TUNGMA168**
+
+เลือก Faq4 เพราะมันวางคำถามไว้ใน summary ไม่ใช่ heading → h3 เหลือ 0 ตรงกับ docx
+ที่เป็นโครงแบน (H1 + H2 ล้วน ไม่มี H3) ส่วน Footer ตัว plain เลือกเพราะไม่มี h2
+ในตัวเอง (FooterCyber กับ FooterPremium มี ซึ่งจะดัน h2 เกินโควตาทุกหน้า)
+
+### พาเลต
+
+อ่านจาก palette.json + เปิดดูอาร์ตเวิร์กจริง โลโก้เป็นฟ้าเทอร์ควอยซ์ #14cbde
+แบนเนอร์พื้นม่วงอมชมพูเข้ม #2c011d สไลด์เป็นชมพูหวาน #fba4c3 มาสคอตเป็นม้าสีชมพู
+สรุปเป็น ชมพูนีออนเป็นสีหลัก + ฟ้าเทอร์ควอยซ์เป็นสีรอง บนพื้นดำอมม่วง
+
+- primary #ff3d9a / light #ffa6d2 / dark #c21a70 / deepest #7d0f46
+- secondary #22d3ee / light #8fe8f2 / muted #4a8f9c
+- surface ไล่จากเข้มสุด #100309 · #12040c · #16050f · #1c0614 · #230a19 · #2a0a1d · #3a1229
+- ตัวอักษร #fdeaf4 / muted #d9a7c4 / muted2 #a97b96
+- ทอง #ffc94d ใช้เฉพาะจุดเหรียญ/แจ็กพอต
+- คงไว้ไม่แตะ: #00B900 (LINE) และสีแบรนด์ธนาคาร/ค่ายเกม (#4e1c80 #1279be #1155cc #0ea5e9)
+
+### โครงการทำงานแบบขนาน
+
+- **P0/P1 (orchestrator)** — brand spec + shared chrome ทั้งหมด:
+  MainLayout, NavbarStyle1, Footer, Navfoot, AnnouncementCyber, ContentBox,
+  ContentBoxPremium, brandProfile.ts, astro.config.mjs, wrangler.toml,
+  public/site.webmanifest
+- **Agent A** — index.astro + 12 component เฉพาะหน้าแรก
+- **Agent B** — ทางเข้า / ทดลองเล่น / promotion
+- **Agent C** — contact-us / login / register / 404 + ตรวจ terms, privacy
+
+ไม่มีไฟล์ไหนถูกแก้โดย agent มากกว่าหนึ่งตัว
+
+### โดเมน (3 ไฟล์ ไม่ใช่ 2)
+
+- astro.config.mjs: site → https://tungma168-brand.com
+- wrangler.toml: name ufg8 → **tungma168** (ถ้าลืมจุดนี้ deploy ครั้งถัดไปจะทับ
+  Worker ของ UFAG8 แล้วเว็บนั้นหายทันที)
+- index.astro ไม่มี URL literal อยู่แล้ว (ใช้ pageGraph) จึงไม่ต้องแก้
+- account_id คงเดิม / workers_dev=false และ not_found_handling คงเดิม
+- โดเมนนี้ยังไม่เคย park ด้วย domain-placeholder จึงไม่ต้องใช้ชื่อ Worker เดิม
+
+### บั๊กที่เจอในรอบนี้
+
+1. **NavbarStyle1 มีลิงก์ตาย 5 เส้น** — /gamedemo, /gamelogin, /contact, /signin,
+   /signup ซึ่งไม่มี route จริงในรีโปนี้เลย verify-build.mjs จะ error ทันทีที่
+   เอามาใช้ แก้เป็น /ทดลองเล่น /ทางเข้า /contact-us /login /register
+   และยุบลิงก์ที่เขียนซ้ำกัน 2 ชุด (desktop/mobile) ให้ map จาก array เดียว
+   นอกจากนี้ alt ของโลโก้ยังเป็นคำว่า betfix ค้างจากแบรนด์เก่ามาก ๆ
+2. **LatestWinners ทุก variant ยกเว้น Cyber ยังใช้ define:vars** — ตัวที่หมุนมาใช้
+   (LatestWinners3) จึงต้องพอร์ตเป็นแพตเทิร์น winnersFeed.ts ก่อน: server-render
+   แถวแรก ๆ, ส่ง bankPool ผ่าน script ชนิด application/json, ใช้ script แบบ bundled
+   ข้อสำคัญคือ json ต้องวางนอก container ของ feed ไม่งั้นถูกนับเป็นแถว
+   และห้ามใช้ Math.random ใน frontmatter (build error)
+3. **meta description จาก docx ยาว 145 ตัวอักษร ต่ำกว่าเกท 150–160 ของ
+   verify-build.mjs** ซึ่งเป็น error ไม่ใช่ warning แทรกคำว่า "คาสิโนสด"
+   (เป็นหัวข้อในไฟล์ brief เดียวกัน) ได้ 154 ตัวอักษร คำอื่นและลำดับคงเดิมทั้งหมด
+   แล้ว sync ค่า default ใน MainLayout ให้ตรงกัน กันหน้าถัดไปที่ลืมส่ง description
+4. **ContentBoxTwoCyberCut ใช้ h2 กับ title/titleleft/titleright ทั้ง 3 จุด** จะดัน
+   h2 เกินจำนวนหัวข้อใน docx เปลี่ยนเป็น p แล้วเพิ่ม prop label ไว้ทำ aria-label
+   บน section แทน (ตามกฎ: ห้ามเลื่อน p ขึ้นเป็น h2 เพื่อแก้ปัญหา accessibility)
+5. **public/site.webmanifest ยังเป็น UFAG8 + theme_color สีทอง** — ไฟล์นี้ไม่มี
+   agent ตัวไหนเป็นเจ้าของ orchestrator ต้องเก็บเอง (เจอซ้ำเป็นรอบที่สองแล้ว)
+6. **docx สะกดผิด** บรรทัด 7 เขียน "เว้บสล็อต" แก้เป็น "เว็บสล็อต" บนหน้าเว็บ
+   (เทียบกับ UFAG8 ที่ docx สะกดชื่อแบรนด์ผิดเป็น UFGA8 รอบนี้ผิดแค่คำทั่วไป)
+7. **การ์ด FloatingBadge เผื่อที่ให้ป้ายหัวข้อไม่พอ** — ป้ายลอยสูงกว่าขอบการ์ด
+   24px และหัวข้อ H2 ภาษาไทยเต็มประโยคตกได้ถึง 3 บรรทัดบนจอมือถือ ขยับ padding
+   ด้านบนของการ์ดจาก 7rem/6rem เป็น 8rem/7rem ให้ตรงกันทั้งสองไฟล์
+
+### รูปภาพ
+
+- banner1.png = hero (MainLayout เลือกโดยชื่อตรงอยู่แล้ว ไม่ต้องแก้ logic)
+- **banner.png (30 ก.ค.), banner2.png (28 ก.ค.), banner3.png (23 ก.ค.) เป็นของเก่า
+  ค้างจากแบรนด์ก่อน ไม่ได้ใช้เลย** — ตรวจจาก mtime ไม่ใช่จากชื่อไฟล์
+- slide3 → หัวข้อโบนัส 200% / slide1 → หัวข้อเครดิตฟรี (ใช้ SevenThree 2 บล็อกพอดี
+  ตามเพดาน) slide2 กับ slide4 ไม่ได้ใช้ในกล่องเนื้อหา แต่ยังอยู่ใน SmoothCarousel
+- og.png (1200x630) มีอยู่แล้วและ MainLayout เลือกให้เอง — ผลลัพธ์ชี้ไป
+  /_astro/og.*.jpeg ถูกต้อง ไม่ใช่ path ใน public/
+
+### หน้าหวย
+
+TUNGMA168 เป็นแบรนด์สล็อต/คาสิโน ไม่ใช่เว็บหวย → ตรวจหวย.astro และ แนวทาง.astro
+ต้องปิด **ตรวจแล้วอยู่ใน src/pages-disabled/ อยู่ก่อนแล้ว** และทั้ง NavbarStyle1
+กับ Footer ที่หมุนมาใช้รอบนี้ก็ไม่มีลิงก์ไปหน้าทั้งสอง จึงไม่ต้องทำอะไรเพิ่ม
+ยืนยันอีกชั้นตอน verify: build ออกมา 10 หน้า ไม่มี 2 route นี้ และ curl แล้วได้ 404
+
+ไม่มีหน้า preset (บทความ / about-us) ในรีโปรอบนี้ และผู้สั่งงานไม่ได้ขอเพิ่ม
+
+### การ verify ที่ทำจริง
+
+- npm run build รอบเดียว — 10 หน้า build ผ่าน, verify-build.mjs **0 error 0 warning**
+- heading inventory หน้าแรก: **h1 x1, h2 x11, h3 x0** (10 หัวข้อจาก docx + หัวข้อ
+  ของ Faq4) เรียงตรงลำดับ docx ทุกตัว ไล่เทียบกับ checklist ทีละบรรทัดแล้ว
+- grep dist/ ทั้งโฟลเดอร์: ชื่อแบรนด์เก่าทุกตัว (UFAG8/UFGA8/ufg8/UFAYES/PABLO666/
+  SUDYOD888/PRODED888/WINUP888/LAPDEE88/betfix) = **0**
+- grep dist/ หาเฉดทอง-โครมเงินเดิม (#dcb96b #f2dca4 #efeade #ac893a #b9bcc4
+  #d7dae1 #7a5f22) = **0**
+- HTML comment ใน dist/index.html = **0**
+- ไม่มี undefined / NaN / [object Object] หลุดออกมา
+- hero ชี้ไป _astro/banner1.* ทุกตัว ไม่มีของเก่าโผล่
+- og:image = /_astro/og.*.jpeg (ไม่ใช่ path ใน public/)
+- FAQ render ครบ 5 ข้อ
+- script ในผลลัพธ์มีแค่ application/json, application/ld+json และ type=module
+  — ไม่มี inline script หลงเหลือ
+- npm run preview แล้ว curl ทุก route (encode ภาษาไทยเป็น percent-encoding
+  ตามข้อควรระวังเดิม): / promotion contact-us login register terms privacy
+  ทางเข้า ทดลองเล่น = 200 ทั้งหมด, ตรวจหวย + แนวทาง = 404 ถูกต้อง
+- ปิด server ด้วยการ kill ตาม port (4321) ไม่ใช่ตาม image name — การใช้
+  taskkill กับ image name node.exe เคยฆ่าตัว CLI ของ agent เองมาแล้วเมื่อ 30 ก.ค.
+
+### ไม่ได้แตะ (out of scope)
+
+- **ไม่ได้ deploy ไม่ได้ commit ไม่ได้ push** ตามที่ผู้สั่งงานระบุชัดเจน
+  งานทั้งหมดยังเป็น working tree อยู่บน branch optimize-seo
+- component variant ที่ไม่ได้ถูก import (Navbar/Footer/Announcement/Faq/
+  LatestWinners/ContentBox ตัวอื่น ๆ) ยังเป็นสีและชื่อแบรนด์เก่า — เป็น inventory
+  สำหรับแบรนด์ถัดไป ไม่ใช่ dead code
+- 404.astro ไม่ได้แก้ เพราะ brand-neutral อยู่แล้ว (ทุกอย่างมาจาก MainLayout)
+  และเป็น noindex ซึ่ง verify-build.mjs ข้ามการเช็ก description ให้อยู่แล้ว
+- terms.astro / privacy.astro ไม่ได้แก้ — ทุกคำที่เป็นชื่อแบรนด์มาจาก BRAND_NAME
+  บรรทัดเดียว ตรวจแล้วสะอาด
+- src/lib/schema.ts บรรทัด 11 ยังมีสตริง https://ufg8-brand.com อยู่ใน **คอมเมนต์**
+  ที่อธิบายว่าทำไมเมื่อก่อนถึงพิมพ์โดเมนมือ — เป็นบันทึกประวัติ ไม่เคย render
+  ปล่อยไว้ตามเดิม (เผื่อ grep รอบหน้าเจอแล้วนึกว่าตกหล่น)
+- ไฟล์ภาพเก่าใน src/assets (banner.png banner2 banner3 และ pro3.webp/slide3.webp
+  ใน public/) ไม่ได้ลบ ตามธรรมเนียมของรีโปนี้
+- prettier ในรีโปมี drift อยู่ก่อนแล้วทั้งไฟล์ที่แตะและไม่ได้แตะ ไม่ได้ไล่จัดใหม่
