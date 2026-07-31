@@ -494,6 +494,53 @@ for (const file of pages) {
   });
 }
 
+// ── build-time randomness ──────────────────────────────────────────────────
+//
+// brandProfile.ts states the invariant: the same domain must produce
+// byte-identical output on every build. A Math.random() in a component's
+// FRONTMATTER runs at build time, so every deploy rewrites the live site's
+// markup for no reason — and nothing about the page looks wrong, so it survives
+// indefinitely. That is exactly what happened when the winners feed was moved
+// to server-rendered rows: it reused the client helper, and two consecutive
+// builds differed.
+//
+// Frontmatter only. The same call inside a <script> runs in the browser, which
+// is the whole point of the widgets that use it.
+const RANDOM_CALLS = /\b(Math\.random\s*\(|Date\.now\s*\(|new Date\s*\(\s*\))/;
+
+function scanAstroFrontmatter(dir) {
+  if (!fs.existsSync(dir)) return;
+  for (const entry of fs.readdirSync(dir, { withFileTypes: true })) {
+    const p = path.join(dir, entry.name);
+    if (entry.isDirectory()) {
+      scanAstroFrontmatter(p);
+      continue;
+    }
+    if (!entry.name.endsWith(".astro")) continue;
+    const src = fs.readFileSync(p, "utf8");
+    if (!src.startsWith("---")) continue;
+    const end = src.indexOf("\n---", 3);
+    if (end < 0) continue;
+    // Strip comments first, or a note explaining the rule trips the rule.
+    const frontmatter = src
+      .slice(0, end)
+      .replace(/\/\*[\s\S]*?\*\//g, "")
+      .replace(/\/\/[^\n]*/g, "");
+    const hit = frontmatter.match(RANDOM_CALLS);
+    if (hit) {
+      error(
+        p.split(path.sep).join("/"),
+        `${hit[1]}) in frontmatter — runs at BUILD time, so every deploy churns the markup. ` +
+          `Use brandPick()/brandFlag() from src/lib/brandProfile.ts to derive it from the domain instead.`,
+      );
+    }
+  }
+}
+
+scanAstroFrontmatter(path.join("src", "components"));
+scanAstroFrontmatter(path.join("src", "pages"));
+scanAstroFrontmatter(path.join("src", "layouts"));
+
 // ── wrangler name vs brand domain ──────────────────────────────────────────
 //
 // Deploying with the previous brand's worker name overwrites the previous

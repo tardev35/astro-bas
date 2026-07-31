@@ -129,14 +129,14 @@ function seedKey(site: URL | string | undefined): string {
   }
 }
 
-const pick = (key: string, salt: string, n: number) => hash32(`${key} ${salt}`) % n;
+const pick = (key: string, salt: string, n: number) => hash32(`${key} ${salt}`) % n;
 const flag = (key: string, salt: string) => pick(key, salt, 2) === 1;
 
 /** Seeded Fisher–Yates. Same key + salt always yields the same permutation. */
 function shuffle<T>(items: readonly T[], key: string, salt: string): T[] {
   const out = items.slice();
   for (let i = out.length - 1; i > 0; i--) {
-    const j = hash32(`${key} ${salt} ${i}`) % (i + 1);
+    const j = hash32(`${key} ${salt} ${i}`) % (i + 1);
     [out[i], out[j]] = [out[j], out[i]];
   }
   return out;
