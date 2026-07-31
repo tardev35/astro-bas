@@ -9,12 +9,30 @@ import { canonicalFor } from "../lib/schema";
 import Navbar from "../components/NavbarPremium.astro";
 import Footer from "../components/FooterPremium.astro";
 
-const bannerImages = import.meta.glob<{ default: ImageMetadata }>("../assets/banner*.{png,webp,jpg,jpeg}", { eager: true });
+// Only banner1 is ever rendered, so only banner1 is imported.
+//
+// This used to glob `banner*.{png,webp,jpg,jpeg}` eagerly, and an imported
+// image is an EMITTED image whether or not anything renders it. Every stale
+// banner in src/assets was therefore copied into dist/_astro on every build and
+// uploaded on every deploy — banner.png (2.2 MB), banner2.png and banner3.png,
+// 3.1 MB of previous brands' artwork that no page has ever linked. It cost a
+// visitor nothing, which is exactly why it survived so long.
+//
+// The wide glob carried a fallback chain (banner1 → first .webp → first of
+// anything) whose entire purpose was to avoid silently picking a stale file.
+// Naming one file removes that failure mode instead of mitigating it: there is
+// nothing else in scope to pick. A missing banner1 now stops the build with a
+// message rather than rendering the previous brand's hero.
+//
+// Keep the extension list. The uploader writes banner1.png today, but brands
+// launched before that have banner1.webp and must keep building.
+const bannerImages = import.meta.glob<{ default: ImageMetadata }>("../assets/banner1.{png,webp,jpg,jpeg}", { eager: true });
 const bannerPaths = Object.keys(bannerImages);
-const preferredBannerPath = bannerPaths.find((path) => /banner1\.(png|webp|jpg|jpeg)$/.test(path));
-const webpBannerPath = bannerPaths.find((path) => path.endsWith(".webp"));
-const mainBannerPath = preferredBannerPath ?? webpBannerPath ?? bannerPaths[0];
-const mainBanner = mainBannerPath ? bannerImages[mainBannerPath].default : null;
+if (bannerPaths.length === 0) {
+  throw new Error("MainLayout: no src/assets/banner1.{png,webp,jpg,jpeg} — the hero image is missing. The uploader writes banner1.png; upload it before building.");
+}
+const mainBannerPath = bannerPaths.find((path) => path.endsWith(".webp")) ?? bannerPaths[0];
+const mainBanner = bannerImages[mainBannerPath].default;
 
 const {
   title = "MIRACLE55 รีวิวเว็บตรง สล็อต PG คาสิโนสด ฝากถอนออโต้",
@@ -208,7 +226,7 @@ const profile = brandProfile(Astro.site);
           decoding="sync" is gone: it blocks the main thread on decode for no
           benefit here, since the image is already fetchpriority="high". */}
       <Image
-        src={mainBanner!}
+        src={mainBanner}
         alt="แบนเนอร์ MIRACLE55 รีวิวเว็บตรงเกมครบ สล็อต คาสิโนสด โปรโมชั่น และระบบฝากถอนออโต้ เล่นง่าย ฝากไว ถอนได้จริง ใช้งานได้ทั้งมือถือและหน้าเว็บ"
         loading="eager"
         fetchpriority="high"

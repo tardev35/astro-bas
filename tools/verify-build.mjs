@@ -582,6 +582,62 @@ const LINK_ONLY_ICON = /^(favicon-\d+x\d+|android-chrome-[\w-]+|mstile-[\w-]+|we
   }
 }
 
+// ── processed images that ship but nothing points at ───────────────────────
+//
+// Astro emits an asset for every image it IMPORTS, not for every image it
+// renders — and an eager import.meta.glob imports the whole folder. MainLayout
+// globbed `banner*` for years to pick one hero, so banner.png (2.2 MB),
+// banner2 and banner3 rode into dist/_astro and up to Cloudflare on every
+// deploy: 3.1 MB, roughly a third of the build, that no page has ever linked.
+// Nobody downloaded it, which is exactly why nobody noticed.
+//
+// Judged per SOURCE IMAGE, not per emitted file. Astro emits the untouched
+// original for every image it imports — `.src` might be read at runtime, so it
+// has no choice — and its image service sometimes generates a width nothing
+// ends up asking for. Neither is reachable from this codebase, and a check
+// that fails on them would be red on a clean checkout, which is how a gate
+// teaches everyone to ignore it.
+//
+// So the question is not "is this exact file linked" but "did ANY version of
+// this picture reach a page". Zero means it was imported and never rendered,
+// which is a real mistake with a real fix.
+//
+// Grouping is by the name before the first dot, which is coarse — two source
+// images sharing a basename count as one. That direction is safe: it can only
+// hide a finding, never invent one.
+const IMAGE_EXT = /\.(png|jpe?g|webp|avif|gif|svg)$/i;
+const imageKey = (filename) => filename.slice(0, filename.indexOf(".")).toLowerCase();
+
+{
+  const referenced = new Set();
+
+  // srcset holds several URLs per attribute and JSON blobs (the bank list)
+  // carry paths inside a text node, so scan whole files rather than parsing
+  // attributes.
+  const scan = (text) => {
+    for (const m of text.matchAll(/\/_astro\/([A-Za-z0-9._-]+)/g)) {
+      if (IMAGE_EXT.test(m[1])) referenced.add(imageKey(m[1]));
+    }
+  };
+  for (const file of pages) scan(fs.readFileSync(file, "utf8"));
+  scan(distCss());
+
+  const astroDir = path.join(DIST, "_astro");
+  if (fs.existsSync(astroDir)) {
+    const orphans = new Map();
+    for (const name of fs.readdirSync(astroDir)) {
+      if (!IMAGE_EXT.test(name)) continue;
+      const key = imageKey(name);
+      if (referenced.has(key)) continue;
+      const bytes = fs.statSync(path.join(astroDir, name)).size;
+      orphans.set(key, (orphans.get(key) ?? 0) + bytes);
+    }
+    for (const [key, bytes] of orphans) {
+      error("dist/_astro/", `${key}.* ships ${Math.round(bytes / 1024)} kB but no page or stylesheet renders any version of it — an image imported without being used`);
+    }
+  }
+}
+
 // ── build-time randomness ──────────────────────────────────────────────────
 //
 // brandProfile.ts states the invariant: the same domain must produce
