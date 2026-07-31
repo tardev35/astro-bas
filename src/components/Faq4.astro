@@ -26,76 +26,70 @@ const { title, faqs = [] } = Astro.props;
   <div class="space-y-4">
     {
       faqs.map((faq) => (
-        <div
+        <details
+          name="faq-terminal"
           class="faq-item group relative overflow-hidden border border-amber-600/25 bg-[#fffdf7]/92 backdrop-blur-sm transition-all duration-300 hover:border-amber-600/50 hover:shadow-[0_15px_40px_rgba(168,132,44,0.30)]"
           style="clip-path: polygon(15px 0, 100% 0, 100% calc(100% - 15px), calc(100% - 15px) 100%, 0 100%, 0 15px);">
-          <div class="absolute top-0 left-0 h-[2px] w-16 bg-gradient-to-r from-[#a97f2a] to-transparent" />
+          <div aria-hidden="true" class="absolute top-0 left-0 h-[2px] w-16 bg-gradient-to-r from-[#a97f2a] to-transparent" />
 
-          <button type="button" aria-expanded="false" class="faq-trigger flex w-full cursor-pointer items-center justify-between p-5 text-left transition-all">
+          <summary class="flex w-full cursor-pointer items-center justify-between p-5 text-left transition-all">
             <span class="flex items-center gap-2 text-sm font-bold text-[#3a2e18] transition-colors group-hover:text-[#8a6410] md:text-lg">
-              <span class="font-mono text-[#a07c1f]">&gt;_</span> {faq.q}
+              <span aria-hidden="true" class="font-mono text-[#a07c1f]">
+                &gt;_
+              </span>
+              {faq.q}
             </span>
 
             <span
-              class="icon ml-4 flex h-8 w-8 shrink-0 items-center justify-center border border-amber-600/30 bg-[#faf4e6] text-lg font-black text-[#a07c1f] transition-all duration-300 group-hover:border-amber-600/50 group-hover:text-[#8a6410]"
+              aria-hidden="true"
+              class="faq-icon ml-4 flex h-8 w-8 shrink-0 items-center justify-center border border-amber-600/30 bg-[#faf4e6] text-lg font-black text-[#a07c1f] transition-all duration-300 group-hover:border-amber-600/50 group-hover:text-[#8a6410]"
               style="clip-path: polygon(25% 0, 100% 0, 100% 75%, 75% 100%, 0 100%, 0 25%);">
               +
             </span>
-          </button>
+          </summary>
 
-          <div class="faq-content max-h-0 overflow-hidden transition-all duration-300 ease-in-out">
-            <div class="border-t border-[#e7d5a3] p-5 pt-4 text-left text-base leading-relaxed text-[#3a2e18]">{faq.a}</div>
-          </div>
-        </div>
+          <div class="faq-answer border-t border-[#e7d5a3] p-5 pt-4 text-left text-base leading-relaxed text-[#3a2e18]">{faq.a}</div>
+        </details>
       ))
     }
   </div>
 </div>
 
-<script>
-  const triggers = document.querySelectorAll<HTMLButtonElement>(".faq-trigger");
-  triggers.forEach((trigger) => {
-    trigger.addEventListener("click", () => {
-      const parent = trigger.parentElement;
-      const content = trigger.nextElementSibling as HTMLElement | null;
-      const icon = trigger.querySelector(".icon");
-      if (!content) return;
-
-      document.querySelectorAll(".faq-item").forEach((item) => {
-        if (item !== parent) {
-          item.classList.remove("active");
-          const other = item.querySelector(".faq-content") as HTMLElement | null;
-          if (other) other.style.maxHeight = "0";
-          item.querySelector(".icon")?.classList.remove("rotate-45");
-          item.querySelector(".faq-trigger")?.setAttribute("aria-expanded", "false");
-        }
-      });
-
-      parent?.classList.toggle("active");
-      if (parent?.classList.contains("active")) {
-        content.style.maxHeight = content.scrollHeight + "px";
-        icon?.classList.add("rotate-45");
-        trigger.setAttribute("aria-expanded", "true");
-      } else {
-        content.style.maxHeight = "0";
-        icon?.classList.remove("rotate-45");
-        trigger.setAttribute("aria-expanded", "false");
-      }
-    });
-  });
-</script>
-
 <style>
-  .font-sans {
-    font-family: var(--font-sans);
+  /* The removed <style> redefined `.rotate-45` with !important — a hand-written
+     rule whose selector is also a Tailwind utility, so anything in this
+     component using rotate-45 for its own reasons silently got an amber border
+     and a colour change too. Keying the open state off [open] removes both the
+     script and the collision. */
+  .faq-item > summary {
+    list-style: none;
   }
-  .rotate-45 {
-    transform: rotate(45deg);
-    border-color: #c9a227 !important;
-    color: #8a6410 !important;
+  .faq-item > summary::-webkit-details-marker {
+    display: none;
   }
-  .faq-item.active {
+  .faq-item[open] {
     border-color: rgba(201, 162, 39, 0.6);
     box-shadow: 0 15px 40px rgba(168, 132, 44, 0.3);
+  }
+  .faq-item[open] .faq-icon {
+    transform: rotate(45deg);
+    border-color: #c9a227;
+    color: #8a6410;
+  }
+  .faq-item[open] .faq-answer {
+    animation: faq-reveal 0.25s ease-out;
+  }
+
+  @keyframes faq-reveal {
+    from {
+      opacity: 0;
+      transform: translateY(-4px);
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .faq-item[open] .faq-answer {
+      animation: none;
+    }
   }
 </style>

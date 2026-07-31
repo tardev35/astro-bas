@@ -279,14 +279,19 @@ for (const file of pages) {
 
   for (const m of html.matchAll(/<img\b[^>]*>/g)) {
     const tag = m[0];
-    const alt = attr(tag, "alt");
+    // Astro's <Image>/<Picture> serialise alt="" as a bare `alt`, which is
+    // valid HTML and means exactly the same thing. An earlier version of this
+    // check looked for `alt=` and so reported every correctly-marked
+    // decorative image as having no alt at all.
+    const hasAlt = /\salt(?=[\s>=])/i.test(tag);
+    const alt = hasAlt ? (attr(tag, "alt") ?? "") : null;
     const src = attr(tag, "src") || "?";
     if (alt === null) {
       error(where, `<img> with no alt attribute: ${src.slice(0, 70)}`);
     } else if (alt !== "" && USELESS_ALT.test(alt.trim())) {
-      warn(where, `alt describes the file, not the picture: alt="${alt}"`, "6");
+      error(where, `alt describes the file, not the picture: alt="${alt}"`);
     } else if (alt !== "" && COUNTER_ALT.test(alt.trim())) {
-      warn(where, `alt ends in a counter: "…${alt.trim().slice(-24)}"`, "6");
+      error(where, `alt ends in a counter — describe the picture instead: "…${alt.trim().slice(-24)}"`);
     }
   }
 
@@ -312,7 +317,7 @@ for (const file of pages) {
   for (const m of html.matchAll(/\shref="([^"]*)"/g)) {
     const href = m[1];
     if (href === "#") {
-      warn(where, 'href="#" — a link that goes nowhere', "6");
+      error(where, 'href="#" — a link that goes nowhere');
       continue;
     }
     if (!href.startsWith("/") || href.startsWith("//")) continue;
@@ -360,7 +365,7 @@ for (const file of pages) {
   }
 
   for (const m of html.matchAll(/\son(click|load|error|mouse[a-z]+|key[a-z]+|focus|blur)="/gi)) {
-    warn(where, `inline on${m[1]}= handler`, "6");
+    error(where, `inline on${m[1]}= handler`);
   }
 
   // Decorative emoji reach the accessibility tree as their CLDR name — a
@@ -370,7 +375,7 @@ for (const file of pages) {
     for (const ch of decodeEntities(text)) if (EMOJI.test(ch)) bareEmoji++;
   });
   if (bareEmoji > 0) {
-    warn(where, `${bareEmoji} emoji outside any aria-hidden="true" element`, "6");
+    error(where, `${bareEmoji} emoji outside any aria-hidden="true" element`);
   }
 
   // --- indexable pages only ---

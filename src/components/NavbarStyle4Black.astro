@@ -32,55 +32,55 @@ const isActive = (path: string) => isActivePath(currentPath, path);
       <a
         href="/"
         class={`group relative px-6 py-2.5 skew-x-[-15deg] overflow-hidden border transition-all duration-300 ${isActive("/") ? "bg-red-600/20 border-red-500 shadow-[0_0_15px_rgba(220,38,38,0.4)]" : "bg-white/5 border-white/10 hover:border-red-500/50"}`}>
-        <div
+        <div aria-hidden="true"
           class={`absolute inset-0 bg-gradient-to-r from-red-600 to-red-500 translate-y-full transition-transform duration-300 ${isActive("/") ? "translate-y-0 opacity-20" : "group-hover:translate-y-0 opacity-40"}`}>
         </div>
         <span class={`block skew-x-[15deg] relative z-10 font-bold tracking-wide transition-colors ${isActive("/") ? "text-yellow-400" : "text-gray-300 group-hover:text-white"}`}>
-          <span class="mr-1">🏠</span> หน้าแรก
+          <span aria-hidden="true" class="mr-1">🏠</span> หน้าแรก
         </span>
       </a>
 
       <a
         href="/promotion"
         class={`group relative px-6 py-2.5 skew-x-[-15deg] overflow-hidden border transition-all duration-300 ${isActive("/promotion") ? "bg-red-600/20 border-red-500 shadow-[0_0_15px_rgba(220,38,38,0.4)]" : "bg-white/5 border-white/10 hover:border-red-500/50"}`}>
-        <div
+        <div aria-hidden="true"
           class={`absolute inset-0 bg-gradient-to-r from-red-600 to-red-500 translate-y-full transition-transform duration-300 ${isActive("/promotion") ? "translate-y-0 opacity-20" : "group-hover:translate-y-0 opacity-40"}`}>
         </div>
         <span class={`block skew-x-[15deg] relative z-10 font-bold tracking-wide transition-colors ${isActive("/promotion") ? "text-yellow-400" : "text-gray-300 group-hover:text-white"}`}>
-          <span class="mr-1">🎁</span> โปรโมชั่น
+          <span aria-hidden="true" class="mr-1">🎁</span> โปรโมชั่น
         </span>
       </a>
 
       <a
         href="/ทดลองเล่น"
         class={`group relative px-6 py-2.5 skew-x-[-15deg] overflow-hidden border transition-all duration-300 ${isActive("/ทดลองเล่น") ? "bg-red-600/20 border-red-500 shadow-[0_0_15px_rgba(220,38,38,0.4)]" : "bg-white/5 border-white/10 hover:border-red-500/50"}`}>
-        <div
+        <div aria-hidden="true"
           class={`absolute inset-0 bg-gradient-to-r from-red-600 to-red-500 translate-y-full transition-transform duration-300 ${isActive("/ทดลองเล่น") ? "translate-y-0 opacity-20" : "group-hover:translate-y-0 opacity-40"}`}>
         </div>
         <span class={`block skew-x-[15deg] relative z-10 font-bold tracking-wide transition-colors ${isActive("/ทดลองเล่น") ? "text-yellow-400" : "text-gray-300 group-hover:text-white"}`}>
-          <span class="mr-1">🎰</span> ทดลองเล่น
+          <span aria-hidden="true" class="mr-1">🎰</span> ทดลองเล่น
         </span>
       </a>
 
       <a
         href="/ทางเข้า"
         class={`group relative px-6 py-2.5 skew-x-[-15deg] overflow-hidden border transition-all duration-300 ${isActive("/ทางเข้า") ? "bg-red-600/20 border-red-500 shadow-[0_0_15px_rgba(220,38,38,0.4)]" : "bg-white/5 border-white/10 hover:border-red-500/50"}`}>
-        <div
+        <div aria-hidden="true"
           class={`absolute inset-0 bg-gradient-to-r from-red-600 to-red-500 translate-y-full transition-transform duration-300 ${isActive("/ทางเข้า") ? "translate-y-0 opacity-20" : "group-hover:translate-y-0 opacity-40"}`}>
         </div>
         <span class={`block skew-x-[15deg] relative z-10 font-bold tracking-wide transition-colors ${isActive("/ทางเข้า") ? "text-yellow-400" : "text-gray-300 group-hover:text-white"}`}>
-          <span class="mr-1">🌐</span> ทางเข้า
+          <span aria-hidden="true" class="mr-1">🌐</span> ทางเข้า
         </span>
       </a>
 
       <a
         href="/contact-us"
         class={`group relative px-6 py-2.5 skew-x-[-15deg] overflow-hidden border transition-all duration-300 ${isActive("/contact-us") ? "bg-red-600/20 border-red-500 shadow-[0_0_15px_rgba(220,38,38,0.4)]" : "bg-white/5 border-white/10 hover:border-red-500/50"}`}>
-        <div
+        <div aria-hidden="true"
           class={`absolute inset-0 bg-gradient-to-r from-red-600 to-red-500 translate-y-full transition-transform duration-300 ${isActive("/contact-us") ? "translate-y-0 opacity-20" : "group-hover:translate-y-0 opacity-40"}`}>
         </div>
         <span class={`block skew-x-[15deg] relative z-10 font-bold tracking-wide transition-colors ${isActive("/contact-us") ? "text-yellow-400" : "text-gray-300 group-hover:text-white"}`}>
-          <span class="mr-1">📞</span> ติดต่อเรา
+          <span aria-hidden="true" class="mr-1">📞</span> ติดต่อเรา
         </span>
       </a>
     </div>
@@ -106,35 +106,35 @@ const isActive = (path: string) => isActivePath(currentPath, path);
       <a
         href="/"
         class={`sidebar-item flex items-center px-4 py-3.5 rounded-lg border transition-all ${isActive("/") ? "bg-red-600/20 border-red-500 text-yellow-400 shadow-[inset_4px_0_0_rgba(220,38,38,1)]" : "bg-white/5 border-transparent text-gray-300 hover:bg-white/10 hover:text-white"}`}>
-        <span class="mr-3 text-xl">🏠</span>
+        <span aria-hidden="true" class="mr-3 text-xl">🏠</span>
         <span class="text-sm font-bold">หน้าแรก</span>
       </a>
 
       <a
         href="/promotion"
         class={`sidebar-item flex items-center px-4 py-3.5 rounded-lg border transition-all ${isActive("/promotion") ? "bg-red-600/20 border-red-500 text-yellow-400 shadow-[inset_4px_0_0_rgba(220,38,38,1)]" : "bg-white/5 border-transparent text-gray-300 hover:bg-white/10 hover:text-white"}`}>
-        <span class="mr-3 text-xl">🎁</span>
+        <span aria-hidden="true" class="mr-3 text-xl">🎁</span>
         <span class="text-sm font-bold">โปรโมชั่น</span>
       </a>
 
       <a
         href="/ทดลองเล่น"
         class={`sidebar-item flex items-center px-4 py-3.5 rounded-lg border transition-all ${isActive("/ทดลองเล่น") ? "bg-red-600/20 border-red-500 text-yellow-400 shadow-[inset_4px_0_0_rgba(220,38,38,1)]" : "bg-white/5 border-transparent text-gray-300 hover:bg-white/10 hover:text-white"}`}>
-        <span class="mr-3 text-xl">🎰</span>
+        <span aria-hidden="true" class="mr-3 text-xl">🎰</span>
         <span class="text-sm font-bold">ทดลองเล่น</span>
       </a>
 
       <a
         href="/ทางเข้า"
         class={`sidebar-item flex items-center px-4 py-3.5 rounded-lg border transition-all ${isActive("/ทางเข้า") ? "bg-red-600/20 border-red-500 text-yellow-400 shadow-[inset_4px_0_0_rgba(220,38,38,1)]" : "bg-white/5 border-transparent text-gray-300 hover:bg-white/10 hover:text-white"}`}>
-        <span class="mr-3 text-xl">🌐</span>
+        <span aria-hidden="true" class="mr-3 text-xl">🌐</span>
         <span class="text-sm font-bold">ทางเข้า</span>
       </a>
 
       <a
         href="/contact-us"
         class={`sidebar-item flex items-center px-4 py-3.5 rounded-lg border transition-all ${isActive("/contact-us") ? "bg-red-600/20 border-red-500 text-yellow-400 shadow-[inset_4px_0_0_rgba(220,38,38,1)]" : "bg-white/5 border-transparent text-gray-300 hover:bg-white/10 hover:text-white"}`}>
-        <span class="mr-3 text-xl">📞</span>
+        <span aria-hidden="true" class="mr-3 text-xl">📞</span>
         <span class="text-sm font-bold">ติดต่อเรา</span>
       </a>
     </div>

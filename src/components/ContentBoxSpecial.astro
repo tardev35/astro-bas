@@ -9,7 +9,7 @@ const { title, as: HeadingTag = "h2" } = Astro.props;
 <section class="relative z-10 mx-auto mb-10 w-full max-w-[1400px] px-4 font-sans">
   <div
     class="group relative isolate w-full overflow-hidden rounded-3xl border border-[#dcb96b]/25 bg-[#100f0c]/92 p-6 text-[#efeade] shadow-[0_10px_30px_rgba(220,185,107,0.16)] backdrop-blur-xl transition-all duration-500 hover:border-[#dcb96b]/50 md:p-10">
-    <div
+    <div aria-hidden="true"
       class="pointer-events-none absolute top-0 left-1/2 -z-10 h-[2px] w-1/2 -translate-x-1/2 bg-gradient-to-r from-transparent via-[#dcb96b] to-transparent opacity-60 transition-opacity duration-500 group-hover:opacity-100">
     </div>
 
@@ -27,7 +27,7 @@ const { title, as: HeadingTag = "h2" } = Astro.props;
     <div class="grid grid-cols-1 gap-6 lg:grid-cols-2 lg:gap-10">
       <article
         class="relative flex gap-4 rounded-2xl border border-[#dcb96b]/20 bg-[#0c0b09]/95 p-6 text-left text-base leading-relaxed text-[#efeade] transition-all duration-300 hover:-translate-y-2 hover:border-[#dcb96b]/50 hover:bg-[#191712]/90 hover:shadow-[0_15px_40px_rgba(220,185,107,0.28)]">
-        <div
+        <div aria-hidden="true"
           class="flex h-12 w-12 shrink-0 items-center justify-center rounded-xl border border-[#dcb96b]/30 bg-gradient-to-br from-[#f2dca4] via-[#dcb96b] to-[#ac893a] text-2xl shadow-[0_5px_15px_rgba(220,185,107,0.28)]">
           ⚽
         </div>
@@ -36,7 +36,7 @@ const { title, as: HeadingTag = "h2" } = Astro.props;
 
       <article
         class="relative flex gap-4 rounded-2xl border border-[#dcb96b]/20 bg-[#0c0b09]/95 p-6 text-left text-base leading-relaxed text-[#efeade] transition-all duration-300 hover:-translate-y-2 hover:border-[#dcb96b]/50 hover:bg-[#191712]/90 hover:shadow-[0_15px_40px_rgba(220,185,107,0.28)]">
-        <div
+        <div aria-hidden="true"
           class="flex h-12 w-12 shrink-0 items-center justify-center rounded-xl border border-[#b9bcc4]/50 bg-gradient-to-br from-[#d7dae1] via-[#b9bcc4] to-[#6f7480] text-2xl shadow-[0_5px_15px_rgba(185,188,196,0.35)]">
           🧾
         </div>

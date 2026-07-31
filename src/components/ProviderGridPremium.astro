@@ -19,7 +19,7 @@ const providers = [
 
 <div class="mx-auto w-full max-w-[1300px] px-4 py-8 font-sans sm:px-6 lg:px-8">
   <div class="mb-8 flex w-full flex-col items-center justify-center gap-2 text-center">
-    <span class="text-2xl drop-shadow-[0_0_10px_rgba(234,179,8,0.8)]">🎰</span>
+    <span aria-hidden="true" class="text-2xl drop-shadow-[0_0_10px_rgba(234,179,8,0.8)]">🎰</span>
     <h2 class="bg-gradient-to-r from-yellow-300 to-yellow-600 bg-clip-text text-3xl font-black tracking-widest text-transparent uppercase drop-shadow-sm">PREMIUM PARTNERS</h2>
     <div class="mt-2 h-[2px] w-24 rounded-full bg-gradient-to-r from-transparent via-purple-500 to-transparent"></div>
   </div>
@@ -39,7 +39,7 @@ const providers = [
 
           {p.isHot && (
             <div class="absolute top-0 right-0 z-10 flex items-center gap-1 rounded-bl-xl border-b border-l border-red-400/50 bg-gradient-to-r from-red-600 to-orange-500 px-3 py-1.5 text-[10px] font-black tracking-wide text-white shadow-md">
-              <span class="animate-pulse">🔥</span> HOT
+              <span aria-hidden="true" class="animate-pulse">🔥</span> HOT
             </div>
           )}
 
@@ -55,7 +55,7 @@ const providers = [
             class="block aspect-square w-full object-cover opacity-90 transition-transform duration-700 group-hover:scale-110 group-hover:opacity-100"
           />
 
-          <div class="pointer-events-none absolute -bottom-10 left-0 h-20 w-full bg-gradient-to-t from-purple-600/40 to-transparent opacity-0 transition-opacity duration-500 group-hover:opacity-100" />
+          <div aria-hidden="true" class="pointer-events-none absolute -bottom-10 left-0 h-20 w-full bg-gradient-to-t from-purple-600/40 to-transparent opacity-0 transition-opacity duration-500 group-hover:opacity-100" />
         </div>
       ))
     }

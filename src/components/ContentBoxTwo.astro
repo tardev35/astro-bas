@@ -12,7 +12,7 @@ const { titleleft, titleright } = Astro.props;
       {
         titleleft && (
           <p class="flex items-center gap-3 border-b border-[#dcb96b]/25 pb-3 text-xl leading-normal font-black tracking-widest text-[#dcb96b] uppercase">
-            <span class="flex h-9 w-9 shrink-0 items-center justify-center rounded-lg border border-[#dcb96b]/40 bg-gradient-to-br from-[#f2dca4] via-[#dcb96b] to-[#ac893a] text-sm text-[#141210] shadow-[0_5px_15px_rgba(220,185,107,0.3)]">
+            <span aria-hidden="true" class="flex h-9 w-9 shrink-0 items-center justify-center rounded-lg border border-[#dcb96b]/40 bg-gradient-to-br from-[#f2dca4] via-[#dcb96b] to-[#ac893a] text-sm text-[#141210] shadow-[0_5px_15px_rgba(220,185,107,0.3)]">
               🔐
             </span>
             {titleleft}
@@ -26,7 +26,7 @@ const { titleleft, titleright } = Astro.props;
       {
         titleright && (
           <p class="flex items-center gap-3 border-b border-[#dcb96b]/25 pb-3 text-xl leading-normal font-black tracking-widest text-[#dcb96b] uppercase">
-            <span class="flex h-9 w-9 shrink-0 items-center justify-center rounded-lg border border-[#b9bcc4]/50 bg-gradient-to-br from-[#d7dae1] via-[#b9bcc4] to-[#6f7480] text-sm text-[#141210] shadow-[0_5px_15px_rgba(185,188,196,0.4)]">
+            <span aria-hidden="true" class="flex h-9 w-9 shrink-0 items-center justify-center rounded-lg border border-[#b9bcc4]/50 bg-gradient-to-br from-[#d7dae1] via-[#b9bcc4] to-[#6f7480] text-sm text-[#141210] shadow-[0_5px_15px_rgba(185,188,196,0.4)]">
               ⚽
             </span>
             {titleright}

@@ -33,7 +33,7 @@ const isActive = (path: string) => isActivePath(currentPath, path);
         <a
           href="/"
           class={`group relative flex items-center h-full px-4 xl:px-6 text-sm xl:text-base font-bold transition-all duration-300 ${isActive("/") ? "text-amber-300" : "text-amber-100/80 hover:text-amber-200"}`}>
-          <div class={`absolute inset-0 bg-gradient-to-b from-transparent to-amber-400/10 transition-opacity duration-300 ${isActive("/") ? "opacity-100" : "opacity-0 group-hover:opacity-100"}`}>
+          <div aria-hidden="true" class={`absolute inset-0 bg-gradient-to-b from-transparent to-amber-400/10 transition-opacity duration-300 ${isActive("/") ? "opacity-100" : "opacity-0 group-hover:opacity-100"}`}>
           </div>
           <span class="relative z-10">หน้าแรก</span>
           <div class={`absolute bottom-0 left-1/2 -translate-x-1/2 h-[3px] bg-amber-400 transition-all duration-300 ${isActive("/") ? "w-full" : "w-0 group-hover:w-full"}`}></div>
@@ -42,7 +42,7 @@ const isActive = (path: string) => isActivePath(currentPath, path);
         <a
           href="/promotion"
           class={`group relative flex items-center h-full px-4 xl:px-6 text-sm xl:text-base font-bold transition-all duration-300 ${isActive("/promotion") ? "text-amber-300" : "text-amber-100/80 hover:text-amber-200"}`}>
-          <div
+          <div aria-hidden="true"
             class={`absolute inset-0 bg-gradient-to-b from-transparent to-amber-400/10 transition-opacity duration-300 ${isActive("/promotion") ? "opacity-100" : "opacity-0 group-hover:opacity-100"}`}>
           </div>
           <span class="relative z-10">โปรโมชั่น</span>
@@ -52,7 +52,7 @@ const isActive = (path: string) => isActivePath(currentPath, path);
         <a
           href="/ทดลองเล่น"
           class={`group relative flex items-center h-full px-4 xl:px-6 text-sm xl:text-base font-bold transition-all duration-300 ${isActive("/ทดลองเล่น") ? "text-amber-300" : "text-amber-100/80 hover:text-amber-200"}`}>
-          <div
+          <div aria-hidden="true"
             class={`absolute inset-0 bg-gradient-to-b from-transparent to-amber-400/10 transition-opacity duration-300 ${isActive("/ทดลองเล่น") ? "opacity-100" : "opacity-0 group-hover:opacity-100"}`}>
           </div>
           <span class="relative z-10">ทดลองเล่น</span>
@@ -62,7 +62,7 @@ const isActive = (path: string) => isActivePath(currentPath, path);
         <a
           href="/ทางเข้า"
           class={`group relative flex items-center h-full px-4 xl:px-6 text-sm xl:text-base font-bold transition-all duration-300 ${isActive("/ทางเข้า") ? "text-amber-300" : "text-amber-100/80 hover:text-amber-200"}`}>
-          <div
+          <div aria-hidden="true"
             class={`absolute inset-0 bg-gradient-to-b from-transparent to-amber-400/10 transition-opacity duration-300 ${isActive("/ทางเข้า") ? "opacity-100" : "opacity-0 group-hover:opacity-100"}`}>
           </div>
           <span class="relative z-10">ทางเข้า</span>
@@ -72,7 +72,7 @@ const isActive = (path: string) => isActivePath(currentPath, path);
         <a
           href="/contact-us"
           class={`group relative flex items-center h-full px-4 xl:px-6 text-sm xl:text-base font-bold transition-all duration-300 ${isActive("/contact-us") ? "text-amber-300" : "text-amber-100/80 hover:text-amber-200"}`}>
-          <div
+          <div aria-hidden="true"
             class={`absolute inset-0 bg-gradient-to-b from-transparent to-amber-400/10 transition-opacity duration-300 ${isActive("/contact-us") ? "opacity-100" : "opacity-0 group-hover:opacity-100"}`}>
           </div>
           <span class="relative z-10">ติดต่อเรา</span>
@@ -138,7 +138,7 @@ const isActive = (path: string) => isActivePath(currentPath, path);
         <a
           href="/register"
           class="flex w-full items-center justify-center rounded-full bg-gradient-to-r from-[#f6e4b4] via-[#e0bd72] to-[#b1873a] py-3.5 text-lg font-extrabold text-[#140f05] shadow-[0_0_20px_rgba(212,175,90,0.4)]">
-          🔥 สมัครสมาชิก
+          <span aria-hidden="true">🔥</span> สมัครสมาชิก
         </a>
         <a href="/login" class="flex w-full items-center justify-center rounded-full border border-amber-400/50 py-3.5 text-lg font-bold text-amber-300 hover:bg-amber-400/10">เข้าสู่ระบบ</a>
       </div>

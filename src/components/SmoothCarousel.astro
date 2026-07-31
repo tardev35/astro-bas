@@ -18,15 +18,21 @@ import slide4 from "../assets/slide4.png";
 //     could not.
 //   * the slides are plain markup, so a crawler and a screen reader see all of
 //     them instead of whatever Swiper's cloned-slide DOM happened to expose.
-const images = [slide1, slide2, slide3, slide4];
+// Each banner is described by what it actually says, not by its position in the
+// list. "…ภาพที่ 1", "…ภาพที่ 2" told a screen-reader user nothing except that
+// there were more pictures; these are promo banners whose whole content IS the
+// text printed on them, so that text is the alt.
+const images = [
+  { src: slide1, alt: "แบนเนอร์สมัคร UFAG8 เว็บกีฬาและตลาดเดิมพัน สมัครผ่านเบอร์โทรภายใน 5 นาที พร้อมหัวข้อราคาบอลอ่านง่าย บอลก่อนแข่งและบอลสด บิลเดี่ยวและบิลสเต็ป และทางเข้าเว็บตรง" },
+  { src: slide2, alt: "แบนเนอร์ UFAG8 เว็บกีฬาและตลาดเดิมพัน พร้อมรายการราคาบอลอ่านง่าย บอลก่อนแข่งและบอลสด บิลเดี่ยวและบิลสเต็ป และทางเข้าเว็บตรงที่ปลอดภัย" },
+  { src: slide3, alt: "แบนเนอร์ UFAG8 แสดงสามขั้นตอน สมัครผ่านเบอร์โทรภายใน 5 นาที ดูราคาบอลทั้งก่อนแข่งและบอลสด แล้วเลือกบิลเดี่ยวหรือบิลสเต็ปได้ตามสไตล์" },
+  { src: slide4, alt: "แบนเนอร์สมัคร UFAG8 เว็บกีฬาและตลาดเดิมพัน ผ่านเบอร์โทรภายใน 5 นาที พร้อมหัวข้อราคาบอลอ่านง่าย บอลก่อนแข่งและบอลสด และบิลเดี่ยวกับบิลสเต็ป" },
+];
 
 // Three copies: one on screen, one scrolling in, one covering the reset. The
 // animation shifts by exactly one copy, so the loop has no visible seam.
 const COPIES = 3;
 const slides = Array.from({ length: COPIES }, () => images).flat();
-
-const altFor = (index: number) =>
-  `UFAG8 เว็บกีฬา รวมแทงบอลตามลีก ตลาดแฮนดิแคป สูง–ต่ำ และ 1X2 พร้อมบอลก่อนแข่งและบอลสด ภาพที่ ${index + 1}`;
 ---
 
 <div class="marquee mx-auto w-full max-w-[1301px] overflow-hidden px-4 py-5">
@@ -42,24 +48,20 @@ const altFor = (index: number) =>
 
   <div class="marquee-track flex">
     {
-      slides.map((img, index) => {
-        // The last two copies are the same four pictures again, so they are
-        // hidden from assistive technology — otherwise the same sentence is
-        // announced twelve times.
-        //
-        // They still carry alt text rather than alt="": Astro's <Picture> drops
-        // the attribute entirely when it is empty, and an <img> with NO alt is
-        // the one case a screen reader falls back to reading the file name.
-        // Since the wrapper is aria-hidden, the text is never announced anyway.
+      slides.map((slide, index) => {
+        // The last two copies are the same four pictures again — decorative
+        // repeats that exist only so the loop has no seam. alt="" plus
+        // aria-hidden on the wrapper keeps them out of the accessibility tree;
+        // without it the same sentence is announced twelve times.
         const isDuplicate = index >= images.length;
         return (
           <div class="marquee-slide" aria-hidden={isDuplicate ? "true" : undefined}>
             <Picture
-              src={img}
-              alt={altFor(index % images.length)}
+              src={slide.src}
+              alt={isDuplicate ? "" : slide.alt}
               class="block w-full rounded-xl border border-[#dcb96b]/25 object-cover shadow-[0_10px_30px_rgba(220,185,107,0.18)]"
-              width={img.width}
-              height={img.height}
+              width={slide.src.width}
+              height={slide.src.height}
               loading={index < 2 ? "eager" : "lazy"}
               fetchpriority={index === 0 ? "high" : "auto"}
               decoding="async"

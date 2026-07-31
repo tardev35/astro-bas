@@ -20,7 +20,7 @@ const marketChips = ["แฮนดิแคป", "สูง–ต่ำ", "1X2",
       <div class="pointer-events-none absolute -top-10 -right-10 h-32 w-32 rounded-full bg-[#dcb96b]/20 blur-[50px]"></div>
 
       <div class="relative z-10 mb-5 flex items-center gap-3">
-        <span class="flex h-11 w-11 shrink-0 items-center justify-center rounded-xl border border-[#dcb96b]/40 bg-gradient-to-br from-[#f2dca4] via-[#dcb96b] to-[#ac893a] text-xl shadow-inner">⚽</span>
+        <span aria-hidden="true" class="flex h-11 w-11 shrink-0 items-center justify-center rounded-xl border border-[#dcb96b]/40 bg-gradient-to-br from-[#f2dca4] via-[#dcb96b] to-[#ac893a] text-xl shadow-inner">⚽</span>
         <div class="flex flex-col">
           <p class="text-base font-black text-[#dcb96b]">ยินดีต้อนรับกลับ</p>
           <span class="text-[11px] text-[#bcb6a6]">บัญชีเดียวใช้เลือกตลาด ตรวจบิล และจัดการข้อมูลของ UFAG8 ได้ในช่องทางเดียว</span>
@@ -29,7 +29,7 @@ const marketChips = ["แฮนดิแคป", "สูง–ต่ำ", "1X2",
 
       <div class="relative z-10 flex flex-col gap-3.5">
         <div class="relative">
-          <span class="absolute top-3.5 left-4 text-[#ac893a]">👤</span>
+          <span aria-hidden="true" class="absolute top-3.5 left-4 text-[#ac893a]">👤</span>
           <input
             type="text"
             placeholder="เบอร์โทรศัพท์ / ยูสเซอร์เนม"
@@ -37,7 +37,7 @@ const marketChips = ["แฮนดิแคป", "สูง–ต่ำ", "1X2",
           />
         </div>
         <div class="relative">
-          <span class="absolute top-3.5 left-4 text-[#ac893a]">🔑</span>
+          <span aria-hidden="true" class="absolute top-3.5 left-4 text-[#ac893a]">🔑</span>
           <input
             type="password"
             placeholder="รหัสผ่าน"
@@ -67,13 +67,13 @@ const marketChips = ["แฮนดิแคป", "สูง–ต่ำ", "1X2",
         <a
           href="/line"
           class="flex w-full items-center justify-center gap-2 rounded-xl bg-gradient-to-r from-[#00B900] to-[#009900] p-3 text-sm font-bold text-white shadow-md transition-all hover:scale-[1.02]">
-          💬 ติดต่อแอดมิน LINE
+          <span aria-hidden="true">💬</span> ติดต่อแอดมิน LINE
         </a>
 
         <div class="mt-1 flex items-center justify-between px-1">
           <div class="flex gap-2">
-            <span class="rounded-full border border-[#dcb96b]/25 bg-[#191712] px-2.5 py-1 text-[10px] font-bold text-[#dcb96b]">🔒 HTTPS + SSL</span>
-            <span class="rounded-full border border-[#b9bcc4]/45 bg-[#15171c]/80 px-2.5 py-1 text-[10px] font-bold text-[#d7dae1]">⚽ ตลาดบอลก่อนแข่งและบอลสด</span>
+            <span class="rounded-full border border-[#dcb96b]/25 bg-[#191712] px-2.5 py-1 text-[10px] font-bold text-[#dcb96b]"><span aria-hidden="true">🔒</span> HTTPS + SSL</span>
+            <span class="rounded-full border border-[#b9bcc4]/45 bg-[#15171c]/80 px-2.5 py-1 text-[10px] font-bold text-[#d7dae1]"><span aria-hidden="true">⚽</span> ตลาดบอลก่อนแข่งและบอลสด</span>
           </div>
           <a href="/register" class="text-xs font-bold text-[#ac893a] transition-colors hover:text-[#f2dca4]">สมัครสมาชิกใหม่</a>
         </div>
@@ -107,7 +107,7 @@ const marketChips = ["แฮนดิแคป", "สูง–ต่ำ", "1X2",
             <div class="rounded-xl border border-[#7a5f22] bg-[#191712]/95 px-3.5 py-2.5 transition-colors hover:border-[#dcb96b]/50 hover:bg-[#22262e]">
               <div class="flex items-center justify-between gap-2 text-sm">
                 <span class="flex min-w-0 items-center gap-2 font-bold text-[#efeade]">
-                  <span class="w-5 shrink-0 text-center">{m.icon}</span> <span class="truncate">{m.name}</span>
+                  <span aria-hidden="true" class="w-5 shrink-0 text-center">{m.icon}</span> <span class="truncate">{m.name}</span>
                 </span>
                 <span class="shrink-0 rounded-full border border-[#dcb96b]/30 bg-[#0c0b09] px-2.5 py-0.5 text-[10px] font-bold text-[#f2dca4]">{m.tag}</span>
               </div>

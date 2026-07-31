@@ -64,6 +64,14 @@ body {
   font-family: var(--font-sans);
 }
 
+/* ให้ลิงก์ที่ชี้ #top (ปุ่มกลับขึ้นบนใน footer) เลื่อนแบบนุ่ม โดยไม่ต้องมี JS
+   บล็อก prefers-reduced-motion ด้านล่างตั้ง scroll-behavior: auto !important
+   ทับให้อยู่แล้ว ซึ่งเป็นสิ่งที่ onclick="window.scrollTo({behavior:'smooth'})"
+   แบบเดิมทำไม่ได้ เพราะมันฮาร์ดโค้ด smooth ไว้ในโค้ด */
+html {
+  scroll-behavior: smooth;
+}
+
 /* kanit-regular - latin_thai */
 @font-face {
   font-family: 'Kanit';

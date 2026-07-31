@@ -976,6 +976,48 @@ This matters beyond bookkeeping: "rendered vs inventory" decides which
 files get the retheme, and mislabelling a live component as inventory
 ships the previous brand's colours to production.
 
+### Accessibility rules the build now enforces
+
+All five are **errors** in `tools/verify-build.mjs`, so a rebrand that
+reintroduces one fails the build rather than shipping.
+
+- **Decorative emoji must sit in an element with `aria-hidden="true"`.** Not a
+  style preference: a heading written `🔥 โปรโมชั่น` is announced "fire
+  โปรโมชั่น". If the emoji carries meaning the text does not — the 🥇🥈🥉 in
+  `GameRankingBoard` replace the rank NUMBER for the top three — hide the emoji
+  and add a `sr-only` span with the meaning, or the information disappears
+  entirely for anyone not looking at it.
+  **Emoji baked into a text prop cannot be marked**, so do not put one at the
+  start of an announcement message. `Announcement6` renders its message three
+  times for the marquee; a leading emoji there was read out three times.
+- **No `href="#"` and no `onclick=`.** A link to nowhere costs a visitor a tap
+  to discover it does nothing — delete the control instead (the footer's YOUTUBE
+  button was removed for exactly this reason; add it back when a brand has a
+  real URL). For back-to-top use `<a href="#top">`: `MainLayout` puts `id="top"`
+  on `<html>` and `global.css` has `scroll-behavior: smooth`, which the
+  reduced-motion block there overrides — an inline
+  `onclick="window.scrollTo({behavior:'smooth'})"` cannot be overridden and
+  ignores the preference.
+- **`alt` must describe the picture.** Not `"bank"`, not `"Website Background"`,
+  and not a counter like `"…ภาพที่ 3"`. For a promo banner, the alt IS the text
+  printed on the banner — open the image and read it. For a decorative repeat
+  (the carousel duplicates each slide twice so the loop has no seam) use
+  `alt=""` **and** `aria-hidden="true"` on the wrapper.
+- **FAQ accordions are `<details>`/`<summary>`.** All five `Faq*` variants were
+  rewritten; none of them has a `<script>` any more. Do not reintroduce a
+  button + `max-height` accordion: the old ones left the collapsed panel in the
+  accessibility tree and in the tab order while invisible, and set
+  `aria-expanded` with no `aria-controls` to point at. Use `<details name="…">`
+  when only one should be open at a time. Keep the question in whatever heading
+  level the variant already used — the `h2`/`h3` inventory is checked against
+  the docx.
+- **A widget whose title is a `<p>` needs `aria-label` on its `<section>`.**
+  Those titles stay `<p>` on purpose (the `h2` list is diffed against the docx),
+  which leaves the section with no accessible name. `ProviderGrid`,
+  `GameRankingBoard`, `ReviewCardSumo2` and `LatestWinnersCyber` each carry one.
+  **Do not promote the `<p>` to an `h2` to "fix" it** — that breaks the docx
+  check on every future rebrand.
+
 ### Behaviour lives in `src/lib/`, not in a component `<script>`
 
 Four things moved out of components into `src/lib/` because a rebrand rewrites
@@ -1017,11 +1059,11 @@ Concretely:
   but nothing imports it. If a brand needs a real interactive carousel, that is
   a deliberate decision to make out loud, not a default to fall back into.
 
-One Astro trap found doing this: **`<Picture alt="">` drops the `alt` attribute
-from the output entirely.** An `<img>` with no `alt` is worse than a decorative
-one — screen readers fall back to reading the filename — so give it real alt
-text and hide the wrapper with `aria-hidden="true"` instead. The build gate
-catches this.
+One Astro detail worth knowing: **`<Image>`/`<Picture>` with `alt=""` serialise
+it as a bare `alt`** — `<img src="…" alt loading="eager">`. That is valid HTML
+and means exactly the same as `alt=""`, so decorative images are marked
+correctly; do not "fix" it by inventing alt text. Any check you write for a
+missing alt has to match the bare form too.
 
 ### Two files the build generates — leave both alone
 

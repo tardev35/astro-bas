@@ -121,31 +121,31 @@ const isActive = (path: string) => isActivePath(currentPath, path);
       <a
         href="/"
         class={`sidebar-item flex items-center px-4 py-3.5 rounded-lg border transition-all ${isActive("/") ? "bg-violet-600/20 border-violet-500/60 text-amber-300" : "bg-white/5 border-transparent text-violet-100/80 hover:bg-white/10"}`}>
-        <span class="mr-3 text-xl">🏠</span>
+        <span aria-hidden="true" class="mr-3 text-xl">🏠</span>
         <span class="text-sm font-bold">หน้าแรก</span>
       </a>
       <a
         href="/promotion"
         class={`sidebar-item flex items-center px-4 py-3.5 rounded-lg border transition-all ${isActive("/promotion") ? "bg-violet-600/20 border-violet-500/60 text-amber-300" : "bg-white/5 border-transparent text-violet-100/80 hover:bg-white/10"}`}>
-        <span class="mr-3 text-xl">🎁</span>
+        <span aria-hidden="true" class="mr-3 text-xl">🎁</span>
         <span class="text-sm font-bold">โปรโมชั่น</span>
       </a>
       <a
         href="/ทดลองเล่น"
         class={`sidebar-item flex items-center px-4 py-3.5 rounded-lg border transition-all ${isActive("/ทดลองเล่น") ? "bg-violet-600/20 border-violet-500/60 text-amber-300" : "bg-white/5 border-transparent text-violet-100/80 hover:bg-white/10"}`}>
-        <span class="mr-3 text-xl">🎰</span>
+        <span aria-hidden="true" class="mr-3 text-xl">🎰</span>
         <span class="text-sm font-bold">ทดลองเล่น</span>
       </a>
       <a
         href="/ทางเข้า"
         class={`sidebar-item flex items-center px-4 py-3.5 rounded-lg border transition-all ${isActive("/ทางเข้า") ? "bg-violet-600/20 border-violet-500/60 text-amber-300" : "bg-white/5 border-transparent text-violet-100/80 hover:bg-white/10"}`}>
-        <span class="mr-3 text-xl">🌐</span>
+        <span aria-hidden="true" class="mr-3 text-xl">🌐</span>
         <span class="text-sm font-bold">ทางเข้า</span>
       </a>
       <a
         href="/contact-us"
         class={`sidebar-item flex items-center px-4 py-3.5 rounded-lg border transition-all ${isActive("/contact-us") ? "bg-violet-600/20 border-violet-500/60 text-amber-300" : "bg-white/5 border-transparent text-violet-100/80 hover:bg-white/10"}`}>
-        <span class="mr-3 text-xl">📞</span>
+        <span aria-hidden="true" class="mr-3 text-xl">📞</span>
         <span class="text-sm font-bold">ติดต่อเรา</span>
       </a>
 
@@ -153,7 +153,7 @@ const isActive = (path: string) => isActivePath(currentPath, path);
         <a
           href="/login"
           class="sidebar-item hover:bg-theme-oklab flex justify-center rounded-lg border border-amber-400/70 bg-transparent py-3.5 text-sm font-bold text-amber-200 transition-colors hover:border-transparent hover:text-[#1a1130]">
-          🔒 เข้าสู่ระบบ
+          <span aria-hidden="true">🔒</span> เข้าสู่ระบบ
         </a>
       </div>
     </div>

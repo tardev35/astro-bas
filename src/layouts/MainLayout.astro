@@ -37,13 +37,22 @@ const ogSiteName = BRAND_NAME;
 
 const profile = brandProfile(Astro.site);
 
+// <html> มี id="top" เป็นเป้าของปุ่ม "กลับขึ้นบน" ใน footer แทน onclick เดิมที่
+// ฮาร์ดโค้ด behavior:'smooth' ไว้ จึงไม่ฟัง prefers-reduced-motion — ตอนนี้การ
+// เลื่อนมาจาก scroll-behavior ใน global.css ซึ่งบล็อก reduced-motion ทับให้แล้ว
+//
+// ห้ามวาง expression `{/* ... */}` ไว้ "ก่อน" <html> ในไฟล์นี้ — Astro จะเลิก
+// มองว่า <html> เป็น root ของเอกสารแล้วตัดทั้งแท็กทิ้ง (ทดสอบแล้วเมื่อ
+// 2026-07-31: ผลลัพธ์คือทุกหน้าไม่มี <html lang="th"> เลย) คอมเมนต์ที่อธิบาย
+// โครงหน้าเลยต้องอยู่ใน frontmatter แบบนี้เท่านั้น
+//
 // --font-sans ตั้งเป็น inline style บน <html> ไม่ใช่ใน CSS เพราะ @theme ของ
 // Tailwind ประกาศตัวแปรนี้ที่ :root — inline style ชนะเสมอโดยไม่ต้องพึ่ง
 // ลำดับของ stylesheet หรือ !important (คอมเมนต์อยู่ใน frontmatter เพราะ
 // คอมเมนต์แบบ HTML จะถูกส่งออกไปที่ไฟล์ผลลัพธ์จริง)
 ---
 
-<html lang="th" style={`--font-sans: ${fontStack};`}>
+<html lang="th" id="top" style={`--font-sans: ${fontStack};`}>
   <head>
     <meta charset="utf-8" />
     <meta name="robots" content={robots} />
@@ -136,7 +145,7 @@ const profile = brandProfile(Astro.site);
       ) : (
         <Image
           src={Bg}
-          alt="Website Background"
+          alt=""
           loading="eager"
           widths={[412, 768, 1024, 1900]}
           sizes="100vw"

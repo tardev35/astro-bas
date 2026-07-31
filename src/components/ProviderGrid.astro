@@ -10,7 +10,7 @@ const markets = [
 ];
 ---
 
-<div class="relative z-10 mx-auto mb-10 w-full max-w-[1400px] px-4 font-sans">
+<section aria-label="ตลาดกีฬาและหมวดเดิมพันที่แสดงบนหน้าเว็บ" class="relative z-10 mx-auto mb-10 w-full max-w-[1400px] px-4 font-sans">
   <div class="mb-8 flex w-full flex-col items-center justify-center gap-2 text-center">
     <p class="bg-gradient-to-r from-[#f2dca4] via-[#dcb96b] to-[#ac893a] bg-clip-text text-3xl font-black tracking-widest text-transparent uppercase">
       ตลาดกีฬาและหมวดเดิมพันที่แสดงบนหน้า <span class="text-[#dcb96b]">UFAG8</span>
@@ -30,7 +30,7 @@ const markets = [
             {market.tag}
           </div>
 
-          <div class="mb-3 text-4xl transition-transform duration-300 group-hover:scale-125 group-hover:rotate-3">{market.icon}</div>
+          <div aria-hidden="true" class="mb-3 text-4xl transition-transform duration-300 group-hover:scale-125 group-hover:rotate-3">{market.icon}</div>
           <p class="text-center text-sm font-black text-[#efeade] transition-colors group-hover:text-[#f2dca4]">{market.name}</p>
           <p class="mt-1 text-center text-[10px] text-[#bcb6a6]">{market.desc}</p>
 
@@ -41,4 +41,4 @@ const markets = [
       ))
     }
   </div>
-</div>
+</section>
