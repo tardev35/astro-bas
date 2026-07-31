@@ -4,7 +4,7 @@ import Bg from "../assets/bg.png";
 import bgConfig from "../assets/bg.json";
 import ogImage from "../assets/slide1.png";
 import "../styles/global.css";
-import { BRAND_NAME, brandProfile, fontStack, usesGoogleFonts } from "../lib/brandProfile";
+import { BRAND_NAME, BRAND_TEXT, brandProfile, fontStack, iconVersion, usesGoogleFonts } from "../lib/brandProfile";
 import { canonicalFor } from "../lib/schema";
 import Navbar from "../components/NavbarPremium.astro";
 import Footer from "../components/FooterPremium.astro";
@@ -76,13 +76,19 @@ const profile = brandProfile(Astro.site);
 // 2026-07-31: ผลลัพธ์คือทุกหน้าไม่มี <html lang="th"> เลย) คอมเมนต์ที่อธิบาย
 // โครงหน้าเลยต้องอยู่ใน frontmatter แบบนี้เท่านั้น
 //
+// color บน <html> คือสีตัวอักษร "พื้น" ของทั้งเว็บ มาจาก BRAND_TEXT — ห้ามลบ
+// ตอนรีแบรนด์ ไม่มีที่อื่นตั้งค่านี้เลย (global.css ก็ไม่ตั้ง) ถ้าหายไป element
+// ไหนที่ไม่ได้ใส่คลาสสีเองจะกลายเป็นสีดำของเบราว์เซอร์บนพื้นเกือบดำ = หายไปเลย
+// หน้า terms/privacy/404 เป็นไฟล์ถาวรที่ไม่ใส่สีของแบรนด์ไว้ข้างในโดยตั้งใจ
+// จึงพึ่งบรรทัดนี้ทั้งหมด — verify-build.mjs ตรวจข้อนี้ให้แล้ว build จะแดงถ้าลืม
+//
 // --font-sans ตั้งเป็น inline style บน <html> ไม่ใช่ใน CSS เพราะ @theme ของ
 // Tailwind ประกาศตัวแปรนี้ที่ :root — inline style ชนะเสมอโดยไม่ต้องพึ่ง
 // ลำดับของ stylesheet หรือ !important (คอมเมนต์อยู่ใน frontmatter เพราะ
 // คอมเมนต์แบบ HTML จะถูกส่งออกไปที่ไฟล์ผลลัพธ์จริง)
 ---
 
-<html lang="th" id="top" style={`--font-sans: ${fontStack};`}>
+<html lang="th" id="top" style={`--font-sans: ${fontStack}; color: ${BRAND_TEXT};`}>
   <head>
     <meta charset="utf-8" />
     <meta name="robots" content={robots} />
@@ -110,10 +116,10 @@ const profile = brandProfile(Astro.site);
         <Fragment>
           {block === "icons" && (
             <Fragment>
-              <link rel="icon" type="image/png" href="/favicon-96x96.png" sizes="96x96" />
-              <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-              {profile.showShortcutIcon && <link rel="shortcut icon" href="/favicon.ico" />}
-              <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png" />
+              <link rel="icon" type="image/png" href={`/favicon-96x96.png?v=${iconVersion}`} sizes="96x96" />
+              <link rel="icon" type="image/svg+xml" href={`/favicon.svg?v=${iconVersion}`} />
+              {profile.showShortcutIcon && <link rel="shortcut icon" href={`/favicon.ico?v=${iconVersion}`} />}
+              <link rel="apple-touch-icon" sizes="180x180" href={`/apple-touch-icon.png?v=${iconVersion}`} />
             </Fragment>
           )}
 

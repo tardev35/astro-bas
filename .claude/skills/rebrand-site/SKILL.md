@@ -433,6 +433,20 @@ the same one:
   those files never hardcode a brand and never rot into the previous one.
   Miss it and the site builds perfectly while telling Google it belongs to
   the brand before this one.
+- **Brand text colour** — set `BRAND_TEXT` in `src/lib/brandProfile.ts` to
+  this brand's **body copy** colour: the one the active `ContentBox*` puts on
+  its paragraphs, not the heading or accent colour. Third one-liner in the
+  same file, right under `BRAND_NAME`.
+
+  `MainLayout` puts it on `<html>` as an inline `color`, which is the only
+  place in the whole site that sets a default text colour — `global.css`
+  cannot, being shared between a near-black brand and an ivory one. Anything
+  that does not name its own colour inherits from here. **Keep that `color:`
+  in the `<html>` style attribute when you retheme the layout.** Drop it and
+  every such element renders in the browser's default black; on the dark
+  surface most brands use, that is invisible rather than merely wrong, and
+  `terms`/`privacy`/`404` name no colours at all by design, so all three go
+  blank at once. `verify-build.mjs` fails the build if it goes missing.
 
 If a family genuinely has no better-fitting alternative for this brand's
 mood and you must reuse the previous variant, say so explicitly in the
@@ -839,6 +853,25 @@ and `tools/verify-build.mjs` fails the build if either route is missing, so
 parking one turns into a red build rather than a pair of dead legal links.
 Do not add them to the uploader's `PRESET_PAGES`: that registry is a set of
 on/off toggles, and these have no "off".
+
+**`public/` belongs to nobody, so claim it explicitly.** Nothing in `public/`
+is reached by the "retheme the components the layout imports" sweep, and the
+uploader only writes the icon sizes it knows about — `favicon.ico`,
+`favicon.svg`, `favicon-96x96.png`, `apple-touch-icon.png`,
+`web-app-manifest-192/512`. Anything else there is from whichever brand last
+put it there. Four SUMOHENG icons (`favicon-16x16`, `favicon-32x32`,
+`android-chrome-192x192`, `android-chrome-512x512`) rode along on every brand
+for a week that way, 286 kB of another brand's logo on a fixed public path.
+`verify-build.mjs` now fails the build on a sized icon nothing links, so this
+particular leak cannot come back — but `site.webmanifest` still needs its
+`name`, `short_name` and `theme_color` set by hand every round.
+
+**Do not drop the `?v=` from the icon links in `MainLayout`.** They read
+`` href={`/favicon.svg?v=${iconVersion}`} `` and friends. The icon *paths* are
+identical on every brand while the *bytes* change, which is the one case a
+browser's favicon cache holds hardest — without the query the tab keeps showing
+the previous brand's logo no matter how correct the files are. `iconVersion`
+comes from `BRAND_NAME`, so it updates itself.
 
 **Preset pages (`บทความ.astro`, `about-us.astro`) follow the same rule, with a
 different trigger.** They are created by the uploader's ส่วนที่ 5 toggle, not by

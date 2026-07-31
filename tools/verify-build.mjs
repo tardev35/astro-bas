@@ -124,6 +124,40 @@ const VOID_TAGS = new Set([
   "link", "meta", "param", "source", "track", "wbr",
 ]);
 
+/** Every .css Astro emitted, concatenated. Read once — `inlineStylesheets` is
+ *  off, so a rule on html/body lives out here rather than in the page. */
+let distCssCache = null;
+const distCss = () => {
+  if (distCssCache === null) {
+    const dir = path.join(DIST, "_astro");
+    distCssCache = !fs.existsSync(dir)
+      ? ""
+      : fs
+          .readdirSync(dir)
+          .filter((f) => f.endsWith(".css"))
+          .map((f) => fs.readFileSync(path.join(dir, f), "utf8"))
+          .join("\n");
+  }
+  return distCssCache;
+};
+
+/** Does the document set a text colour that everything else can inherit?
+ *  Accepts an inline style on <html>/<body>, a <style> in the page, or a rule
+ *  on html/body/:root in a stylesheet — any of the three is a real answer. */
+const declaresColour = (css) => /(^|[,{}])\s*(?::root|html|body)[^{}]*\{[^{}]*(?:^|[;{\s])color\s*:/im.test(css);
+
+function rootDeclaresColour(html) {
+  for (const tag of [/<html\b[^>]*>/i, /<body\b[^>]*>/i]) {
+    const m = html.match(tag);
+    const style = m ? attr(m[0], "style") : null;
+    if (style && /(^|;)\s*color\s*:/i.test(style)) return true;
+  }
+  for (const m of html.matchAll(/<style\b[^>]*>([\s\S]*?)<\/style>/gi)) {
+    if (declaresColour(m[1])) return true;
+  }
+  return declaresColour(distCss());
+}
+
 /**
  * Walk text nodes, tracking whether any ancestor carries aria-hidden="true".
  * A regex cannot answer that question — the attribute is on an ancestor, not on
@@ -275,6 +309,22 @@ for (const file of pages) {
 
   if (!/<html[^>]+lang="th"/i.test(html)) {
     error(where, 'no lang="th" on <html>');
+  }
+
+  // A default text colour for the document. Nothing in global.css sets one —
+  // it cannot, being the same file for a near-black brand and an ivory one —
+  // so it arrives as an inline `color` on <html> from BRAND_TEXT.
+  //
+  // Without it every element that does not name its own colour falls through
+  // to the browser default, which is black. On the near-black surface this
+  // template has used for most brands that is not "dim", it is GONE: terms,
+  // privacy and 404 are brand-neutral by design and name no colours at all,
+  // so all three rendered as black-on-black until 2026-07-31.
+  //
+  // A rule in a real stylesheet counts too — the requirement is that the
+  // document HAS a text colour, not that it arrives one particular way.
+  if (!rootDeclaresColour(html)) {
+    error(where, "no default text colour on <html>/<body> — text without its own colour class renders black (see BRAND_TEXT)");
   }
 
   for (const m of html.matchAll(/<img\b[^>]*>/g)) {
@@ -492,6 +542,44 @@ for (const file of pages) {
     ),
     h3: [...html.matchAll(/<h3\b[^>]*>([\s\S]*?)<\/h3>/g)].length,
   });
+}
+
+// ── icons that ship but nothing points at ──────────────────────────────────
+//
+// public/ is copied into the build wholesale, so an icon left behind by an
+// older brand keeps deploying under a fixed, guessable path long after the
+// layout stopped linking it. favicon-16x16.png and favicon-32x32.png did
+// exactly that: byte-identical to the SUMOHENG build of 2026-07-23, still
+// served from every brand launched since. Two costs, and the second is worse:
+// visitors may see another brand's logo, and anyone fetching that one path
+// across the portfolio gets the same bytes back — a cross-domain match sharper
+// than anything on the page, which is the very thing brandProfile.ts exists to
+// avoid. The uploader writes 96x96/180/192/512 and never these two, so no
+// rebrand was ever going to notice.
+//
+// Scoped to sized variants on purpose. favicon.ico and apple-touch-icon.png
+// are fetched by browsers at their well-known root paths with no link at all,
+// so "unreferenced" is a normal state for them, not a defect.
+const LINK_ONLY_ICON = /^(favicon-\d+x\d+|android-chrome-[\w-]+|mstile-[\w-]+|web-app-manifest-[\w-]+)\.(png|svg|ico|webp|jpe?g)$/i;
+
+{
+  const referenced = new Set();
+  const note = (u) => referenced.add(u.split(/[?#]/)[0].replace(/^\//, ""));
+
+  for (const file of pages) {
+    const html = fs.readFileSync(file, "utf8");
+    for (const m of html.matchAll(/\s(?:href|src)="([^"]*)"/g)) note(m[1]);
+  }
+  const manifest = path.join(DIST, "site.webmanifest");
+  if (fs.existsSync(manifest)) {
+    for (const m of fs.readFileSync(manifest, "utf8").matchAll(/"src"\s*:\s*"([^"]+)"/g)) note(m[1]);
+  }
+
+  for (const entry of fs.readdirSync(DIST, { withFileTypes: true })) {
+    if (!entry.isFile() || !LINK_ONLY_ICON.test(entry.name)) continue;
+    if (referenced.has(entry.name)) continue;
+    error("dist/", `${entry.name} ships but no page and no manifest entry links it — a previous brand's icon left in public/`);
+  }
 }
 
 // ── build-time randomness ──────────────────────────────────────────────────
