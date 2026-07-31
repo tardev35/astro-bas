@@ -117,6 +117,35 @@ async function toPng(buf, dir, base, opts) {
   return `${base}.png`;
 }
 
+// og:image. Every page declares twitter:card = summary_large_image, which wants
+// roughly 1.91:1 at about 1200x630. slide1 is stored inside a 600x600 box, so
+// the card was rendering a small square — the layout Twitter and Facebook use
+// for a "large image" card does not exist at that aspect ratio.
+//
+// Letterboxed, not cropped: these are promo banners whose whole point is the
+// text printed on them, and a centre crop of a square banner to 1.91:1 cuts the
+// brand name off the top and the call to action off the bottom. The padding
+// colour is sampled from the artwork, so it reads as part of the design instead
+// of as two black bars.
+const OG_WIDTH = 1200;
+const OG_HEIGHT = 630;
+
+async function toOgImage(buf, dir) {
+  let background = { r: 10, g: 10, b: 9 };
+  try {
+    const { dominant } = await sharp(buf).stats();
+    if (dominant) background = dominant;
+  } catch {
+    // stats() can fail on odd inputs; the near-black default is fine.
+  }
+  await sharp(buf)
+    .resize({ width: OG_WIDTH, height: OG_HEIGHT, fit: "contain", background })
+    .png({ compressionLevel: 9, effort: 10 })
+    .toFile(join(dir, "og.png"));
+  await cleanupSiblings(dir, "og", "png");
+  return "og.png";
+}
+
 async function toWebp(buf, dir, base, opts) {
   const img = await prep(buf, opts);
   await img.webp({ quality: 90, effort: 6 }).toFile(join(dir, `${base}.webp`));
@@ -884,6 +913,9 @@ async function handleUpload(slot, index, ext, buf) {
       if (!(n >= 1 && n <= 4)) throw new Error("slide index must be 1-4");
       const written = [await toPng(buf, ASSETS, `slide${n}`, { box: SLIDE_BOX })];
       if (n === 1) {
+        // From the ORIGINAL upload, not the 600px-boxed slide — the og image is
+        // 1200 wide and there is no point upscaling a copy we just shrank.
+        written.push(await toOgImage(buf, ASSETS));
         const palette = await writePalette();
         if (palette) written.push(palette);
       }
