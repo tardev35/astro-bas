@@ -1,44 +1,42 @@
 ---
+import { isActivePath } from "../lib/nav";
 import { Picture } from "astro:assets";
 const images = import.meta.glob<{ default: ImageMetadata }>("../assets/logo.{png,webp,jpg}", { eager: true });
 const imagePaths = Object.keys(images);
 const mainLogo = imagePaths.length > 0 ? images[imagePaths[0]].default : null;
 const currentPath = Astro.url.pathname;
-const isActive = (path: string) => {
-  if (path === "/") return currentPath === "/";
-  return currentPath.startsWith(path);
-};
+const isActive = (path: string) => isActivePath(currentPath, path);
 ---
 
-<div class="hidden w-full border-b border-pink-600/30 bg-gradient-to-r from-[#100307] via-[#3a0a1c] to-[#100307] px-4 py-1.5 font-sans text-xs font-bold text-pink-100/80 lg:block">
+<div class="hidden w-full border-b border-amber-600/30 bg-gradient-to-r from-[#100b03] via-[#3a2703] to-[#100b03] px-4 py-1.5 font-sans text-xs font-bold text-amber-100/80 lg:block">
   <div class="mx-auto flex max-w-7xl justify-between">
     <div class="flex gap-4">
-      <span class="flex items-center gap-1"><span class="text-pink-400">👑</span> BUNNY555 เว็บตรงอันดับ 1 ระบบเสถียร ลื่นไหล</span>
-      <span class="flex items-center gap-1 text-green-400"><span class="text-green-500">✔</span> ฝาก-ถอน ออโต้ 24 ชม.</span>
+      <span class="flex items-center gap-1"><span aria-hidden="true" class="text-amber-400">👑</span> GSYBET เว็บเกมคาสิโนครบวงจร</span>
+      <span class="flex items-center gap-1 text-green-400"><span aria-hidden="true" class="text-green-500">✔</span> ฝาก-ถอน ออโต้ 24 ชม.</span>
     </div>
     <div class="flex gap-4">
-      <a href="/line" class="flex items-center gap-1 transition-colors hover:text-white">ติดต่อแอดมิน LINE: @BUNNY555</a>
+      <a href="/line" class="flex items-center gap-1 transition-colors hover:text-white">ติดต่อแอดมิน LINE: @GSYBET</a>
     </div>
   </div>
 </div>
 
 <header class="sticky top-2 z-50 mt-2 w-full px-2 font-sans md:px-4">
   <nav
-    class="relative mx-auto flex h-[75px] w-full max-w-7xl items-center justify-between rounded-[20px] border border-pink-500/40 bg-[#0a0305]/90 px-4 shadow-[0_10px_30px_rgba(236,72,153,0.18)] backdrop-blur-lg xl:px-8">
+    class="relative mx-auto flex h-[75px] w-full max-w-7xl items-center justify-between rounded-[20px] border border-amber-500/40 bg-[#0a0703]/90 px-4 shadow-[0_10px_30px_rgba(234,179,8,0.15)] backdrop-blur-lg xl:px-8">
     <a href="/" class="z-50 flex-shrink-0 transition-transform hover:scale-105">
       {
         mainLogo ? (
           <Picture
             src={mainLogo}
-            alt="BUNNY555 Logo"
+            alt="GSYBET Logo"
             loading="eager"
             fetchpriority="high"
-            class="h-[40px] w-auto drop-shadow-[0_0_10px_rgba(236,72,153,0.55)] xl:h-[45px]"
+            class="h-[40px] w-auto drop-shadow-[0_0_10px_rgba(234,179,8,0.5)] xl:h-[45px]"
             formats={["avif", "webp"]}
             fallbackFormat="webp"
           />
         ) : (
-          <span class="bg-gradient-to-b from-[#fbcfe8] to-[#db2777] bg-clip-text text-3xl font-black text-transparent drop-shadow-[0_0_8px_rgba(236,72,153,0.45)]">BUNNY555</span>
+          <span class="bg-gradient-to-b from-[#fef08a] to-[#ca8a04] bg-clip-text text-3xl font-black text-transparent drop-shadow-[0_0_8px_rgba(234,179,8,0.4)]">GSYBET</span>
         )
       }
     </a>
@@ -54,10 +52,10 @@ const isActive = (path: string) => {
         ].map((item) => (
           <a
             href={item.path}
-            class={`group relative flex h-full items-center text-sm font-bold tracking-wide uppercase transition-colors xl:text-base ${isActive(item.path) ? "text-pink-400 drop-shadow-[0_0_8px_rgba(236,72,153,0.45)]" : "text-pink-50/80 hover:text-pink-400"}`}>
+            class={`group relative flex h-full items-center text-sm font-bold tracking-wide uppercase transition-colors xl:text-base ${isActive(item.path) ? "text-amber-400 drop-shadow-[0_0_8px_rgba(234,179,8,0.4)]" : "text-amber-50/80 hover:text-amber-400"}`}>
             <span>{item.name}</span>
             <div
-              class={`absolute bottom-[18px] left-0 h-[2px] w-full origin-center bg-pink-400 shadow-[0_0_8px_rgba(236,72,153,0.8)] transition-transform duration-300 ${isActive(item.path) ? "scale-x-100" : "scale-x-0 group-hover:scale-x-100"}`}
+              class={`absolute bottom-[18px] left-0 h-[2px] w-full origin-center bg-amber-400 shadow-[0_0_8px_rgba(234,179,8,0.8)] transition-transform duration-300 ${isActive(item.path) ? "scale-x-100" : "scale-x-0 group-hover:scale-x-100"}`}
             />
           </a>
         ))
@@ -67,27 +65,27 @@ const isActive = (path: string) => {
     <div class="z-50 flex items-center gap-3">
       <a
         href="/login"
-        class="hidden items-center justify-center rounded-full border border-pink-500/50 bg-[#2a0714] px-6 py-2 text-sm font-bold text-pink-300 shadow-sm transition-all hover:bg-pink-500/20 lg:flex">
+        class="hidden items-center justify-center rounded-full border border-amber-500/50 bg-[#2a1c04] px-6 py-2 text-sm font-bold text-amber-400 shadow-sm transition-all hover:bg-amber-500/20 lg:flex">
         เข้าสู่ระบบ
       </a>
       <a
         href="/register"
-        class="hidden items-center justify-center rounded-full bg-gradient-to-r from-pink-300 via-pink-400 to-pink-600 px-6 py-2 text-sm font-black text-[#2a0714] shadow-[0_0_15px_rgba(236,72,153,0.45)] transition-all hover:scale-105 lg:flex">
+        class="hidden items-center justify-center rounded-full bg-gradient-to-r from-yellow-300 via-amber-400 to-amber-600 px-6 py-2 text-sm font-black text-[#1a1204] shadow-[0_0_15px_rgba(234,179,8,0.4)] transition-all hover:scale-105 lg:flex">
         สมัครสมาชิก
       </a>
 
       <button
         id="hamburger-btn"
-        class="relative flex h-[42px] w-[42px] flex-col items-center justify-center gap-[5px] rounded-full border border-pink-500/30 bg-gradient-to-b from-[#2a0714] to-[#0a0305] shadow-sm lg:hidden"
+        class="relative flex h-[42px] w-[42px] flex-col items-center justify-center gap-[5px] rounded-full border border-amber-500/30 bg-gradient-to-b from-[#2a1c04] to-[#0a0703] shadow-sm lg:hidden"
         aria-label="Menu">
-        <span class="line-1 h-[2px] w-5 origin-center rounded-full bg-pink-400 transition-all duration-300"></span>
-        <span class="line-2 h-[2px] w-5 origin-center rounded-full bg-pink-400 transition-all duration-300"></span>
-        <span class="line-3 h-[2px] w-5 origin-center rounded-full bg-pink-400 transition-all duration-300"></span>
+        <span class="line-1 h-[2px] w-5 origin-center rounded-full bg-amber-400 transition-all duration-300"></span>
+        <span class="line-2 h-[2px] w-5 origin-center rounded-full bg-amber-400 transition-all duration-300"></span>
+        <span class="line-3 h-[2px] w-5 origin-center rounded-full bg-amber-400 transition-all duration-300"></span>
       </button>
     </div>
   </nav>
 
-  <div id="fullscreen-menu" class="pointer-events-none fixed inset-0 z-[40] flex flex-col items-center justify-center bg-[#0a0305]/98 opacity-0 backdrop-blur-xl transition-opacity duration-500">
+  <div id="fullscreen-menu" class="pointer-events-none fixed inset-0 z-[40] flex flex-col items-center justify-center bg-[#0a0703]/98 opacity-0 backdrop-blur-xl transition-opacity duration-500">
     <div class="flex w-full flex-col items-center space-y-5 px-6">
       {
         [
@@ -99,7 +97,7 @@ const isActive = (path: string) => {
         ].map((item) => (
           <a
             href={item.path}
-            class={`fs-item text-2xl font-black tracking-widest uppercase transition-all duration-300 ${isActive(item.path) ? "text-pink-400 drop-shadow-[0_0_10px_rgba(236,72,153,0.6)]" : "text-white/80 hover:text-white"}`}>
+            class={`fs-item text-2xl font-black tracking-widest uppercase transition-all duration-300 ${isActive(item.path) ? "text-amber-400 drop-shadow-[0_0_10px_rgba(234,179,8,0.6)]" : "text-white/80 hover:text-white"}`}>
             {item.name}
           </a>
         ))
@@ -107,12 +105,12 @@ const isActive = (path: string) => {
       <div class="fs-item mt-4 flex w-full max-w-[280px] flex-col gap-4 pt-6">
         <a
           href="/register"
-          class="flex w-full items-center justify-center rounded-full bg-gradient-to-r from-pink-300 to-pink-600 py-3.5 text-lg font-black text-[#2a0714] shadow-[0_0_20px_rgba(236,72,153,0.5)]">
+          class="flex w-full items-center justify-center rounded-full bg-gradient-to-r from-yellow-300 to-amber-600 py-3.5 text-lg font-black text-[#1a1204] shadow-[0_0_20px_rgba(234,179,8,0.5)]">
           สมัครสมาชิกใหม่
         </a>
         <a
           href="/login"
-          class="flex w-full items-center justify-center rounded-full border-2 border-pink-500/50 bg-[#2a0714] py-3.5 text-lg font-bold text-pink-300 transition-colors hover:bg-pink-500/20">
+          class="flex w-full items-center justify-center rounded-full border-2 border-amber-500/50 bg-[#2a1c04] py-3.5 text-lg font-bold text-amber-400 transition-colors hover:bg-amber-500/20">
           เข้าสู่ระบบ
         </a>
       </div>

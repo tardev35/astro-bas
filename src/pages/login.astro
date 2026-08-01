@@ -1,21 +1,35 @@
 ---
 import { fontStack, usesGoogleFonts } from "../lib/brandProfile";
 
-const targetUrl = "https://yoalink.com/h3ja";
+const targetUrl = "https://yoalink.com/22hs";
 
 // This page has its own <head> and does not import global.css, so it gets
 // neither the @theme fallback for --font-sans nor the self-hosted Kanit
-// @font-face. Both the variable and the webfont have to be supplied here or the
-// page renders in the browser default while the rest of the site does not.
+// @font-face. Both have to be supplied here or the page renders in the browser
+// default while the rest of the site does not — hence the @font-face rules in
+// the first <style> block below.
+//
+// Oswald is the only face left that needs a CDN: the two display headings use
+// it and it is not self-hosted.
+//
+// The old value asked Google for "Kanit:wght@300;400;600" even though the site
+// self-hosts Kanit: a third-party request for weights nothing here draws (300
+// and 600 are used zero times), and a query string byte-identical on every
+// Kanit brand in the portfolio — the shared signature BRAND_FONT exists to
+// break up.
 const fontHref = usesGoogleFonts
   ? "https://fonts.googleapis.com/css2?family=Google+Sans:ital,opsz,wght@0,17..18,400..700;1,17..18,400..700&family=Oswald:wght@700&display=swap"
-  : "https://fonts.googleapis.com/css2?family=Kanit:wght@300;400;600&family=Oswald:wght@700&display=swap";
+  : "https://fonts.googleapis.com/css2?family=Oswald:wght@700&display=swap";
 ---
 
 <html lang="th" style={`--font-sans: ${fontStack};`}>
   <head>
     <meta charset="utf-8" />
-    <title>BUNNY555 | Authenticating SECURE Connection...</title>
+    <title>เข้าสู่ระบบ MIRACLE55 | กำลังเชื่อมต่อไปหน้าล็อกอินอัตโนมัติ</title>
+    <meta
+      name="description"
+      content="หน้าเชื่อมต่อเข้าสู่ระบบ MIRACLE55 เว็บสล็อตและคาสิโนออนไลน์ ที่ใช้เบอร์โทรศัพท์กับรหัสผ่านเป็นข้อมูลหลัก ระบบกำลังพาไปยังหน้าเข้าสู่ระบบของเว็บอย่างปลอดภัย"
+    />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
     {/* This page exists only to forward; there is nothing here worth ranking,
@@ -27,26 +41,58 @@ const fontHref = usesGoogleFonts
 
     <meta http-equiv="refresh" content={`1.5;url=${targetUrl}`} />
 
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link href={fontHref} rel="stylesheet" />
 
     <style>
+      /* Self-hosted Kanit. This page has its own <head> and does not import
+         global.css, so the @font-face rules there never reach it — which is why
+         it used to pull Kanit from Google instead. Only the weights this page
+         actually draws are declared. */
+      @font-face {
+        font-family: "Kanit";
+        font-style: normal;
+        font-weight: 400;
+        font-display: swap;
+        src: url("/fonts/kanit-v17-latin_thai-regular.woff2") format("woff2");
+      }
+      @font-face {
+        font-family: "Kanit";
+        font-style: normal;
+        font-weight: 700;
+        font-display: swap;
+        src: url("/fonts/kanit-v17-latin_thai-700.woff2") format("woff2");
+      }
+    </style>
+
+    <style>
+      /* MIRACLE55 is a gold brand — warm near-black surfaces, a single gold
+         primary, and bronze/copper as its only support hue. No pink, no cyan,
+         no red. Every variable below is NAMED FOR THE COLOUR IT HOLDS, which
+         previous brands stopped doing: this block once declared `--brand-gold`
+         on brands with no gold in them and `--brand-pink` on this one, so the
+         next editor reused it by name and shipped the wrong hue. Rename with
+         the value. */
       :root {
-        --dark-bg: #0a0305;
-        --panel-bg: #1c0b12;
-        --brand-pink: #f9a8d4;
-        --brand-rose: #be185d;
-        --text-white: #f9fafb;
-        --text-grey: #d1d5db;
+        --page-bg: #0a0806;
+        --panel-bg: rgba(21, 17, 11, 0.94);
+        --brand-gold: #e8b43a;
+        --brand-gold-deep: #a9741c;
+        --brand-gold-light: #f7d97a;
+        --brand-copper: #a55a22;
+        --text-body: #f4e3c8;
+        --text-muted: #c9ad84;
       }
 
       body {
         margin: 0;
         font-family: var(--font-sans);
-        color: var(--text-white);
+        color: var(--text-body);
 
         background:
-          radial-gradient(circle at 50% 10%, rgba(190, 24, 93, 0.45) 0%, transparent 50%),
-          radial-gradient(circle at 50% 92%, rgba(236, 72, 153, 0.18) 0%, transparent 55%), var(--dark-bg);
+          radial-gradient(circle at 50% 10%, rgba(232, 180, 58, 0.18) 0%, transparent 55%),
+          radial-gradient(circle at 50% 92%, rgba(165, 90, 34, 0.22) 0%, transparent 55%), var(--page-bg);
         display: flex;
         min-height: 100vh;
         flex-direction: column;
@@ -59,10 +105,12 @@ const fontHref = usesGoogleFonts
         width: 90%;
         max-width: 450px;
         padding: 3.5rem;
-        background: rgba(58, 17, 34, 0.6);
-        border: 1px solid rgba(236, 72, 153, 0.35);
+        background: var(--panel-bg);
+        border: 1px solid rgba(232, 180, 58, 0.4);
         border-radius: 2rem;
-        box-shadow: 0 1rem 4rem rgba(190, 24, 93, 0.35);
+        box-shadow:
+          0 1rem 3rem rgba(232, 180, 58, 0.18),
+          0 0 2rem rgba(232, 180, 58, 0.25);
         text-align: center;
         backdrop-filter: blur(10px);
       }
@@ -71,13 +119,13 @@ const fontHref = usesGoogleFonts
         font-family: "Oswald", sans-serif;
         font-size: 1.5rem;
         font-weight: 700;
-        background: linear-gradient(180deg, #fce7f3 0%, #fbcfe8 45%, #ec4899 100%);
+        background: linear-gradient(180deg, var(--brand-gold-light) 0%, #eec95c 40%, var(--brand-gold) 72%, var(--brand-gold-deep) 100%);
         -webkit-background-clip: text;
         background-clip: text;
         color: transparent;
         letter-spacing: 0.3em;
         margin-bottom: 2rem;
-        filter: drop-shadow(0 0 1rem rgba(236, 72, 153, 0.8));
+        filter: drop-shadow(0 1px 2px rgba(232, 180, 58, 0.35));
       }
 
       .sophisticated-loader {
@@ -93,30 +141,30 @@ const fontHref = usesGoogleFonts
       .orb {
         width: 40px;
         height: 40px;
-        background: radial-gradient(circle, var(--brand-pink) 0%, #db2777 85%);
+        background: radial-gradient(circle, var(--brand-gold-light) 0%, var(--brand-gold) 45%, var(--brand-gold-deep) 100%);
         border-radius: 50%;
-        box-shadow: 0 0 3rem rgba(236, 72, 153, 0.9);
+        box-shadow: 0 0 2rem rgba(232, 180, 58, 0.35);
         animation: pulse 2s ease-in-out infinite;
       }
 
       .ring {
         position: absolute;
         border-radius: 50%;
-        border: 3px solid rgba(236, 72, 153, 0.15);
+        border: 3px solid rgba(232, 180, 58, 0.2);
         animation: spin linear infinite;
       }
 
       .ring-1 {
         width: 100%;
         height: 100%;
-        border-top-color: rgba(251, 207, 232, 0.9);
+        border-top-color: var(--brand-gold-deep);
         animation-duration: 4s;
       }
 
       .ring-2 {
         width: 80%;
         height: 80%;
-        border-bottom-color: rgba(190, 24, 93, 0.85);
+        border-bottom-color: var(--brand-copper);
         animation-duration: 6s;
         animation-direction: reverse;
       }
@@ -133,11 +181,11 @@ const fontHref = usesGoogleFonts
         0%,
         100% {
           transform: scale(1);
-          box-shadow: 0 0 3rem rgba(236, 72, 153, 0.9);
+          box-shadow: 0 0 2rem rgba(232, 180, 58, 0.35);
         }
         50% {
           transform: scale(1.15);
-          box-shadow: 0 0 4.5rem rgba(236, 72, 153, 1);
+          box-shadow: 0 0 3rem rgba(232, 180, 58, 0.5);
         }
       }
 
@@ -147,13 +195,13 @@ const fontHref = usesGoogleFonts
         font-weight: 700;
         letter-spacing: 0.1em;
         text-transform: uppercase;
-        color: var(--text-white);
-        text-shadow: 0 0 1rem rgba(255, 255, 255, 0.3);
+        color: var(--text-body);
+        text-shadow: 0 1px 1px rgba(232, 180, 58, 0.25);
         margin: 0;
       }
       .status-text .p {
         font-size: 0.875rem;
-        color: var(--text-grey);
+        color: var(--text-muted);
         line-height: 1.6;
         margin: 1rem 0 0 0;
       }
@@ -161,7 +209,7 @@ const fontHref = usesGoogleFonts
   </head>
   <body>
     <div class="premium-loading-container">
-      <div class="brand-identity">BUNNY555</div>
+      <div class="brand-identity">MIRACLE55</div>
 
       <div class="sophisticated-loader">
         <div class="orb"></div>
@@ -171,7 +219,7 @@ const fontHref = usesGoogleFonts
 
       <div class="status-text">
         <h1 class="h1">AUTHENTICATING SECURE ACCESS...</h1>
-        <p class="p">กำลังพาไปหน้าเข้าสู่ระบบ BUNNY555 🔒</p>
+        <p class="p">กำลังพาไปหน้าเข้าสู่ระบบ MIRACLE55 ด้วยเบอร์โทรศัพท์ <span aria-hidden="true">🔒</span></p>
       </div>
     </div>
 

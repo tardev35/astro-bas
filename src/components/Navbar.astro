@@ -1,4 +1,5 @@
 ---
+import { isActivePath } from "../lib/nav";
 import { Picture } from "astro:assets";
 
 const images = import.meta.glob<{ default: ImageMetadata }>("../assets/logo.{png,webp,jpg}", { eager: true });
@@ -8,10 +9,7 @@ const mainLogo = imagePaths.length > 0 ? images[imagePaths[0]].default : null;
 
 const currentPath = Astro.url.pathname;
 
-const isActive = (path: string) => {
-  if (path === "/") return currentPath === "/";
-  return currentPath.startsWith(path);
-};
+const isActive = (path: string) => isActivePath(currentPath, path);
 ---
 
 <!-- 1. ปรับพื้นหลังเป็นสีน้ำเงินเข้มเกือบดำ และขอบทองจางๆ -->
@@ -43,7 +41,7 @@ const isActive = (path: string) => {
             ? "bg-gradient-to-b from-amber-300 via-yellow-500 to-amber-600 text-slate-950 border-amber-200 shadow-[0_0_20px_rgba(245,158,11,0.4)]"
             : "bg-white/5 backdrop-blur-sm text-gray-300 hover:bg-white/10 border-white/10 hover:text-white"
         }`}>
-        <span class="text-lg">🏠</span>
+        <span aria-hidden="true" class="text-lg">🏠</span>
         <span>หน้าแรก</span>
       </a>
 
@@ -54,7 +52,7 @@ const isActive = (path: string) => {
             ? "bg-gradient-to-b from-amber-300 via-yellow-500 to-amber-600 text-slate-950 border-amber-200 shadow-[0_0_20px_rgba(245,158,11,0.4)]"
             : "bg-white/5 backdrop-blur-sm text-gray-300 hover:bg-white/10 border-white/10 hover:text-white"
         }`}>
-        <span class="text-lg">⭐</span>
+        <span aria-hidden="true" class="text-lg">⭐</span>
         <span>โปรโมชั่น</span>
       </a>
 
@@ -65,7 +63,7 @@ const isActive = (path: string) => {
             ? "bg-gradient-to-b from-amber-300 via-yellow-500 to-amber-600 text-slate-950 border-amber-200 shadow-[0_0_20px_rgba(245,158,11,0.4)]"
             : "bg-white/5 backdrop-blur-sm text-gray-300 hover:bg-white/10 border-white/10 hover:text-white"
         }`}>
-        <span class="text-lg">🎮</span>
+        <span aria-hidden="true" class="text-lg">🎮</span>
         <span>ทดลองเล่น</span>
       </a>
 
@@ -76,7 +74,7 @@ const isActive = (path: string) => {
             ? "bg-gradient-to-b from-amber-300 via-yellow-500 to-amber-600 text-slate-950 border-amber-200 shadow-[0_0_20px_rgba(245,158,11,0.4)]"
             : "bg-white/5 backdrop-blur-sm text-gray-300 hover:bg-white/10 border-white/10 hover:text-white"
         }`}>
-        <span class="text-lg">🌐</span>
+        <span aria-hidden="true" class="text-lg">🌐</span>
         <span>ทางเข้า</span>
       </a>
 
@@ -87,7 +85,7 @@ const isActive = (path: string) => {
             ? "bg-gradient-to-b from-amber-300 via-yellow-500 to-amber-600 text-slate-950 border-amber-200 shadow-[0_0_20px_rgba(245,158,11,0.4)]"
             : "bg-white/5 backdrop-blur-sm text-gray-300 hover:bg-white/10 border-white/10 hover:text-white"
         }`}>
-        <span class="text-lg">👤</span>
+        <span aria-hidden="true" class="text-lg">👤</span>
         <span>ติดต่อ</span>
       </a>
     </div>
@@ -104,9 +102,9 @@ const isActive = (path: string) => {
       <a
         href="/register"
         class="rounded-lg border border-red-400 bg-gradient-to-b from-red-500 to-red-700 px-5 py-2 text-base font-black text-white shadow-[0_0_15px_rgba(220,38,38,0.4)] hover:brightness-110">
-        👤 สมัครสมาชิก
+        <span aria-hidden="true">👤</span> สมัครสมาชิก
       </a>
-      <a href="/login" class="rounded-lg border border-gray-600 bg-gradient-to-b from-slate-700 to-black px-5 py-2 text-base font-bold text-white transition-all hover:bg-gray-900">🔒 เข้าสู่ระบบ</a>
+      <a href="/login" class="rounded-lg border border-gray-600 bg-gradient-to-b from-slate-700 to-black px-5 py-2 text-base font-bold text-white transition-all hover:bg-gray-900"><span aria-hidden="true">🔒</span> เข้าสู่ระบบ</a>
     </div>
   </div>
 
@@ -116,41 +114,41 @@ const isActive = (path: string) => {
       <a
         href="/"
         class={`group flex items-center px-4 py-3.5 text-sm font-bold transition-all duration-300 rounded-xl border ${isActive("/") ? "bg-amber-500/10 text-amber-400 border-amber-500/30" : "text-gray-400 border-transparent hover:text-white hover:bg-white/5"}`}>
-        <span class={`mr-3 text-lg ${isActive("/") ? "drop-shadow-[0_0_8px_rgba(245,158,11,0.6)]" : ""}`}>🏠</span>
+        <span aria-hidden="true" class={`mr-3 text-lg ${isActive("/") ? "drop-shadow-[0_0_8px_rgba(245,158,11,0.6)]" : ""}`}>🏠</span>
         หน้าแรก
       </a>
 
       <a
         href="/promotion"
         class={`group flex items-center px-4 py-3.5 text-sm font-bold transition-all duration-300 rounded-xl border ${isActive("/promotion") ? "bg-amber-500/10 text-amber-400 border-amber-500/30" : "text-gray-400 border-transparent hover:text-white hover:bg-white/5"}`}>
-        <span class={`mr-3 text-lg ${isActive("/promotion") ? "drop-shadow-[0_0_8px_rgba(245,158,11,0.6)]" : ""}`}>⭐</span>
+        <span aria-hidden="true" class={`mr-3 text-lg ${isActive("/promotion") ? "drop-shadow-[0_0_8px_rgba(245,158,11,0.6)]" : ""}`}>⭐</span>
         โปรโมชั่น
       </a>
 
       <a
         href="/ทดลองเล่น"
         class={`group flex items-center px-4 py-3.5 text-sm font-bold transition-all duration-300 rounded-xl border ${isActive("/ทดลองเล่น") ? "bg-amber-500/10 text-amber-400 border-amber-500/30" : "text-gray-400 border-transparent hover:text-white hover:bg-white/5"}`}>
-        <span class={`mr-3 text-lg ${isActive("/ทดลองเล่น") ? "drop-shadow-[0_0_8px_rgba(245,158,11,0.6)]" : ""}`}>🎮</span>
+        <span aria-hidden="true" class={`mr-3 text-lg ${isActive("/ทดลองเล่น") ? "drop-shadow-[0_0_8px_rgba(245,158,11,0.6)]" : ""}`}>🎮</span>
         ทดลองเล่น
       </a>
 
       <a
         href="/ทางเข้า"
         class={`group flex items-center px-4 py-3.5 text-sm font-bold transition-all duration-300 rounded-xl border ${isActive("/ทางเข้า") ? "bg-amber-500/10 text-amber-400 border-amber-500/30" : "text-gray-400 border-transparent hover:text-white hover:bg-white/5"}`}>
-        <span class={`mr-3 text-lg ${isActive("/ทางเข้า") ? "drop-shadow-[0_0_8px_rgba(245,158,11,0.6)]" : ""}`}>🌐</span>
+        <span aria-hidden="true" class={`mr-3 text-lg ${isActive("/ทางเข้า") ? "drop-shadow-[0_0_8px_rgba(245,158,11,0.6)]" : ""}`}>🌐</span>
         ทางเข้า
       </a>
 
       <a
         href="/contact-us"
         class={`group flex items-center px-4 py-3.5 text-sm font-bold transition-all duration-300 rounded-xl border ${isActive("/contact-us") ? "bg-amber-500/10 text-amber-400 border-amber-500/30" : "text-gray-400 border-transparent hover:text-white hover:bg-white/5"}`}>
-        <span class={`mr-3 text-lg ${isActive("/contact-us") ? "drop-shadow-[0_0_8px_rgba(245,158,11,0.6)]" : ""}`}>👤</span>
+        <span aria-hidden="true" class={`mr-3 text-lg ${isActive("/contact-us") ? "drop-shadow-[0_0_8px_rgba(245,158,11,0.6)]" : ""}`}>👤</span>
         ติดต่อ
       </a>
 
       <div class="mt-4 flex flex-col space-y-3 border-t border-amber-500/10 pt-6">
         <a href="/register" class="flex w-full items-center justify-center rounded-xl bg-gradient-to-r from-red-600 to-red-500 py-4 text-base font-black text-white shadow-lg shadow-red-600/30">
-          🔥 สมัครสมาชิก
+          <span aria-hidden="true">🔥</span> สมัครสมาชิก
         </a>
       </div>
     </div>

@@ -169,12 +169,21 @@ git clone git@gitlab.com:tardev-group/astro-tud.git
 
 ```powershell
 git push bas rebrand-ufayes-cf:main
+git push dev rebrand-ufayes-cf:main
 git push tud rebrand-ufayes-cf:main
 git push aoy rebrand-ufayes-cf:main
 ```
 
 `git remote add` ทำครั้งเดียวตอนเปิด repo ครั้งต่อๆ ไปเหลือแค่บรรทัด `push`
 เพื่อนแต่ละคนแค่ `git switch main` แล้ว `git pull`
+
+> ⚠️ **`astro-dev` ยังใช้บรรทัดข้างบนไม่ได้ (สถานะ ณ 28 ก.ค.)** มันแตกเป็นคนละสายไปตั้งแต่
+> **25 ก.ค.** (`d12ac16`) แล้วเดินต่อด้วยรีแบรนด์ของตัวเองซ้อนกันหลายชั้นบน `main`
+> (`NOVA852 → ดีเฮง789 → KINGHENG168 → PGZEED168 → ezwin168`) บวกกับ uploader
+> คนละเวอร์ชัน — ตอนนี้ห่างกัน **57 vs 26 commit / 93 ไฟล์** คำสั่งกระจายจะถูกปฏิเสธ
+> และ **`git merge dev/main` จะลากแบรนด์ของเขาเข้าต้นแบบทั้งก้อน อย่าทำ**
+>
+> จนกว่าจะรวมสายกันได้ ให้ยกทีละ commit แทน — ดู **A4.1**
 
 **กติกาข้อเดียวที่ทำให้คำสั่งนี้ปลอดภัยตลอด:**
 
@@ -216,6 +225,48 @@ git log --format="%h  %an  %ar%n    %s" rebrand-ufayes-cf..tud/main
 แล้วดึงกลับเข้าต้นแบบตาม **A5** — เสร็จแล้วคำสั่งกระจายจะผ่านเอง
 
 **`--force` แก้ปัญหานี้ไม่ได้ มันแค่ลบงานเขาทิ้ง** แล้วคนที่เสียงานจะไม่รู้ตัวด้วยซ้ำ
+
+## A4.1 repo ที่แตกเป็นคนละสายไปแล้ว — ยกทีละ commit
+
+ใช้เมื่อ repo ปลายทางเดินไปไกลจนรวมกลับไม่ไหวในตอนนี้ แต่ยังอยากให้ของชิ้นเดียวไปถึง
+ทำใน **worktree ชั่วคราว** จะได้ไม่ต้องสลับ branch ในโฟลเดอร์ที่กำลังทำงานอยู่
+
+```powershell
+git fetch dev
+git worktree add -b tmp-ยกของ ..\tmp-cp dev/main
+cd ..\tmp-cp
+git cherry-pick <commit>
+# แก้ conflict — กติกา: เก็บสี/ข้อความของแบรนด์เขาไว้ เอาเฉพาะโครงสร้างของเราเข้าไป
+git cherry-pick --continue
+```
+
+**ต้อง build ให้ผ่านก่อน push เสมอ** ไม่ต้อง `npm install` ใหม่ ยืม `node_modules`
+ของโฟลเดอร์ต้นแบบมาใช้ได้เลย (เร็วกว่ามาก):
+
+```powershell
+cmd /c mklink /J node_modules C:\path\ไปยัง\astro-full-schema-main\node_modules
+npm run build
+```
+
+ผ่านแล้วค่อยส่งขึ้นไป แล้วเก็บกวาด:
+
+```powershell
+git push dev tmp-ยกของ:main
+cmd /c rmdir node_modules        # ⚠️ ปลด junction ก่อนเสมอ — อ่านกล่องข้างล่าง
+cd ..\astro-full-schema-main
+git worktree remove --force ..\tmp-cp
+git branch -D tmp-ยกของ
+```
+
+> 🚨 **ห้ามสลับลำดับ 2 บรรทัดนี้เด็ดขาด** ถ้า `git worktree remove --force` รันตอน junction
+> ยังอยู่ **มันจะเดินทะลุ junction เข้าไปลบ `node_modules` ตัวจริงของโฟลเดอร์ต้นแบบ**
+> คำสั่งจะขึ้น `failed to delete ... Invalid argument` เหมือนล้มเหลวเฉยๆ แต่ของถูกลบไปแล้ว
+> บางส่วน อาการที่ตามมาคือ `npm run build` ขึ้น `'astro' is not recognized`
+> **เคยพลาดมาแล้ววันที่ 28 ก.ค.** แก้ได้ด้วย `npm install` ซ้ำ แต่ไม่ต้องให้ถึงตรงนั้น
+
+> **conflict ที่จะเจอคือ `Footer*.astro` / `Navbar*.astro` เป็นหลัก** เพราะเป็นไฟล์ที่
+> ทุกแบรนด์ retheme ทับ — เวลาแก้ให้ดูว่าอันไหนคือ "สีของแบรนด์เขา" (เก็บไว้) อันไหนคือ
+> "โครงสร้าง/component ใหม่ของเรา" (เอาเข้า) ห้ามเลือกทั้งฝั่งแบบไม่อ่าน
 
 ## A5. เวลางานของเพื่อนดี อยากเก็บเข้าต้นแบบ
 

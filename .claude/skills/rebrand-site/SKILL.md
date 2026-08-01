@@ -365,11 +365,30 @@ different colors:
   never leave the default in place assuming it's generic filler.
 - `LatestWinners`/`LatestWinners2..4`/`LatestWinnersCyber`/
   `LatestWinnersPremium`/`LatestWinnersHuay` — the live withdrawal/win
-  feed. These are self-contained (own bank-logo imports, own mock-data
-  generator script) but the brand name and hue are hardcoded straight
-  into the JSX, not passed as props — swapping variants means doing the
-  full retheme + brand-name pass on the newly chosen file, same as any
-  other component in Phase 3.
+  feed. These are self-contained (own bank-logo imports) but the brand
+  name and hue are hardcoded straight into the JSX, not passed as props —
+  swapping variants means doing the full retheme + brand-name pass on the
+  newly chosen file, same as any other component in Phase 3.
+
+  **All seven now share `src/lib/winnersFeed.ts`, and none of them may go
+  back to `<script define:vars>`** — that forces `is:inline`, which the
+  gate fails on an indexable page, and it renders the feed container empty
+  in the HTML (nothing for a crawler, nothing without JS, a guaranteed
+  layout shift). The rows are server-rendered and the module only takes
+  over the rotation.
+
+  What that means when you retheme one: the row markup is yours to restyle
+  freely, but keep the `data-winner-*` hooks on the elements that carry
+  live values, and keep the initial rows coming from `brandPick`/
+  `brandFlag` rather than `Math.random()` — frontmatter runs at build time,
+  so a random call there makes two builds of the same domain differ and the
+  gate rejects it. Everything the module needs to know is a `data-*` on the
+  feed element (`data-interval`, `data-max-rows`, `data-amount-min/max`,
+  `data-pending-chance`, `data-user-style`, `data-user-digits`,
+  `data-insert`, `data-big-win-above`) or on a row element
+  (`data-pending-text`/`data-done-text` and the matching `-class` pairs).
+  Put this brand's wording and classes there; the module never learns the
+  palette.
 - `Navbar`/`NavbarStyle1..11`/`NavbarCyber`/`NavbarHuay`/
   `NavbarPremium` and `Footer`/`FooterStyle2..3`/`FooterCyber`/
   `FooterHuay`/`FooterPremium`(`Sumo`) — **unlike the families above,
@@ -381,6 +400,30 @@ different colors:
   *previous* brand's name hardcoded in a logo-fallback heading and
   footer copyright line (exactly like the currently-wired one did) —
   retheme and swap that text before wiring it in, not after.
+
+  **Give every navbar menu item an icon.** The owner asked for this after
+  seeing TUNGMA168's navbar (2026-08-01) and it applies from here on,
+  whichever variant a brand picks. Roughly half the inventory has none —
+  `NavbarPremium` is the one that was live when this was raised, and it
+  ships plain text links.
+
+  Do it the way `NavbarStyle1` does: put the icon in the `links` array
+  next to `name` and `path`, then render it as its own
+  `<span aria-hidden="true">`. Two things that follow from that, both
+  enforced by `tools/verify-build.mjs`:
+
+  - **`aria-hidden="true"` is not optional.** A decorative emoji outside
+    an aria-hidden element fails the build, and without it a screen
+    reader announces the menu as "house หน้าแรก".
+  - **The icon must be a sibling of the label, never inside its text.**
+    Concatenating them puts the emoji into the accessible name.
+
+  Several variants — `NavbarPremium` among them — declare the menu twice,
+  once for desktop and once for the mobile drawer. Hoist that into one
+  `links` const while you are in there rather than adding icons to both
+  copies, or the next person edits one and not the other. Pick icons that
+  match the brand's genre (a lottery brand's menu should not be led by a
+  slot machine), and keep them to one per item.
 
 **Rotate every family's variant on each rebrand — the ONE variant you
 must not reuse is the one the previous brand had wired in.** This is a
@@ -427,6 +470,26 @@ the same one:
   the *same four paths on every brand that uses it*, which is a sharper
   cross-brand match than anything visual. Rotating the font breaks that
   set in half.
+- **Brand name** — set `BRAND_NAME` in `src/lib/brandProfile.ts` to the new
+  brand, right under `BRAND_FONT`. Also one line. It feeds `og:site_name`,
+  every JSON-LD `name`, and the whole of `terms.astro`/`privacy.astro`, so
+  those files never hardcode a brand and never rot into the previous one.
+  Miss it and the site builds perfectly while telling Google it belongs to
+  the brand before this one.
+- **Brand text colour** — set `BRAND_TEXT` in `src/lib/brandProfile.ts` to
+  this brand's **body copy** colour: the one the active `ContentBox*` puts on
+  its paragraphs, not the heading or accent colour. Third one-liner in the
+  same file, right under `BRAND_NAME`.
+
+  `MainLayout` puts it on `<html>` as an inline `color`, which is the only
+  place in the whole site that sets a default text colour — `global.css`
+  cannot, being shared between a near-black brand and an ivory one. Anything
+  that does not name its own colour inherits from here. **Keep that `color:`
+  in the `<html>` style attribute when you retheme the layout.** Drop it and
+  every such element renders in the browser's default black; on the dark
+  surface most brands use, that is invisible rather than merely wrong, and
+  `terms`/`privacy`/`404` name no colours at all by design, so all three go
+  blank at once. `verify-build.mjs` fails the build if it goes missing.
 
 If a family genuinely has no better-fitting alternative for this brand's
 mood and you must reuse the previous variant, say so explicitly in the
@@ -825,6 +888,63 @@ turning them off is an action, not an absence of one:**
 
 Record the on/off decision in the workspec either way.
 
+**`terms.astro` and `privacy.astro` are NOT in that decision.** They ship on
+every brand, are never parked, and are never rewritten. They are brand-neutral
+by construction — every brand-specific word in them comes from `BRAND_NAME`, so
+setting that one line retitles both pages. Every footer variant links to them,
+and `tools/verify-build.mjs` fails the build if either route is missing, so
+parking one turns into a red build rather than a pair of dead legal links.
+Do not add them to the uploader's `PRESET_PAGES`: that registry is a set of
+on/off toggles, and these have no "off".
+
+**Both render their body through `ContentBox.astro`, and must keep doing so**
+(asked for on 2026-08-01, after MIRACLE55 shipped them as bare text on the
+background while every other page was in boxes). Each section is one
+`<ContentBox as="h2" title={…}>`; the page title is one `<ContentBox as="h1">`.
+
+Two rules make that survive a rebrand, and both are easy to break by being
+helpful:
+
+- **Nothing inside those boxes may name a colour.** `ContentBox`'s own wrapper
+  sets the text colour and the paragraphs inherit it, which is the only reason
+  these pages stay brand-neutral after being wrapped. Copying index's
+  `class="text-[#…]"` onto the paragraphs would hardcode this brand's palette
+  into a file no future rebrand opens.
+- **`ContentBox.astro` specifically — never the variant `index.astro` picked
+  this round.** A permanent page cannot follow a rotation it does not know
+  about. This pins `ContentBox` as always-live, which costs nothing: it is
+  already imported by two or more pages, so the shared-chrome rule in Step P1
+  already puts it in the set you retheme before fan-out. Just do not let it
+  fall out of that set — if `index.astro` stops using `ContentBox`, terms and
+  privacy still do, and it still needs this brand's colours.
+
+**`privacy.astro` describes what the built site actually does, and that is the
+one thing in it that can go stale.** Today the build is static with no
+analytics, no tracking pixel, no cookie banner and no form that posts anywhere
+— login and register are links to an external operator — and the page says so.
+A privacy policy claiming collection the site does not perform is worse than
+none. If a brand ever adds analytics, a pixel or a real form, that page has to
+change in the same pass.
+
+**`public/` belongs to nobody, so claim it explicitly.** Nothing in `public/`
+is reached by the "retheme the components the layout imports" sweep, and the
+uploader only writes the icon sizes it knows about — `favicon.ico`,
+`favicon.svg`, `favicon-96x96.png`, `apple-touch-icon.png`,
+`web-app-manifest-192/512`. Anything else there is from whichever brand last
+put it there. Four SUMOHENG icons (`favicon-16x16`, `favicon-32x32`,
+`android-chrome-192x192`, `android-chrome-512x512`) rode along on every brand
+for a week that way, 286 kB of another brand's logo on a fixed public path.
+`verify-build.mjs` now fails the build on a sized icon nothing links, so this
+particular leak cannot come back — but `site.webmanifest` still needs its
+`name`, `short_name` and `theme_color` set by hand every round.
+
+**Do not drop the `?v=` from the icon links in `MainLayout`.** They read
+`` href={`/favicon.svg?v=${iconVersion}`} `` and friends. The icon *paths* are
+identical on every brand while the *bytes* change, which is the one case a
+browser's favicon cache holds hardest — without the query the tab keeps showing
+the previous brand's logo no matter how correct the files are. `iconVersion`
+comes from `BRAND_NAME`, so it updates itself.
+
 **Preset pages (`บทความ.astro`, `about-us.astro`) follow the same rule, with a
 different trigger.** They are created by the uploader's ส่วนที่ 5 toggle, not by
 a keyword, and like the lottery pages nothing removes them again — so a page one
@@ -864,21 +984,14 @@ inferring them from the docx's main title/H1/H2 the same way you did for
 GROW268.**
 
 **Length rule for any `description` you write yourself: 150–160
-characters.** The ones you infer have run long every time: on UFAG8 the
-four sub-pages came out at 234 / 251 / 270 / 337 characters, roughly
-double, because each one kept appending another clause
-(`ทั้งแฮนดิแคป สูง–ต่ำ และ 1X2`, `บิลเดี่ยวกับบิลสเต็ป`, …) until the whole
-page outline was in the tag. Google truncates around 155, so everything
-past that is invisible; write one sentence that says what the page is for
-and stop. Same target for the home page.
-
-**The length rule applies only to descriptions you write.** A
-`Meta:`/`Meta Description:` line the docx supplies is copied **verbatim** —
-do not re-word it, pad it, or trim it to hit the range. Copywriters who
-fill in that section already write to length: on BUNNY555 the five
-docx-supplied descriptions (home + `โปรโมชั่น`/`ติดต่อเรา`/`ทดลองเล่น`/`ทางเข้า`)
-landed at 137–146 characters with no editing at all. Only pages the docx
-is silent about are yours to compose.
+characters.** A description the docx supplies is used verbatim — those
+are already written to length — but the ones you infer have run long
+every time: on UFAG8 the four sub-pages came out at 234 / 251 / 270 /
+337 characters, roughly double, because each one kept appending another
+clause (`ทั้งแฮนดิแคป สูง–ต่ำ และ 1X2`, `บิลเดี่ยวกับบิลสเต็ป`, …) until
+the whole page outline was in the tag. Google truncates around 155, so
+everything past that is invisible; write one sentence that says what the
+page is for and stop. Same target for the home page.
 
 Count **characters, not bytes** — Thai is 3 bytes per character in UTF-8,
 so `wc -c` reads about 3× the real length and will send you chasing a
@@ -968,6 +1081,196 @@ This matters beyond bookkeeping: "rendered vs inventory" decides which
 files get the retheme, and mislabelling a live component as inventory
 ships the previous brand's colours to production.
 
+### Images: always tell Astro how big the picture is drawn
+
+`<Image>`/`<Picture>` with no `widths` and no `sizes` ships the **source file**.
+Not a resized copy — the original. The logo went out at 1024x481 and 73,938
+bytes into a box drawn about 110x50 px; with `widths={[110, 220, 330]}` and
+`sizes="110px"` the 1x candidate is 2,700 bytes.
+
+`sizes` describes how wide the image is **drawn**, not how wide you want the
+file. The hero banner said `sizes="(max-width: 768px) 412px, 100vw"` while being
+drawn full-bleed, so a DPR-2 phone needed 824 px, found no candidate between 768
+and 1900, and downloaded the 1900w file — 97 KB for a 412 px-wide slot. It is
+`sizes="100vw"` with candidates at 412/640/828/1024/1280/1600/1900 now, and that
+phone gets 32 KB. This is the LCP element on every page; get it wrong and
+nothing else you do to the page matters much.
+
+Only the LCP image gets `loading="eager" fetchpriority="high"`. The wallpaper
+had `loading="eager" decoding="sync"` and was competing with it.
+
+**og:image** comes from `src/assets/og.png`, which the uploader writes at
+1200x630 from the slide1 upload (letterboxed on a colour sampled from the
+artwork — a centre crop of a square promo banner cuts the brand name off the
+top). `MainLayout` falls back to slide1 for brands launched before this existed.
+Do not point `og:image` at an imported asset's `.src`: that is the untouched
+original, and it was shipping a 190 KB PNG to be read by a meta tag.
+
+**`{/* comments */}` cannot sit next to a tag inside a ternary branch.** Half of
+these tags are one branch of `mainLogo ? (…) : (…)`, and adding a comment beside
+one makes the branch two expressions — the build fails with `Expected ")" but
+found "$$render"`, pointing at a line some distance away. Put the note in the
+frontmatter.
+
+### Accessibility rules the build now enforces
+
+All five are **errors** in `tools/verify-build.mjs`, so a rebrand that
+reintroduces one fails the build rather than shipping.
+
+- **Decorative emoji must sit in an element with `aria-hidden="true"`.** Not a
+  style preference: a heading written `🔥 โปรโมชั่น` is announced "fire
+  โปรโมชั่น". If the emoji carries meaning the text does not — the 🥇🥈🥉 in
+  `GameRankingBoard` replace the rank NUMBER for the top three — hide the emoji
+  and add a `sr-only` span with the meaning, or the information disappears
+  entirely for anyone not looking at it.
+  **Emoji baked into a text prop cannot be marked**, so do not put one at the
+  start of an announcement message. `Announcement6` renders its message three
+  times for the marquee; a leading emoji there was read out three times.
+- **No `href="#"` and no `onclick=`.** A link to nowhere costs a visitor a tap
+  to discover it does nothing — delete the control instead (the footer's YOUTUBE
+  button was removed for exactly this reason; add it back when a brand has a
+  real URL). For back-to-top use `<a href="#top">`: `MainLayout` puts `id="top"`
+  on `<html>` and `global.css` has `scroll-behavior: smooth`, which the
+  reduced-motion block there overrides — an inline
+  `onclick="window.scrollTo({behavior:'smooth'})"` cannot be overridden and
+  ignores the preference.
+- **`alt` must describe the picture.** Not `"bank"`, not `"Website Background"`,
+  and not a counter like `"…ภาพที่ 3"`. For a promo banner, the alt IS the text
+  printed on the banner — open the image and read it. For a decorative repeat
+  (the carousel duplicates each slide twice so the loop has no seam) use
+  `alt=""` **and** `aria-hidden="true"` on the wrapper.
+- **FAQ accordions are `<details>`/`<summary>`.** All five `Faq*` variants were
+  rewritten; none of them has a `<script>` any more. Do not reintroduce a
+  button + `max-height` accordion: the old ones left the collapsed panel in the
+  accessibility tree and in the tab order while invisible, and set
+  `aria-expanded` with no `aria-controls` to point at. Use `<details name="…">`
+  when only one should be open at a time. Keep the question in whatever heading
+  level the variant already used — the `h2`/`h3` inventory is checked against
+  the docx.
+- **A widget whose title is a `<p>` needs `aria-label` on its `<section>`.**
+  Those titles stay `<p>` on purpose (the `h2` list is diffed against the docx),
+  which leaves the section with no accessible name. `ProviderGrid`,
+  `GameRankingBoard`, `ReviewCardSumo2` and `LatestWinnersCyber` each carry one.
+  **Do not promote the `<p>` to an `h2` to "fix" it** — that breaks the docx
+  check on every future rebrand.
+
+### Behaviour lives in `src/lib/`, not in a component `<script>`
+
+Four things moved out of components into `src/lib/` because a rebrand rewrites
+components and does not touch `src/lib/`. When you retheme one of these, change
+its markup and its classes — **do not move the logic back inline.**
+
+| module | used by | what it guards |
+|---|---|---|
+| `nav.ts` — `isActivePath()` | every `Navbar*` variant | percent-encoded Thai routes and trailing slashes |
+| `liveCounter.ts` | `GameRankingBoard` | off-screen, background tab, reduced-motion |
+| `winnersFeed.ts` | `LatestWinnersCyber` | same, plus server-rendered first rows |
+| — (CSS only) | `SmoothCarousel` | replaced Swiper entirely |
+
+Concretely:
+
+- **Never write `isActive` by hand in a navbar.** All 16 variants used to carry
+  the same three-line copy, and all 16 were wrong: `Astro.url.pathname` is
+  percent-encoded, so on `/ทดลองเล่น` and `/ทางเข้า` no menu item highlighted at
+  all. Write
+  `const isActive = (path: string) => isActivePath(currentPath, path);` and
+  import `isActivePath` from `../lib/nav`.
+- **Never use `define:vars` on an indexable page.** It forces `is:inline`, which
+  strips `type`/`async`/`defer` and leaves a parser-blocking script mid-document.
+  Pass data as `<script type="application/json">` and read it from a normal
+  bundled `<script>`. `verify-build.mjs` fails the build on an attribute-less
+  `<script>` in any indexable page. (`login.astro`/`register.astro` are exempt
+  and stay as they are — they are noindex redirect stubs.)
+- **Never render a feed container empty and fill it from JS.** Server-render the
+  first rows; JS replaces them. An empty container is invisible to crawlers,
+  empty with JS off, and shifts the layout the moment it fills.
+- **Never start a `setInterval`/recursive `setTimeout` without guards.** Anything
+  that animates on a timer must stop when off screen, when the tab is hidden,
+  and under `prefers-reduced-motion`. `GameRankingBoard`'s counters sit in a
+  `hidden sm:flex` container, so an unguarded loop wakes the main thread on every
+  phone to retype text nobody can see.
+- **Do not reintroduce Swiper.** `SmoothCarousel` is a CSS animation now; Swiper
+  was 158,890 bytes of JavaScript to slide four pictures, could not be paused,
+  and ignored `prefers-reduced-motion`. The package is still in `package.json`
+  but nothing imports it. If a brand needs a real interactive carousel, that is
+  a deliberate decision to make out loud, not a default to fall back into.
+
+One Astro detail worth knowing: **`<Image>`/`<Picture>` with `alt=""` serialise
+it as a bare `alt`** — `<img src="…" alt loading="eager">`. That is valid HTML
+and means exactly the same as `alt=""`, so decorative images are marked
+correctly; do not "fix" it by inventing alt text. Any check you write for a
+missing alt has to match the bare form too.
+
+### Two files the build generates — leave both alone
+
+**`src/styles/_sources.generated.css`** is rewritten by `tools/gen-tw-sources.mjs`
+on every `npm run build` and `npm run dev` (npm's `prebuild`/`predev` hooks run
+it; you never invoke it yourself). It lists the components in `src/components/`
+that nothing reachable from `src/pages` or `src/layouts` renders, as
+`@source not` lines, so Tailwind stops turning the inventory's hardcoded colours
+into utility classes. Measured on UFAG8: 63 of 82 components excluded, and the
+stylesheet went from 227 kB to 79 kB.
+
+It is committed, and **it will show up in `git status` after almost every
+rebrand** — because switching which navbar/footer/announcement is active changes
+which components are reachable. That diff is correct and expected. Do not edit
+the file, and do not "fix" it back.
+
+The generator's failure mode is deliberately one-way: if anything goes wrong it
+writes an empty list, which restores Tailwind's scan-everything default. The
+worst case is a stylesheet as big as it used to be, never a missing style.
+
+**Do not add a `<style>` block containing only
+`.font-sans { font-family: var(--font-sans) }`.** Tailwind already generates
+that exact rule from the `--font-sans` theme variable, so the block changes
+nothing visually — but its presence makes Astro stamp a `data-astro-cid-*`
+attribute onto every element the component renders. 43 components carried that
+dead block; removing it dropped 502 attributes from the homepage to 114.
+
+### Structured data — call the builder, never write JSON-LD by hand
+
+Every indexable page gets its JSON-LD from `pageGraph()` in
+`src/lib/schema.ts`. One call, in the frontmatter:
+
+```ts
+const graph = pageGraph(Astro, {
+  name: "…",            // usually the page's H1
+  description: "…",     // the SAME string passed to MainLayout's description=
+  breadcrumb: [         // every page EXCEPT the homepage
+    { name: "หน้าแรก", path: "/" },
+    { name: "ทางเข้า", path: "/ทางเข้า" },
+  ],
+  faqs,                 // only if the page renders an FAQ — same array
+});
+```
+```astro
+<script type="application/ld+json" set:html={graph} />
+```
+
+**Never type a domain, and never build a URL with `+`.** Not
+`Astro.url.origin + path`, not `"https://" + brand`, not
+`encodeURIComponent(...)`. Every URL in the graph comes from `abs()`, which is
+the only function that knows the trailing-slash and Thai-encoding rules. Before
+this existed, all three pages that had JSON-LD claimed a URL that did not match
+their own `<link rel=canonical>` — to a parser that is not a typo, it is markup
+describing a *different page*.
+
+`pageGraph` already fills in `@id` cross-references, `inLanguage`, `isPartOf`,
+`publisher`, and the `Organization`/`WebSite` nodes. Do not add them by hand and
+do not "tidy" the `@id` fragments or the node order — both are varied per brand
+by the same hash that varies the `<head>`, for the same reason (see the comment
+block at the top of `schema.ts`).
+
+For anything beyond a plain page, pass the extras rather than hand-rolling:
+`org: { contactPoints: [...] }` for a contact page, `extra: [itemList(ctx, …)]`
+for a listing page. **Never add `Review`, `AggregateRating`, or `sameAs`** —
+the reviews on these sites are written characters, so marking them up is
+fabricated structured data on a YMYL page, and `sameAs` would publish the
+cross-brand link `brandProfile.ts` exists to prevent.
+
+`tools/verify-build.mjs` fails the build if a page's JSON-LD does not parse, and
+warns if any self-referential URL disagrees with the canonical.
+
 ## Phase 4 — Fix stale asset references (the actual bug class this skill exists for)
 
 The user will almost always call out `SmoothCarousel.astro` and
@@ -1042,6 +1345,28 @@ pointing at a `public/` path during a rebrand, repoint it to the
    previous brand means the next `wrangler deploy` overwrites that brand's
    live Worker and takes its site down. Nothing else in the build catches
    this, because the site builds perfectly either way.
+1b. **`npm run build` also runs `node tools/verify-build.mjs` (a `postbuild`
+   script), and a non-zero exit there fails the build.** Read its output —
+   the rules it enforces are not repeated in this document, and it is the
+   only check for several of them:
+
+   - **ERRORS block.** Off-domain URLs (a previous brand's domain surviving
+     in a component), `href` to a route that does not exist (inherited from
+     whichever `Navbar*`/`Footer*` variant you switched to), a second `<h1>`,
+     a missing `alt`, JSON-LD that does not parse, a canonical on the wrong
+     host, a meta description over 200 characters, and the `wrangler.toml`
+     name/domain mismatch above. Fix them; do not work around them.
+   - **WARNINGS do not block** and are tagged with the improvement phase that
+     owns them. They are pre-existing and expected — **do not go fix them
+     during a rebrand.** Chasing a warning mid-rebrand means editing files
+     outside the brief.
+   - It also prints the `h1`/`h2` inventory per page. Diff that against the
+     docx checklist here rather than grepping for headings by hand; the
+     script cannot read the brief, so this part is still your job.
+
+   The script lives outside every file a rebrand rewrites, on purpose. If a
+   new class of bug shows up twice, add a check to it instead of adding a
+   paragraph here — a rule that exits non-zero cannot be skimmed.
 2. Start `npm run dev`, `curl` the built pages, and grep the rendered
    HTML:
    - old brand name must not appear anywhere in the response body

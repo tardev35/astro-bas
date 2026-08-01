@@ -1,4 +1,5 @@
 ---
+import { isActivePath } from "../lib/nav";
 import { Picture } from "astro:assets";
 const images = import.meta.glob<{ default: ImageMetadata }>("../assets/logo.{png,webp,jpg}", { eager: true });
 
@@ -7,10 +8,7 @@ const mainLogo = imagePaths.length > 0 ? images[imagePaths[0]].default : null;
 
 const currentPath = Astro.url.pathname;
 
-const isActive = (path: string) => {
-  if (path === "/") return currentPath === "/";
-  return currentPath.startsWith(path);
-};
+const isActive = (path: string) => isActivePath(currentPath, path);
 ---
 
 <header class="sticky top-0 z-50 w-full font-sans shadow-[0_4px_20px_rgba(0,0,0,0.8)]">
@@ -20,8 +18,8 @@ const isActive = (path: string) => {
       ยินดีต้อนรับสู่ UFAYES เว็บตรง UFABET แทงบอล คาสิโนสด สล็อต หวย ครบในบัญชีเดียว
     </div>
     <div class="flex items-center gap-5">
-      <a href="/login" class="flex items-center gap-1 text-white/80 transition-colors hover:text-red-400">🔒 เข้าสู่ระบบ</a>
-      <a href="/register" class="flex items-center gap-1 font-bold text-white drop-shadow-[0_0_5px_rgba(220,38,38,0.6)] transition-colors hover:text-red-300">⚽ สมัครสมาชิก ระบบฝากถอนออโต้</a>
+      <a href="/login" class="flex items-center gap-1 text-white/80 transition-colors hover:text-red-400"><span aria-hidden="true">🔒</span> เข้าสู่ระบบ</a>
+      <a href="/register" class="flex items-center gap-1 font-bold text-white drop-shadow-[0_0_5px_rgba(220,38,38,0.6)] transition-colors hover:text-red-300"><span aria-hidden="true">⚽</span> สมัครสมาชิก ระบบฝากถอนออโต้</a>
     </div>
   </div>
 

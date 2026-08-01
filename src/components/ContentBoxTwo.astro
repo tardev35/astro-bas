@@ -1,14 +1,25 @@
 ---
-const { titleleft, titleright } = Astro.props;
+export interface Props {
+  titleleft?: string;
+  titleright?: string;
+  label?: string;
+}
+const { titleleft, titleright, label } = Astro.props;
+
+// Both column titles are deliberately <p>, not headings: they label UI panels
+// (a login form, a reference table), not docx sections, so promoting them would
+// add heading levels the brief never asked for. The section carries its own
+// accessible name instead, which is what `label` is for.
+const sectionLabel = label ?? titleleft ?? titleright ?? "ข้อมูลประกอบ";
 ---
 
-<section class="relative z-10 mx-auto mb-10 w-full max-w-[1400px] px-4 font-sans">
+<section aria-label={sectionLabel} class="relative z-10 mx-auto mb-10 w-full max-w-[1400px] px-4 font-sans">
   <div class="grid grid-cols-1 gap-6 md:grid-cols-2 lg:gap-8">
-    <article class="flex flex-col gap-4 text-left text-base leading-relaxed text-white/90">
+    <article class="flex flex-col gap-4 text-left text-base leading-relaxed text-[#f4e3c8]">
       {
         titleleft && (
-          <p class="flex items-center gap-3 border-b border-pink-400/40 pb-3 text-xl leading-normal font-black tracking-widest text-white uppercase drop-shadow-md">
-            <span class="flex h-9 w-9 shrink-0 items-center justify-center rounded-lg border border-pink-300/40 bg-gradient-to-br from-[#ec4899] to-[#881337] text-sm text-white shadow-[0_0_10px_rgba(236,72,153,0.5)]">
+          <p class="flex items-center gap-3 border-b border-[#e8b43a]/25 pb-3 text-xl leading-normal font-black tracking-widest text-[#e8b43a] uppercase">
+            <span aria-hidden="true" class="flex h-9 w-9 shrink-0 items-center justify-center rounded-lg border border-[#e8b43a]/40 bg-gradient-to-br from-[#f7d97a] via-[#e8b43a] to-[#a9741c] text-sm text-[#1a1206] shadow-[0_5px_15px_rgba(232,180,58,0.3)]">
               🔐
             </span>
             {titleleft}
@@ -18,12 +29,12 @@ const { titleleft, titleright } = Astro.props;
       <slot name="left" />
     </article>
 
-    <article class="flex flex-col gap-4 text-left text-base leading-relaxed text-white/90">
+    <article class="flex flex-col gap-4 text-left text-base leading-relaxed text-[#f4e3c8]">
       {
         titleright && (
-          <p class="flex items-center gap-3 border-b border-pink-400/40 pb-3 text-xl leading-normal font-black tracking-widest text-white uppercase drop-shadow-md">
-            <span class="flex h-9 w-9 shrink-0 items-center justify-center rounded-lg border border-pink-200/50 bg-gradient-to-br from-[#fce7f3] to-[#db2777] text-sm text-[#241019] shadow-[0_0_10px_rgba(236,72,153,0.5)]">
-              💰
+          <p class="flex items-center gap-3 border-b border-[#e8b43a]/25 pb-3 text-xl leading-normal font-black tracking-widest text-[#e8b43a] uppercase">
+            <span aria-hidden="true" class="flex h-9 w-9 shrink-0 items-center justify-center rounded-lg border border-[#a55a22]/50 bg-gradient-to-br from-[#e0b98a] via-[#a55a22] to-[#8a5a28] text-sm text-[#1a1206] shadow-[0_5px_15px_rgba(165,90,34,0.4)]">
+              🎰
             </span>
             {titleright}
           </p>
@@ -33,8 +44,3 @@ const { titleleft, titleright } = Astro.props;
     </article>
   </div>
 </section>
-<style>
-  .font-sans {
-    font-family: var(--font-sans);
-  }
-</style>

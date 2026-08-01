@@ -3,7 +3,7 @@ import kbankLogo from "../assets/banks/kbank.png";
 import scbLogo from "../assets/banks/scb.png";
 import krungsriLogo from "../assets/banks/krungsri.png";
 import ktbLogo from "../assets/banks/ktb.png";
-import ttbLogo from "../assets/banks/ttb.png";
+import { brandPick } from "../lib/brandProfile";
 
 const bankPool = [
   { name: "KBank", color: "bg-[#1155cc]", icon: kbankLogo.src },
@@ -11,76 +11,73 @@ const bankPool = [
   { name: "Krungsri", color: "bg-[#fcd34d]", icon: krungsriLogo.src },
   { name: "KTB", color: "bg-[#0ea5e9]", icon: ktbLogo.src },
 ];
+
+// Ported off `<script define:vars={{ bankPool }}>` — see src/lib/winnersFeed.ts.
+// This is the only variant that does not insert strictly at the front: new
+// pills land at a random spot near the head so the cloud reads as a crowd
+// rather than a queue. `data-insert="scatter"` on the feed asks for that.
+//
+// Values come from the domain hash, never Math.random() — frontmatter runs at
+// build time, and the gate fails the build on a random call there.
+const LETTERS = "abcdefghijklmnopqrstuvwxyz";
+const pick = (salt: string, n: number) => brandPick(Astro.site, salt, n);
+
+const initialRows = Array.from({ length: 8 }, (_, i) => ({
+  bank: bankPool[pick(`pill-bank-${i}`, bankPool.length)],
+  user: `${LETTERS.charAt(pick(`pill-a-${i}`, 26))}${LETTERS.charAt(pick(`pill-b-${i}`, 26))}***`,
+  amount: (15000 + pick(`pill-amount-${i}`, 80001)).toLocaleString("en-US"),
+}));
 ---
 
 <div class="mx-auto w-full max-w-[1000px] p-4 font-sans">
-  <div class="relative overflow-hidden rounded-[30px] border-2 border-red-900/60 bg-[#14040a]/90 px-4 py-8 shadow-lg backdrop-blur-md">
+  <section
+    aria-label="รายการถอนเงินล่าสุดของสมาชิก"
+    class="relative overflow-hidden rounded-[30px] border-2 border-amber-400/30 bg-[#0b1330]/90 px-4 py-8 shadow-[0_15px_40px_rgba(226,192,95,0.18)] backdrop-blur-md">
     <div class="mb-6 text-center">
-      <p class="bg-gradient-to-b from-[#fef08a] to-[#f59e0b] bg-clip-text text-xl font-black text-transparent md:text-2xl">⚡ CASHOT123 ถอนเงินแบบเรียลไทม์</p>
+      <p class="bg-gradient-to-b from-[#f7e3a4] to-[#c39a34] bg-clip-text text-xl font-black text-transparent md:text-2xl"><span aria-hidden="true">⚡</span> PRODED888 ถอนเงินแบบเรียลไทม์</p>
     </div>
 
-    <div id="feed-pills" class="relative z-10 flex flex-wrap justify-center gap-3"></div>
-  </div>
+    <div
+      data-winners-feed
+      data-interval="3000"
+      data-max-rows="12"
+      data-user-digits="0"
+      data-insert="scatter"
+      class="relative z-10 flex flex-wrap justify-center gap-3">
+      {
+        initialRows.map((row) => (
+          <div data-winner-row class="winner-pill transition-all duration-500 ease-out">
+            <div class="flex items-center gap-3 rounded-full border border-amber-400/25 bg-[#070c1c] py-1.5 pr-4 pl-1.5 shadow-[0_0_10px_rgba(226,192,95,0.18)] hover:border-amber-400/60">
+              <div data-winner-bank class={`flex h-8 w-8 shrink-0 items-center justify-center rounded-full ${row.bank.color}`}>
+                <img data-winner-icon src={row.bank.icon} alt="" width="16" height="16" loading="lazy" decoding="async" class="h-4 w-4 object-contain" />
+              </div>
+              <div data-winner-user class="text-sm font-bold text-white/90">{row.user}</div>
+              <div class="text-sm font-black text-[#f7e3a4] drop-shadow-sm">+<span data-winner-amount>{row.amount}</span> ฿</div>
+            </div>
+          </div>
+        ))
+      }
+    </div>
+
+    <script type="application/json" data-winners-banks set:html={JSON.stringify(bankPool)} />
+  </section>
 </div>
 
-<script define:vars={{ bankPool }}>
-  const feed = document.getElementById("feed-pills");
-  const getRandomStr = (len, chars) =>
-    Array.from({ length: len })
-      .map(() => chars.charAt(Math.floor(Math.random() * chars.length)))
-      .join("");
-  const getAmount = () => (Math.floor(Math.random() * (95000 - 15000 + 1)) + 15000).toLocaleString("en-US");
+<script>
+  import { startWinnersFeed } from "../lib/winnersFeed";
 
-  const createHTML = () => {
-    const bank = bankPool[Math.floor(Math.random() * bankPool.length)];
-    const user = `${getRandomStr(2, "abcdefghijklmnopqrstuvwxyz")}***`;
-
-    return `
-      <div class="transform scale-90 opacity-0 transition-all duration-500 ease-out">
-        <div class="flex items-center gap-3 rounded-full border border-red-500/40 bg-[#0d0304] py-1.5 pl-1.5 pr-4 shadow-[0_0_10px_rgba(220,38,38,0.15)] hover:border-red-400">
-          <div class="flex h-8 w-8 shrink-0 items-center justify-center rounded-full ${bank.color}">
-            <img src="${bank.icon}" alt="bank" class="h-4 w-4 object-contain" />
-          </div>
-          <div class="text-sm font-bold text-white/90">${user}</div>
-          <div class="text-sm font-black text-amber-400 drop-shadow-sm">+${getAmount()} ฿</div>
-        </div>
-      </div>
-    `;
-  };
-
-  const trigger = () => {
-    const tempDiv = document.createElement("div");
-    tempDiv.innerHTML = createHTML();
-    const newEl = tempDiv.firstElementChild;
-
-    // สุ่มเอาไปแทรกตำแหน่งต่างๆ เพื่อให้ดูเป็นธรรมชาติ (ไม่ใช่แค่ดันลง)
-    if (feed.children.length > 0) {
-      feed.insertBefore(newEl, feed.children[Math.floor(Math.random() * Math.min(3, feed.children.length))]);
-    } else {
-      feed.appendChild(newEl);
-    }
-
-    setTimeout(() => {
-      newEl.classList.remove("scale-90", "opacity-0");
-      newEl.classList.add("scale-100", "opacity-100");
-    }, 50);
-
-    if (feed.children.length > 12) {
-      // โชว์ชิปได้เยอะขึ้นเพราะขนาดเล็ก
-      const last = feed.lastElementChild;
-      last.classList.remove("scale-100", "opacity-100");
-      last.classList.add("scale-90", "opacity-0");
-      setTimeout(() => last.remove(), 500);
-    }
-  };
-
-  for (let i = 0; i < 8; i++) {
-    trigger();
-  }
-  setInterval(trigger, 3000);
+  startWinnersFeed();
 </script>
+
 <style>
-  .font-sans {
-    font-family: var(--font-sans);
+  .winner-pill.is-entering {
+    transform: scale(0.9);
+    opacity: 0;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .winner-pill {
+      transition: none;
+    }
   }
 </style>

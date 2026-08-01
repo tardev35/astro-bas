@@ -1,53 +1,46 @@
 ---
 const providers = [
-  { name: "PG Soft", desc: "แอนิเมชันลื่นไหล กราฟิกสดใส โบนัสแตกไว", tag: "ค่ายเกม", icon: "🎨", color: "from-[#3a1122] to-[#0a0305]" },
-  { name: "Pragmatic Play", desc: "แจกรางวัลรัว ฟีเจอร์ทันสมัย ตอบสนองฉับไว", tag: "ค่ายเกม", icon: "⚡", color: "from-[#4c0519] to-[#0a0305]" },
-  { name: "JOKER Gaming", desc: "นวัตกรรมคลาสสิก อัปเกรดใหม่ ไหลลื่นทุกอุปกรณ์", tag: "ค่ายเกม", icon: "🃏", color: "from-[#241019] to-[#050203]" },
-  { name: "สล็อตออนไลน์รวมค่าย", desc: "ซอฟต์แวร์คุณภาพจากทั่วโลกรวมไว้ในที่เดียว", tag: "สล็อต", icon: "🎰", color: "from-[#3a1122] to-[#050203]" },
-  { name: "ทดลองเล่นฟรี", desc: "เรียนรู้ฟีเจอร์เกมล้ำสมัยก่อนใคร ไม่มีค่าใช้จ่าย", tag: "ทดลองเล่น", icon: "🕹️", color: "from-[#881337] to-[#0a0305]" },
-  { name: "โปรโมชั่นระบบออโต้", desc: "กดรับสิทธิ์ได้ด้วยตนเอง สะดวกและโปร่งใส", tag: "โปรโมชั่น", icon: "🎁", color: "from-[#4c0519] to-[#1c0b12]" },
+  { name: "PG Soft", desc: "สล็อตฟีเจอร์โบนัสเยอะ เดิมพันเริ่มต้นหลักบาท เหมาะกับงบร่าง", tag: "ค่ายหลัก", icon: "🎰" },
+  { name: "ค่ายสล็อตกลุ่มอื่น", desc: "ผู้ให้บริการหลายกลุ่มรวมไว้ในบัญชีเดียว ไม่ต้องสมัครแยก", tag: "รวมหลายค่าย", icon: "🧩" },
+  { name: "คาสิโนสด", desc: "บาคาร่า รูเล็ต ไฮโล และเกมโต๊ะที่เดินรอบแบบเรียลไทม์", tag: "เกมโต๊ะ", icon: "🎴" },
+  { name: "กีฬาและบอลสด", desc: "แยกตลาดก่อนแข่งกับบอลสด ราคาขยับตามสกอร์และเวลาในสนาม", tag: "แทงบอล", icon: "⚽" },
+  { name: "เดิมพันเริ่มต้น", desc: "เกมงบน้อยอยู่ราว 1–10 บาทต่อรอบ ตรวจซ้ำจากหน้าเกมจริง", tag: "ตรวจก่อนเล่น", icon: "🪙" },
+  { name: "ฟีเจอร์โบนัสในเกม", desc: "ฟรีสปิน ตัวคูณ และรูปแบบการจ่ายที่ต่างกันในแต่ละเกม", tag: "อ่านกติกา", icon: "🎁" },
+  { name: "ความผันผวนของเกม", desc: "รอบโบนัสมาถี่แต่จ่ายน้อย หรือมานานแต่จ่ายเป็นก้อน เลือกตามงบ", tag: "ดูก่อนลงเครดิต", icon: "🎲" },
 ];
 ---
 
-<div class="relative z-10 mx-auto mb-10 w-full max-w-[1400px] px-4 font-sans">
+<section aria-label="ค่ายสล็อตและหมวดเกมที่รวมไว้ในบัญชีเดียว" class="relative z-10 mx-auto mb-10 w-full max-w-[1400px] px-4 font-sans">
   <div class="mb-8 flex w-full flex-col items-center justify-center gap-2 text-center">
-    <p class="bg-gradient-to-r from-white via-pink-100 to-pink-300 bg-clip-text text-3xl font-black tracking-widest text-transparent uppercase drop-shadow-[0_2px_10px_rgba(236,72,153,0.35)]">
-      ค่ายเกมชั้นนำและบริการภายใน <span class="text-pink-200">BUNNY555</span>
+    <p class="bg-gradient-to-r from-[#f7d97a] via-[#e8b43a] to-[#a9741c] bg-clip-text text-3xl font-black tracking-widest text-transparent uppercase">
+      ค่ายสล็อตและหมวดเกมที่ <span class="text-[#e0b98a]">MIRACLE55</span> รวมไว้ในบัญชีเดียว
     </p>
-    <div class="mt-2 h-[4px] w-24 rounded-full bg-gradient-to-r from-transparent via-pink-400 to-transparent"></div>
+    <div class="mt-2 h-[4px] w-24 rounded-full bg-gradient-to-r from-transparent via-[#e8b43a] to-transparent"></div>
   </div>
 
-  <div class="grid grid-cols-2 gap-4 sm:grid-cols-3 lg:grid-cols-6 lg:gap-5">
+  <div class="grid grid-cols-2 gap-4 sm:grid-cols-3 lg:grid-cols-4 lg:gap-5 xl:grid-cols-7">
     {
-      providers.map((game) => (
+      providers.map((provider) => (
         <a
           href="/register"
-          class={`group relative flex flex-col items-center justify-center overflow-hidden rounded-2xl border border-pink-400/25 bg-gradient-to-b ${game.color} p-5 shadow-lg backdrop-blur-md transition-all duration-300 hover:-translate-y-2 hover:border-pink-300 hover:shadow-[0_10px_30px_rgba(236,72,153,0.45)]`}>
-          <div class="pointer-events-none absolute inset-0 bg-white/5 opacity-0 transition-opacity duration-300 group-hover:opacity-100" />
+          class="group relative flex flex-col items-center justify-center overflow-hidden rounded-2xl border border-[#e8b43a]/25 bg-[#15110b]/92 p-5 shadow-[0_10px_30px_rgba(232,180,58,0.18)] backdrop-blur-md transition-all duration-300 hover:-translate-y-2 hover:border-[#e8b43a]/50 hover:bg-[#241a10]/95 hover:shadow-[0_15px_40px_rgba(232,180,58,0.3)]">
+          <div class="pointer-events-none absolute inset-0 bg-[#e8b43a]/10 opacity-0 transition-opacity duration-300 group-hover:opacity-100" />
 
-          <div class="absolute top-2 right-2 z-10 rounded-full bg-gradient-to-r from-[#fce7f3] to-[#db2777] px-2 py-0.5 text-[9px] font-black tracking-wide whitespace-nowrap text-[#241019] shadow-sm transition-transform duration-300 group-hover:scale-110">
-            {game.tag}
+          <div class="absolute top-2 right-2 z-10 rounded-full bg-gradient-to-r from-[#f7d97a] via-[#e8b43a] to-[#a9741c] px-2 py-0.5 text-[9px] font-black tracking-wide whitespace-nowrap text-[#1a1206] shadow-sm transition-transform duration-300 group-hover:scale-110">
+            {provider.tag}
           </div>
 
-          <div class="mb-3 text-4xl drop-shadow-[0_0_15px_rgba(255,255,255,0.3)] transition-transform duration-300 group-hover:scale-125 group-hover:rotate-3">{game.icon}</div>
-          <p class="text-center text-sm font-black text-white transition-colors group-hover:text-pink-200">{game.name}</p>
-          <p class="mt-1 text-center text-[10px] text-pink-100/70 group-hover:text-white">{game.desc}</p>
+          <div aria-hidden="true" class="mb-3 text-4xl transition-transform duration-300 group-hover:scale-125 group-hover:rotate-3">
+            {provider.icon}
+          </div>
+          <p class="text-center text-sm font-black text-[#f4e3c8] transition-colors group-hover:text-[#f7d97a]">{provider.name}</p>
+          <p class="mt-1 text-center text-[10px] text-[#e0b98a]">{provider.desc}</p>
 
-          {/* ทั้งการ์ดเป็นลิงก์แล้ว ตัวนี้จึงเป็น span ไม่ใช่ <a> — <a> ซ้อน <a> เป็น HTML ที่ไม่ถูกต้อง
-              เบราว์เซอร์จะแยกออกจากกันเอง แล้วครึ่งล่างของการ์ดจะหลุดออกไปกดไม่ได้ */}
-          <span class="relative z-10 mt-4 block w-full rounded-full border border-pink-400/30 bg-black/40 py-1.5 text-center text-[11px] font-bold text-pink-200 shadow-inner transition-colors duration-300 group-hover:border-pink-200 group-hover:bg-[#be185d] group-hover:text-white">
-            เข้าเล่นเกม
+          <span class="relative z-10 mt-4 block w-full rounded-full border border-[#e8b43a]/25 bg-[#0f0c07] py-1.5 text-center text-[11px] font-bold text-[#e8b43a] shadow-inner transition-colors duration-300 group-hover:border-[#e8b43a]/50 group-hover:bg-gradient-to-r group-hover:from-[#f7d97a] group-hover:via-[#e8b43a] group-hover:to-[#a9741c] group-hover:text-[#1a1206]">
+            เข้าดูเกม
           </span>
         </a>
       ))
     }
   </div>
-</div>
-<style>
-  .font-sans {
-    font-family: var(--font-sans);
-  }
-  .font-mono {
-    font-family: monospace;
-  }
-</style>
+</section>

@@ -10,7 +10,7 @@ const { titleleft, titlecenter, titleright } = Astro.props;
         {
           titleleft && (
             <h3 class="flex items-center gap-2 text-lg leading-normal font-black tracking-widest text-yellow-400 uppercase">
-              <span class="text-xl drop-shadow-[0_0_5px_rgba(250,204,21,0.8)]">💸</span> {titleleft}
+              <span aria-hidden="true" class="text-xl drop-shadow-[0_0_5px_rgba(250,204,21,0.8)]">💸</span> {titleleft}
             </h3>
           )
         }
@@ -21,7 +21,7 @@ const { titleleft, titlecenter, titleright } = Astro.props;
         {
           titlecenter && (
             <h3 class="flex items-center gap-2 text-lg leading-normal font-black tracking-widest text-yellow-400 uppercase">
-              <span class="text-xl drop-shadow-[0_0_5px_rgba(250,204,21,0.8)]">⚡</span> {titlecenter}
+              <span aria-hidden="true" class="text-xl drop-shadow-[0_0_5px_rgba(250,204,21,0.8)]">⚡</span> {titlecenter}
             </h3>
           )
         }
@@ -32,7 +32,7 @@ const { titleleft, titlecenter, titleright } = Astro.props;
         {
           titleright && (
             <h3 class="flex items-center gap-2 text-lg leading-normal font-black tracking-widest text-yellow-400 uppercase">
-              <span class="text-xl drop-shadow-[0_0_5px_rgba(250,204,21,0.8)]">💎</span> {titleright}
+              <span aria-hidden="true" class="text-xl drop-shadow-[0_0_5px_rgba(250,204,21,0.8)]">💎</span> {titleright}
             </h3>
           )
         }
@@ -41,8 +41,3 @@ const { titleleft, titlecenter, titleright } = Astro.props;
     </div>
   </div>
 </section>
-<style>
-  .font-sans {
-    font-family: var(--font-sans);
-  }
-</style>

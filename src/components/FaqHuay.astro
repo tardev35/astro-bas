@@ -32,45 +32,58 @@ const {
   <div class="flex flex-col gap-3">
     {
       faqs.map((faq) => (
-        <div class="faq-item group overflow-hidden rounded-xl border border-amber-500/25 bg-[#1a0409]/85 backdrop-blur-md transition-all duration-300 hover:border-amber-400/60 hover:shadow-[0_10px_25px_rgba(251,191,36,0.15)]">
-          <button class="faq-btn flex w-full items-center justify-between gap-4 p-5 text-left outline-none">
+        <details
+          name="faq-huay"
+          class="faq-item group overflow-hidden rounded-xl border border-amber-500/25 bg-[#1a0409]/85 backdrop-blur-md transition-all duration-300 hover:border-amber-400/60 hover:shadow-[0_10px_25px_rgba(251,191,36,0.15)]">
+          <summary class="flex w-full cursor-pointer items-center justify-between gap-4 p-5 text-left">
             <h3 class="text-base leading-normal font-bold text-white transition-colors group-hover:text-amber-300">{faq.q}</h3>
-            <span class="icon flex h-6 w-6 shrink-0 items-center justify-center rounded-md border border-amber-500/40 bg-[#5f0914] text-sm font-bold text-amber-200 transition-all duration-300 group-hover:bg-[#fbbf24] group-hover:text-[#1a0409]">
+            <span
+              aria-hidden="true"
+              class="faq-icon flex h-6 w-6 shrink-0 items-center justify-center rounded-md border border-amber-500/40 bg-[#5f0914] text-sm font-bold text-amber-200 transition-all duration-300 group-hover:bg-[#fbbf24] group-hover:text-[#1a0409]">
               +
             </span>
-          </button>
-          <div class="faq-content grid grid-rows-[0fr] transition-[grid-template-rows] duration-300 ease-in-out">
-            <div class="overflow-hidden">
-              <p class="border-t border-amber-500/20 bg-[#0f0206]/70 p-5 text-left text-base leading-relaxed text-amber-50/85">{faq.a}</p>
-            </div>
-          </div>
-        </div>
+          </summary>
+          <p class="faq-answer border-t border-amber-500/20 bg-[#0f0206]/70 p-5 text-left text-base leading-relaxed text-amber-50/85">{faq.a}</p>
+        </details>
       ))
     }
   </div>
 </section>
 
-<script>
-  const faqItems = document.querySelectorAll(".faq-item");
-  faqItems.forEach((item) => {
-    const btn = item.querySelector(".faq-btn");
-    const content = item.querySelector(".faq-content");
-    const icon = item.querySelector(".icon");
+<style>
+  /* The removed script queried `.icon`, `.faq-content` and `.faq-item` across
+     the WHOLE document, not within its own component — so a second accordion
+     anywhere on the page would have had its rows closed and its icons reset by
+     this one. `name` gives the exclusive behaviour it was reaching for, scoped
+     to this group by the browser. */
+  .faq-item > summary {
+    list-style: none;
+  }
+  .faq-item > summary::-webkit-details-marker {
+    display: none;
+  }
+  .faq-item[open] {
+    border-color: rgba(251, 191, 36, 0.6);
+  }
+  .faq-item[open] .faq-icon {
+    transform: rotate(45deg);
+    background-color: #fbbf24;
+    color: #1a0409;
+  }
+  .faq-item[open] .faq-answer {
+    animation: faq-reveal 0.25s ease-out;
+  }
 
-    btn?.addEventListener("click", () => {
-      const isOpen = content?.classList.contains("grid-rows-[1fr]");
-      document.querySelectorAll(".faq-content").forEach((c) => c.classList.remove("grid-rows-[1fr]"));
-      document.querySelectorAll(".icon").forEach((i) => {
-        i.classList.remove("rotate-45", "bg-[#fbbf24]", "text-[#1a0409]");
-        i.textContent = "+";
-      });
-      document.querySelectorAll(".faq-item").forEach((i) => i.classList.remove("border-amber-400/60", "shadow-md"));
+  @keyframes faq-reveal {
+    from {
+      opacity: 0;
+      transform: translateY(-4px);
+    }
+  }
 
-      if (!isOpen) {
-        content?.classList.add("grid-rows-[1fr]");
-        icon?.classList.add("rotate-45", "bg-[#fbbf24]", "text-[#1a0409]");
-        item.classList.add("border-amber-400/60", "shadow-md");
-      }
-    });
-  });
-</script>
+  @media (prefers-reduced-motion: reduce) {
+    .faq-item[open] .faq-answer {
+      animation: none;
+    }
+  }
+</style>

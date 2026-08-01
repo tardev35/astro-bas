@@ -1,4 +1,5 @@
 ---
+import { isActivePath } from "../lib/nav";
 import { Picture } from "astro:assets";
 const images = import.meta.glob<{ default: ImageMetadata }>("../assets/logo.{png,webp,jpg}", { eager: true });
 
@@ -7,10 +8,7 @@ const mainLogo = imagePaths.length > 0 ? images[imagePaths[0]].default : null;
 
 const currentPath = Astro.url.pathname;
 
-const isActive = (path: string) => {
-  if (path === "/") return currentPath === "/";
-  return currentPath.startsWith(path);
-};
+const isActive = (path: string) => isActivePath(currentPath, path);
 ---
 
 <header class="sticky top-0 z-50 w-full font-sans">
@@ -45,7 +43,7 @@ const isActive = (path: string) => {
       <div class="hidden h-full items-center justify-center gap-8 lg:flex xl:gap-12">
         <a href="/" class="group relative flex h-full flex-col items-center justify-center text-sm font-bold transition-all xl:text-base">
           <span class={`transition-colors duration-300 ${isActive("/") ? "text-amber-400 drop-shadow-[0_0_8px_rgba(245,158,11,0.5)]" : "text-red-100/70 group-hover:text-amber-200"}`}>หน้าแรก</span>
-          <div
+          <div aria-hidden="true"
             class={`absolute bottom-5 w-1.5 h-1.5 rounded-full bg-amber-400 transition-all duration-300 ${isActive("/") ? "opacity-100 scale-100 shadow-[0_0_10px_rgba(245,158,11,1)]" : "opacity-0 scale-0 group-hover:opacity-100 group-hover:scale-100"}`}>
           </div>
         </a>
@@ -54,7 +52,7 @@ const isActive = (path: string) => {
           <span class={`transition-colors duration-300 ${isActive("/promotion") ? "text-amber-400 drop-shadow-[0_0_8px_rgba(245,158,11,0.5)]" : "text-red-100/70 group-hover:text-amber-200"}`}>
             โปรโมชั่น
           </span>
-          <div
+          <div aria-hidden="true"
             class={`absolute bottom-5 w-1.5 h-1.5 rounded-full bg-amber-400 transition-all duration-300 ${isActive("/promotion") ? "opacity-100 scale-100 shadow-[0_0_10px_rgba(245,158,11,1)]" : "opacity-0 scale-0 group-hover:opacity-100 group-hover:scale-100"}`}>
           </div>
         </a>
@@ -63,7 +61,7 @@ const isActive = (path: string) => {
           <span class={`transition-colors duration-300 ${isActive("/ทดลองเล่น") ? "text-amber-400 drop-shadow-[0_0_8px_rgba(245,158,11,0.5)]" : "text-red-100/70 group-hover:text-amber-200"}`}>
             ทดลองเล่น
           </span>
-          <div
+          <div aria-hidden="true"
             class={`absolute bottom-5 w-1.5 h-1.5 rounded-full bg-amber-400 transition-all duration-300 ${isActive("/ทดลองเล่น") ? "opacity-100 scale-100 shadow-[0_0_10px_rgba(245,158,11,1)]" : "opacity-0 scale-0 group-hover:opacity-100 group-hover:scale-100"}`}>
           </div>
         </a>
@@ -72,7 +70,7 @@ const isActive = (path: string) => {
           <span class={`transition-colors duration-300 ${isActive("/ทางเข้า") ? "text-amber-400 drop-shadow-[0_0_8px_rgba(245,158,11,0.5)]" : "text-red-100/70 group-hover:text-amber-200"}`}>
             ทางเข้า
           </span>
-          <div
+          <div aria-hidden="true"
             class={`absolute bottom-5 w-1.5 h-1.5 rounded-full bg-amber-400 transition-all duration-300 ${isActive("/ทางเข้า") ? "opacity-100 scale-100 shadow-[0_0_10px_rgba(245,158,11,1)]" : "opacity-0 scale-0 group-hover:opacity-100 group-hover:scale-100"}`}>
           </div>
         </a>
@@ -81,7 +79,7 @@ const isActive = (path: string) => {
           <span class={`transition-colors duration-300 ${isActive("/contact-us") ? "text-amber-400 drop-shadow-[0_0_8px_rgba(245,158,11,0.5)]" : "text-red-100/70 group-hover:text-amber-200"}`}>
             ติดต่อเรา
           </span>
-          <div
+          <div aria-hidden="true"
             class={`absolute bottom-5 w-1.5 h-1.5 rounded-full bg-amber-400 transition-all duration-300 ${isActive("/contact-us") ? "opacity-100 scale-100 shadow-[0_0_10px_rgba(245,158,11,1)]" : "opacity-0 scale-0 group-hover:opacity-100 group-hover:scale-100"}`}>
           </div>
         </a>
@@ -116,35 +114,35 @@ const isActive = (path: string) => {
       <a
         href="/"
         class={`sheet-item flex items-center justify-between px-5 py-4 rounded-2xl transition-all ${isActive("/") ? "bg-gradient-to-r from-red-600/25 to-transparent border border-amber-500/30 text-amber-400" : "bg-white/5 border-transparent text-gray-400"}`}>
-        <div class="flex items-center gap-4"><span class="text-2xl drop-shadow-lg">🏠</span><span class="text-base font-bold tracking-wide">หน้าแรก</span></div>
+        <div class="flex items-center gap-4"><span aria-hidden="true" class="text-2xl drop-shadow-lg">🏠</span><span class="text-base font-bold tracking-wide">หน้าแรก</span></div>
         {isActive("/") && <span class="h-2 w-2 rounded-full bg-amber-400 shadow-[0_0_8px_rgba(245,158,11,1)]" />}
       </a>
 
       <a
         href="/promotion"
         class={`sheet-item flex items-center justify-between px-5 py-4 rounded-2xl transition-all ${isActive("/promotion") ? "bg-gradient-to-r from-red-600/25 to-transparent border border-amber-500/30 text-amber-400" : "bg-white/5 border-transparent text-gray-400"}`}>
-        <div class="flex items-center gap-4"><span class="text-2xl drop-shadow-lg">🎁</span><span class="text-base font-bold tracking-wide">โปรโมชั่น</span></div>
+        <div class="flex items-center gap-4"><span aria-hidden="true" class="text-2xl drop-shadow-lg">🎁</span><span class="text-base font-bold tracking-wide">โปรโมชั่น</span></div>
         {isActive("/promotion") && <span class="h-2 w-2 rounded-full bg-amber-400 shadow-[0_0_8px_rgba(245,158,11,1)]" />}
       </a>
 
       <a
         href="/ทดลองเล่น"
         class={`sheet-item flex items-center justify-between px-5 py-4 rounded-2xl transition-all ${isActive("/ทดลองเล่น") ? "bg-gradient-to-r from-red-600/25 to-transparent border border-amber-500/30 text-amber-400" : "bg-white/5 border-transparent text-gray-400"}`}>
-        <div class="flex items-center gap-4"><span class="text-2xl drop-shadow-lg">🎰</span><span class="text-base font-bold tracking-wide">ทดลองเล่น</span></div>
+        <div class="flex items-center gap-4"><span aria-hidden="true" class="text-2xl drop-shadow-lg">🎰</span><span class="text-base font-bold tracking-wide">ทดลองเล่น</span></div>
         {isActive("/ทดลองเล่น") && <span class="h-2 w-2 rounded-full bg-amber-400 shadow-[0_0_8px_rgba(245,158,11,1)]" />}
       </a>
 
       <a
         href="/ทางเข้า"
         class={`sheet-item flex items-center justify-between px-5 py-4 rounded-2xl transition-all ${isActive("/ทางเข้า") ? "bg-gradient-to-r from-red-600/25 to-transparent border border-amber-500/30 text-amber-400" : "bg-white/5 border-transparent text-gray-400"}`}>
-        <div class="flex items-center gap-4"><span class="text-2xl drop-shadow-lg">🌐</span><span class="text-base font-bold tracking-wide">ทางเข้า</span></div>
+        <div class="flex items-center gap-4"><span aria-hidden="true" class="text-2xl drop-shadow-lg">🌐</span><span class="text-base font-bold tracking-wide">ทางเข้า</span></div>
         {isActive("/ทางเข้า") && <span class="h-2 w-2 rounded-full bg-amber-400 shadow-[0_0_8px_rgba(245,158,11,1)]" />}
       </a>
 
       <a
         href="/contact-us"
         class={`sheet-item flex items-center justify-between px-5 py-4 rounded-2xl transition-all ${isActive("/contact-us") ? "bg-gradient-to-r from-red-600/25 to-transparent border border-amber-500/30 text-amber-400" : "bg-white/5 border-transparent text-gray-400"}`}>
-        <div class="flex items-center gap-4"><span class="text-2xl drop-shadow-lg">📞</span><span class="text-base font-bold tracking-wide">ติดต่อเรา</span></div>
+        <div class="flex items-center gap-4"><span aria-hidden="true" class="text-2xl drop-shadow-lg">📞</span><span class="text-base font-bold tracking-wide">ติดต่อเรา</span></div>
         {isActive("/contact-us") && <span class="h-2 w-2 rounded-full bg-amber-400 shadow-[0_0_8px_rgba(245,158,11,1)]" />}
       </a>
 
