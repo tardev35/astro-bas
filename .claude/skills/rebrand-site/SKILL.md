@@ -401,6 +401,30 @@ different colors:
   footer copyright line (exactly like the currently-wired one did) —
   retheme and swap that text before wiring it in, not after.
 
+  **Give every navbar menu item an icon.** The owner asked for this after
+  seeing TUNGMA168's navbar (2026-08-01) and it applies from here on,
+  whichever variant a brand picks. Roughly half the inventory has none —
+  `NavbarPremium` is the one that was live when this was raised, and it
+  ships plain text links.
+
+  Do it the way `NavbarStyle1` does: put the icon in the `links` array
+  next to `name` and `path`, then render it as its own
+  `<span aria-hidden="true">`. Two things that follow from that, both
+  enforced by `tools/verify-build.mjs`:
+
+  - **`aria-hidden="true"` is not optional.** A decorative emoji outside
+    an aria-hidden element fails the build, and without it a screen
+    reader announces the menu as "house หน้าแรก".
+  - **The icon must be a sibling of the label, never inside its text.**
+    Concatenating them puts the emoji into the accessible name.
+
+  Several variants — `NavbarPremium` among them — declare the menu twice,
+  once for desktop and once for the mobile drawer. Hoist that into one
+  `links` const while you are in there rather than adding icons to both
+  copies, or the next person edits one and not the other. Pick icons that
+  match the brand's genre (a lottery brand's menu should not be led by a
+  slot machine), and keep them to one per item.
+
 **Rotate every family's variant on each rebrand — the ONE variant you
 must not reuse is the one the previous brand had wired in.** This is a
 hard rule, not a nice-to-have: these are unrelated clients on a shared
@@ -872,6 +896,35 @@ and `tools/verify-build.mjs` fails the build if either route is missing, so
 parking one turns into a red build rather than a pair of dead legal links.
 Do not add them to the uploader's `PRESET_PAGES`: that registry is a set of
 on/off toggles, and these have no "off".
+
+**Both render their body through `ContentBox.astro`, and must keep doing so**
+(asked for on 2026-08-01, after MIRACLE55 shipped them as bare text on the
+background while every other page was in boxes). Each section is one
+`<ContentBox as="h2" title={…}>`; the page title is one `<ContentBox as="h1">`.
+
+Two rules make that survive a rebrand, and both are easy to break by being
+helpful:
+
+- **Nothing inside those boxes may name a colour.** `ContentBox`'s own wrapper
+  sets the text colour and the paragraphs inherit it, which is the only reason
+  these pages stay brand-neutral after being wrapped. Copying index's
+  `class="text-[#…]"` onto the paragraphs would hardcode this brand's palette
+  into a file no future rebrand opens.
+- **`ContentBox.astro` specifically — never the variant `index.astro` picked
+  this round.** A permanent page cannot follow a rotation it does not know
+  about. This pins `ContentBox` as always-live, which costs nothing: it is
+  already imported by two or more pages, so the shared-chrome rule in Step P1
+  already puts it in the set you retheme before fan-out. Just do not let it
+  fall out of that set — if `index.astro` stops using `ContentBox`, terms and
+  privacy still do, and it still needs this brand's colours.
+
+**`privacy.astro` describes what the built site actually does, and that is the
+one thing in it that can go stale.** Today the build is static with no
+analytics, no tracking pixel, no cookie banner and no form that posts anywhere
+— login and register are links to an external operator — and the page says so.
+A privacy policy claiming collection the site does not perform is worse than
+none. If a brand ever adds analytics, a pixel or a real form, that page has to
+change in the same pass.
 
 **`public/` belongs to nobody, so claim it explicitly.** Nothing in `public/`
 is reached by the "retheme the components the layout imports" sweep, and the

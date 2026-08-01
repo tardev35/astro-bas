@@ -1,20 +1,9 @@
 ---
 import MainLayout from "../layouts/MainLayout.astro";
+import ContentBox from "../components/ContentBox.astro";
 import { BRAND_NAME } from "../lib/brandProfile";
 import { pageGraph } from "../lib/schema";
 
-// Companion to terms.astro — see the note there about why this file is
-// brand-neutral and must stay that way.
-//
-// Every claim below is checked against what the built site actually does. This
-// is a static Astro build with no analytics, no tracking pixels, no cookie
-// banner and no form that posts anywhere: the login and register buttons are
-// links to an external operator. A privacy policy that described collection
-// this site does not perform would be worse than none, so it describes exactly
-// that arrangement instead.
-//
-// If a future change adds analytics, a pixel, or a real form, THIS PAGE HAS TO
-// CHANGE WITH IT. That is the one maintenance obligation the file carries.
 const pageDescription = `นโยบายความเป็นส่วนตัวของเว็บไซต์ ${BRAND_NAME} อธิบายว่าเว็บไซต์นี้เก็บข้อมูลอะไรบ้าง ไม่เก็บอะไร การใช้คุกกี้ ลิงก์ไปยังผู้ให้บริการภายนอก และช่องทางติดต่อสอบถาม`;
 
 const graph = pageGraph(Astro, {
@@ -69,29 +58,26 @@ const sections = [
 <MainLayout title={`นโยบายความเป็นส่วนตัว ${BRAND_NAME}`} description={pageDescription}>
   <script type="application/ld+json" set:html={graph} />
 
-  <section class="mx-auto w-full max-w-3xl px-4 py-14 font-sans">
-    <h1 class="text-2xl font-black tracking-wide md:text-3xl">นโยบายความเป็นส่วนตัว {BRAND_NAME}</h1>
+  <ContentBox as="h1" title={`นโยบายความเป็นส่วนตัว ${BRAND_NAME}`}>
+    <p class="text-left">หน้านี้อธิบายว่าเว็บไซต์เก็บข้อมูลอะไร ไม่เก็บอะไร และเกิดอะไรขึ้นเมื่อท่านกดลิงก์ออกไปยังผู้ให้บริการภายนอก</p>
+  </ContentBox>
 
-    <p class="mt-4 text-base leading-relaxed opacity-80">
-      หน้านี้อธิบายว่าเว็บไซต์เก็บข้อมูลอะไร ไม่เก็บอะไร และเกิดอะไรขึ้นเมื่อท่านกดลิงก์ออกไปยังผู้ให้บริการภายนอก
-    </p>
+  {
+    sections.map((section) => (
+      <ContentBox as="h2" title={section.h}>
+        {section.p.map((text, i) => (
+          <p class={i === 0 ? "text-left" : "mt-3 text-left"}>{text}</p>
+        ))}
+      </ContentBox>
+    ))
+  }
 
-    {
-      sections.map((section) => (
-        <div class="mt-10">
-          <h2 class="text-xl font-bold md:text-2xl">{section.h}</h2>
-          {section.p.map((text) => (
-            <p class="mt-4 text-base leading-relaxed opacity-80">{text}</p>
-          ))}
-        </div>
-      ))
-    }
-
-    <p class="mt-12 text-base leading-relaxed opacity-80">
+  <ContentBox>
+    <p class="text-left">
       อ่านเพิ่มเติมได้ที่ <a href="/terms/" class="font-bold underline underline-offset-4">เงื่อนไขและข้อตกลง</a> หรือ <a
         href="/contact-us/"
         class="font-bold underline underline-offset-4">ติดต่อทีมงาน</a
       >
     </p>
-  </section>
+  </ContentBox>
 </MainLayout>

@@ -1,21 +1,9 @@
 ---
 import MainLayout from "../layouts/MainLayout.astro";
+import ContentBox from "../components/ContentBox.astro";
 import { BRAND_NAME } from "../lib/brandProfile";
 import { pageGraph } from "../lib/schema";
 
-// The footer has always linked "เงื่อนไขและข้อตกลง" — at the homepage, because
-// the page it wanted did not exist. A legal link that goes to the homepage is
-// worse than no link: it looks like disclosure and isn't.
-//
-// BRAND-NEUTRAL, like 404.astro. Everything specific to the current brand comes
-// from BRAND_NAME and from MainLayout (fonts, palette, navbar, footer), so this
-// page retitles itself on every launch instead of quietly keeping the previous
-// brand's name. Do not paste a brand name into this file.
-//
-// The wording deliberately does not promise anything the site cannot deliver.
-// This is an informational review site: it does not take bets, hold balances,
-// or process payments, and saying so plainly is both accurate and the whole
-// point of having the page.
 const pageDescription = `เงื่อนไขและข้อตกลงการใช้งานเว็บไซต์ ${BRAND_NAME} ครอบคลุมขอบเขตของข้อมูล การจำกัดอายุผู้ใช้ ลิงก์ไปยังผู้ให้บริการภายนอก ข้อจำกัดความรับผิด และการแก้ไขเงื่อนไข`;
 
 const graph = pageGraph(Astro, {
@@ -75,29 +63,26 @@ const sections = [
 <MainLayout title={`เงื่อนไขและข้อตกลง ${BRAND_NAME}`} description={pageDescription}>
   <script type="application/ld+json" set:html={graph} />
 
-  <section class="mx-auto w-full max-w-3xl px-4 py-14 font-sans">
-    <h1 class="text-2xl font-black tracking-wide md:text-3xl">เงื่อนไขและข้อตกลง {BRAND_NAME}</h1>
+  <ContentBox as="h1" title={`เงื่อนไขและข้อตกลง ${BRAND_NAME}`}>
+    <p class="text-left">กรุณาอ่านเงื่อนไขด้านล่างก่อนใช้งานเว็บไซต์ การเข้าชมและใช้งานต่อถือว่าท่านรับทราบและยอมรับข้อกำหนดทั้งหมดนี้</p>
+  </ContentBox>
 
-    <p class="mt-4 text-base leading-relaxed opacity-80">
-      กรุณาอ่านเงื่อนไขด้านล่างก่อนใช้งานเว็บไซต์ การเข้าชมและใช้งานต่อถือว่าท่านรับทราบและยอมรับข้อกำหนดทั้งหมดนี้
-    </p>
+  {
+    sections.map((section) => (
+      <ContentBox as="h2" title={section.h}>
+        {section.p.map((text, i) => (
+          <p class={i === 0 ? "text-left" : "mt-3 text-left"}>{text}</p>
+        ))}
+      </ContentBox>
+    ))
+  }
 
-    {
-      sections.map((section) => (
-        <div class="mt-10">
-          <h2 class="text-xl font-bold md:text-2xl">{section.h}</h2>
-          {section.p.map((text) => (
-            <p class="mt-4 text-base leading-relaxed opacity-80">{text}</p>
-          ))}
-        </div>
-      ))
-    }
-
-    <p class="mt-12 text-base leading-relaxed opacity-80">
+  <ContentBox>
+    <p class="text-left">
       อ่านเพิ่มเติมได้ที่ <a href="/privacy/" class="font-bold underline underline-offset-4">นโยบายความเป็นส่วนตัว</a> หรือ <a
         href="/contact-us/"
         class="font-bold underline underline-offset-4">ติดต่อทีมงาน</a
       >
     </p>
-  </section>
+  </ContentBox>
 </MainLayout>
