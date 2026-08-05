@@ -1,22 +1,28 @@
 ---
 import MainLayout from "../layouts/MainLayout.astro";
-import ContentBox from "../components/ContentBoxPremium.astro";
+import ContentBox from "../components/ContentBoxCyberCut.astro";
 import Navfoot from "../components/Navfoot.astro";
-import Announcement from "../components/AnnouncementPremium.astro";
+import Announcement from "../components/AnnouncementCyber.astro";
 
 import { Picture } from "astro:assets";
 
+// Only the three slides that belong to THIS brand's drop are imported.
+// slide4.png is dated 2026-08-01 — the previous brand's promo — and an image
+// imported without being rendered still gets emitted into dist/, so it is
+// dropped here rather than left as an unused import.
 import pro1 from "../assets/slide1.png";
 import pro2 from "../assets/slide2.png";
 import pro3 from "../assets/slide3.png";
-import pro4 from "../assets/slide4.png";
 import { pageGraph } from "../lib/schema";
 
+// 150–160 CHARACTERS (not bytes). The brief's own sentence is 135 characters,
+// under verify-build.mjs's 150 floor, so the trailing clause brings it into
+// the window without changing what the brief says.
 const pageDescription =
-  "โปรโมชั่น MIRACLE55 เว็บตรงรวมสล็อต PG คาสิโนสด พร้อม 5 เงื่อนไขที่ต้องอ่านก่อนกดรับ ทั้งยอดฝากขั้นต่ำ โบนัสที่ได้รับ จำนวนเทิร์น เกมที่ร่วมรายการ และเพดานถอน";
+  "อัปเดตสิทธิพิเศษและโบนัสล่าสุดจาก PGW44 รับความคุ้มค่าแบบจัดเต็มด้วย โปรลุ้นรับรางวัลเยอะ สนับสนุนทุกการลงทุนของคุณให้เติบโตอย่างมั่นคง คืนยอดเสีย 15% ทุกวัน";
 
 const graph = pageGraph(Astro, {
-  name: "โปรโมชั่น MIRACLE55 เงื่อนไขที่ต้องอ่านก่อนกดรับสิทธิ์",
+  name: "โปรโมชั่น PGW44 โปรลุ้นรับรางวัลเยอะ และเงื่อนไขก่อนกดรับสิทธิ์",
   description: pageDescription,
   breadcrumb: [
     { name: "หน้าแรก", path: "/" },
@@ -26,98 +32,82 @@ const graph = pageGraph(Astro, {
 });
 ---
 
-<MainLayout title="โปรโมชั่น MIRACLE55 โบนัสต้อนรับ คืนยอดเสีย และฝากแรกของวัน" description={pageDescription}>
+<MainLayout title="PGW44 โปรโมชั่น จัดเต็ม โปรลุ้นรับรางวัลเยอะ คุ้มค่าทุกวัน" description={pageDescription}>
   <script type="application/ld+json" set:html={graph} />
 
   <Announcement />
 
-  <ContentBox title="โปรโมชั่น MIRACLE55" as="h1">
-    <div>
-      <h2 class="mb-4 text-2xl leading-normal font-bold text-[#e8b43a]">โปรโมชั่น MIRACLE55 ต้องอ่าน 5 เงื่อนไขตรงไหนก่อนกดรับ</h2>
+  <ContentBox title="โปรโมชั่น PGW44" as="h1">
+    <h2 class="mb-4 text-2xl leading-normal font-bold text-[#ffd54a]">โปรลุ้นรับรางวัลเยอะ ของ PGW44 มีอะไรบ้าง และต้องอ่านเงื่อนไขตรงไหน</h2>
 
-      <p class="mb-5 text-left text-base leading-relaxed text-[#f4e3c8]">
-        <strong class="text-[#f7d97a]">MIRACLE55</strong> วางแกนหลักไว้ที่สล็อต PG คาสิโนสด และกีฬาในบัญชีเดียว สิทธิ์ที่หน้าเว็บเปิดให้กดรับจึงผูกอยู่กับยอดฝากและเกมที่ร่วมรายการ ไม่ได้ลอยอยู่เดี่ยว ๆ ในหน้าโปร โบนัสตัวใหญ่บนแบนเนอร์อย่างโบนัสต้อนรับ 10,000 บอกได้แค่ว่ามีอะไรให้ ส่วนบรรทัดเล็กใต้ตัวเลขคือคนที่ตัดสินว่าเราได้จริงเท่าไร ก่อนกดรับจึงควรไล่ให้ครบทั้ง 5 ข้อ คือยอดฝากขั้นต่ำ โบนัสที่ได้รับจริง จำนวนเทิร์น เกมที่ร่วมรายการ และเพดานถอน เพราะโปรแต่ละแบบอาจกำหนดเกมและเงื่อนไขถอนไม่เหมือนกัน การเลือกจากเปอร์เซ็นต์สูงที่สุดเพียงอย่างเดียวจึงไม่ใช่วิธีที่ปลอดภัยที่สุด
-      </p>
+    <p class="mb-5 text-left text-base leading-relaxed text-[#e8efd8]">
+      <strong class="text-[#ffd54a]">PGW44</strong> วางแกนหลักไว้ที่สล็อตจากค่ายระดับโลกอย่าง PG Soft, Pragmatic Play และ Nolimit City รวมกับคาสิโนสดในบัญชีเดียว สิทธิ์ที่หน้าเว็บเปิดให้กดรับจึงผูกอยู่กับยอดฝากและเกมที่ร่วมรายการ ไม่ได้ลอยอยู่เดี่ยว ๆ ในหน้าโปร รอบนี้มีสามแคมเปญหลักคือคืนยอดเสีย 15% ที่คืนให้ตามยอดที่เสียจริง ฝากแรก 29 บาทเพื่อลุ้นรับหม้อชาบูมูลค่า 1,290 บาท และกิจกรรมแทงผิด 10 ครั้งติดต่อกันเพื่อลุ้นรับ iPhone 17 Pro Max มูลค่า 46,900 บาท ตัวเลขใหญ่บนแบนเนอร์บอกได้แค่ว่ามีอะไรให้ ส่วนบรรทัดเล็กใต้ตัวเลขคือคนที่ตัดสินว่าเราได้จริงเท่าไร ก่อนกดรับจึงควรไล่ให้ครบทั้งยอดฝากขั้นต่ำ โบนัสที่ได้รับจริง จำนวนเทิร์น เกมที่ร่วมรายการ และเพดานถอน
+    </p>
 
-      <p class="mb-5 text-left text-base leading-relaxed text-[#f4e3c8]">
-        รายการที่เห็นบนหน้าโปรมีทั้งแบบรับครั้งเดียวและแบบรับตามรอบ เช่น สมัครวันนี้รับโบนัสสูงสุด 10% ฝากแรกของวันรับเพิ่ม 10% ที่ระบุว่ารับได้วันละ 1 ครั้ง คืนยอดเสีย 10% และค่าคอม 0.75% ที่แบนเนอร์ระบุว่าไม่มีเทิร์นและไม่จำกัด ตัวเลขเหล่านี้ควรใช้เป็นข้อมูลร่างแล้วตรวจจากหน้าโปรจริงอีกครั้งก่อนกด เพราะช่วงเวลาของสิทธิ์ ค่ายเกมที่ยกเว้น และการรับซ้อนกับรายการอื่นเป็นรายละเอียดที่เปลี่ยนได้ตามรอบ ถ้าแผนของเราคือหมุนตามงบแล้วปิดจบ การไม่รับสิทธิ์เลยก็เป็นทางเลือกที่สมเหตุสมผล เพราะโบนัสที่ติดเทิร์นไม่ได้แปลว่าเงินอยู่ในมือแล้ว
-      </p>
+    <p class="mb-5 text-left text-base leading-relaxed text-[#e8efd8]">
+      รายการที่เห็นบนหน้าโปรมีทั้งแบบรับครั้งเดียวและแบบรับตามรอบ เช่น ฝากแรก 29 ที่ระบุว่าสำหรับสมาชิกใหม่เท่านั้น กับคืนยอดเสียที่คำนวณให้ตามรอบ ตัวเลขเหล่านี้ควรใช้เป็นข้อมูลร่างแล้วตรวจจากหน้าโปรจริงอีกครั้งก่อนกด เพราะช่วงเวลาของสิทธิ์ ค่ายเกมที่ยกเว้น และการรับซ้อนกับรายการอื่นเป็นรายละเอียดที่เปลี่ยนได้ตามรอบ ถ้าแผนของเราคือหมุนตามงบแล้วปิดจบ การไม่รับสิทธิ์เลยก็เป็นทางเลือกที่สมเหตุสมผล เพราะโบนัสที่ติดเทิร์นไม่ได้แปลว่าเงินอยู่ในมือแล้ว
+    </p>
 
-      <h2 class="mt-10 mb-4 text-2xl leading-normal font-bold text-[#e8b43a]">รับโบนัสแล้วต้องตรวจเทิร์นและยอดถอนอย่างไร</h2>
+    <h2 class="mt-10 mb-4 text-2xl leading-normal font-bold text-[#ffd54a]">รับสิทธิ์แล้วต้องตรวจเทิร์นและยอดถอนอย่างไร</h2>
 
-      <p class="mb-5 text-left text-base leading-relaxed text-[#f4e3c8]">
-        หลังกดรับสิทธิ์ควรเปิดหน้าประวัติรายการดูว่ายอดโบนัสเข้าครบ เทิร์นเดินถูกเกม และยอดคงเหลือตรงกับที่ระบบแสดง เพราะโปรบางรายการนับยอดเฉพาะสล็อตบางค่าย และอาจไม่นับยอดจากโต๊ะคาสิโนสดหรือบิลกีฬาเลย อีกจุดที่คนอ่านข้ามบ่อยคือคำว่าเริ่มต้น 1 บาท ซึ่งเป็นเดิมพันของเกมที่รองรับ ไม่ใช่ขั้นต่ำของการฝากหรือการถอน ทั้งสามส่วนอาจใช้ตัวเลขคนละชุด จึงควรดูยอดบนหน้าฝากและหน้าเกมแยกกัน เกมหนึ่งเริ่มน้อยได้ แต่อีกเกมอาจกำหนดยอดสูงกว่า
-      </p>
+    <p class="mb-5 text-left text-base leading-relaxed text-[#e8efd8]">
+      หลังกดรับสิทธิ์ควรเปิดหน้าประวัติรายการดูว่ายอดโบนัสเข้าครบ เทิร์นเดินถูกเกม และยอดคงเหลือตรงกับที่ระบบแสดง เพราะกิจกรรมบางรายการนับยอดเฉพาะสล็อตบางค่าย และอาจไม่นับยอดจากโต๊ะคาสิโนสดเลย อีกจุดที่คนอ่านข้ามบ่อยคือคำว่าไม่มีขั้นต่ำ ซึ่งหมายถึงยอดฝากถอนบนระบบออโต้ ไม่ใช่ยอดเดิมพันขั้นต่ำของทุกเกม ทั้งสองส่วนอาจใช้ตัวเลขคนละชุด จึงควรดูยอดบนหน้าฝากและหน้าเกมแยกกัน เกมหนึ่งเริ่มน้อยได้ แต่อีกเกมอาจกำหนดยอดสูงกว่า
+    </p>
 
-      <p class="mb-8 text-left text-base leading-relaxed text-[#f4e3c8]">
-        ด้านการเงิน ระบบกระเป๋าเดียวของ MIRACLE55 ทำให้เครดิตจากบัญชีสมาชิกถูกใช้ร่วมกับหลายหมวดเกมได้โดยไม่ต้องโยกยอดไปมา ส่วนระบบฝากถอนออโต้เปิดทำรายการผ่านหน้าเว็บได้ตลอด 24 ชั่วโมงตามสถานะระบบในช่วงนั้น เวลาร่างอยู่ที่ราว 5–30 วินาทีสำหรับฝาก และ 1–5 นาทีสำหรับถอน ก่อนทำรายการควรตรวจชื่อบัญชี ยอดเงิน และประวัติรายการให้ครบ หากยอดยังไม่เปลี่ยนไม่ควรกดซ้ำทันที เพราะนิ้วที่กดสองรอบไม่ได้ทำให้ธนาคารขยันขึ้น และควรกรอกข้อมูลเฉพาะบนโดเมนที่ตรวจแล้วและเชื่อมต่อแบบ HTTPS เท่านั้น ไม่ใช่ลิงก์ที่ส่งต่อกันมาในแชตพร้อมคำโฆษณา
-      </p>
+    <p class="mb-8 text-left text-base leading-relaxed text-[#e8efd8]">
+      ด้านการเงิน ระบบกระเป๋าเดียวของ PGW44 ทำให้เครดิตจากบัญชีสมาชิกถูกใช้ร่วมกับหลายหมวดเกมได้โดยไม่ต้องโยกยอดไปมา ส่วน ระบบออโต้ไม่มีขั้นต่ำ เปิดทำรายการผ่านหน้าเว็บได้ตลอด 24 ชั่วโมงตามสถานะระบบในช่วงนั้น และประมวลผลเสร็จภายในไม่กี่วินาที ก่อนทำรายการควรตรวจชื่อบัญชี ยอดเงิน และประวัติรายการให้ครบ หากยอดยังไม่เปลี่ยนไม่ควรกดซ้ำทันที เพราะนิ้วที่กดสองรอบไม่ได้ทำให้ธนาคารขยันขึ้น และควรกรอกข้อมูลเฉพาะบนโดเมนที่ตรวจแล้วและเชื่อมต่อแบบ HTTPS เท่านั้น ไม่ใช่ลิงก์ที่ส่งต่อกันมาในแชตพร้อมคำโฆษณา
+    </p>
 
-      <div class="mx-auto grid w-full max-w-7xl grid-cols-1 gap-6 px-4 sm:grid-cols-2 lg:grid-cols-2 xl:grid-cols-2">
-        <Picture
-          src={pro1}
-          alt="แบนเนอร์โปรสมาชิกใหม่ของ MIRACLE55 โบนัสต้อนรับ 10,000 พร้อมข้อความ ฝากถอนออโต้ เกมครบ เล่นง่าย"
-          loading="lazy"
-          fetchpriority="low"
-          widths={[200, 400, 600, 800]}
-          sizes="(max-width: 768px) 100vw, 50vw"
-          class="mx-auto h-auto w-full rounded-xl border border-[#e8b43a]/25 object-contain shadow-[0_10px_30px_rgba(232,180,58,0.18)] transition-transform duration-300 hover:-translate-y-1 hover:border-[#e8b43a]/50 hover:shadow-[0_15px_40px_rgba(232,180,58,0.30)]"
-          decoding="async"
-          formats={["avif", "webp"]}
-          fallbackFormat="webp"
-          quality={80}
-        />
+    <div class="mx-auto grid w-full max-w-7xl grid-cols-1 gap-6 px-4 sm:grid-cols-2 lg:grid-cols-3">
+      <Picture
+        src={pro1}
+        alt="แบนเนอร์โปรโมชั่น PGW44 คืนยอดเสีย 15% เสียเท่าไหร่ เราคืนให้! พร้อมข้อความ เล่นได้ทุกเกม สล็อต บาคาร่า ยิงปลา มั่นคง ปลอดภัย มาตรฐานระดับสากล และฝาก-ถอน AUTO รวดเร็วทันใจ"
+        loading="lazy"
+        fetchpriority="low"
+        widths={[200, 400, 600, 800]}
+        sizes="(max-width: 768px) 100vw, 33vw"
+        class="mx-auto h-auto w-full rounded-xl border border-[#ecab03]/25 object-contain shadow-[0_10px_30px_rgba(236,171,3,0.18)] transition-transform duration-300 hover:-translate-y-1 hover:border-[#ecab03]/50 hover:shadow-[0_15px_40px_rgba(236,171,3,0.30)]"
+        decoding="async"
+        formats={["avif", "webp"]}
+        fallbackFormat="webp"
+        quality={80}
+      />
 
-        <Picture
-          src={pro2}
-          alt="แบนเนอร์ MIRACLE55 เล่นครบ สล็อต PG คาสิโนสด กีฬา พร้อมรายการระบบกระเป๋าเดียว ฝากถอนออโต้ 24 ชม. รวดเร็ว 5–30 วินาที เล่นผ่านมือถือได้ทันทีไม่ต้องดาวน์โหลด เว็บตรงมั่นคงปลอดภัย และข้อความสมัครวันนี้รับโบนัสสูงสุด 10%"
-          loading="lazy"
-          fetchpriority="low"
-          widths={[200, 400, 600, 800]}
-          sizes="(max-width: 768px) 100vw, 50vw"
-          class="mx-auto h-auto w-full rounded-xl border border-[#e8b43a]/25 object-contain shadow-[0_10px_30px_rgba(232,180,58,0.18)] transition-transform duration-300 hover:-translate-y-1 hover:border-[#e8b43a]/50 hover:shadow-[0_15px_40px_rgba(232,180,58,0.30)]"
-          decoding="async"
-          formats={["avif", "webp"]}
-          fallbackFormat="webp"
-          quality={80}
-        />
+      <Picture
+        src={pro2}
+        alt="แบนเนอร์โปรโมชั่น PGW44 ฝากแรก 29 ลุ้นรับหม้อชาบู มูลค่า 1,290 บาท พร้อมข้อความ อร่อยฟิน ลุ้นของรางวัลสุดพรีเมียม สมาชิกใหม่เท่านั้น และปลอดภัย มั่นคง มาตรฐานสากล"
+        loading="lazy"
+        fetchpriority="low"
+        widths={[200, 400, 600, 800]}
+        sizes="(max-width: 768px) 100vw, 33vw"
+        class="mx-auto h-auto w-full rounded-xl border border-[#ecab03]/25 object-contain shadow-[0_10px_30px_rgba(236,171,3,0.18)] transition-transform duration-300 hover:-translate-y-1 hover:border-[#ecab03]/50 hover:shadow-[0_15px_40px_rgba(236,171,3,0.30)]"
+        decoding="async"
+        formats={["avif", "webp"]}
+        fallbackFormat="webp"
+        quality={80}
+      />
 
-        <Picture
-          src={pro3}
-          alt="แบนเนอร์ MIRACLE55 คืนยอดเสีย 10% และค่าคอม 0.75% ระบุว่าไม่มีเทิร์น ไม่จำกัด พร้อมข้อความรีวิวเว็บตรงมาตรฐานสากล ระบบโปรชัด เล่นง่าย ถอนออโต้"
-          loading="lazy"
-          fetchpriority="low"
-          widths={[200, 400, 600, 800]}
-          sizes="(max-width: 768px) 100vw, 50vw"
-          class="mx-auto h-auto w-full rounded-xl border border-[#e8b43a]/25 object-contain shadow-[0_10px_30px_rgba(232,180,58,0.18)] transition-transform duration-300 hover:-translate-y-1 hover:border-[#e8b43a]/50 hover:shadow-[0_15px_40px_rgba(232,180,58,0.30)]"
-          decoding="async"
-          formats={["avif", "webp"]}
-          fallbackFormat="webp"
-          quality={80}
-        />
+      <Picture
+        src={pro3}
+        alt="แบนเนอร์โปรโมชั่น PGW44 แทงผิด 10 ครั้งติดต่อกัน ลุ้นรับ iPhone 17 Pro Max ความจุ 256GB มูลค่า 46,900 บาท พร้อมข้อความ ยิ่งผิดยิ่งมีสิทธิ์ และสมัครง่าย ฝาก-ถอน AUTO รวดเร็ว"
+        loading="lazy"
+        fetchpriority="low"
+        widths={[200, 400, 600, 800]}
+        sizes="(max-width: 768px) 100vw, 33vw"
+        class="mx-auto h-auto w-full rounded-xl border border-[#ecab03]/25 object-contain shadow-[0_10px_30px_rgba(236,171,3,0.18)] transition-transform duration-300 hover:-translate-y-1 hover:border-[#ecab03]/50 hover:shadow-[0_15px_40px_rgba(236,171,3,0.30)]"
+        decoding="async"
+        formats={["avif", "webp"]}
+        fallbackFormat="webp"
+        quality={80}
+      />
+    </div>
 
-        <Picture
-          src={pro4}
-          alt="แบนเนอร์ MIRACLE55 ฝากแรกของวัน รับเพิ่ม 10% พร้อมข้อความระบบออโต้ 24 ชม. เล่นง่ายผ่านมือถือ และรับได้วันละ 1 ครั้ง"
-          loading="lazy"
-          fetchpriority="low"
-          widths={[200, 400, 600, 800]}
-          sizes="(max-width: 768px) 100vw, 50vw"
-          class="mx-auto h-auto w-full rounded-xl border border-[#e8b43a]/25 object-contain shadow-[0_10px_30px_rgba(232,180,58,0.18)] transition-transform duration-300 hover:-translate-y-1 hover:border-[#e8b43a]/50 hover:shadow-[0_15px_40px_rgba(232,180,58,0.30)]"
-          decoding="async"
-          formats={["avif", "webp"]}
-          fallbackFormat="webp"
-          quality={80}
-        />
-      </div>
-
-      <div class="mt-12 flex justify-center pb-4">
-        <a
-          href="/register"
-          class="flex items-center justify-center rounded-lg border border-[#e8b43a]/60 bg-gradient-to-r from-[#f7d97a] via-[#e8b43a] to-[#a9741c] px-10 py-3.5 text-lg font-black text-[#1a1206] shadow-[0_10px_30px_rgba(232,180,58,0.18)] transition-transform hover:scale-105 hover:shadow-[0_15px_40px_rgba(232,180,58,0.30)]">
-          สมัครสมาชิก MIRACLE55
-        </a>
-      </div>
+    <div class="mt-12 flex justify-center pb-4">
+      <a
+        href="/register"
+        class="flex items-center justify-center rounded-lg border border-[#ecab03]/60 bg-gradient-to-r from-[#ffd54a] via-[#ecab03] to-[#a9760a] px-10 py-3.5 text-lg font-black text-[#0a0f06] shadow-[0_10px_30px_rgba(236,171,3,0.18)] transition-transform hover:scale-105 hover:shadow-[0_15px_40px_rgba(236,171,3,0.30)]">
+        สมัครสมาชิก PGW44
+      </a>
     </div>
   </ContentBox>
 

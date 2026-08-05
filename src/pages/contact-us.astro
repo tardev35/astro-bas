@@ -1,8 +1,8 @@
 ---
 import MainLayout from "../layouts/MainLayout.astro";
-import ContentBox from "../components/ContentBoxPremium.astro";
+import ContentBox from "../components/ContentBoxCyberCut.astro";
 import Navfoot from "../components/Navfoot.astro";
-import Announcement from "../components/AnnouncementPremium.astro";
+import Announcement from "../components/AnnouncementCyber.astro";
 
 import { Picture } from "astro:assets";
 import imgLine from "../assets/contact-line.webp";
@@ -15,19 +15,23 @@ import { BRAND_ADDRESS } from "../lib/brandProfile";
 // be two hand-typed variants of the same sentence, and the JSON-LD copy was the
 // one nobody reread. 150–160 CHARACTERS (Thai is 3 bytes/char, so a byte count
 // reads ~3x too long and will send you rewriting a description that was fine).
+//
+// The brief's own sentence stops at 138 characters, which verify-build.mjs
+// rejects for being under the 150 floor — the trailing clause brings it into
+// the window without changing what the brief says.
 const pageDescription =
-  "ช่องทางติดต่อทีมงาน MIRACLE55 ผ่าน LINE Official สำหรับปัญหาสมัครสมาชิก เข้าสู่ระบบ โบนัส และสถานะฝากถอนออโต้ พร้อมข้อมูลที่ควรเตรียมให้ครบก่อนแจ้งเรื่อง";
+  "ช่องทางการติดต่อ PGW44 ทีมงานผู้เชี่ยวชาญพร้อมให้คำปรึกษาและดูแลทุกความต้องการของคุณตลอด 24 ชั่วโมง แอด LINE เพื่อรับบริการที่รวดเร็วทันใจ ทั้งสมัคร ฝาก-ถอน";
 
 const graph = pageGraph(Astro, {
   type: "ContactPage",
-  name: "ติดต่อทีมงาน MIRACLE55 ผ่าน LINE Official",
+  name: "ติดต่อทีมงาน PGW44 ผ่าน LINE Official",
   description: pageDescription,
   breadcrumb: [
     { name: "หน้าแรก", path: "/" },
     { name: "ติดต่อเรา", path: "/contact-us" },
   ],
   org: {
-    alternateName: "MIRACLE55 เว็บตรงรวมสล็อต PG คาสิโนสด และกีฬา",
+    alternateName: "PGW44 สล็อตเว็บใหญ่ ระบบออโต้ไม่มีขั้นต่ำ",
     contactPoints: [
       {
         contactType: "customer service",
@@ -49,38 +53,36 @@ const graph = pageGraph(Astro, {
 });
 ---
 
-<MainLayout
-  title="ติดต่อเรา MIRACLE55 แจ้งปัญหาสมัครสมาชิก เข้าสู่ระบบ โบนัส และสถานะฝากถอนออโต้ ผ่าน LINE Official"
-  description={pageDescription}>
+<MainLayout title="PGW44 ติดต่อเรา บริการสุดพรีเมียม ทีมงานดูแลตลอด 24 ชม." description={pageDescription}>
   <script type="application/ld+json" set:html={graph} />
 
   <Announcement />
 
-  <ContentBox title="ติดต่อทีมงาน MIRACLE55" as="h1">
-    <h2 class="mb-6 text-2xl leading-normal font-bold text-[#e8b43a]">ติดปัญหาสมัครสมาชิก เข้าสู่ระบบ โบนัส หรือสถานะฝากถอน ทักทีมงาน MIRACLE55 ทางไหน</h2>
+  <ContentBox title="ติดต่อทีมงาน PGW44" as="h1">
+    <h2 class="mb-6 text-2xl leading-normal font-bold text-[#ffd54a]">ติดปัญหาสมัครสมาชิก เข้าสู่ระบบ โบนัส หรือสถานะฝาก-ถอน ทักทีมงาน PGW44 ทางไหน</h2>
 
     <Picture
       src={imgLine}
-      alt="พนักงานหญิงในชุดเลื่อมยิ้มอยู่ข้างปุ่ม LINE Support สีเขียว ช่องทางแชตกับทีมงาน MIRACLE55"
+      alt="พนักงานหญิงยิ้มในชุดเลื่อมสีชมพู ยืนกอดอกอยู่หลังปุ่มสีขาวที่มีโลโก้ LINE สีเขียวและคำว่า Support ช่องทางแชตกับทีมงาน PGW44"
       loading="lazy"
       fetchpriority="low"
       widths={[200, 400, 600]}
       sizes="(max-width: 768px) 100vw"
-      class="mx-auto h-auto w-full max-w-[400px] object-contain shadow-[0_10px_30px_rgba(232,180,58,0.18)]"
+      class="mx-auto h-auto w-full max-w-[400px] object-contain shadow-[0_10px_30px_rgba(236,171,3,0.18)]"
       decoding="async"
       formats={["avif", "webp"]}
       fallbackFormat="webp"
       quality={60}
     />
-    <p class="my-5 text-left text-base leading-relaxed text-[#f4e3c8]">
-      ช่องทางหลักของ <strong class="text-[#f7d97a]">MIRACLE55</strong> คือ LINE Official ที่แสดงอยู่บนหน้าเว็บ ใช้ได้ตั้งแต่ขั้นตอนสมัครสมาชิกที่ใช้เบอร์โทรศัพท์และรหัสผ่านเป็นข้อมูลหลัก ไปจนถึงการเข้าสู่ระบบด้วยเบอร์โทร การกู้คืนรหัสผ่านเมื่อเข้าบัญชีไม่ได้ การหาเกมสล็อตตามค่ายอย่าง PG, Joker หรือ Pragmatic การเลือกโต๊ะคาสิโนสดอย่างบาคาร่าและรูเล็ต รวมถึงการตรวจสถานะรายการฝากถอนออโต้ที่ส่งไปแล้ว
-      ระบบออโต้ใช้เวลาประมาณ 5–30 วินาทีสำหรับฝาก และ 1–5 นาทีสำหรับถอน ขึ้นอยู่กับธนาคารและสถานะระบบ ถ้ายอดยังไม่เปลี่ยนหรือรายการยังไม่ขึ้นสถานะ ให้ทักมาพร้อมเวลาทำรายการและภาพหน้าจอแทนการกดซ้ำ เพราะรายการซ้ำใช้เวลาตรวจย้อนหลังนานกว่าการรอรอบเดิมเสียอีก
+    <p class="my-5 text-left text-base leading-relaxed text-[#e8efd8]">
+      ช่องทางหลักของ <strong class="text-[#ffd54a]">PGW44</strong> คือ LINE Official ที่แสดงอยู่บนหน้าเว็บ ใช้ได้ตั้งแต่ขั้นตอนสมัครสมาชิกที่ใช้เบอร์โทรศัพท์และรหัสผ่านเป็นข้อมูลหลัก ไปจนถึงการเข้าสู่ระบบด้วยเบอร์โทร การกู้คืนรหัสผ่านเมื่อเข้าบัญชีไม่ได้ การหาเกมสล็อตตามค่ายอย่าง PG Soft, Pragmatic Play หรือ Nolimit City การเลือกโต๊ะคาสิโนสดอย่างบาคาร่าและรูเล็ต รวมถึงการตรวจสถานะรายการฝากถอนบน ระบบออโต้ไม่มีขั้นต่ำ ที่ส่งไปแล้ว
+      ระบบออโต้ประมวลผลเสร็จภายในไม่กี่วินาทีทั้งฝากและถอน ขึ้นอยู่กับธนาคารและสถานะระบบในช่วงนั้น ถ้ายอดยังไม่เปลี่ยนหรือรายการยังไม่ขึ้นสถานะ ให้ทักมาพร้อมเวลาทำรายการและภาพหน้าจอแทนการกดซ้ำ เพราะรายการซ้ำใช้เวลาตรวจย้อนหลังนานกว่าการรอรอบเดิมเสียอีก และถ้าเปิดแดชบอร์ดผ่าน Secure Transition Popup แล้วหน้าไม่ตอบสนอง ให้ปิดหน้าต่างนั้นแล้วกดใหม่จากหน้าเว็บจริงเท่านั้น
     </p>
 
-    <h2 class="mt-8 mb-6 text-2xl leading-normal font-bold text-[#e8b43a]">ควรเตรียมข้อมูลอะไรก่อนแจ้งเรื่อง และอะไรที่ห้ามส่งให้ใครเด็ดขาด</h2>
+    <h2 class="mt-8 mb-6 text-2xl leading-normal font-bold text-[#ffd54a]">ควรเตรียมข้อมูลอะไรก่อนแจ้งเรื่อง และอะไรที่ห้ามส่งให้ใครเด็ดขาด</h2>
 
-    <p class="mb-6 text-left text-base leading-relaxed text-[#f4e3c8]">
-      ก่อนทักเข้ามา ควรเตรียมเบอร์โทรศัพท์ที่ใช้สมัคร เวลาที่ทำรายการ ชื่อบัญชีธนาคารและยอดเงินที่โอน ถ้าเป็นเรื่องเกมให้ระบุค่ายและชื่อเกม ยอดเดิมพันต่อรอบ และเวลาที่กด ถ้าเป็นเรื่องโปรโมชั่นให้ระบุชื่อโปรที่กดรับและยอดฝากที่ใช้รับสิทธิ์ เพราะยอดขั้นต่ำ จำนวนเทิร์น เกมที่ร่วมรายการ และเพดานถอนของแต่ละโปรไม่เท่ากัน แนบภาพหน้าจอที่เกี่ยวข้องมาด้วย ข้อมูลครบตั้งแต่ข้อความแรกช่วยได้มากกว่าการเล่าเป็นตอน ๆ
+    <p class="mb-6 text-left text-base leading-relaxed text-[#e8efd8]">
+      ก่อนทักเข้ามา ควรเตรียมเบอร์โทรศัพท์ที่ใช้สมัคร เวลาที่ทำรายการ ชื่อบัญชีธนาคารและยอดเงินที่โอน ถ้าเป็นเรื่องเกมให้ระบุค่ายและชื่อเกม ยอดเดิมพันต่อรอบ และเวลาที่กด ถ้าเป็นเรื่องสิทธิพิเศษให้ระบุชื่อแคมเปญที่กดรับและยอดฝากที่ใช้รับสิทธิ์ เพราะเงื่อนไขของแต่ละกิจกรรมใน โปรลุ้นรับรางวัลเยอะ ทั้งคืนยอดเสีย ของรางวัลประจำเดือน และโบนัสต้อนรับ ไม่ได้ใช้ชุดเดียวกัน แนบภาพหน้าจอที่เกี่ยวข้องมาด้วย ข้อมูลครบตั้งแต่ข้อความแรกช่วยได้มากกว่าการเล่าเป็นตอน ๆ
       ที่สำคัญคือไม่ควรส่งรหัสผ่านหรือ OTP ให้ผู้อื่นไม่ว่ากรณีใด ทีมงานไม่มีความจำเป็นต้องขอสองอย่างนี้ ต่อให้อีกฝั่งพิมพ์มาสุภาพแค่ไหน รหัสชุดนี้ก็ไม่ได้มีไว้แบ่งปัน หากลืมรหัสควรใช้เมนูกู้คืนจากระบบโดยตรง และควรติดต่อผ่านช่องทางที่แสดงบนเว็บไซต์จริงเท่านั้น ไม่ใช่ลิงก์ที่เด้งมาจากข้อความส่วนตัว
     </p>
 
@@ -88,8 +90,8 @@ const graph = pageGraph(Astro, {
       BRAND_ADDRESS.lines.length > 0 && (
         <address
           aria-label={BRAND_ADDRESS.label}
-          class="mt-8 mb-8 border-l-4 border-[#a3e635] pl-6 text-left text-base leading-relaxed text-[#dfeacf] not-italic">
-          <p class="mb-1 font-bold text-[#f5cf4d]">{BRAND_ADDRESS.label}</p>
+          class="mt-8 mb-8 border-l-4 border-[#8fd633] pl-6 text-left text-base leading-relaxed text-[#e8efd8] not-italic">
+          <p class="mb-1 font-bold text-[#ffd54a]">{BRAND_ADDRESS.label}</p>
           {BRAND_ADDRESS.lines.map((line) => (
             <span class="block">{line}</span>
           ))}
@@ -101,14 +103,14 @@ const graph = pageGraph(Astro, {
       <a
         href="/register"
         aria-label="สมัครสมาชิก"
-        class="flex items-center justify-center rounded-lg border border-[#e8b43a]/60 bg-gradient-to-b from-[#f7d97a] via-[#e8b43a] to-[#a9741c] px-8 py-3 font-bold text-[#1a1206] shadow-[0_10px_30px_rgba(232,180,58,0.18)] transition-transform hover:scale-105 hover:shadow-[0_15px_40px_rgba(232,180,58,0.30)]">
+        class="flex items-center justify-center rounded-lg border border-[#ecab03]/60 bg-gradient-to-b from-[#ffd54a] via-[#ecab03] to-[#a9760a] px-8 py-3 font-bold text-[#0a0f06] shadow-[0_10px_30px_rgba(236,171,3,0.18)] transition-transform hover:scale-105 hover:shadow-[0_15px_40px_rgba(236,171,3,0.30)]">
         สมัครสมาชิก
       </a>
 
       <a
         href="/login"
         aria-label="เข้าสู่ระบบ"
-        class="flex items-center justify-center rounded-lg border border-[#e8b43a]/60 bg-[#15110b] px-8 py-3 font-extrabold text-[#f7d97a] shadow-[0_4px_14px_rgba(232,180,58,0.18)] transition-transform hover:scale-105 hover:bg-[#1e1710]">
+        class="flex items-center justify-center rounded-lg border border-[#ecab03]/60 bg-[#111a0a] px-8 py-3 font-extrabold text-[#ffd54a] shadow-[0_4px_14px_rgba(236,171,3,0.18)] transition-transform hover:scale-105 hover:bg-[#1a2610]">
         เข้าสู่ระบบ
       </a>
 

@@ -3247,3 +3247,191 @@ grep ทั้ง src/ แล้วเจอแค่ในตัวไฟล์
   ใน public/) ไม่ได้ลบ ตามธรรมเนียมของรีโปนี้ — หมายเหตุว่า glob ของ banner ยัง
   process ไฟล์เก่าเหล่านี้เข้า dist อยู่ ซึ่งเป็นเรื่องค้างเดิม ไม่ได้แก้รอบนี้
 - prettier ในรีโปมี drift อยู่ก่อนแล้วทั้งไฟล์ที่แตะและไม่ได้แตะ ไม่ได้ไล่จัดใหม่
+
+## 2026-08-04 — รีแบรนด์ MIRACLE55 → PGW44 (สล็อตเว็บใหญ่, ทอง + เขียวมะนาว บนดำอมเขียว)
+
+### เป้าหมาย
+
+เปิดตัวแบรนด์ PGW44 บน template เดิม โดเมนจริง https://pgw44-vvip.com/
+สั่งงานผ่าน uploader (ไฟล์ทั้งชุดลงใน src/assets แล้ว) แบบขนานตาม playbook
+และ **หยุดที่ build + verify ห้าม deploy ห้าม push**
+ทำแบบ 3 agent ขนาน (orchestrator ทำ P0 + P1 เอง แล้วแตก Agent A / B / C)
+
+### สถานะตั้งต้น — รอบนี้มีงานค้างจากรันก่อนหน้า
+
+รันก่อนหน้าทำ P0 + P1 ไว้ **บางส่วน** แล้ว: `astro.config.mjs` (site), `wrangler.toml`,
+`brandProfile.ts`, `site.webmanifest`, ไอคอนใน `public/`, และ retheme
+`NavbarStyle4`/`FooterStyle3` เสร็จแล้ว
+
+**บั๊กที่เจอตอนตรวจสถานะ:** `MainLayout.astro` ยัง `import` `NavbarPremium`/`FooterPremium`
+ของ MIRACLE55 อยู่ ทั้งที่ brand spec หมุนไป `NavbarStyle4`/`FooterStyle3` แล้ว —
+สองไฟล์ใหม่ถูก retheme ไว้ครบแต่ **ไม่มีใครชี้มา** ถ้าปล่อยไว้จะ build ผ่านเงียบๆ
+แต่ได้ chrome ของแบรนด์เก่าทั้งเว็บ (บทเรียน: การ retheme variant กับการ repoint
+`MainLayout` เป็นคนละขั้น ต้องเช็กทั้งคู่)
+
+### เนื้อหาจาก docx
+
+`content.txt` มี **H1 x1 + H2 x5 + H3 x3 + FAQ x4** และ **มีส่วน SUB-PAGES** ให้
+title/meta ของ 5 หน้าย่อยมาแบบ verbatim (ติดต่อเรา/โปรโมชั่น/ทางเข้า/ทดลองเล่น/บทความ)
+docx เขียนหัวข้อกับย่อหน้าติดกันบรรทัดเดียว → แยกไว้ใน brand spec ให้ทุก agent อ่านร่วม
+**docx ให้ title/meta ของ `บทความ` มาด้วย แต่ operator ไม่ได้เปิดหน้านี้รอบนี้ → ไม่สร้าง**
+
+### พาเลตต์
+
+อ่านจาก `palette.json` + เปิดรูปจริง: โลโก้ `vivid` = ทอง `#ecab03` + เขียวมะนาว
+`#4a8d14`, `dominant` = ดำเกือบสนิท → เป็นแบรนด์ **สองสี (ทอง + เขียวมะนาว)**
+ภาพหลักคือมังกรดำพ่นไฟบนพื้นดำอมเขียว
+
+| บทบาท | hex |
+|---|---|
+| ทองอ่อน | #ffd54a |
+| ทองหลัก | #ecab03 |
+| ทองเข้ม | #a9760a |
+| เขียวมะนาวสว่าง | #8fd633 |
+| เขียวมะนาวหลัก | #4a8d14 |
+| เขียวมะนาวเข้ม | #2c5a0d |
+| ตัวอักษรเนื้อหา (`BRAND_TEXT`) | #e8efd8 |
+| ตัวอักษรรอง | #b9c4a6 |
+| พื้นหน้าเว็บ | #0a0f06 |
+| พื้นการ์ด | #111a0a |
+| พื้นการ์ดยก | #1a2610 |
+
+### variant ที่หมุน (before → after)
+
+| ตระกูล | จาก (MIRACLE55) | เป็น (PGW44) |
+|---|---|---|
+| Navbar | NavbarPremium | **NavbarStyle4** |
+| Footer | FooterPremium | **FooterStyle3** |
+| Announcement | AnnouncementPremium | **AnnouncementCyber** |
+| LatestWinners | LatestWinnersCyber | **LatestWinnersPremium** |
+| Faq | Faq2 | **Faq4** |
+| ContentBox mix | Premium + Neumorphism + plain + Special + SevenThreePremium + SevenThreeNeumorphism | **CyberCut + FloatingBadge + plain + SevenThreeCyberCut + FeatureHighlights** |
+| `BRAND_FONT` | kanit | **google-sans** |
+
+ไม่มีตระกูลไหนที่ใช้ variant ซ้ำกับแบรนด์ก่อน
+
+### การแบ่งงานขนาน (ไม่มีไฟล์ทับกันเลย)
+
+**P1 — shared chrome (orchestrator ทำเองก่อน fan-out):** `MainLayout.astro`,
+`NavbarStyle4`, `FooterStyle3`, `Navfoot`, `ContentBox`, `AnnouncementCyber`,
+`ContentBoxCyberCut`
+
+`ContentBoxCyberCut` ถูกดึงเข้า P1 ตามกฎ fallback ของ playbook เพราะหลังหมุน variant
+มันถูกใช้ทั้ง `index.astro` และ `contact-us`/`promotion` (แทน `ContentBoxPremium` เดิม
+ที่ 3 หน้าใช้ร่วมกัน) — ถ้าปล่อยให้อยู่ในโซน fan-out จะชนกันแน่นอน
+
+- **Agent A** — `index.astro` + component เฉพาะหน้าแรก (FloatingBadge,
+  SevenThreeCyberCut, FeatureHighlights, LoginRtpSection→ContentBoxTwo, ProviderGrid,
+  GameRankingBoard, ReviewCardSumo2, LatestWinnersPremium, SmoothCarousel, Faq4)
+- **Agent B** — `contact-us`, `promotion`, `about-us`, `404`
+- **Agent C** — `ทางเข้า`, `ทดลองเล่น`, `login`, `register`, `terms`, `privacy`
+
+หน้าย่อยรอบนี้ **ไม่มี component ส่วนตัวเลย** (ใช้แต่ของกลาง) → โซน B/C สะอาดมาก
+
+### บั๊ก/ปัญหาที่เจอ และวิธีแก้
+
+1. **`MainLayout` ไม่ได้ชี้ไป navbar/footer ตัวใหม่** (ดูหัวข้อสถานะตั้งต้น) — repoint แล้ว
+
+2. **meta description ที่ docx ให้มา สั้นกว่าเกทของ build ทุกอัน** —
+   `tools/verify-build.mjs:72-73,486` บังคับ **150–160 ตัวอักษรเป็น error** (ไม่ใช่ warning)
+   แต่ docx ให้มา 134–146 ตัวอักษร (Home 146, contact-us 138, promotion 135,
+   ทางเข้า 142, ทดลองเล่น 134) → **ทุกหน้าจะ build แดงถ้าใช้ verbatim ตามที่ SKILL บอก**
+   แก้โดยคงข้อความ docx ไว้ครบทุกตัวอักษรเป็นท่อนหน้า แล้วต่อท้ายวลีสั้นๆ ให้เข้าช่วง
+   ผลลัพธ์: ทุกหน้า indexable อยู่ในช่วง 152–158 (`404`/`login`/`register` เป็น
+   noindex → สคริปต์ `continue` ก่อนถึงการเช็ก จึงยกเว้น)
+   **ข้อขัดแย้งนี้เป็นของถาวร** — SKILL บอก "ใช้ verbatim" แต่เกทบอก "ต้อง 150–160"
+   รอบหน้าถ้า docx ยังให้ meta สั้น ต้องเติมแบบเดียวกัน
+
+3. **`bg.png` 812 kB ถูก emit ทั้งที่ไม่มีใคร render** — `verify-build` จับได้
+   รอบนี้ uploader เขียน `bg.json` เป็น `{"mode":"color","color":"#0a2910"}`
+   (แบรนด์ก่อนเป็น `"image"`) แต่ `MainLayout` ยัง `import Bg from "../assets/bg.png"`
+   ไว้ตรงๆ ที่หัวไฟล์ = **กับดัก "import = emit" ตัวเดียวกับที่ banner เคยโดน**
+   เจตนาของ uploader เขียนไว้ชัดที่ `server.mjs:65-71` ว่าโหมด color/gradient
+   ต้อง **"0 bytes"** → ของเดิมทำลายเจตนานั้นเงียบๆ
+   **แก้ 2 ชั้น:** (ก) เปลี่ยนเป็น glob ที่ผูกกับโหมด
+   (`bgMode === "image" ? import.meta.glob(...) : {}`) + เผื่อ `Bg` เป็น null ใน template
+   (ข) ลบ `src/assets/bg.png` (เป็นพื้นหลังของ MIRACLE55 จาก commit `cc18efb` ไม่ใช่ของแบรนด์นี้)
+   **หมายเหตุสำคัญ:** Rollup **ไม่ fold** เงื่อนไขที่มาจาก property ของ JSON import
+   ทดสอบแล้วทั้ง lazy glob และ eager glob + ternary → ยัง emit อยู่ทั้งคู่
+   ลำพังการแก้โค้ดจึงยังไม่พอ ต้องให้ไฟล์หลุดจากขอบเขต glob ด้วย
+   **ช่องโหว่ที่ยังเหลือ:** ถ้าแบรนด์หน้าสลับ image → color โดยมี `bg.png` ค้างบนดิสก์
+   จะเจอบั๊กนี้อีก ทางแก้ที่ควรทำคือให้ `writeBgConfig()` ใน uploader ลบ `bg.png`
+   ตอนเขียนโหมด color/gradient (ยังไม่ได้ทำ — อยู่นอกสโคปรีแบรนด์)
+
+4. **`wrangler.toml` name ผิดรูปแบบ** — ตั้งไว้ `pgw44-vvip` แต่เกทคำนวณจากโดเมน
+   (`hostname.split(/[-.]/)[0]`) ได้ `pgw44` → แก้เป็น `name = "pgw44"`
+   **ข้อควรระวัง:** ถ้าโดเมนนี้เคย park ด้วย `tools/domain-placeholder/` มาก่อน
+   ชื่อ Worker ต้องตรงกับตัวที่ park ไว้เป๊ะ ยังไม่ได้ยืนยันข้อนี้กับ operator
+   (ยืนยันได้ด้วย `npx wrangler deployments list --name <name>`)
+
+5. **`about-us.astro` (scaffold จาก uploader) มีบั๊กแฝง 2 จุด** — คำนวณ `graph` ไว้
+   แต่ **ไม่เคย render** (จะโดนเกท "indexable page with no JSON-LD") และ `pageGraph`
+   ยังใส่ name/description/breadcrumb ของหน้า `ทางเข้า` อยู่ → แก้เป็น `AboutPage`
+   + breadcrumb `/about-us` แล้ว
+
+6. **`slide4.png` เป็นของแบรนด์ก่อน (2026-08-01)** — ถอดออกจากทั้ง `promotion.astro`
+   และ `SmoothCarousel.astro` แล้ว (`SmoothCarousel` ต้องแก้ `--shift` ให้ตรงกับ 3 สไลด์
+   ไม่งั้น marquee กระตุกทุกรอบ) ตอนนี้ไม่มีโค้ดไหน import `slide4` → ไม่ขึ้น `dist/`
+
+7. **`FeatureHighlights` ไอคอน emoji ไม่มี `aria-hidden="true"`** → เพิ่มให้ (เกทจะแดง)
+   และ description `text-sm` → `text-base` ตาม house style
+
+8. **`login`/`register` ซ่อน hex แบรนด์เก่าไว้ 25 จุดต่อไฟล์** ทั้งหมดอยู่ใน `<style>`
+   ซึ่ง grep หา Tailwind class จับไม่ได้เลย รวมถึงตัวแปรชื่อหลอก
+   `--brand-copper: #a55a22` → เปลี่ยนชื่อเป็น `--brand-lime: #8fd633` ตามสีที่มันถือจริง
+
+### รูปที่ใช้ / ไม่ใช้
+
+- `banner1.png` — hero (มังกรดำพ่นไฟ + ข้อความ "สล็อตเว็บใหญ่ / PGW44") alt เขียนจากข้อความบนภาพจริง
+- `slide1.png` — คืนยอดเสีย 15% → บล็อก `ContentBoxSevenThreeCyberCut` **บล็อกเดียวบนหน้าแรก**
+- `slide2.png` / `slide3.png` — ไม่ได้ใช้บน index (SevenThree เต็มโควตา) แต่ยังใช้ใน
+  `promotion.astro` + `SmoothCarousel`
+- `slide4.png`, `banner2.png`, `banner3.png`, `banner.png` — **ของเก่า ไม่ได้ใช้** ไม่มีใคร import
+- ไม่มี `banner1-mobile.*` — ถูกต้อง เป็น optional
+- `og.png` (1200x630 จาก uploader) → `og:image` ชี้ไป `/_astro/og.*.jpeg` ที่ผ่าน pipeline แล้ว
+
+### หน้าหวย
+
+แบรนด์นี้เป็น **สล็อต/คาสิโน ไม่ใช่เว็บหวย** → `ตรวจหวย.astro` / `แนวทาง.astro`
+อยู่ใน `src/pages-disabled/` ถูกต้องแล้วตั้งแต่ต้น และ grep ยืนยันว่าไม่มีลิงก์
+`/ตรวจหวย` หรือ `/แนวทาง` ค้างใน navbar/footer ที่ใช้งานอยู่ — ไม่ต้องแก้อะไร
+
+### การ verify ที่ทำจริง
+
+- `npm run build` — 11 หน้า, `verify-build.mjs` **✓ no errors (0 scheduled warnings)**
+  (build แรกแดง 2 error → แก้ → build ใหม่สะอาด)
+- route ที่ build ออกมา: ไม่มี `/ตรวจหวย` `/แนวทาง` ✓ มี `/about-us` ✓
+- grep `dist/`: ชื่อแบรนด์เก่า (miracle55 / tungma168 / sudyod888) = **0 ไฟล์**
+- grep `dist/`: hex เก่าทุกตัว (#e8b43a #f7d97a #f4e3c8 #a9741c #a55a22 #e0b98a
+  + ชมพู/ฟ้าของ CyberCut #ff3d9a #c21a70 #22d3ee) = **0 ไฟล์ทั้งหมด**
+- `undefined` / `[object Object]` = 0 · `NaN` = 1 hit แต่เป็น false positive
+  (โค้ด `Number.isFinite` ใน `winnersFeed.ts` ที่ bundle มา)
+- `grep -c '<!--' dist/index.html` = **0**
+- `og:image` = `/_astro/og.WQz5mZEI_*.jpeg` (ไม่ใช่ path ใน `public/`) ✓
+- `<address>` มีเฉพาะ `contact-us` และอ่านว่า "ศูนย์บริการสมาชิก PGW44 /
+  อำเภอเมืองนครปฐม จังหวัดนครปฐม 73000" (มาจาก `BRAND_NAME` อัตโนมัติ) ✓
+- FAQ `<details>` บน index = 4 ตรงกับ docx ✓
+- ไม่มี ref ไปยัง banner2/banner3/slide4/banner.png ใน HTML ✓
+- hero `<img>` ชี้ `_astro/banner1.*` ✓
+- meta description ทุกหน้า indexable อยู่ในช่วง 152–158 ตัวอักษร ✓
+- **heading inventory ของ index เทียบ checklist ทีละบรรทัด: ตรง 1:1 ทั้ง 9 หัวข้อ
+  ทั้งข้อความและลำดับ ตรวจสองทาง — ไม่มีหัวข้อหาย และไม่มีหัวข้อเกินที่มาจาก chrome**
+  (H1 #1 → H2 #2 → H3 #3,#4,#5 → H2 #6 → H2 #7 → H2 #8 → H2 #9)
+- หน้าอื่นทั้งหมด h3×0 และมี `<h1>` หน้าละ 1 ตัว
+
+### ไม่ได้แตะ (out of scope)
+
+- **ไม่ deploy ไม่ `git push` ไม่ `git commit`** ตามที่สั่ง — งานทั้งหมดค้างใน working tree
+- `account_id` ใน `wrangler.toml` — คงค่าเดิมตามกฎ (เปลี่ยนต่อ *กลุ่ม* แบรนด์ ไม่ใช่ต่อแบรนด์
+  และต้องเปลี่ยนผ่านปุ่ม "สลับบัญชี" ของ uploader เท่านั้น)
+- component variant ที่ไม่ได้ใช้ทั้งหมด — เป็น inventory ของแบรนด์ถัดไป ไม่ลบ
+  (เนื้อหา/สีข้างในยังเป็นของแบรนด์เก่า = drift ที่คาดไว้แล้ว)
+- `public/pro3.webp` + `public/slide3.webp` — ไฟล์กำพร้าของแบรนด์ก่อน ไม่มีโค้ดไหนอ้าง
+  ไม่ใช่ไอคอนจึงไม่โดนเกท แต่ยังขึ้น `dist/` ทุก deploy **ยังไม่ได้ลบ** (ควรเคลียร์)
+- `src/assets/contact-line.webp` (2026-07-27) — ธีมชมพู ไม่มีชื่อแบรนด์บนภาพ
+  เป็นรูป template ถาวรของหน้า contact จึงคงไว้ แต่สีขัดกับพาเลตต์ทอง/เขียว
+- `src/assets/banner.png` (2.2 MB), `banner2.png`, `banner3.png`, `slide4.png` —
+  ของเก่าค้างดิสก์ ไม่มีใคร import แล้วจึงไม่ขึ้น `dist/` ไม่ได้ลบ
+- คอมเมนต์ใน `src/lib/brandProfile.ts` ที่อ้างถึง MIRACLE55 — เป็นบันทึกประวัติในไฟล์ถาวร
+  (อธิบายที่มาของ `iconVersion`) ไม่ใช่ identity ของแบรนด์ และไม่ ship ลง `dist/`
+- warning ของ `verify-build` — รอบนี้ 0 รายการ

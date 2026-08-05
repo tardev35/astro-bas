@@ -1,0 +1,42 @@
+---
+import MainLayout from "../layouts/MainLayout.astro";
+import ContentBox from "../components/ContentBox.astro";
+import Navfoot from "../components/Navfoot.astro";
+import Announcement from "../components/AnnouncementCyber.astro";
+import { pageGraph } from "../lib/schema";
+
+// The brief supplies no title/meta for this page, so both are written here.
+// 150–160 CHARACTERS (Thai is 3 bytes/char — a byte count reads ~3x too long).
+const pageDescription =
+  "รู้จัก PGW44 สล็อตเว็บใหญ่ ที่รวมค่ายเกมระดับโลกไว้ในที่เดียว ขับเคลื่อนด้วย ระบบออโต้ไม่มีขั้นต่ำ ลื่นไหล ปลอดภัย 100% พร้อมดูแลสมาชิกทุกระดับตลอด 24 ชั่วโมง";
+
+const graph = pageGraph(Astro, {
+  type: "AboutPage",
+  name: "เกี่ยวกับเรา PGW44 อาณาจักรสล็อตเว็บใหญ่ มาตรฐานระดับสากล",
+  description: pageDescription,
+  breadcrumb: [
+    { name: "หน้าแรก", path: "/" },
+    { name: "เกี่ยวกับเรา", path: "/about-us" },
+  ],
+});
+---
+
+<MainLayout title="PGW44 เกี่ยวกับเรา อาณาจักรสล็อตเว็บใหญ่ มาตรฐานระดับสากล" description={pageDescription}>
+  <script type="application/ld+json" set:html={graph} />
+
+  <Announcement />
+
+  <ContentBox title="เกี่ยวกับเรา PGW44" as="h1">
+    <p class="mb-5 text-left text-base leading-relaxed text-[#e8efd8]">
+      <strong class="text-[#ffd54a]">PGW44</strong> คือ สล็อตเว็บใหญ่ ที่ถูกสร้างขึ้นมาเพื่อรองรับผู้เล่นทุกระดับด้วยมาตรฐานความมั่นคงระดับสากล เราวางตัวเองเป็นศูนย์กลางของซอฟต์แวร์คุณภาพเยี่ยม โดยเชื่อมต่อกับผู้พัฒนาชั้นนำอย่าง PG Soft ที่โดดเด่นด้านกราฟิก 3D และรอบโบนัสที่เข้าถึงได้ไว Pragmatic Play ที่กลไกการออกรางวัลโปร่งใสและตอบสนองฉับไว และ Nolimit City ที่เน้นตัวคูณเงินรางวัลแบบก้าวกระโดด ทุกเกมบนระบบผ่านการตรวจสอบเสถียรภาพก่อนเปิดให้บริการ เพื่อให้ภาพแสดงผลคมชัด โหลดไว ไม่มีอาการค้าง และมีอัตราการจ่ายที่ยุติธรรมกับนักลงทุนที่ต้องการความมั่นใจในทุกการกดสปิน
+    </p>
+
+    <h2 class="mt-8 mb-5 text-2xl leading-normal font-bold text-[#ffd54a]">สิ่งที่เรายึดถือในการดูแลสมาชิก</h2>
+
+    <p class="text-left text-base leading-relaxed text-[#e8efd8]">
+      หัวใจของเราคือการมอบอิสระทางการเงินอย่างแท้จริงผ่าน ระบบออโต้ไม่มีขั้นต่ำ ที่ประมวลผลด้วยสถาปัตยกรรมอัจฉริยะ ตัดความซับซ้อนออกไป ทำให้ทั้งยอดฝากและยอดถอนเสร็จสิ้นภายในไม่กี่วินาทีอย่างแม่นยำ โดยไม่มีเงื่อนไขผูกมัด ควบคู่กับความปลอดภัยที่เป็นเสาหลักของแพลตฟอร์ม ฐานข้อมูลและการเชื่อมต่อทั้งหมดถูกเข้ารหัสด้วยเทคโนโลยีที่เทียบเท่าสถาบันการเงิน และการเข้าสู่แดชบอร์ดส่วนตัวจะแสดงผลผ่าน Secure Transition Popup Modal ที่ป้องกันการรีเฟรชหน้าเว็บซ้ำซ้อน นอกจากนี้เรายังตอบแทนความไว้วางใจด้วย โปรลุ้นรับรางวัลเยอะ ทั้งโบนัสต้อนรับ คืนยอดเสีย และแคมเปญประจำวันที่สมาชิกกดรับสิทธิ์เองได้จากหน้าแดชบอร์ด พร้อมทีมงานที่ดูแลตลอด 24 ชั่วโมง
+    </p>
+  </ContentBox>
+
+  <Navfoot />
+</MainLayout>

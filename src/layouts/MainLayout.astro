@@ -1,13 +1,12 @@
 ---
 import { Image, getImage } from "astro:assets";
-import Bg from "../assets/bg.png";
 import bgConfig from "../assets/bg.json";
 import ogImage from "../assets/slide1.png";
 import "../styles/global.css";
 import { BRAND_NAME, BRAND_TEXT, brandProfile, fontStack, iconVersion, usesGoogleFonts } from "../lib/brandProfile";
 import { canonicalFor } from "../lib/schema";
-import Navbar from "../components/NavbarPremium.astro";
-import Footer from "../components/FooterPremium.astro";
+import Navbar from "../components/NavbarStyle4.astro";
+import Footer from "../components/FooterStyle3.astro";
 
 // Only banner1 is ever rendered, so only banner1 is imported.
 //
@@ -56,8 +55,8 @@ const mobileBannerImg = mobileBanner
   : null;
 
 const {
-  title = "MIRACLE55 รีวิวเว็บตรง สล็อต PG คาสิโนสด ฝากถอนออโต้",
-  description = "รีวิว MIRACLE55 เว็บตรงรวมสล็อต PG คาสิโนสด และกีฬาไว้ในบัญชีเดียว เช็กเกม ระบบกระเป๋าเดียว ฝากถอนออโต้ โปรโมชั่น เล่นผ่านมือถือ และทางเข้าก่อนสมัครใช้งาน",
+  title = "PGW44 สล็อตเว็บใหญ่ ระบบออโต้ไม่มีขั้นต่ำ โปรลุ้นรับรางวัลเยอะ",
+  description = "PGW44 สล็อตเว็บใหญ่ อาณาจักรความบันเทิงที่มั่นคงที่สุด มอบอิสระด้วย ระบบออโต้ไม่มีขั้นต่ำ ลื่นไหล ปลอดภัย พร้อมจัดเต็ม โปรลุ้นรับรางวัลเยอะ ทุกวัน ตลอด 24 ชม.",
   robots = "index, follow",
 } = Astro.props;
 
@@ -94,6 +93,21 @@ const ImageOg = ogRendered.src;
 // which fails the build with "Expected ) but found $$render".)
 const bgMode = (bgConfig as { mode?: string }).mode ?? "image";
 const bgCss = bgMode === "color" ? `background-color:${(bgConfig as { color?: string }).color};` : bgMode === "gradient" ? `background-image:${(bgConfig as { css?: string }).css};` : null;
+
+// bg.json เลือกได้ 3 โหมด: color / gradient / image — มีแต่โหมด image เท่านั้นที่
+// ต้องใช้ไฟล์รูปจริง
+//
+// เดิมบรรทัดบนสุดของไฟล์นี้เขียน `import Bg from "../assets/bg.png"` ไว้ตรงๆ
+// ซึ่งเป็นกับดักตัวเดียวกับที่ banner เคยโดน: **import = emit** ต่อให้ไม่มี
+// branch ไหน render มันเลย พอ uploader เขียน bg.json มาเป็น mode "color"
+// (แบรนด์นี้) รูป bg.png 812 kB ก็ยังถูกก๊อปขึ้น dist/_astro ทุก build และขึ้น
+// Cloudflare ทุก deploy โดยไม่มีใครโหลด — verify-build.mjs จับข้อนี้ให้แล้ว
+//
+// glob แบบ lazy (ไม่ใส่ eager) ทำให้ไฟล์ถูกโหลดเฉพาะตอน mode === "image"
+// จริงๆ เท่านั้น และยังคงรองรับ .webp/.jpg ของแบรนด์เก่าไว้เหมือนเดิม
+const bgCandidates = bgMode === "image" ? import.meta.glob<{ default: ImageMetadata }>("../assets/bg.{png,webp,jpg,jpeg}", { eager: true }) : {};
+const bgEntry = Object.values(bgCandidates)[0];
+const Bg = bgEntry ? bgEntry.default : null;
 
 // canonicalFor() is the same function every JSON-LD URL goes through, so the
 // canonical and the structured data cannot drift apart (see src/lib/schema.ts).
@@ -164,7 +178,7 @@ const profile = brandProfile(Astro.site);
 
           {block === "appmeta" && (
             <Fragment>
-              {profile.showAppTitle && <meta name="apple-mobile-web-app-title" content="miracle55" />}
+              {profile.showAppTitle && <meta name="apple-mobile-web-app-title" content="pgw44" />}
               <link rel="manifest" href="/site.webmanifest" />
             </Fragment>
           )}
@@ -206,7 +220,7 @@ const profile = brandProfile(Astro.site);
         background-attachment: fixed;
         background-repeat: no-repeat;
         margin: 0;
-        background-color: #0a0806;
+        background-color: #0a0f06;
         font-weight: 400;
         font-family: var(--font-sans) !important;
       }
@@ -215,7 +229,7 @@ const profile = brandProfile(Astro.site);
 
   <body class="relative flex min-h-screen w-full flex-col">
     {
-      bgCss ? (
+      bgCss || !Bg ? (
         <div class="fixed inset-0 -z-50 h-full w-full bg-cover bg-center" style={bgCss} />
       ) : (
         <Image
@@ -259,7 +273,7 @@ const profile = brandProfile(Astro.site);
         }
         <Image
           src={mainBanner}
-          alt="แบนเนอร์ MIRACLE55 รีวิวเว็บตรงเกมครบ สล็อต คาสิโนสด โปรโมชั่น และระบบฝากถอนออโต้ เล่นง่าย ฝากไว ถอนได้จริง ใช้งานได้ทั้งมือถือและหน้าเว็บ"
+          alt="แบนเนอร์ PGW44 สล็อตเว็บใหญ่ เกมเยอะ แตกง่าย จ่ายจริง พร้อมมังกรดำพ่นไฟและหีบสมบัติเหรียญทอง ระบุจุดเด่น เว็บตรง 100% ไม่ผ่านเอเย่นต์ ระบบออโต้ฝาก-ถอนรวดเร็ว ปลอดภัยมั่นคงมาตรฐานสากล สมัครวันนี้รับโบนัสพิเศษทันที"
           loading="eager"
           fetchpriority="high"
           widths={[412, 640, 828, 1024, 1280, 1600, 1900]}
