@@ -3,7 +3,6 @@ import { Picture } from "astro:assets";
 
 import slide1 from "../assets/slide1.png";
 import slide2 from "../assets/slide2.png";
-import slide3 from "../assets/slide3.png";
 
 // This used to be Swiper: 158,890 bytes of JavaScript (86,801 of it modules the
 // config never touched) to slide four pictures sideways forever. It is a CSS
@@ -22,22 +21,20 @@ import slide3 from "../assets/slide3.png";
 // there were more pictures; these are promo banners whose whole content IS the
 // text printed on them, so that text is the alt.
 //
-// THREE slides, not four: slide4.png is a leftover from a previous brand's
-// drop and shows that brand's promo. Importing it would both ship a stale
-// picture and emit its asset into dist/. If a future brand uploads a real
-// slide4, add it back here AND update --shift below.
+// TWO slides, not three or four: slide3.png (2026-08-06 12:41) and slide4.png
+// (2026-08-01) are leftovers from previous brands' drops and still carry those
+// brands' wordmarks. Importing either would both ship a stale picture and emit
+// its asset into dist/, because an import IS an emit. Only slide1 and slide2
+// belong to this brand. If a future brand uploads a real slide3, add it back
+// here AND redo the --shift arithmetic below for N=3.
 const images = [
   {
     src: slide1,
-    alt: "แบนเนอร์โปรโมชั่น TUNJAI123 คืนยอดเสีย 15% เสียเท่าไหร่ เราคืนให้มากกว่าเดิม รับคืนทุกยอดเสีย ไม่มีเงื่อนไข พร้อมข้อความ มั่นคง ปลอดภัย มาตรฐานสากล ฝาก-ถอน ออโต้ รวดเร็วทันใจ โบนัสจัดเต็มทุกวัน และบริการลูกค้าตลอด 24 ชั่วโมง",
+    alt: "แบนเนอร์โปรโมชั่น DEVA555 สมาชิกใหม่ รับเพิ่ม 300% พร้อมตรา WELCOME BONUS และข้อความ โบนัสจัดเต็ม คุ้มที่สุดสำหรับสมาชิกใหม่ ด้านล่างมีไอคอนสี่ช่อง สมัครง่ายใช้เบอร์มือถือ โบนัสจัดเต็ม ปลอดภัย 100% มั่นคงเชื่อถือได้ และบริการตลอด 24 ชม. ปิดท้ายด้วยข้อความ สมัครวันนี้ รับโบนัสสุดคุ้มไปเลย",
   },
   {
     src: slide2,
-    alt: "แบนเนอร์โปรโมชั่น TUNJAI123 ฝากแรก ลุ้นรับทอง 1 บาท ง่ายๆ เพียงฝากครั้งแรกก็มีสิทธิ์ลุ้น พร้อมข้อความ ลุ้นรับทอง 1 บาท ทุกยอดฝากแรก โปรดีๆ จัดเต็มเฉพาะสมาชิกใหม่ มั่นคงปลอดภัย เชื่อถือได้ 100% และ ฝาก-ถอนรวดเร็ว ทันใจ 24 ชั่วโมง",
-  },
-  {
-    src: slide3,
-    alt: "แบนเนอร์โปรโมชั่น TUNJAI123 แนะนำเพื่อน รับค่าคอม 0.8% ยิ่งแนะนำมาก ยิ่งรับเยอะ ไม่จำกัดยอด พร้อมข้อความ แนะนำเพื่อนได้ไม่จำกัดจำนวน รับค่าคอมสูงสุด 0.8% ไม่จำกัดเพดาน รายได้เสริมถอนได้จริง และระบบปลอดภัย มั่นคง 100%",
+    alt: "แบนเนอร์โปรโมชั่น DEVA555 ฝากแรกลุ้นรับมอไซค์ ข้างภาพรถจักรยานยนต์สีทอง พร้อมข้อความ เริ่มต้นเพียง 1 บาท ก็มีสิทธิ์ลุ้นรับมอไซค์ และตรา ลุ้นรับมอไซค์ทุกเดือน ด้านล่างมีไอคอนสี่ช่อง ฝาก-ถอนรวดเร็วทันใจ ระบบปลอดภัยมั่นคง 100% โบนัสจัดเต็มทุกวันทุกเวลา และบริการลูกค้า 24 ชั่วโมง ปิดท้ายด้วยข้อความ เล่นง่าย จ่ายจริง โอกาสดีๆ ไม่ควรพลาด",
   },
 ];
 
@@ -61,24 +58,24 @@ const slides = Array.from({ length: COPIES }, () => images).flat();
   <input id="carousel-pause" type="checkbox" class="peer sr-only" />
   <label
     for="carousel-pause"
-    class="sr-only cursor-pointer peer-focus-visible:not-sr-only peer-focus-visible:mb-3 peer-focus-visible:inline-block peer-focus-visible:rounded-full peer-focus-visible:border peer-focus-visible:border-[#dab563]/60 peer-focus-visible:px-4 peer-focus-visible:py-2 peer-focus-visible:text-sm peer-focus-visible:font-bold peer-focus-visible:text-[#f5eb8b]">
+    class="sr-only cursor-pointer peer-focus-visible:not-sr-only peer-focus-visible:mb-3 peer-focus-visible:inline-block peer-focus-visible:rounded-full peer-focus-visible:border peer-focus-visible:border-[#dfb85f]/60 peer-focus-visible:px-4 peer-focus-visible:py-2 peer-focus-visible:text-sm peer-focus-visible:font-bold peer-focus-visible:text-[#fded9a]">
     หยุด / เล่นสไลด์ภาพ
   </label>
 
   <div class="marquee-track flex">
     {
       slides.map((slide, index) => {
-        // The last two copies are the same three pictures again — decorative
+        // The last two copies are the same two pictures again — decorative
         // repeats that exist only so the loop has no seam. alt="" plus
         // aria-hidden on the wrapper keeps them out of the accessibility tree;
-        // without it the same sentence is announced nine times.
+        // without it the same sentence is announced three times.
         const isDuplicate = index >= images.length;
         return (
           <div class="marquee-slide" aria-hidden={isDuplicate ? "true" : undefined}>
             <Picture
               src={slide.src}
               alt={isDuplicate ? "" : slide.alt}
-              class="block w-full rounded-xl border border-[#dab563]/25 object-cover shadow-[0_10px_30px_rgba(218,181,99,0.20)]"
+              class="block w-full rounded-xl border border-[#dfb85f]/25 object-cover shadow-[0_10px_30px_rgba(223,184,95,0.20)]"
               width={slide.src.width}
               height={slide.src.height}
               loading="lazy"
@@ -98,26 +95,28 @@ const slides = Array.from({ length: COPIES }, () => images).flat();
 </div>
 
 <style>
-  /* --shift is one full copy of the image set: three slides plus the three gaps
-     between them, measured against the track's width (which is the container's
-     width — the slides overflow it, which is the point). Getting this wrong by
-     a pixel is what makes a marquee visibly jump on every loop.
+  /* --shift is one full copy of the image set: the slides in one copy plus the
+     gaps that follow them, measured against the track's width (which is the
+     container's width — the slides overflow it, which is the point). Getting
+     this wrong by a pixel is what makes a marquee visibly jump on every loop.
 
      With N slides per copy, P per view and gap g:
        copy width = N * (100% - (P-1)*g) / P + N*g
-     mobile  N=3 P=2 g=12px -> 150% + 18px
-     desktop N=3 P=3 g=16px -> 100% + 16px */
+     This brand ships N=2 (slide1 + slide2; slide3/slide4 belong to previous
+     brands — see the frontmatter note):
+     mobile  N=2 P=2 g=12px -> 100% + 12px
+     desktop N=2 P=3 g=16px -> 200%/3 + 32px/3 */
   .marquee {
     --gap: 12px;
     --per-view: 2;
-    --shift: calc(-150% - 18px);
+    --shift: calc(-100% - 12px);
   }
 
   @media (min-width: 768px) {
     .marquee {
       --gap: 16px;
       --per-view: 3;
-      --shift: calc(-100% - 16px);
+      --shift: calc(-200% / 3 - 32px / 3);
     }
   }
 

@@ -2,27 +2,28 @@
 import MainLayout from "../layouts/MainLayout.astro";
 import ContentBox from "../components/ContentBoxPremium.astro";
 import Navfoot from "../components/Navfoot.astro";
-import Announcement from "../components/AnnouncementPremium.astro";
+import Announcement from "../components/Announcement3.astro";
 
 import { Picture } from "astro:assets";
 
-// Only the three slides that belong to THIS brand's drop (2026-08-06) are
-// imported. slide4.png is dated 2026-08-01 — the previous brand's promo — and
-// an image imported without being rendered still gets emitted into dist/, so it
-// is dropped here rather than left as an unused import.
+// Only the TWO slides that belong to THIS brand's drop (2026-08-06 14:04) are
+// imported. slide3.png (12:41) and slide4.png (2026-08-01) are the previous
+// brands' promo art — slide3 still shows the old wordmark — and an image
+// imported without being rendered still gets emitted into dist/, so they are
+// dropped here rather than left as unused imports.
 import pro1 from "../assets/slide1.png";
 import pro2 from "../assets/slide2.png";
-import pro3 from "../assets/slide3.png";
 import { pageGraph } from "../lib/schema";
 
-// 152 CHARACTERS (not bytes). The brief's own sentence is 126 characters, under
+// 154 CHARACTERS (not bytes — Thai is 3 bytes/char, so a byte count reads ~3x
+// too long). The brief's own sentence is 141 characters, under
 // verify-build.mjs's 150 floor, so the trailing clause brings it into the
-// window without changing what the brief says.
+// 150–160 window without changing what the brief says.
 const pageDescription =
-  "อัปเดตโปรโมชั่นที่ดีที่สุดจาก TUNJAI123 รับสิทธิพิเศษง่ายๆ ผ่านระบบออโต้ เพิ่มโอกาสทำกำไรและมอบความคุ้มค่าให้คุณอย่างเต็มพิกัด พร้อมแคมเปญใหม่ทุกสัปดาห์";
+  "อัปเดตสิทธิพิเศษและโปรโมชั่นที่ดีที่สุดจาก DEVA555 รับโบนัสง่ายๆ ผ่านระบบอัตโนมัติ เพื่อเพิ่มศักยภาพและขยายโอกาสในการทำกำไรของคุณให้ถึงขีดสุด ครบทุกแคมเปญ";
 
 const graph = pageGraph(Astro, {
-  name: "TUNJAI123 โปรโมชั่น รับโบนัสสุดคุ้ม จ่ายจริง ทุกแคมเปญ",
+  name: "DEVA555 โปรโมชั่น แจกพลังโบนัสสุดคุ้ม อัปเดตใหม่ทุกวัน",
   description: pageDescription,
   breadcrumb: [
     { name: "หน้าแรก", path: "/" },
@@ -32,34 +33,34 @@ const graph = pageGraph(Astro, {
 });
 ---
 
-<MainLayout title="TUNJAI123 โปรโมชั่น รับโบนัสสุดคุ้ม จ่ายจริง ทุกแคมเปญ" description={pageDescription}>
+<MainLayout title="DEVA555 โปรโมชั่น แจกพลังโบนัสสุดคุ้ม อัปเดตใหม่ทุกวัน" description={pageDescription}>
   <script type="application/ld+json" set:html={graph} />
 
   <Announcement />
 
-  <ContentBox title="โปรโมชั่น TUNJAI123 รับโบนัสสุดคุ้ม จ่ายจริง ทุกแคมเปญ" as="h1">
-    <h2 class="mb-4 text-2xl leading-normal font-bold text-[#f5eb8b]">แคมเปญรอบนี้ของ TUNJAI123 มีอะไรบ้าง และต้องอ่านเงื่อนไขตรงไหน</h2>
+  <ContentBox title="โปรโมชั่น DEVA555 แจกพลังโบนัสระดับทวยเทพ อัปเดตใหม่ทุกวัน" as="h1">
+    <h2 class="mb-4 text-2xl leading-normal font-bold text-[#fded9a]">แคมเปญรอบนี้ของ DEVA555 มีอะไรบ้าง และต้องอ่านเงื่อนไขตรงไหน</h2>
 
-    <p class="mb-5 text-left text-base leading-relaxed text-[#ece3cf]">
-      <strong class="text-[#dab563]">TUNJAI123</strong> คือเว็บตรงอันดับ 1 ที่เชื่อมต่อ API ลิขสิทธิ์แท้ 100% จากผู้พัฒนาระดับโลกอย่าง PG Soft, Pragmatic Play และ JILI มาไว้ในบัญชีเดียว เป็นศูนย์ รวมทุกค่ายในเว็ปเดียวที่ไม่ต้องเสียเวลาย้ายเงินหรือสลับบัญชีให้ยุ่งยาก
-      สิทธิพิเศษบนหน้านี้จึงผูกอยู่กับยอดฝากและเกมที่ร่วมรายการ ไม่ได้ลอยอยู่เดี่ยว ๆ รอบนี้มีสามแคมเปญหลัก คือคืนยอดเสีย 15% ที่คืนให้ตามยอดที่เสียจริงโดยไม่มีเงื่อนไขซ่อน ฝากครั้งแรกเพื่อลุ้นรับทองคำมูลค่า 1 บาท และแนะนำเพื่อนเพื่อรับค่าคอมมิชชั่นสูงสุด 0.8% แบบไม่จำกัดเพดาน
+    <p class="mb-5 text-left text-base leading-relaxed text-[#e9ddbe]">
+      <strong class="text-[#dfb85f]">DEVA555</strong> คือ สล็อตเว็บตรงอันดับ 1 ที่เชื่อมต่อ API ลิขสิทธิ์แท้จากผู้พัฒนาระดับโลกอย่าง PG Soft, Pragmatic Play และ JILI มาไว้ในบัญชีเดียว
+      สิทธิพิเศษบนหน้านี้จึงผูกอยู่กับยอดฝากและค่ายเกมที่ร่วมรายการ ไม่ได้ลอยอยู่เดี่ยว ๆ รอบนี้มีสองแคมเปญหลัก คือ สมาชิกใหม่รับเพิ่ม 300% ที่คิดจากยอดฝากครั้งแรกของบัญชีใหม่ และ ฝากแรกลุ้นรับมอไซค์ ที่เริ่มต้นเพียง 1 บาทก็มีสิทธิ์ลุ้น
       ตัวเลขใหญ่บนแบนเนอร์บอกได้แค่ว่ามีอะไรให้ ส่วนบรรทัดเล็กใต้ตัวเลขคือคนที่ตัดสินว่าเราได้จริงเท่าไร ก่อนกดรับจึงควรไล่ให้ครบทั้งยอดฝากขั้นต่ำ โบนัสที่ได้รับจริง จำนวนเทิร์น ค่ายเกมที่ร่วมรายการ และเพดานถอน
     </p>
 
-    <p class="mb-8 text-left text-base leading-relaxed text-[#ece3cf]">
-      รายการที่เห็นมีทั้งแบบรับครั้งเดียวและแบบรับตามรอบ เช่น โปรฝากแรกที่ระบุว่าสำหรับสมาชิกใหม่เท่านั้น กับคืนยอดเสียที่คำนวณให้ตามรอบบิล ตัวเลขเหล่านี้ควรใช้เป็นข้อมูลตั้งต้นแล้วตรวจจากหน้าโปรจริงอีกครั้งก่อนกด
+    <p class="mb-8 text-left text-base leading-relaxed text-[#e9ddbe]">
+      รายการที่เห็นมีทั้งแบบรับครั้งเดียวและแบบรับตามรอบ เช่น โบนัสต้อนรับที่ระบุว่าใช้ได้กับบัญชีใหม่เท่านั้น กับสิทธิ์ลุ้นรางวัลใหญ่ที่นับตามรอบการฝาก ตัวเลขเหล่านี้ควรใช้เป็นข้อมูลตั้งต้นแล้วตรวจจากหน้าโปรจริงอีกครั้งก่อนกด
       เพราะช่วงเวลาของสิทธิ์ ค่ายเกมที่ยกเว้น และการรับซ้อนกับรายการอื่นเป็นรายละเอียดที่ปรับได้ตามรอบ ถ้าแผนของเราคือหมุนตามงบแล้วปิดจบ การไม่รับสิทธิ์เลยก็เป็นทางเลือกที่สมเหตุสมผล เพราะโบนัสที่ยังติดเทิร์นไม่ได้แปลว่าเงินอยู่ในมือแล้ว
     </p>
 
-    <div class="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3">
+    <div class="grid grid-cols-1 gap-6 sm:grid-cols-2">
       <Picture
         src={pro1}
-        alt="แบนเนอร์โปรโมชั่น TUNJAI123 คืนยอดเสีย 15% เสียเท่าไหร่ เราคืนให้มากกว่าเดิม พร้อมข้อความ รับคืนทุกยอดเสีย ไม่มีเงื่อนไข และไอคอนสี่ช่อง มั่นคงปลอดภัยมาตรฐานสากล ฝาก-ถอนออโต้รวดเร็วทันใจ โบนัสจัดเต็มทุกวัน และบริการลูกค้าตลอด 24 ชั่วโมง บนพื้นหลังดำทองมีตู้สล็อตและกองเหรียญ"
+        alt="แบนเนอร์โปรโมชั่น DEVA555 สมาชิกใหม่ รับเพิ่ม 300% พร้อมตราสัญลักษณ์ WELCOME BONUS และข้อความ โบนัสจัดเต็ม คุ้มที่สุดสำหรับสมาชิกใหม่ ด้านล่างมีไอคอนสี่ช่อง สมัครง่ายใช้แค่เบอร์ โบนัสจัดเต็มรับทันที 300% ปลอดภัย 100% มั่นคงเชื่อถือได้ และบริการตลอด 24 ชม. พร้อมดูแลคุณ ภาพผู้หญิงในชุดสีทองยืนข้างตู้สล็อตและกองเหรียญบนพื้นหลังดำทอง"
         loading="lazy"
         fetchpriority="low"
-        widths={[200, 400, 600, 800]}
-        sizes="(max-width: 768px) 100vw, 33vw"
-        class="mx-auto h-auto w-full rounded-xl border border-[#dab563]/25 object-contain shadow-[0_10px_30px_rgba(218,181,99,0.18)] transition-transform duration-300 hover:-translate-y-1 hover:border-[#dab563]/55 hover:shadow-[0_15px_40px_rgba(218,181,99,0.30)]"
+        widths={[320, 640, 960]}
+        sizes="(max-width: 639px) 100vw, 50vw"
+        class="mx-auto h-auto w-full rounded-xl border border-[#dfb85f]/25 object-contain shadow-[0_10px_30px_rgba(223,184,95,0.18)] transition-transform duration-300 hover:-translate-y-1 hover:border-[#dfb85f]/55 hover:shadow-[0_15px_40px_rgba(223,184,95,0.30)]"
         decoding="async"
         formats={["avif", "webp"]}
         fallbackFormat="webp"
@@ -68,26 +69,12 @@ const graph = pageGraph(Astro, {
 
       <Picture
         src={pro2}
-        alt="แบนเนอร์โปรโมชั่น TUNJAI123 ฝากแรกลุ้นรับทอง 1 บาท พร้อมภาพกล่องของขวัญสีแดงบรรจุสร้อยคอทองคำและทองแท่ง ข้อความ ง่ายๆ เพียงฝากครั้งแรกก็มีสิทธิ์ลุ้น และไอคอนโปรดีจัดเต็มเฉพาะสมาชิกใหม่ มั่นคงปลอดภัยเชื่อถือได้ 100% ฝาก-ถอนรวดเร็วทันใจ 24 ชั่วโมง"
+        alt="แบนเนอร์โปรโมชั่น DEVA555 ฝากแรกลุ้นรับมอไซค์ พร้อมภาพรถจักรยานยนต์สีดำและป้ายมุมขวา ลุ้นรับมอไซค์ทุกเดือน ข้อความ เริ่มต้นเพียง 1 บาท ก็มีสิทธิ์ลุ้นรับมอไซค์ ด้านล่างมีไอคอนสี่ช่อง ฝาก-ถอนรวดเร็วทันใจ ระบบปลอดภัยมั่นคง 100% โบนัสจัดเต็มทุกวันทุกเวลา และบริการลูกค้า 24 ชั่วโมง ภาพผู้หญิงในชุดสีทองนั่งข้างกล่องของขวัญและกองเหรียญบนพื้นหลังดำทอง"
         loading="lazy"
         fetchpriority="low"
-        widths={[200, 400, 600, 800]}
-        sizes="(max-width: 768px) 100vw, 33vw"
-        class="mx-auto h-auto w-full rounded-xl border border-[#dab563]/25 object-contain shadow-[0_10px_30px_rgba(218,181,99,0.18)] transition-transform duration-300 hover:-translate-y-1 hover:border-[#dab563]/55 hover:shadow-[0_15px_40px_rgba(218,181,99,0.30)]"
-        decoding="async"
-        formats={["avif", "webp"]}
-        fallbackFormat="webp"
-        quality={80}
-      />
-
-      <Picture
-        src={pro3}
-        alt="แบนเนอร์โปรโมชั่น TUNJAI123 แนะนำเพื่อนรับค่าคอม 0.8% พร้อมข้อความ ยิ่งแนะนำมาก ยิ่งรับเยอะ ไม่จำกัดยอด และไอคอนแนะนำเพื่อนได้ไม่จำกัดจำนวน รับค่าคอมสูงสุด 0.8% ไม่จำกัดเพดาน รายได้เสริมถอนได้จริง ระบบปลอดภัยมั่นคง 100% บนพื้นหลังดำทองมีกองเหรียญและชิป"
-        loading="lazy"
-        fetchpriority="low"
-        widths={[200, 400, 600, 800]}
-        sizes="(max-width: 768px) 100vw, 33vw"
-        class="mx-auto h-auto w-full rounded-xl border border-[#dab563]/25 object-contain shadow-[0_10px_30px_rgba(218,181,99,0.18)] transition-transform duration-300 hover:-translate-y-1 hover:border-[#dab563]/55 hover:shadow-[0_15px_40px_rgba(218,181,99,0.30)]"
+        widths={[320, 640, 960]}
+        sizes="(max-width: 639px) 100vw, 50vw"
+        class="mx-auto h-auto w-full rounded-xl border border-[#dfb85f]/25 object-contain shadow-[0_10px_30px_rgba(223,184,95,0.18)] transition-transform duration-300 hover:-translate-y-1 hover:border-[#dfb85f]/55 hover:shadow-[0_15px_40px_rgba(223,184,95,0.30)]"
         decoding="async"
         formats={["avif", "webp"]}
         fallbackFormat="webp"
@@ -95,31 +82,31 @@ const graph = pageGraph(Astro, {
       />
     </div>
 
-    <h2 class="mt-10 mb-4 text-2xl leading-normal font-bold text-[#f5eb8b]">รับสิทธิ์ผ่านระบบออโต้ AI รวดเร็วดั่งใจนึก โอนไว</h2>
+    <h2 class="mt-10 mb-4 text-2xl leading-normal font-bold text-[#fded9a]">รับสิทธิ์ผ่านระบบ ฝากถอนออโต้ไว 3 วิ ไม่ต้องแจ้งทีมงาน</h2>
 
-    <p class="mb-5 text-left text-base leading-relaxed text-[#ece3cf]">
-      หัวใจสำคัญที่ทำให้ระบบของเราเหนือกว่าคือความไวระดับเสี้ยววินาที เมื่อคุณทำธุรกรรมทางการเงิน เทคโนโลยี AI อัจฉริยะจะตรวจสอบและปรับยอดเครดิตให้โดยอัตโนมัติ ไม่ต้องส่งสลิปหรือรอการยืนยันให้เสียเวลา
+    <p class="mb-5 text-left text-base leading-relaxed text-[#e9ddbe]">
+      หัวใจสำคัญที่ทำให้ระบบของ DEVA555 เหนือกว่าคือความไวระดับวินาที เมื่อคุณทำธุรกรรมทางการเงิน เทคโนโลยี AI จะตรวจสอบและปรับยอดเครดิตให้โดยอัตโนมัติด้วยกลไก ฝากถอนออโต้ไว 3 วิ ไม่ต้องส่งสลิปหรือรอการยืนยันให้เสียเวลา
       สิทธิ์ที่ผูกกับยอดฝากจึงถูกคำนวณต่อทันทีในรอบเดียวกัน ไม่ต้องแจ้งทีมงานแล้วรอรอบตรวจ หลังกดรับสิทธิ์ควรเปิดหน้าประวัติรายการดูว่ายอดโบนัสเข้าครบ เทิร์นเดินถูกเกม และยอดคงเหลือตรงกับที่ระบบแสดง เพราะบางแคมเปญนับยอดเฉพาะสล็อตบางค่าย และอาจไม่นับยอดจากโต๊ะคาสิโนสดเลย
     </p>
 
-    <p class="mb-8 text-left text-base leading-relaxed text-[#ece3cf]">
+    <p class="mb-8 text-left text-base leading-relaxed text-[#e9ddbe]">
       อีกจุดที่คนอ่านข้ามบ่อยคือคำว่าไม่มีขั้นต่ำ ซึ่งหมายถึงยอดฝากถอนบนระบบออโต้ ไม่ใช่ยอดเดิมพันขั้นต่ำของทุกเกม ทั้งสองส่วนใช้ตัวเลขคนละชุด จึงควรดูยอดบนหน้าฝากและหน้าเกมแยกกัน เกมหนึ่งเริ่มน้อยได้ แต่อีกเกมอาจกำหนดยอดสูงกว่า
-      ระบบกระเป๋าเดียวของ TUNJAI123 ทำให้เครดิตในบัญชีสมาชิกถูกใช้ร่วมกับทุกค่ายได้โดยไม่ต้องโยกยอดไปมา และถ้ายอดยังไม่เปลี่ยนก็ไม่ควรกดซ้ำทันที เพราะนิ้วที่กดสองรอบไม่ได้ทำให้ธนาคารขยันขึ้น
+      เนื่องจากแพลตฟอร์ม รองรับทรูวอเลท และบัญชีธนาคารในกระเป๋าเดียวกัน เครดิตในบัญชีสมาชิกจึงถูกใช้ร่วมกับทุกค่ายได้โดยไม่ต้องโยกยอดไปมา และถ้ายอดยังไม่เปลี่ยนก็ไม่ควรกดซ้ำทันที เพราะนิ้วที่กดสองรอบไม่ได้ทำให้ธนาคารขยันขึ้น
     </p>
 
-    <h2 class="mt-10 mb-4 text-2xl leading-normal font-bold text-[#f5eb8b]">การันตี จ่ายจริง ไม่มีกั๊ก และปลอดภัยขั้นสุดทุกการเชื่อมต่อ</h2>
+    <h2 class="mt-10 mb-4 text-2xl leading-normal font-bold text-[#fded9a]">การันตี จ่ายจริง ไม่มีกั๊ก และ ปลอดภัย 100% ทุกการเชื่อมต่อ</h2>
 
-    <p class="mb-8 text-left text-base leading-relaxed text-[#ece3cf]">
-      รากฐานของความน่าเชื่อถือคือสภาพคล่องทางการเงินที่แข็งแกร่ง สมาชิกของ TUNJAI123 วางใจได้ว่าทุกความสำเร็จจะได้รับผลตอบแทนอย่างเต็มเม็ดเต็มหน่วย ไม่ว่าจะทำกำไรได้ในระดับใด ระบบก็พร้อมโอนไวและจ่ายจริงครบถ้วนทุกบิล โดยไม่มีการหักค่าธรรมเนียมหรือเปอร์เซ็นต์แอบแฝง
-      ด้านความปลอดภัย ฐานข้อมูลทั้งหมดถูกเข้ารหัสด้วยเทคโนโลยีระดับสูง และการเชื่อมต่อเข้าสู่แดชบอร์ดส่วนตัวจะแสดงผลผ่าน Premium Loader ในรูปแบบ Secure Transition Popup ซึ่งช่วยป้องกันการโหลดเว็บซ้ำซ้อนและรักษาความเป็นส่วนตัวไว้ได้ 100%
+    <p class="mb-8 text-left text-base leading-relaxed text-[#e9ddbe]">
+      รากฐานของความน่าเชื่อถือคือสภาพคล่องทางการเงินที่แข็งแกร่ง สมาชิกของ DEVA555 วางใจได้ว่าทุกความสำเร็จจะได้รับผลตอบแทนอย่างเต็มเม็ดเต็มหน่วย ไม่ว่าจะทำกำไรได้ในระดับใด ระบบก็พร้อมโอนไวและจ่ายจริงครบถ้วนทุกบิล โดยไม่มีการหักค่าธรรมเนียมหรือเปอร์เซ็นต์แอบแฝง
+      ด้านความปลอดภัย ฐานข้อมูลทั้งหมดถูกเข้ารหัสด้วยมาตรฐานเดียวกับสถาบันการเงิน และการเชื่อมต่อเข้าสู่แดชบอร์ดส่วนตัวจะแสดงผลผ่าน Premium Secure Popup ซึ่งช่วยป้องกันการโหลดเว็บซ้ำซ้อนและรักษาความเป็นส่วนตัวไว้ได้ ปลอดภัย 100%
       ก่อนกรอกข้อมูลทุกครั้ง ควรตรวจว่าอยู่บนโดเมนจริงของเราและเชื่อมต่อแบบ HTTPS เท่านั้น ไม่ใช่ลิงก์ที่ส่งต่อกันมาในแชตพร้อมคำโฆษณา
     </p>
 
     <div class="mt-12 flex justify-center pb-4">
       <a
         href="/register"
-        class="flex items-center justify-center rounded-lg border border-[#dab563]/60 bg-gradient-to-r from-[#f5eb8b] via-[#dab563] to-[#a97f28] px-10 py-3.5 text-lg font-black text-[#120c04] shadow-[0_10px_30px_rgba(218,181,99,0.20)] transition-transform hover:scale-105 hover:shadow-[0_15px_40px_rgba(218,181,99,0.32)]">
-        สมัครสมาชิก TUNJAI123
+        class="flex items-center justify-center rounded-lg border border-[#dfb85f]/60 bg-gradient-to-r from-[#fded9a] via-[#dfb85f] to-[#a57a32] px-10 py-3.5 text-lg font-black text-[#140d04] shadow-[0_10px_30px_rgba(223,184,95,0.20)] transition-transform hover:scale-105 hover:shadow-[0_15px_40px_rgba(223,184,95,0.32)]">
+        สมัครสมาชิก DEVA555
       </a>
     </div>
   </ContentBox>

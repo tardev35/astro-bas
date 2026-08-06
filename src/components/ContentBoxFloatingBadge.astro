@@ -14,6 +14,17 @@ const headingSize = HeadingTag === "h1" ? "text-xl sm:text-2xl md:text-3xl" : "t
 // in sync with ContentBoxSevenThreeFloatingBadge.astro, which uses the same
 // anchor.
 //
+// Re-checked 2026-08-06 against this brand's real H2
+// ("DEVA555 รวบรวมค่ายเกมระดับโลก สล็อตเว็บตรงอันดับ 1", 49 chars):
+//   360px viewport — card 328px wide, badge w-[92%] ≈ 302px, minus px-4, the
+//   2px borders and the two ✦ spans leaves ~212px of text at text-lg/18px,
+//   leading-normal = 27px per line → 3 lines = 81px + py-2.5 (20px) + border
+//   (4px) = 105px. Bottom edge at 105 − 24 = 81px < pt-32 (128px). 47px clear.
+//   md — badge max-w-2xl (672px), text-2xl/24px, leading 36px → 2 lines = 72px
+//   + 24px = 96px; bottom edge at 72px < md:pt-28 (112px). 40px clear.
+// A four-line phone badge would still land at 108px, inside 128px. Do not
+// reduce these paddings without redoing this arithmetic with the live title.
+//
 // The badge itself is w-[92%] max-w-2xl + text-center, NOT whitespace-nowrap:
 // a real docx sentence in a nowrap badge blew past the viewport on mobile and
 // forced the whole page into horizontal scroll.
@@ -21,18 +32,20 @@ const headingSize = HeadingTag === "h1" ? "text-xl sm:text-2xl md:text-3xl" : "t
 
 <section class="my-10 flex w-full justify-center px-4 font-sans">
   <div
-    class="relative isolate w-full max-w-[1400px] rounded-2xl border-2 border-[#ecab03]/25 bg-gradient-to-b from-[#111a0a]/95 to-[#0a0f06]/95 p-8 pt-32 text-left text-base leading-relaxed text-[#e8efd8] shadow-[0_10px_30px_rgba(236,171,3,0.16)] md:pt-28">
-    <div class="pointer-events-none absolute -top-16 -right-10 -z-10 h-40 w-40 rounded-full bg-[#ecab03]/25 blur-[60px]"></div>
-    <div class="pointer-events-none absolute -bottom-16 -left-10 -z-10 h-40 w-40 rounded-full bg-[#8fd633]/30 blur-[60px]"></div>
+    class="relative isolate w-full max-w-[1400px] rounded-2xl border-2 border-[#dfb85f]/25 bg-gradient-to-b from-[#140d04]/95 to-[#070502]/95 p-8 pt-32 text-left text-base leading-relaxed text-[#e9ddbe] shadow-[0_10px_30px_rgba(223,184,95,0.16)] md:pt-28">
+    <div class="pointer-events-none absolute -top-16 -right-10 -z-10 h-40 w-40 rounded-full bg-[#dfb85f]/25 blur-[60px]"></div>
+    <div class="pointer-events-none absolute -bottom-16 -left-10 -z-10 h-40 w-40 rounded-full bg-[#a57a32]/30 blur-[60px]"></div>
 
     {
       title && (
-        <div class="absolute -top-6 left-1/2 flex w-[92%] max-w-2xl -translate-x-1/2 items-center justify-center gap-2 rounded-lg border-2 border-[#ecab03]/35 bg-[#111a0a] px-4 py-2.5 text-center shadow-[0_10px_30px_rgba(236,171,3,0.24)] sm:px-8">
-          <span aria-hidden="true" class="shrink-0 text-[#8fd633]">
+        <div class="absolute -top-6 left-1/2 flex w-[92%] max-w-2xl -translate-x-1/2 items-center justify-center gap-2 rounded-lg border-2 border-[#dfb85f]/35 bg-[#140d04] px-4 py-2.5 text-center shadow-[0_10px_30px_rgba(223,184,95,0.24)] sm:px-8">
+          <span aria-hidden="true" class="shrink-0 text-[#dfe4e7]">
             ✦
           </span>
-          <HeadingTag class={`bg-gradient-to-r from-[#ffd54a] via-[#ecab03] to-[#a9760a] bg-clip-text ${headingSize} leading-normal font-black tracking-tight text-transparent uppercase`}>{title}</HeadingTag>
-          <span aria-hidden="true" class="shrink-0 text-[#8fd633]">
+          <HeadingTag class={`bg-gradient-to-r from-[#fded9a] via-[#dfb85f] to-[#a57a32] bg-clip-text ${headingSize} leading-normal font-black tracking-tight text-transparent uppercase`}>
+            {title}
+          </HeadingTag>
+          <span aria-hidden="true" class="shrink-0 text-[#dfe4e7]">
             ✦
           </span>
         </div>

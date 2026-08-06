@@ -2,21 +2,21 @@
 import MainLayout from "../layouts/MainLayout.astro";
 import ContentBox from "../components/ContentBox.astro";
 import Navfoot from "../components/Navfoot.astro";
-import Announcement from "../components/AnnouncementPremium.astro";
+import Announcement from "../components/Announcement3.astro";
 import { pageGraph } from "../lib/schema";
 
 // BUTTON PAGE, not an article, and no longer an auto-forwarding interstitial:
 // one <h1> from the ContentBox title and one button to the affiliate link.
 // Never add an <h2>, never write body copy here.
 //
-// 153 characters — this page is indexed now, so verify-build holds the
+// 151 characters — this page is indexed now, so verify-build holds the
 // description to the 150–160 window like any other page. Count characters with
 // PowerShell `"...".Length`; a byte count reads ~3x too long on Thai.
 const pageDescription =
-  "หน้าเข้าสู่ระบบ TUNJAI123 สำหรับสมาชิกที่ต้องการเข้าเล่นเกมลิขสิทธิ์แท้ทุกค่าย กดปุ่มเดียวเชื่อมต่อเข้าเว็บหลักได้ทันที ปลอดภัยขั้นสุด โหลดไว ตลอด 24 ชม.";
+  "หน้าเข้าสู่ระบบ DEVA555 สล็อตเว็บตรงอันดับ 1 กดปุ่มเดียวเชื่อมต่อเข้าเว็บหลักผ่าน Secure Popup ปลอดภัย 100% พร้อมระบบ ฝากถอนออโต้ไว 3 วิ รองรับทรูวอเลท";
 
 const graph = pageGraph(Astro, {
-  name: "เข้าสู่ระบบ TUNJAI123 เว็บหลัก ปลอดภัยขั้นสุด",
+  name: "เข้าสู่ระบบ DEVA555 เว็บหลัก ปลอดภัย 100%",
   description: pageDescription,
   breadcrumb: [
     { name: "หน้าแรก", path: "/" },
@@ -29,18 +29,18 @@ const graph = pageGraph(Astro, {
 const targetUrl = "https://tinyurl.com/pigbas";
 ---
 
-<MainLayout title="เข้าสู่ระบบ TUNJAI123 เว็บหลัก ปลอดภัยขั้นสุด" description={pageDescription}>
+<MainLayout title="เข้าสู่ระบบ DEVA555 เว็บหลัก ปลอดภัย 100%" description={pageDescription}>
   <script type="application/ld+json" set:html={graph} />
 
   <Announcement />
 
-  <ContentBox title="เข้าสู่ระบบ TUNJAI123" as="h1">
+  <ContentBox title="เข้าสู่ระบบ DEVA555" as="h1">
     <div class="flex justify-center py-8">
       <a
         href={targetUrl}
         rel="nofollow sponsored"
         aria-label="เข้าระบบเกม"
-        class="group relative mx-auto flex w-full max-w-[320px] items-center justify-center gap-3 overflow-hidden rounded-xl border border-[#dfe4e7]/50 bg-[#1a1510] px-6 py-4 text-xl font-bold tracking-wide text-[#dfe4e7] shadow-[0_10px_30px_rgba(223,228,231,0.16)] transition-all duration-300 hover:scale-105 hover:border-[#dfe4e7] hover:bg-[#241d14] hover:shadow-[0_15px_40px_rgba(223,228,231,0.28)]">
+        class="group relative mx-auto flex w-full max-w-[320px] items-center justify-center gap-3 overflow-hidden rounded-xl border border-[#dfe4e7]/50 bg-[#140d04] px-6 py-4 text-xl font-bold tracking-wide text-[#dfe4e7] shadow-[0_10px_30px_rgba(223,228,231,0.16)] transition-all duration-300 hover:scale-105 hover:border-[#dfe4e7] hover:bg-[#1e1408] hover:shadow-[0_15px_40px_rgba(223,228,231,0.28)]">
         เข้าระบบเกม
       </a>
     </div>

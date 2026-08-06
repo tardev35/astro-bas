@@ -19,17 +19,15 @@ const games = [
 const medal = (rank: number) => (rank === 1 ? "🥇" : rank === 2 ? "🥈" : rank === 3 ? "🥉" : null);
 ---
 
-<section aria-label="เกมยอดนิยมจากค่ายลิขสิทธิ์แท้บน TUNJAI123" class="mx-auto w-full max-w-[1300px] px-4 py-8 font-sans">
+<section aria-label="เกมยอดนิยมจากค่ายเกมระดับโลกบน DEVA555" class="mx-auto w-full max-w-[1300px] px-4 py-8 font-sans">
   <div class="mb-8 flex w-full flex-col items-center justify-center gap-2 text-center">
     <span aria-hidden="true" class="text-2xl">🏆</span>
-    <p class="bg-gradient-to-r from-[#f5eb8b] via-[#dab563] to-[#dfe4e7] bg-clip-text text-2xl font-black tracking-widest text-transparent uppercase">
-      เกมยอดนิยมจากค่ายลิขสิทธิ์แท้บน TUNJAI123
+    <p class="bg-gradient-to-r from-[#fded9a] via-[#dfb85f] to-[#dfe4e7] bg-clip-text text-2xl font-black tracking-widest text-transparent uppercase">เกมยอดนิยมจากค่ายเกมระดับโลกบน DEVA555</p>
+    <p class="max-w-3xl text-base leading-relaxed text-[#b6a582]">
+      ทุกเกมบนแพลตฟอร์มผ่านการคัดสรรเรื่องคุณภาพและอัตราการจ่ายที่ยุติธรรมก่อนเปิดให้บริการ กราฟิกจึงลื่นไหล ตอบสนองไว ไร้อาการสะดุดกวนใจ รายชื่อในกระดานนี้เปลี่ยนแปลงได้ตามช่วงเวลา
+      และควรตรวจรายละเอียดจากหน้าเกมจริงอีกครั้งก่อนเริ่มเล่น
     </p>
-    <p class="max-w-3xl text-base leading-relaxed text-[#b5bbbc]">
-      ทุกเกมบนระบบผ่านการตรวจสอบมาตรฐานความโปร่งใสก่อนเปิดให้บริการ กราฟิกจึงไหลลื่นคมชัดและมีอัตราการจ่ายรางวัลที่ยุติธรรม
-      รายชื่อในกระดานนี้เปลี่ยนแปลงได้ตามช่วงเวลา และควรตรวจรายละเอียดจากหน้าเกมจริงอีกครั้งก่อนเริ่มเล่น
-    </p>
-    <div class="mt-2 h-[3px] w-24 rounded-full bg-gradient-to-r from-transparent via-[#dab563] to-transparent"></div>
+    <div class="mt-2 h-[3px] w-24 rounded-full bg-gradient-to-r from-transparent via-[#dfb85f] to-transparent"></div>
   </div>
 
   <div class="flex flex-col gap-3">
@@ -40,31 +38,29 @@ const medal = (rank: number) => (rank === 1 ? "🥇" : rank === 2 ? "🥈" : ran
           <article
             class={`group relative flex items-center gap-3 overflow-hidden rounded-2xl border p-3 backdrop-blur-md transition-all duration-300 hover:-translate-y-0.5 sm:gap-5 sm:p-4 ${
               top
-                ? "border-[#dab563]/50 bg-gradient-to-r from-[#1a1510]/95 via-[#100d08]/92 to-[#100d08]/92 shadow-[0_15px_40px_rgba(218,181,99,0.3)]"
-                : "border-[#dab563]/25 bg-[#100d08]/92 shadow-[0_10px_30px_rgba(218,181,99,0.18)] hover:border-[#dab563]/50 hover:shadow-[0_15px_40px_rgba(218,181,99,0.3)]"
+                ? "border-[#dfb85f]/50 bg-gradient-to-r from-[#1e1408]/95 via-[#140d04]/92 to-[#140d04]/92 shadow-[0_15px_40px_rgba(223,184,95,0.3)]"
+                : "border-[#dfb85f]/25 bg-[#140d04]/92 shadow-[0_10px_30px_rgba(223,184,95,0.18)] hover:border-[#dfb85f]/50 hover:shadow-[0_15px_40px_rgba(223,184,95,0.3)]"
             }`}>
-            <div class="pointer-events-none absolute top-1/2 -left-10 h-24 w-24 -translate-y-1/2 rounded-full bg-[#dab563]/25 blur-[40px] transition-all duration-500 group-hover:bg-[#dfe4e7]/25" />
+            <div class="pointer-events-none absolute top-1/2 -left-10 h-24 w-24 -translate-y-1/2 rounded-full bg-[#dfb85f]/25 blur-[40px] transition-all duration-500 group-hover:bg-[#dfe4e7]/25" />
 
             <div class="relative z-10 flex w-8 shrink-0 flex-col items-center justify-center sm:w-12">
               {/* Ranks 1–3 show a medal INSTEAD of the number, so hiding the
                   emoji on its own would leave those three rows with no rank at
                   all. The visually-hidden text puts it back. */}
-              {
-                medal(g.rank) ? (
-                  <span class="text-2xl sm:text-3xl">
-                    <span aria-hidden="true">{medal(g.rank)}</span>
-                    <span class="sr-only">อันดับ {g.rank}</span>
-                  </span>
-                ) : (
-                  <span class="text-xl font-black text-[#a97f28] sm:text-2xl">#{g.rank}</span>
-                )
-              }
+              {medal(g.rank) ? (
+                <span class="text-2xl sm:text-3xl">
+                  <span aria-hidden="true">{medal(g.rank)}</span>
+                  <span class="sr-only">อันดับ {g.rank}</span>
+                </span>
+              ) : (
+                <span class="text-xl font-black text-[#a57a32] sm:text-2xl">#{g.rank}</span>
+              )}
             </div>
 
-            <div class={`relative z-10 h-14 w-14 shrink-0 overflow-hidden rounded-xl border sm:h-16 sm:w-16 ${top ? "border-[#dab563]/50" : "border-[#dab563]/25"}`}>
+            <div class={`relative z-10 h-14 w-14 shrink-0 overflow-hidden rounded-xl border sm:h-16 sm:w-16 ${top ? "border-[#dfb85f]/50" : "border-[#dfb85f]/25"}`}>
               <Picture
                 src={g.img}
-                alt={`ภาพหน้าปกเกม ${g.name} ในกระดานเกมยอดนิยมของ TUNJAI123`}
+                alt={`ภาพหน้าปกเกม ${g.name} ในกระดานเกมยอดนิยมของ DEVA555`}
                 formats={["avif", "webp"]}
                 fallbackFormat="webp"
                 loading="lazy"
@@ -78,20 +74,22 @@ const medal = (rank: number) => (rank === 1 ? "🥇" : rank === 2 ? "🥈" : ran
 
             <div class="relative z-10 min-w-0 flex-1">
               <div class="flex items-center gap-2">
-                <p class="truncate text-base font-black text-[#ece3cf] sm:text-lg">{g.name}</p>
-                {top && <span class="hidden shrink-0 rounded-full border border-[#dfe4e7]/50 bg-[#050403] px-2 py-0.5 text-[9px] font-black tracking-wider text-[#dfe4e7] sm:inline">ยอดนิยมสูงสุด</span>}
+                <p class="truncate text-base font-black text-[#e9ddbe] sm:text-lg">{g.name}</p>
+                {top && (
+                  <span class="hidden shrink-0 rounded-full border border-[#dfe4e7]/50 bg-[#070502] px-2 py-0.5 text-[9px] font-black tracking-wider text-[#dfe4e7] sm:inline">ยอดนิยมสูงสุด</span>
+                )}
               </div>
-              <p class="truncate text-[11px] text-[#b5bbbc] sm:text-xs">{g.type}</p>
+              <p class="truncate text-[11px] text-[#b6a582] sm:text-xs">{g.type}</p>
 
               <div class="mt-2 flex flex-wrap items-center gap-1.5">
                 {g.menus.map((m) => (
-                  <span class="rounded-full border border-[#dab563]/25 bg-[#050403] px-2.5 py-0.5 text-[10px] font-bold text-[#dab563]">{m}</span>
+                  <span class="rounded-full border border-[#dfb85f]/25 bg-[#070502] px-2.5 py-0.5 text-[10px] font-bold text-[#dfb85f]">{m}</span>
                 ))}
               </div>
             </div>
 
             <div class="relative z-10 hidden shrink-0 flex-col items-end gap-1 sm:flex">
-              <span class="flex items-center gap-1.5 text-[11px] text-[#b5bbbc]">
+              <span class="flex items-center gap-1.5 text-[11px] text-[#b6a582]">
                 <span class="h-1.5 w-1.5 animate-pulse rounded-full bg-green-500 shadow-[0_0_6px_rgba(34,197,94,0.6)]" />
                 <span class="tabular-nums" data-players data-base={g.players}>
                   {g.players.toLocaleString("en-US")}
@@ -102,8 +100,8 @@ const medal = (rank: number) => (rank === 1 ? "🥇" : rank === 2 ? "🥈" : ran
                 href="/register"
                 class={`rounded-full px-4 py-1.5 text-xs font-black transition-transform hover:scale-105 ${
                   top
-                    ? "bg-gradient-to-r from-[#f5eb8b] via-[#dab563] to-[#a97f28] text-[#120c04] shadow-[0_10px_30px_rgba(218,181,99,0.24)]"
-                    : "border border-[#dab563]/60 bg-[#050403] text-[#dab563] hover:border-[#dab563] hover:bg-[#1a1510]"
+                    ? "bg-gradient-to-r from-[#fded9a] via-[#dfb85f] to-[#a57a32] text-[#140d04] shadow-[0_10px_30px_rgba(223,184,95,0.24)]"
+                    : "border border-[#dfb85f]/60 bg-[#070502] text-[#dfb85f] hover:border-[#dfb85f] hover:bg-[#1e1408]"
                 }`}>
                 เข้าดูเกม
               </a>

@@ -1,75 +1,74 @@
 ---
 import MainLayout from "../layouts/MainLayout.astro";
-import Announcement from "../components/AnnouncementPremium.astro";
+import Announcement from "../components/Announcement3.astro";
 import ContentBox from "../components/ContentBox.astro";
-import ContentBoxPremium from "../components/ContentBoxPremium.astro";
-import ContentBoxNeumorphism from "../components/ContentBoxNeumorphism.astro";
+import ContentBoxCyberCut from "../components/ContentBoxCyberCut.astro";
+import ContentBoxFloatingBadge from "../components/ContentBoxFloatingBadge.astro";
+import ContentBoxSevenThreeCyberCut from "../components/ContentBoxSevenThreeCyberCut.astro";
+import ContentBoxSevenThree from "../components/ContentBoxSevenThree.astro";
 import ContentBoxSpecial from "../components/ContentBoxSpecial.astro";
-import ContentBoxSevenThreePremium from "../components/ContentBoxSevenThreePremium.astro";
 import FeatureHighlights from "../components/FeatureHighlights.astro";
 import LoginRtpSection from "../components/LoginRtpSection.astro";
 import ProviderGrid from "../components/ProviderGrid.astro";
 import GameRankingBoard from "../components/GameRankingBoard.astro";
 import ReviewCardSumo2 from "../components/ReviewCardSumo2.astro";
-import LatestWinners from "../components/LatestWinnersCyber.astro";
+import LatestWinners from "../components/LatestWinners2.astro";
 import SmoothCarousel from "../components/SmoothCarousel.astro";
-import Faq from "../components/Faq2.astro";
+import Faq from "../components/Faq3.astro";
 import Navfoot from "../components/Navfoot.astro";
 
 import { Picture } from "astro:assets";
 import { pageGraph } from "../lib/schema";
-import imgFirstDeposit from "../assets/slide2.png";
-import imgCashback from "../assets/slide1.png";
+import imgMotorbike from "../assets/slide2.png";
+import imgWelcomeBonus from "../assets/slide1.png";
 
-const pageTitle = "TUNJAI123 เว็บตรงอันดับ 1 ลิขสิทธิ์แท้ จ่ายจริง รวมทุกค่ายในเว็ปเดียว";
+const pageTitle = "DEVA555 สล็อตเว็บตรงอันดับ 1 ฝากถอนออโต้ไว 3 วิ รองรับทรูวอเลท";
 
-// The docx meta stops at "ปลอดภัยขั้นสุด" (143 characters). tools/verify-build.mjs
+// The docx meta stops at "ปลอดภัย 100%" (144 characters). tools/verify-build.mjs
 // requires 150–160, so the brief's wording is kept verbatim and a short factual
 // tail closes the gap.
-const pageDescription =
-  "TUNJAI123 เว็บตรงอันดับ 1 ลิขสิทธิ์แท้ 100% สัมผัสความรวดเร็วดั่งใจนึก ศูนย์ รวมทุกค่ายในเว็ปเดียว มั่นคง การันตี จ่ายจริง โอนไว ปลอดภัยขั้นสุด ตลอด 24 ชม.";
+const pageDescription = "DEVA555 สล็อตเว็บตรงอันดับ 1 สัมผัสพลังแห่งการทำกำไรระดับทวยเทพ ขับเคลื่อนด้วยระบบ ฝากถอนออโต้ไว 3 วิ ลื่นไหล รองรับทรูวอเลท มั่นคง ปลอดภัย 100% ตลอด 24 ชม.";
 
 // The three provider sub-points that sit under docx heading #2.
 // FeatureHighlights renders each `title` as an <h3>, which is the only place
-// this page is allowed to have one.
+// this page is allowed to have one. Its accent union is "gold" | "silver".
 const providerPoints = [
   {
     icon: "🐉",
-    title: "PG Soft กราฟิกเหนือชั้น แอนิเมชันสมจริง โบนัสแตกไว",
-    description:
-      "ส่งมอบความบันเทิงผ่านเทคโนโลยี 3D ที่ตอบสนองฉับไว ฟีเจอร์ตัวคูณและฟรีสปินถูกออกแบบมาให้ผู้เล่นกอบโกยผลตอบแทนได้อย่างรวดเร็ว",
+    title: "PG Soft กราฟิกเหนือจินตนาการ โบนัสแตกไวระดับเทพ",
+    description: "นำเสนอโลกแห่ง 3D แอนิเมชันที่สวยงามและดึงดูดสายตา ฟีเจอร์ภายในเกมถูกออกแบบมาให้แจกรางวัลอย่างต่อเนื่อง ช่วยให้กอบโกยผลตอบแทนได้รวดเร็ว",
     accent: "gold" as const,
   },
   {
     icon: "⚡",
-    title: "Pragmatic Play ฟีเจอร์ทันสมัย แจกรางวัลรัว ไม่มีสะดุด",
-    description: "เอาใจสายทำกำไรด้วยระบบเกมเพลย์ที่รวดเร็วและทรงพลัง สปินแต่ละรอบเต็มไปด้วยโอกาสลุ้นแจ็กพอตก้อนโตที่พร้อมแตกตลอดเวลา",
+    title: "Pragmatic Play ขีดสุดแห่งฟีเจอร์ แจกรางวัลรัวอย่างต่อเนื่อง",
+    description: "ค่ายเกมที่โดดเด่นด้วยกลไกการออกรางวัลที่โปร่งใสและหนักหน่วง เข้าถึงรอบแจ็กพอตได้ไว ตอบโจทย์นักลงทุนที่ชอบความตื่นเต้น",
     accent: "silver" as const,
   },
   {
     icon: "👑",
-    title: "JILI เอฟเฟกต์อลังการ ทำกำไรทะลุพิกัด รองรับทุกอุปกรณ์",
-    description: "นวัตกรรมเกมที่พัฒนามาเพื่อความเบาและเสถียร เข้าใช้งานได้อย่างสมูทบนสมาร์ทโฟน ช่วยให้คุณต่อยอดทุนได้อย่างไร้ข้อจำกัด",
+    title: "JILI เอฟเฟกต์สุดอลังการ ทำกำไรง่าย รองรับมือถือทุกรุ่น",
+    description: "นวัตกรรมเกมที่พัฒนามาเพื่อความเบาและเสถียร เข้าใช้งานได้อย่างสมูทบนหน้าจอสมาร์ทโฟน ช่วยให้คุณต่อยอดทุนได้อย่างไร้ข้อจำกัด",
     accent: "gold" as const,
   },
 ];
 
 const faqs = [
   {
-    q: "ทำไมแพลตฟอร์มนี้ถึงเป็น เว็บตรงอันดับ 1 ที่ได้รับความนิยม?",
-    a: "เพราะเราคือศูนย์ รวมทุกค่ายในเว็ปเดียว ที่ให้บริการด้วย ลิขสิทธิ์แท้ 100% มีความมั่นคง และเชื่อถือได้ในทุกการใช้งาน",
+    q: "ระบบ ฝากถอนออโต้ไว 3 วิ มีความแม่นยำมากน้อยแค่ไหน?",
+    a: "ระบบของ DEVA555 ควบคุมด้วย AI ขั้นสูง ทำให้การปรับยอดเครดิตมีความแม่นยำสูงสุดและรวดเร็วทันใจภายใน 3 วินาที",
   },
   {
-    q: "ระบบการฝากถอนเงินของ TUNJAI123 มีความเร็วระดับไหน?",
-    a: "ขับเคลื่อนด้วยระบบออโต้ที่ให้ความรวดเร็วดั่งใจนึก โอนไว และปรับยอดเครดิตสำเร็จภายในเวลาเพียงไม่กี่วินาที",
+    q: "ทำไมจึงยกให้ที่นี่เป็น สล็อตเว็บตรงอันดับ 1 ของยุคนี้?",
+    a: "เพราะ DEVA555 รวบรวมเกมลิขสิทธิ์แท้ มอบบริการที่โปร่งใส และมีความมั่นคงทางการเงินในระดับสูงสุด",
   },
   {
-    q: "หากทำกำไรได้ยอดใหญ่ แพลตฟอร์มจะ จ่ายจริง หรือไม่?",
-    a: "การันตี จ่ายจริง ทุกยอดบิล ไม่ว่ายอดจะสูงแค่ไหน ทางระบบก็พร้อมโอนให้คุณเต็มจำนวนอย่างไร้เงื่อนไข",
+    q: "การทำรายการผ่านแอปที่ รองรับทรูวอเลท มีการหักค่าบริการหรือไม่?",
+    a: "แพลตฟอร์ม DEVA555 ให้บริการฟรีทุกการเชื่อมต่อ ทำธุรกรรมได้เต็มยอดแบบไม่มีการหักค่าธรรมเนียมใดๆ ทั้งสิ้น",
   },
   {
-    q: "ข้อมูลส่วนตัวของผู้ใช้งานจะ ปลอดภัยขั้นสุด ได้อย่างไร?",
-    a: "เราใช้เทคโนโลยีปกป้องข้อมูลระดับองค์กร และเข้าใช้งานผ่าน Secure Popup Loader เพื่อความปลอดภัยและเป็นส่วนตัวสูงสุด",
+    q: "ข้อมูลเครดิตและการใช้งานมีความ ปลอดภัย 100% จริงไหม?",
+    a: "จริงแน่นอน ระบบของ DEVA555 ใช้การเข้ารหัสมาตรฐานเดียวกับสถาบันการเงิน เพื่อปกป้องคุณในทุกขั้นตอน",
   },
 ];
 
@@ -85,27 +84,27 @@ const graph = pageGraph(Astro, {
 
   <Announcement />
 
-  <ContentBoxPremium as="h1" title="TUNJAI123 เว็บตรงอันดับ 1 ลิขสิทธิ์แท้ จ่ายจริง รวมทุกค่ายในเว็ปเดียว">
-    <p class="text-left text-base leading-relaxed text-[#ece3cf]">
-      <strong class="text-[#f5eb8b]">TUNJAI123</strong> เว็บตรงอันดับ 1 ลิขสิทธิ์แท้ ที่ออกแบบระบบโครงสร้างมาเพื่อตอบสนองความต้องการของผู้เล่นยุคใหม่ สัมผัสประสบการณ์ความสนุกแบบไร้รอยต่อและมีความรวดเร็วดั่งใจนึก
-      แพลตฟอร์มของเรามีความมั่นคงสูง การันตี จ่ายจริง ทุกยอดการทำรายการ พร้อมเปิดศูนย์ รวมทุกค่ายในเว็ปเดียว ให้คุณเข้าถึงความบันเทิงระดับโกลบอลได้อย่างปลอดภัยขั้นสุดในทุกๆ คลิก
+  <ContentBoxCyberCut as="h1" title="DEVA555 สล็อตเว็บตรงอันดับ 1 ฝากถอนออโต้ไว 3 วิ รองรับทรูวอเลท">
+    <p class="text-left text-base leading-relaxed text-[#e9ddbe]">
+      <strong class="text-[#fded9a]">DEVA555</strong> สล็อตเว็บตรงอันดับ 1 ที่พร้อมมอบพลังแห่งการทำกำไรระดับทวยเทพให้กับผู้เล่นทุกคน โครงสร้างระบบของเราถูกออกแบบมาเพื่อความเหนือชั้น ขับเคลื่อนด้วยเทคโนโลยี
+      ฝากถอนออโต้ไว 3 วิ ที่ทำงานได้อย่างแม่นยำและลื่นไหลที่สุดในยุคนี้ นอกจากนี้ยังเปิดกว้าง รองรับทรูวอเลท เพื่อเพิ่มความสะดวกสบายขั้นสุด การันตีความมั่นคงและ ปลอดภัย 100% ในทุกมิติของการใช้งาน
     </p>
-  </ContentBoxPremium>
+  </ContentBoxCyberCut>
 
-  <ContentBoxNeumorphism as="h2" title="TUNJAI123 ศูนย์ รวมทุกค่ายในเว็ปเดียว ลิขสิทธิ์แท้ 100%">
-    <p class="text-left text-base leading-relaxed text-[#ece3cf]">
-      เพื่อความสะดวกสบายสูงสุด แพลตฟอร์ม TUNJAI123 ได้ทำการเชื่อมต่อ API ลิขสิทธิ์แท้จากผู้พัฒนาซอฟต์แวร์ระดับโลกมาไว้ในที่เดียวจบ คุณจะไม่ต้องเสียเวลาย้ายเงินหรือสลับบัญชีให้ยุ่งยากอีกต่อไป
-      ทุกเกมบนระบบผ่านการตรวจสอบมาตรฐานความโปร่งใส มอบอัตราการจ่ายรางวัลที่ยุติธรรมและภาพกราฟิกที่ไหลลื่นที่สุด
+  <ContentBoxFloatingBadge as="h2" title="DEVA555 รวบรวมค่ายเกมระดับโลก สล็อตเว็บตรงอันดับ 1">
+    <p class="text-left text-base leading-relaxed text-[#e9ddbe]">
+      ก้าวข้ามขีดจำกัดของความสนุกด้วยการคัดสรรซอฟต์แวร์เกมชั้นนำจากทั่วทุกมุมโลกมาไว้บนแพลตฟอร์ม DEVA555 เพียงที่เดียว เราเน้นย้ำเรื่องคุณภาพและอัตราการจ่ายที่ยุติธรรม
+      ทุกการหมุนสปินของคุณจะเต็มไปด้วยความลื่นไหล ตอบสนองไว ไร้อาการสะดุดกวนใจ เพื่อให้คุณมุ่งสมาธิไปที่การทำกำไรได้อย่างเต็มที่
     </p>
     <FeatureHighlights items={providerPoints} />
-  </ContentBoxNeumorphism>
+  </ContentBoxFloatingBadge>
 
   <ProviderGrid />
 
-  <ContentBoxSevenThreePremium titleright="เทคโนโลยีออโต้สุดล้ำ สัมผัสความรวดเร็วดั่งใจนึก โอนไว">
+  <ContentBoxSevenThreeCyberCut titleright="DEVA555 นวัตกรรม ฝากถอนออโต้ไว 3 วิ ลื่นไหลที่สุด">
     <Picture
       slot="left"
-      src={imgFirstDeposit}
+      src={imgMotorbike}
       loading="lazy"
       fetchpriority="low"
       widths={[200, 400, 600]}
@@ -114,46 +113,46 @@ const graph = pageGraph(Astro, {
       formats={["avif", "webp"]}
       fallbackFormat="webp"
       quality={80}
-      alt="แบนเนอร์โปรโมชั่น TUNJAI123 ฝากแรก ลุ้นรับทอง 1 บาท ง่ายๆ เพียงฝากครั้งแรกก็มีสิทธิ์ลุ้น พร้อมข้อความ ลุ้นรับทอง 1 บาท ทุกยอดฝากแรก โปรดีๆ จัดเต็มเฉพาะสมาชิกใหม่ มั่นคงปลอดภัย เชื่อถือได้ 100% และ ฝาก-ถอนรวดเร็ว ทันใจ 24 ชั่วโมง"
-      class="mx-auto h-auto w-full rounded-2xl border border-[#dab563]/30 shadow-[0_10px_30px_rgba(218,181,99,0.20)]"
+      alt="แบนเนอร์โปรโมชั่น DEVA555 ฝากแรกลุ้นรับมอไซค์ ข้างภาพรถจักรยานยนต์สีทอง พร้อมข้อความ เริ่มต้นเพียง 1 บาท ก็มีสิทธิ์ลุ้นรับมอไซค์ และตรา ลุ้นรับมอไซค์ทุกเดือน ด้านล่างมีไอคอนสี่ช่อง ฝาก-ถอนรวดเร็วทันใจ ระบบปลอดภัยมั่นคง 100% โบนัสจัดเต็มทุกวันทุกเวลา และบริการลูกค้า 24 ชั่วโมง ปิดท้ายด้วยข้อความ เล่นง่าย จ่ายจริง โอกาสดีๆ ไม่ควรพลาด"
+      class="mx-auto h-auto w-full rounded-2xl border border-[#dfb85f]/30 shadow-[0_10px_30px_rgba(223,184,95,0.20)]"
     />
-    <p slot="right" class="text-left text-base leading-relaxed text-[#ece3cf]">
-      หัวใจสำคัญที่ทำให้ระบบของเราเหนือกว่าคือความไวระดับเสี้ยววินาที เมื่อคุณทำธุรกรรมทางการเงิน เทคโนโลยี AI อัจฉริยะจะทำการตรวจสอบและปรับยอดเครดิตให้คุณโดยอัตโนมัติ ไม่ต้องส่งสลิปหรือรอการยืนยันให้เสียเวลา
-      มอบอิสระทางการเงินที่คล่องตัวและตอบโจทย์ไลฟ์สไตล์ของคนที่รักความเร็วอย่างแท้จริง
+    <p slot="right" class="text-left text-base leading-relaxed text-[#e9ddbe]">
+      เวลาคือสิ่งมีค่าที่สุดสำหรับนักลงทุน ดังนั้นระบบของ DEVA555 จึงพัฒนาสถาปัตยกรรมทางการเงินที่ทำงานด้วย AI อัจฉริยะ ทำให้การประมวลผลเครดิตแบบ ฝากถอนออโต้ไว 3 วิ เป็นเรื่องที่เกิดขึ้นจริง
+      ยอดเงินจะถูกอัปเดตเข้ากระเป๋าอย่างรวดเร็วและแม่นยำ ช่วยให้คุณเดินหน้าคว้าโอกาสทองได้อย่างต่อเนื่องไม่มีสะดุด
     </p>
-  </ContentBoxSevenThreePremium>
-
-  <ContentBoxSevenThreePremium titleright="TUNJAI123 เว็บตรงอันดับ 1 การันตี จ่ายจริง ไม่มีกั๊ก">
-    <Picture
-      slot="left"
-      src={imgCashback}
-      loading="lazy"
-      fetchpriority="low"
-      widths={[200, 400, 600]}
-      sizes="(max-width: 768px) 100vw, 30vw"
-      decoding="async"
-      formats={["avif", "webp"]}
-      fallbackFormat="webp"
-      quality={80}
-      alt="แบนเนอร์โปรโมชั่น TUNJAI123 คืนยอดเสีย 15% เสียเท่าไหร่ เราคืนให้มากกว่าเดิม รับคืนทุกยอดเสีย ไม่มีเงื่อนไข พร้อมข้อความ มั่นคง ปลอดภัย มาตรฐานสากล ฝาก-ถอน ออโต้ รวดเร็วทันใจ โบนัสจัดเต็มทุกวัน และบริการลูกค้าตลอด 24 ชั่วโมง"
-      class="mx-auto h-auto w-full rounded-2xl border border-[#dab563]/30 shadow-[0_10px_30px_rgba(218,181,99,0.20)]"
-    />
-    <p slot="right" class="text-left text-base leading-relaxed text-[#ece3cf]">
-      รากฐานของความน่าเชื่อถือคือสภาพคล่องทางการเงินที่แข็งแกร่ง สมาชิกของ TUNJAI123 สามารถวางใจได้เลยว่าทุกความสำเร็จของคุณจะได้รับผลตอบแทนอย่างเต็มเม็ดเต็มหน่วย ไม่ว่าคุณจะทำกำไรได้ในระดับใด
-      ระบบก็พร้อมโอนไวและจ่ายจริงครบถ้วนทุกบิล โดยไม่มีการหักค่าธรรมเนียมหรือเปอร์เซ็นต์แอบแฝง
-    </p>
-  </ContentBoxSevenThreePremium>
+  </ContentBoxSevenThreeCyberCut>
 
   <LatestWinners />
 
-  <ContentBox as="h2" title="TUNJAI123 มั่นคง ปลอดภัยขั้นสุด ผ่านระบบ Premium Popup">
-    <p class="text-left text-base leading-relaxed text-[#ece3cf]">
-      เรื่องความปลอดภัยของข้อมูลคือสิ่งที่เราให้ความสำคัญเป็นลำดับต้นๆ ฐานข้อมูลทั้งหมดของ TUNJAI123 ถูกเข้ารหัสด้วยเทคโนโลยีความปลอดภัยขั้นสูง นอกจากนี้ การเชื่อมต่อเข้าสู่แดชบอร์ดส่วนตัวจะแสดงผลผ่าน Premium
-      Loader ในรูปแบบ Secure Transition Popup ซึ่งช่วยป้องกันการโหลดเว็บซ้ำซ้อนและรักษาความเป็นส่วนตัวของคุณให้ปลอดภัย 100%
+  <ContentBoxSevenThree titleright="รองรับทรูวอเลท ยกระดับความสะดวกสบาย ไร้ขีดจำกัด">
+    <Picture
+      slot="left"
+      src={imgWelcomeBonus}
+      loading="lazy"
+      fetchpriority="low"
+      widths={[200, 400, 600]}
+      sizes="(max-width: 768px) 100vw, 30vw"
+      decoding="async"
+      formats={["avif", "webp"]}
+      fallbackFormat="webp"
+      quality={80}
+      alt="แบนเนอร์โปรโมชั่น DEVA555 สมาชิกใหม่ รับเพิ่ม 300% พร้อมตรา WELCOME BONUS และข้อความ โบนัสจัดเต็ม คุ้มที่สุดสำหรับสมาชิกใหม่ ด้านล่างมีไอคอนสี่ช่อง สมัครง่ายใช้เบอร์มือถือ โบนัสจัดเต็ม ปลอดภัย 100% มั่นคงเชื่อถือได้ และบริการตลอด 24 ชม. ปิดท้ายด้วยข้อความ สมัครวันนี้ รับโบนัสสุดคุ้มไปเลย"
+      class="mx-auto h-auto w-full rounded-2xl border border-[#dfb85f]/30 shadow-[0_10px_30px_rgba(223,184,95,0.20)]"
+    />
+    <p slot="right" class="text-left text-base leading-relaxed text-[#e9ddbe]">
+      หมดปัญหาเรื่องช่องทางการทำธุรกรรมที่ยุ่งยาก เพราะเครือข่ายของ DEVA555 เปิดกว้างและ รองรับทรูวอเลท อย่างเต็มรูปแบบ การเชื่อมต่อกระเป๋าเงินดิจิทัลช่วยให้คุณสามารถโอนถ่ายเครดิตได้ทุกที่ทุกเวลา
+      ลดขั้นตอนที่ซับซ้อนและมอบอิสระทางการเงินอย่างแท้จริงให้กับสมาชิกทุกคน
+    </p>
+  </ContentBoxSevenThree>
+
+  <ContentBox as="h2" title="DEVA555 มั่นคง ปลอดภัย 100% ผ่านระบบ Secure Popup">
+    <p class="text-left text-base leading-relaxed text-[#e9ddbe]">
+      รากฐานแห่งความเป็นผู้นำคือความน่าเชื่อถือ สมาชิกของ DEVA555 สามารถวางใจได้ว่าข้อมูลส่วนบุคคลและยอดเครดิตจะถูกเข้ารหัสขั้นสูงเพื่อป้องกันการรั่วไหล อีกทั้งการเข้าสู่ระบบยังประมวลผลผ่าน Premium
+      Secure Popup ที่ป้องกันหน้าเว็บโหลดซ้ำ การันตีว่าคุณจะได้รับบริการที่มั่นคง ปลอดภัย 100% ตลอดการเชื่อมต่อ
     </p>
   </ContentBox>
 
-  <Faq title="FAQ คำถามที่พบบ่อย เกี่ยวกับ TUNJAI123 เว็บตรงอันดับ 1" faqs={faqs} />
+  <Faq title="FAQ คำถามที่พบบ่อย เกี่ยวกับ DEVA555 สล็อตเว็บตรงอันดับ 1" faqs={faqs} />
 
   <LoginRtpSection />
 
@@ -161,27 +160,23 @@ const graph = pageGraph(Astro, {
 
   <SmoothCarousel />
 
-  <ContentBoxSpecial label="เข้าสู่ระบบและสมัครสมาชิก TUNJAI123">
+  <ContentBoxSpecial label="เข้าสู่ระบบและสมัครสมาชิก DEVA555">
     <div slot="left" class="flex flex-col gap-3">
-      <p class="text-base font-black tracking-wide text-[#f5eb8b]">เข้าสู่ระบบสมาชิกเดิม</p>
-      <p class="text-left text-base leading-relaxed text-[#ece3cf]">
-        เข้าแดชบอร์ดส่วนตัวผ่าน Secure Transition Popup เพื่อจัดการยอดฝากถอน เลือกค่ายเกม และกดรับสิทธิพิเศษได้จากจุดเดียว
-      </p>
+      <p class="text-base font-black tracking-wide text-[#fded9a]">เข้าสู่ระบบสมาชิกเดิม</p>
+      <p class="text-left text-base leading-relaxed text-[#e9ddbe]">เข้าแดชบอร์ดส่วนตัวผ่าน Premium Secure Popup เพื่อจัดการยอดฝากถอนออโต้ไว 3 วิ เลือกค่ายเกม และกดรับสิทธิพิเศษได้จากจุดเดียว</p>
       <a
         href="/login"
-        class="mt-1 inline-flex items-center justify-center rounded-full bg-gradient-to-r from-[#f5eb8b] via-[#dab563] to-[#a97f28] px-8 py-3 text-sm font-black whitespace-nowrap text-[#120c04] shadow-[0_10px_30px_rgba(218,181,99,0.28)] transition-all duration-300 hover:-translate-y-1 hover:scale-105 hover:shadow-[0_15px_40px_rgba(218,181,99,0.42)] sm:text-base">
+        class="mt-1 inline-flex items-center justify-center rounded-full bg-gradient-to-r from-[#fded9a] via-[#dfb85f] to-[#a57a32] px-8 py-3 text-sm font-black whitespace-nowrap text-[#140d04] shadow-[0_10px_30px_rgba(223,184,95,0.28)] transition-all duration-300 hover:-translate-y-1 hover:scale-105 hover:shadow-[0_15px_40px_rgba(223,184,95,0.42)] sm:text-base">
         เข้าสู่ระบบ
       </a>
     </div>
 
     <div slot="right" class="flex flex-col gap-3">
       <p class="text-base font-black tracking-wide text-[#dfe4e7]">สมัครสมาชิกใหม่</p>
-      <p class="text-left text-base leading-relaxed text-[#ece3cf]">
-        เปิดบัญชีเดียวใช้ได้ครบทุกค่ายลิขสิทธิ์แท้ พร้อมรับสิทธิ์ฝากแรกลุ้นรับทอง 1 บาท และคืนยอดเสีย 15% ตามเงื่อนไขของแต่ละแคมเปญ
-      </p>
+      <p class="text-left text-base leading-relaxed text-[#e9ddbe]">เปิดบัญชีเดียวใช้ได้ครบทุกค่ายลิขสิทธิ์แท้ รองรับทรูวอเลท เต็มรูปแบบ พร้อมรับสิทธิ์ของสมาชิกใหม่ตามเงื่อนไขของแต่ละแคมเปญ</p>
       <a
         href="/register"
-        class="mt-1 inline-flex items-center justify-center rounded-full border border-[#dfe4e7]/60 bg-[#1a1510]/85 px-8 py-3 text-sm font-black whitespace-nowrap text-[#dfe4e7] backdrop-blur-sm transition-all duration-300 hover:scale-105 hover:border-[#dfe4e7] hover:bg-[#100d08]/85 hover:shadow-[0_15px_40px_rgba(223,228,231,0.28)] sm:text-base">
+        class="mt-1 inline-flex items-center justify-center rounded-full border border-[#dfe4e7]/60 bg-[#1e1408]/85 px-8 py-3 text-sm font-black whitespace-nowrap text-[#dfe4e7] backdrop-blur-sm transition-all duration-300 hover:scale-105 hover:border-[#dfe4e7] hover:bg-[#140d04]/85 hover:shadow-[0_15px_40px_rgba(223,228,231,0.28)] sm:text-base">
         สมัครสมาชิก
       </a>
     </div>
