@@ -7,27 +7,85 @@ import img4 from "../assets/providers/game4.avif";
 import img5 from "../assets/providers/game5.avif";
 import img6 from "../assets/providers/game6.avif";
 
+// These six tiles are CAMP artwork, not individual game covers — each one has a
+// software house's wordmark printed on it (PG / PP Slot / JILI / Joker / Slotxo
+// / Sexy Slot). They used to be labelled with game titles ("Mahjong Ways 2",
+// "Gates of Olympus", …) that appear nowhere in the pictures, which also made
+// every alt describe something the image does not show. The rows name what is
+// drawn, and `alt` describes the drawing.
+//
+// This board is chrome, so its title is a <p> and the <section> carries the
+// accessible name. The docx's three highlighted camps live in ProviderGrid and
+// FeatureHighlights; this widget is the wider "camps we also carry" strip.
 const games = [
-  { rank: 1, name: "Mahjong Ways 2", type: "PG Soft • สล็อต 3D", menus: ["ยอดนิยม", "เล่นล่าสุด"], players: 5124, img: img1 },
-  { rank: 2, name: "Gates of Olympus", type: "Pragmatic Play • สล็อต", menus: ["ยอดนิยม", "รายการโปรด"], players: 3842, img: img2 },
-  { rank: 3, name: "Super Ace", type: "JILI • สล็อต", menus: ["เล่นบนมือถือ", "รายการโปรด"], players: 3517, img: img3 },
-  { rank: 4, name: "Treasures of Aztec", type: "PG Soft • สล็อต 3D", menus: ["เกมใหม่", "เล่นล่าสุด"], players: 2905, img: img4 },
-  { rank: 5, name: "Sweet Bonanza", type: "Pragmatic Play • สล็อต", menus: ["เกมใหม่", "รายการโปรด"], players: 2431, img: img5 },
-  { rank: 6, name: "Golden Empire", type: "JILI • สล็อต", menus: ["เล่นบนมือถือ", "เล่นล่าสุด"], players: 2108, img: img6 },
+  {
+    rank: 1,
+    name: "PG Soft",
+    type: "Pocket Games Soft • สล็อต 3D",
+    menus: ["ยอดนิยม", "เล่นล่าสุด"],
+    players: 5124,
+    img: img1,
+    alt: "ตราสัญลักษณ์ค่ายเกม PG Pocket Games Soft บนภาพหญิงสาวสวมเครื่องประดับขนนกสไตล์อารยธรรมโบราณ ล้อมรอบด้วยตัวการ์ตูนหลายตัวบนพื้นหลังสีทอง",
+  },
+  {
+    rank: 2,
+    name: "Pragmatic Play",
+    type: "PP Slot • สล็อตแตกหนัก",
+    menus: ["ยอดนิยม", "รายการโปรด"],
+    players: 3842,
+    img: img6,
+    alt: "ตราสัญลักษณ์ PP Slot ของค่าย Pragmatic Play บนภาพเทพเจ้าเคราขาวสวมมงกุฎ กำสายฟ้าไว้ในมือ ยืนอยู่หน้าเสาหินสไตล์กรีก",
+  },
+  {
+    rank: 3,
+    name: "JILI",
+    type: "JILI Games • เล่นลื่นบนมือถือ",
+    menus: ["เล่นบนมือถือ", "รายการโปรด"],
+    players: 3517,
+    img: img5,
+    alt: "ตราสัญลักษณ์ค่ายเกม JILI บนภาพนักรบสวมเครื่องประดับทองคำและหมวกขนนก ถือขวานศึกด้ามยาวบนพื้นหลังสีทอง",
+  },
+  {
+    rank: 4,
+    name: "Joker Gaming",
+    type: "Joker • สล็อตคลาสสิก",
+    menus: ["เกมใหม่", "เล่นล่าสุด"],
+    players: 2905,
+    img: img4,
+    alt: "ตราสัญลักษณ์ค่ายเกม Joker บนภาพนักรบสวมหมวกเหล็กและผ้าคลุมสีแดง ถือโล่ยืนอยู่หน้าสนามกีฬาโคลอสเซียม",
+  },
+  {
+    rank: 5,
+    name: "Slotxo",
+    type: "Slotxo • สล็อตธีมตะวันตก",
+    menus: ["เกมใหม่", "รายการโปรด"],
+    players: 2431,
+    img: img3,
+    alt: "ตราสัญลักษณ์ค่ายเกม Slotxo บนภาพวัวกระทิงสวมหมวกคาวบอยและแว่นกันแดด ถือถุงเงินกลางทะเลทราย",
+  },
+  {
+    rank: 6,
+    name: "Sexy Slot",
+    type: "Sexy Slot • สล็อตธีมออฟฟิศ",
+    menus: ["เล่นบนมือถือ", "เล่นล่าสุด"],
+    players: 2108,
+    img: img2,
+    alt: "ตราสัญลักษณ์ค่ายเกม Sexy Slot บนภาพคู่ชายหญิงในชุดทำงาน มีหัวใจสีแดงลอยอยู่ด้านข้าง",
+  },
 ];
 
 const medal = (rank: number) => (rank === 1 ? "🥇" : rank === 2 ? "🥈" : rank === 3 ? "🥉" : null);
 ---
 
-<section aria-label="เกมยอดนิยมจากค่ายเกมระดับโลกบน DEVA555" class="mx-auto w-full max-w-[1300px] px-4 py-8 font-sans">
+<section aria-label="ค่ายเกมระดับโลกยอดนิยมบน LUCKYGAME689" class="mx-auto w-full max-w-[1300px] px-4 py-8 font-sans">
   <div class="mb-8 flex w-full flex-col items-center justify-center gap-2 text-center">
     <span aria-hidden="true" class="text-2xl">🏆</span>
-    <p class="bg-gradient-to-r from-[#fded9a] via-[#dfb85f] to-[#dfe4e7] bg-clip-text text-2xl font-black tracking-widest text-transparent uppercase">เกมยอดนิยมจากค่ายเกมระดับโลกบน DEVA555</p>
-    <p class="max-w-3xl text-base leading-relaxed text-[#b6a582]">
-      ทุกเกมบนแพลตฟอร์มผ่านการคัดสรรเรื่องคุณภาพและอัตราการจ่ายที่ยุติธรรมก่อนเปิดให้บริการ กราฟิกจึงลื่นไหล ตอบสนองไว ไร้อาการสะดุดกวนใจ รายชื่อในกระดานนี้เปลี่ยนแปลงได้ตามช่วงเวลา
-      และควรตรวจรายละเอียดจากหน้าเกมจริงอีกครั้งก่อนเริ่มเล่น
+    <p class="bg-gradient-to-r from-[#ffd84d] via-[#faad23] to-[#ff3d8a] bg-clip-text text-2xl font-black tracking-widest text-transparent uppercase">ค่ายเกมระดับโลกยอดนิยมบน LUCKYGAME689</p>
+    <p class="max-w-3xl text-base leading-relaxed text-[#e0a6b5]">
+      ทุกตัวเกมบนแพลตฟอร์มผ่านการคัดกรองอย่างพิถีพิถันเพื่อให้ได้มาตรฐานระดับสากลก่อนเปิดให้บริการ กราฟิกจึงสวยงาม โบนัสแตกง่าย และทำงานประสานกับเซิร์ฟเวอร์หลักได้อย่างสมบูรณ์แบบ
+      รายชื่อในกระดานนี้เปลี่ยนแปลงได้ตามช่วงเวลา และควรตรวจรายละเอียดจากหน้าเกมจริงอีกครั้งก่อนเริ่มเล่น
     </p>
-    <div class="mt-2 h-[3px] w-24 rounded-full bg-gradient-to-r from-transparent via-[#dfb85f] to-transparent"></div>
+    <div class="mt-2 h-[3px] w-24 rounded-full bg-gradient-to-r from-transparent via-[#faad23] to-transparent"></div>
   </div>
 
   <div class="flex flex-col gap-3">
@@ -38,29 +96,26 @@ const medal = (rank: number) => (rank === 1 ? "🥇" : rank === 2 ? "🥈" : ran
           <article
             class={`group relative flex items-center gap-3 overflow-hidden rounded-2xl border p-3 backdrop-blur-md transition-all duration-300 hover:-translate-y-0.5 sm:gap-5 sm:p-4 ${
               top
-                ? "border-[#dfb85f]/50 bg-gradient-to-r from-[#1e1408]/95 via-[#140d04]/92 to-[#140d04]/92 shadow-[0_15px_40px_rgba(223,184,95,0.3)]"
-                : "border-[#dfb85f]/25 bg-[#140d04]/92 shadow-[0_10px_30px_rgba(223,184,95,0.18)] hover:border-[#dfb85f]/50 hover:shadow-[0_15px_40px_rgba(223,184,95,0.3)]"
+                ? "border-[#faad23]/50 bg-gradient-to-r from-[#3d0410]/95 via-[#2b0204]/92 to-[#2b0204]/92 shadow-[0_15px_40px_rgba(250,173,35,0.3)]"
+                : "border-[#faad23]/25 bg-[#2b0204]/92 shadow-[0_10px_30px_rgba(250,173,35,0.16)] hover:border-[#faad23]/50 hover:shadow-[0_15px_40px_rgba(224,27,93,0.28)]"
             }`}>
-            <div class="pointer-events-none absolute top-1/2 -left-10 h-24 w-24 -translate-y-1/2 rounded-full bg-[#dfb85f]/25 blur-[40px] transition-all duration-500 group-hover:bg-[#dfe4e7]/25" />
+            <div class="pointer-events-none absolute top-1/2 -left-10 h-24 w-24 -translate-y-1/2 rounded-full bg-[#faad23]/25 blur-[40px] transition-all duration-500 group-hover:bg-[#e01b5d]/30" />
 
             <div class="relative z-10 flex w-8 shrink-0 flex-col items-center justify-center sm:w-12">
-              {/* Ranks 1–3 show a medal INSTEAD of the number, so hiding the
-                  emoji on its own would leave those three rows with no rank at
-                  all. The visually-hidden text puts it back. */}
               {medal(g.rank) ? (
                 <span class="text-2xl sm:text-3xl">
                   <span aria-hidden="true">{medal(g.rank)}</span>
                   <span class="sr-only">อันดับ {g.rank}</span>
                 </span>
               ) : (
-                <span class="text-xl font-black text-[#a57a32] sm:text-2xl">#{g.rank}</span>
+                <span class="text-xl font-black text-[#b8760f] sm:text-2xl">#{g.rank}</span>
               )}
             </div>
 
-            <div class={`relative z-10 h-14 w-14 shrink-0 overflow-hidden rounded-xl border sm:h-16 sm:w-16 ${top ? "border-[#dfb85f]/50" : "border-[#dfb85f]/25"}`}>
+            <div class={`relative z-10 h-14 w-14 shrink-0 overflow-hidden rounded-xl border sm:h-16 sm:w-16 ${top ? "border-[#faad23]/50" : "border-[#faad23]/25"}`}>
               <Picture
                 src={g.img}
-                alt={`ภาพหน้าปกเกม ${g.name} ในกระดานเกมยอดนิยมของ DEVA555`}
+                alt={g.alt}
                 formats={["avif", "webp"]}
                 fallbackFormat="webp"
                 loading="lazy"
@@ -74,22 +129,22 @@ const medal = (rank: number) => (rank === 1 ? "🥇" : rank === 2 ? "🥈" : ran
 
             <div class="relative z-10 min-w-0 flex-1">
               <div class="flex items-center gap-2">
-                <p class="truncate text-base font-black text-[#e9ddbe] sm:text-lg">{g.name}</p>
+                <p class="truncate text-base font-black text-[#ffe9c4] sm:text-lg">{g.name}</p>
                 {top && (
-                  <span class="hidden shrink-0 rounded-full border border-[#dfe4e7]/50 bg-[#070502] px-2 py-0.5 text-[9px] font-black tracking-wider text-[#dfe4e7] sm:inline">ยอดนิยมสูงสุด</span>
+                  <span class="hidden shrink-0 rounded-full border border-[#ff3d8a]/50 bg-[#1a0106] px-2 py-0.5 text-[9px] font-black tracking-wider text-[#ff3d8a] sm:inline">ยอดนิยมสูงสุด</span>
                 )}
               </div>
-              <p class="truncate text-[11px] text-[#b6a582] sm:text-xs">{g.type}</p>
+              <p class="truncate text-[11px] text-[#e0a6b5] sm:text-xs">{g.type}</p>
 
               <div class="mt-2 flex flex-wrap items-center gap-1.5">
                 {g.menus.map((m) => (
-                  <span class="rounded-full border border-[#dfb85f]/25 bg-[#070502] px-2.5 py-0.5 text-[10px] font-bold text-[#dfb85f]">{m}</span>
+                  <span class="rounded-full border border-[#faad23]/25 bg-[#1a0106] px-2.5 py-0.5 text-[10px] font-bold text-[#faad23]">{m}</span>
                 ))}
               </div>
             </div>
 
             <div class="relative z-10 hidden shrink-0 flex-col items-end gap-1 sm:flex">
-              <span class="flex items-center gap-1.5 text-[11px] text-[#b6a582]">
+              <span class="flex items-center gap-1.5 text-[11px] text-[#e0a6b5]">
                 <span class="h-1.5 w-1.5 animate-pulse rounded-full bg-green-500 shadow-[0_0_6px_rgba(34,197,94,0.6)]" />
                 <span class="tabular-nums" data-players data-base={g.players}>
                   {g.players.toLocaleString("en-US")}
@@ -100,8 +155,8 @@ const medal = (rank: number) => (rank === 1 ? "🥇" : rank === 2 ? "🥈" : ran
                 href="/register"
                 class={`rounded-full px-4 py-1.5 text-xs font-black transition-transform hover:scale-105 ${
                   top
-                    ? "bg-gradient-to-r from-[#fded9a] via-[#dfb85f] to-[#a57a32] text-[#140d04] shadow-[0_10px_30px_rgba(223,184,95,0.24)]"
-                    : "border border-[#dfb85f]/60 bg-[#070502] text-[#dfb85f] hover:border-[#dfb85f] hover:bg-[#1e1408]"
+                    ? "bg-gradient-to-r from-[#ffd84d] via-[#faad23] to-[#b8760f] text-[#2b0204] shadow-[0_10px_30px_rgba(250,173,35,0.24)]"
+                    : "border border-[#faad23]/60 bg-[#1a0106] text-[#faad23] hover:border-[#faad23] hover:bg-[#3d0410]"
                 }`}>
                 เข้าดูเกม
               </a>

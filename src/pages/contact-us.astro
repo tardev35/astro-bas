@@ -2,7 +2,7 @@
 import MainLayout from "../layouts/MainLayout.astro";
 import ContentBox from "../components/ContentBoxPremium.astro";
 import Navfoot from "../components/Navfoot.astro";
-import Announcement from "../components/Announcement3.astro";
+import Announcement from "../components/AnnouncementPremium.astro";
 
 import { Picture } from "astro:assets";
 import imgLine from "../assets/contact-line.webp";
@@ -18,22 +18,22 @@ import { BRAND_ADDRESS } from "../lib/brandProfile";
 // WebPage node's description. Keeping it in a const is what stops the meta tag
 // and the structured data from drifting apart. 150–160 CHARACTERS (Thai is
 // 3 bytes/char, so a byte count reads ~3x too long and will send you rewriting
-// a description that was fine). The brief's own sentence is 141 characters,
+// a description that was fine). The brief's own sentence is 133 characters,
 // under verify-build.mjs's 150 floor, so the trailing clause brings it into
-// the window without changing what the brief says. This one is 154.
+// the window without changing what the brief says. This one is 158.
 const pageDescription =
-  "ช่องทางการติดต่อ DEVA555 ทีมงานผู้เชี่ยวชาญพร้อมให้คำปรึกษาและแก้ไขปัญหาอย่างรวดเร็วทันใจตลอด 24 ชั่วโมง แอด LINE เพื่อรับบริการระดับพรีเมียม ไม่มีวันหยุด";
+  "ช่องทางการติดต่อ LUCKYGAME689 ทีมงานผู้เชี่ยวชาญพร้อมให้การดูแลและซัพพอร์ตด้วย บริการระดับ VVIP ตอบไว แก้ไขปัญหาตรงจุดตลอด 24 ชั่วโมง ทุกวันผ่านไลน์ออฟฟิเชียล";
 
 const graph = pageGraph(Astro, {
   type: "ContactPage",
-  name: "DEVA555 ติดต่อเรา ทีมงานระดับเทพ ดูแลซัพพอร์ต 24 ชม.",
+  name: "LUCKYGAME689 ติดต่อเรา บริการระดับ VVIP ทีมงานดูแล 24 ชม.",
   description: pageDescription,
   breadcrumb: [
     { name: "หน้าแรก", path: "/" },
     { name: "ติดต่อเรา", path: "/contact-us" },
   ],
   org: {
-    alternateName: "DEVA555 สล็อตเว็บตรงอันดับ 1 ฝากถอนออโต้ไว 3 วิ รองรับทรูวอเลท",
+    alternateName: "LUCKYGAME689 เว็บสล็อตเจ้าใหญ่ โปรโมชั่นเด็ด บริการระดับ VVIP",
     contactPoints: [
       {
         contactType: "customer service",
@@ -55,20 +55,20 @@ const graph = pageGraph(Astro, {
 });
 ---
 
-<MainLayout title="DEVA555 ติดต่อเรา ทีมงานระดับเทพ ดูแลซัพพอร์ต 24 ชม." description={pageDescription}>
+<MainLayout title="LUCKYGAME689 ติดต่อเรา บริการระดับ VVIP ทีมงานดูแล 24 ชม." description={pageDescription}>
   <script type="application/ld+json" set:html={graph} />
 
   <Announcement />
 
-  <ContentBox title="ติดต่อทีมงาน DEVA555" as="h1">
+  <ContentBox title="ติดต่อทีมงาน LUCKYGAME689" as="h1">
     <Picture
       src={imgLine}
-      alt="พนักงานหญิงยิ้มในชุดเลื่อมสีชมพู ยืนกอดอกอยู่หลังปุ่มสีขาวที่มีโลโก้ LINE สีเขียวและคำว่า Support ช่องทางแชตกับทีมงาน DEVA555"
+      alt="พนักงานหญิงยิ้มในชุดเลื่อมสีชมพู ยืนกอดอกอยู่หลังปุ่มสีขาวที่มีโลโก้ LINE สีเขียวและคำว่า Support ช่องทางแชตกับทีมงาน LUCKYGAME689"
       loading="lazy"
       fetchpriority="low"
       widths={[200, 400, 600]}
       sizes="(max-width: 768px) 100vw, 400px"
-      class="mx-auto h-auto w-full max-w-[400px] object-contain shadow-[0_10px_30px_rgba(223,184,95,0.18)]"
+      class="mx-auto h-auto w-full max-w-[400px] object-contain shadow-[0_10px_30px_rgba(250,173,35,0.18)]"
       decoding="async"
       formats={["avif", "webp"]}
       fallbackFormat="webp"
@@ -78,15 +78,15 @@ const graph = pageGraph(Astro, {
       BRAND_ADDRESS.lines.length > 0 && (
         <address
           aria-label={BRAND_ADDRESS.label}
-          class="mt-8 mb-8 border-l-4 border-[#dfb85f] pl-6 text-left text-base leading-relaxed text-[#e9ddbe] not-italic">
-          <p class="mb-1 font-bold text-[#fded9a]">{BRAND_ADDRESS.label}</p>
+          class="mt-8 mb-8 border-l-4 border-[#faad23] pl-6 text-left text-base leading-relaxed text-[#ffe9c4] not-italic">
+          <p class="mb-1 font-bold text-[#ffd84d]">{BRAND_ADDRESS.label}</p>
           {BRAND_ADDRESS.lines.map((line) => (
             <span class="block">{line}</span>
           ))}
           {BRAND_ADDRESS.email && (
             <span class="mt-3 block">
               <span aria-hidden="true" class="mr-2">✉️</span>
-              <a href={`mailto:${BRAND_ADDRESS.email}`} class="font-bold text-[#dfb85f] underline decoration-current/40 underline-offset-4">
+              <a href={`mailto:${BRAND_ADDRESS.email}`} class="font-bold text-[#faad23] underline decoration-current/40 underline-offset-4">
                 {BRAND_ADDRESS.email}
               </a>
             </span>
@@ -99,14 +99,14 @@ const graph = pageGraph(Astro, {
       <a
         href="/register"
         aria-label="สมัครสมาชิก"
-        class="flex items-center justify-center rounded-lg border border-[#dfb85f]/60 bg-gradient-to-b from-[#fded9a] via-[#dfb85f] to-[#a57a32] px-8 py-3 font-bold text-[#140d04] shadow-[0_10px_30px_rgba(223,184,95,0.20)] transition-transform hover:scale-105 hover:shadow-[0_15px_40px_rgba(223,184,95,0.32)]">
+        class="flex items-center justify-center rounded-lg border border-[#faad23]/60 bg-gradient-to-b from-[#ffd84d] via-[#faad23] to-[#b8760f] px-8 py-3 font-bold text-[#2b0204] shadow-[0_10px_30px_rgba(250,173,35,0.20)] transition-transform hover:scale-105 hover:shadow-[0_15px_40px_rgba(250,173,35,0.32)]">
         สมัครสมาชิก
       </a>
 
       <a
         href="/login"
         aria-label="เข้าสู่ระบบ"
-        class="flex items-center justify-center rounded-lg border border-[#dfe4e7]/50 bg-[#140d04] px-8 py-3 font-extrabold text-[#dfe4e7] shadow-[0_4px_14px_rgba(223,228,231,0.18)] transition-transform hover:scale-105 hover:border-[#dfe4e7] hover:bg-[#1e1408]">
+        class="flex items-center justify-center rounded-lg border border-[#ff3d8a]/50 bg-[#2b0204] px-8 py-3 font-extrabold text-[#ff3d8a] shadow-[0_4px_14px_rgba(224,27,93,0.18)] transition-transform hover:scale-105 hover:border-[#ff3d8a] hover:bg-[#3d0410]">
         เข้าสู่ระบบ
       </a>
 

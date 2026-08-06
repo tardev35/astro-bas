@@ -3,7 +3,7 @@ export interface FeatureItem {
   icon: string;
   title: string;
   description: string;
-  accent?: "gold" | "silver";
+  accent?: "gold" | "magenta";
 }
 
 export interface Props {
@@ -11,36 +11,40 @@ export interface Props {
 }
 
 const { items } = Astro.props;
+
+// The <h3> below is the ONLY h3 a docx-driven page is allowed to have: it is
+// the sanctioned "short sub-points under one H2 section" shape. Its text comes
+// from the caller, never from this file.
 ---
 
 <div class="mt-4 flex flex-col gap-5">
   {
     items.map((item) => {
-      const isGold = item.accent !== "silver";
+      const isGold = item.accent !== "magenta";
       return (
         <div
-          class={`group flex flex-col items-start gap-4 rounded-2xl border border-[#dfb85f]/25 bg-[#140d04]/70 p-6 transition-all duration-300 hover:-translate-y-1 sm:flex-row ${
+          class={`group flex flex-col items-start gap-4 rounded-2xl border border-[#faad23]/25 bg-[#2b0204]/70 p-6 transition-all duration-300 hover:-translate-y-1 sm:flex-row ${
             isGold
-              ? "hover:border-[#dfb85f]/60 hover:bg-[#1e1408] hover:shadow-[0_10px_20px_rgba(223,184,95,0.20)]"
-              : "hover:border-[#dfe4e7]/60 hover:bg-[#1e1408] hover:shadow-[0_10px_20px_rgba(223,228,231,0.18)]"
+              ? "hover:border-[#faad23]/60 hover:bg-[#3d0410] hover:shadow-[0_10px_20px_rgba(250,173,35,0.22)]"
+              : "hover:border-[#ff3d8a]/60 hover:bg-[#3d0410] hover:shadow-[0_10px_20px_rgba(224,27,93,0.26)]"
           }`}>
           <div
             aria-hidden="true"
             class={`flex h-14 w-14 shrink-0 items-center justify-center rounded-xl text-3xl transition-transform duration-300 group-hover:scale-110 ${
               isGold
-                ? "border border-[#fded9a]/50 bg-gradient-to-br from-[#fded9a] via-[#dfb85f] to-[#a57a32] shadow-[0_0_15px_rgba(223,184,95,0.45)] group-hover:rotate-3"
-                : "border border-[#dfe4e7]/50 bg-gradient-to-br from-[#f4f7f8] via-[#dfe4e7] to-[#b6a582] shadow-[0_0_15px_rgba(223,228,231,0.4)]"
+                ? "border border-[#ffd84d]/50 bg-gradient-to-br from-[#ffd84d] via-[#faad23] to-[#b8760f] shadow-[0_0_15px_rgba(250,173,35,0.45)] group-hover:rotate-3"
+                : "border border-[#ff3d8a]/50 bg-gradient-to-br from-[#ff3d8a] via-[#e01b5d] to-[#7a0426] shadow-[0_0_15px_rgba(224,27,93,0.45)]"
             }`}>
             {item.icon}
           </div>
           <div class="flex flex-col gap-2 text-left">
             <h3
               class={`text-xl leading-normal font-black tracking-wide drop-shadow-sm ${
-                isGold ? "bg-gradient-to-r from-[#fded9a] to-[#a57a32] bg-clip-text text-transparent" : "bg-gradient-to-r from-[#f4f7f8] to-[#b6a582] bg-clip-text text-transparent"
+                isGold ? "bg-gradient-to-r from-[#ffd84d] to-[#b8760f] bg-clip-text text-transparent" : "bg-gradient-to-r from-[#ff3d8a] to-[#e01b5d] bg-clip-text text-transparent"
               }`}>
               {item.title}
             </h3>
-            <p class="text-left text-base leading-relaxed text-[#b6a582] transition-colors group-hover:text-[#e9ddbe]">{item.description}</p>
+            <p class="text-left text-base leading-relaxed text-[#e0a6b5] transition-colors group-hover:text-[#ffe9c4]">{item.description}</p>
           </div>
         </div>
       );

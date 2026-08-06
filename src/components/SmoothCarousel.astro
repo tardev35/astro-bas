@@ -22,19 +22,19 @@ import slide2 from "../assets/slide2.png";
 // text printed on them, so that text is the alt.
 //
 // TWO slides, not three or four: slide3.png (2026-08-06 12:41) and slide4.png
-// (2026-08-01) are leftovers from previous brands' drops and still carry those
-// brands' wordmarks. Importing either would both ship a stale picture and emit
-// its asset into dist/, because an import IS an emit. Only slide1 and slide2
-// belong to this brand. If a future brand uploads a real slide3, add it back
-// here AND redo the --shift arithmetic below for N=3.
+// (2026-08-01) predate this brand's asset drop (slide1/slide2, 2026-08-06
+// 15:02) and still carry previous brands' wordmarks. Importing either would
+// both ship a stale picture and emit its asset into dist/, because an import IS
+// an emit. If a future brand uploads a real slide3, add it back here AND redo
+// the --shift arithmetic below for N=3.
 const images = [
   {
     src: slide1,
-    alt: "แบนเนอร์โปรโมชั่น DEVA555 สมาชิกใหม่ รับเพิ่ม 300% พร้อมตรา WELCOME BONUS และข้อความ โบนัสจัดเต็ม คุ้มที่สุดสำหรับสมาชิกใหม่ ด้านล่างมีไอคอนสี่ช่อง สมัครง่ายใช้เบอร์มือถือ โบนัสจัดเต็ม ปลอดภัย 100% มั่นคงเชื่อถือได้ และบริการตลอด 24 ชม. ปิดท้ายด้วยข้อความ สมัครวันนี้ รับโบนัสสุดคุ้มไปเลย",
+    alt: "แบนเนอร์โปรโมชั่นคืนยอดเสีย CASHBACK 10% ของ LUCKYGAME689 ตัวอักษรสีทองบนพื้นสีชมพูบานเย็น ข้างภาพผู้หญิงในชุดราตรีสีทอง พร้อมข้อความ โปรดี คุ้มสุด คืนยอดทุกการช้อป และ ช้อปมาก ยิ่งได้คืนมาก ด้านล่างมีป้ายสี่ช่อง ช้อปครบรับเงินคืนทันที ปลอดภัย มั่นใจได้ 100% บริการดี ตอบไว 24 ชม. และ คุ้มค่า คืนจริง ทุกการใช้จ่าย",
   },
   {
     src: slide2,
-    alt: "แบนเนอร์โปรโมชั่น DEVA555 ฝากแรกลุ้นรับมอไซค์ ข้างภาพรถจักรยานยนต์สีทอง พร้อมข้อความ เริ่มต้นเพียง 1 บาท ก็มีสิทธิ์ลุ้นรับมอไซค์ และตรา ลุ้นรับมอไซค์ทุกเดือน ด้านล่างมีไอคอนสี่ช่อง ฝาก-ถอนรวดเร็วทันใจ ระบบปลอดภัยมั่นคง 100% โบนัสจัดเต็มทุกวันทุกเวลา และบริการลูกค้า 24 ชั่วโมง ปิดท้ายด้วยข้อความ เล่นง่าย จ่ายจริง โอกาสดีๆ ไม่ควรพลาด",
+    alt: "แบนเนอร์โปรโมชั่นชวนเพื่อนรับค่าคอมมิชชั่น 0.8% ของ LUCKYGAME689 ตัวเลข 0.8% สีทองขนาดใหญ่บนพื้นสีชมพูบานเย็น พร้อมข้อความ ยิ่งชวนมาก ยิ่งได้มาก ไม่จำกัดเพื่อน และ ชวนเพื่อนตอนนี้ รับโบนัสเลย ด้านล่างมีป้ายสี่ช่อง ชวนง่ายแชร์ลิงก์ได้ทันที รับรายได้ไม่อั้นจากยอดเพื่อน ถอนได้จริงโอนไวไม่มีขั้นต่ำ และ ปลอดภัยมั่นใจได้ 100%",
   },
 ];
 
@@ -52,30 +52,31 @@ const slides = Array.from({ length: COPIES }, () => images).flat();
 // Every picture here is lazy/low priority on purpose: the LCP image is the hero
 // banner in MainLayout, and a second eager fetchpriority="high" image competes
 // with it for the same early bandwidth.
+//
+// The last two copies are the same two pictures again — decorative repeats that
+// exist only so the loop has no seam. alt="" plus aria-hidden on the wrapper
+// keeps them out of the accessibility tree; without it the same sentence is
+// announced three times.
 ---
 
 <div class="marquee mx-auto w-full max-w-[1301px] overflow-hidden px-4 py-5">
   <input id="carousel-pause" type="checkbox" class="peer sr-only" />
   <label
     for="carousel-pause"
-    class="sr-only cursor-pointer peer-focus-visible:not-sr-only peer-focus-visible:mb-3 peer-focus-visible:inline-block peer-focus-visible:rounded-full peer-focus-visible:border peer-focus-visible:border-[#dfb85f]/60 peer-focus-visible:px-4 peer-focus-visible:py-2 peer-focus-visible:text-sm peer-focus-visible:font-bold peer-focus-visible:text-[#fded9a]">
+    class="sr-only cursor-pointer peer-focus-visible:not-sr-only peer-focus-visible:mb-3 peer-focus-visible:inline-block peer-focus-visible:rounded-full peer-focus-visible:border peer-focus-visible:border-[#faad23]/60 peer-focus-visible:px-4 peer-focus-visible:py-2 peer-focus-visible:text-sm peer-focus-visible:font-bold peer-focus-visible:text-[#ffd84d]">
     หยุด / เล่นสไลด์ภาพ
   </label>
 
   <div class="marquee-track flex">
     {
       slides.map((slide, index) => {
-        // The last two copies are the same two pictures again — decorative
-        // repeats that exist only so the loop has no seam. alt="" plus
-        // aria-hidden on the wrapper keeps them out of the accessibility tree;
-        // without it the same sentence is announced three times.
         const isDuplicate = index >= images.length;
         return (
           <div class="marquee-slide" aria-hidden={isDuplicate ? "true" : undefined}>
             <Picture
               src={slide.src}
               alt={isDuplicate ? "" : slide.alt}
-              class="block w-full rounded-xl border border-[#dfb85f]/25 object-cover shadow-[0_10px_30px_rgba(223,184,95,0.20)]"
+              class="block w-full rounded-xl border border-[#faad23]/25 object-cover shadow-[0_10px_30px_rgba(250,173,35,0.20)]"
               width={slide.src.width}
               height={slide.src.height}
               loading="lazy"

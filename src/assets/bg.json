@@ -1,4 +1,4 @@
 {
-  "mode": "color",
-  "color": "#372806"
+  "mode": "gradient",
+  "css": "radial-gradient(circle at 50% 0%, #6b0a20 0%, #45030f 45%, #1a0106 100%)"
 }

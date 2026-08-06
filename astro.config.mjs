@@ -30,10 +30,10 @@ export default defineConfig({
   },
 
   redirects: {
-    "/line": "https://tinyurl.com/suhng",
+    "/line": "https://tinyurl.com/4uw46sek",
   },
 
-  site: "https://deva-555.co",
+  site: "https://luckygame689-play.net",
   integrations: [
     sitemap({
       // /login, /register and /line are forwarding pages that all ship

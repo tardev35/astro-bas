@@ -10,45 +10,62 @@ const currentPath = Astro.url.pathname;
 
 const isActive = (path: string) => isActivePath(currentPath, path);
 
+// One array for both the desktop bar and the mobile circular menu — the two used
+// to be separate literals, which is how a link ends up in one and not the other.
+//
+// Every item carries an icon (owner's standing request since TUNGMA168). It is
+// rendered as its own aria-hidden <span> beside the label, never concatenated
+// into it: an emoji inside the accessible name makes a screen reader announce
+// "house หน้าแรก".
 const links = [
   { name: "หน้าแรก", path: "/", icon: "🏠" },
   { name: "โปรโมชั่น", path: "/promotion", icon: "🎁" },
-  { name: "ทดลองเล่น", path: "/ทดลองเล่น", icon: "🎰" },
-  { name: "ทางเข้า", path: "/ทางเข้า", icon: "🌐" },
+  { name: "ทดลองเล่น", path: "/ทดลองเล่น", icon: "🎮" },
+  { name: "ทางเข้า", path: "/ทางเข้า", icon: "🚪" },
+  { name: "เกี่ยวกับเรา", path: "/about-us", icon: "💎" },
   { name: "ติดต่อเรา", path: "/contact-us", icon: "📞" },
 ];
+
+const logoAlt = "โลโก้ LUCKYGAME689 เครื่องเกมพกพาสีทอง หน้าจอสีชมพูบานเย็น มีตัวอักษร LUCKY GAME 689";
 ---
 
 <header class="sticky top-0 z-50 w-full font-sans">
-  <nav class="relative z-50 w-full border-b border-amber-400/30 bg-gradient-to-r from-[#0b0906] via-[#171209] to-[#0b0906] shadow-[0_4px_25px_rgba(0,0,0,0.75)]">
+  <nav class="relative z-50 w-full border-b border-[#faad23]/35 bg-gradient-to-r from-[#1a0106] via-[#3d0410] to-[#1a0106] shadow-[0_4px_25px_rgba(43,2,4,0.85)]">
     <div class="mx-auto flex h-[70px] w-full max-w-[1600px] items-center justify-between px-4 lg:h-[85px] lg:px-8">
       <div class="flex items-center">
         <a href="/" class="relative flex-shrink-0 transition-transform hover:scale-105">
-          <div class="absolute inset-0 rounded-full bg-amber-400/20 blur-xl"></div>
+          <div aria-hidden="true" class="absolute inset-0 rounded-full bg-[#faad23]/25 blur-xl"></div>
           <Picture
             src={mainLogo!}
-            alt="LAPDEE88 Logo"
+            alt={logoAlt}
             loading="eager"
             fetchpriority="high"
-            class="relative h-[40px] w-auto drop-shadow-[0_0_8px_rgba(212,175,90,0.35)] lg:h-[50px]"
+            widths={[120, 240, 360]}
+            sizes="(max-width: 1023px) 120px, 150px"
+            class="relative h-[40px] w-auto drop-shadow-[0_0_10px_rgba(250,173,35,0.45)] lg:h-[50px]"
             formats={["avif", "webp"]}
             fallbackFormat="webp"
           />
         </a>
       </div>
 
-      <div class="hidden h-full items-center justify-center gap-2 lg:flex xl:gap-4">
+      <div class="hidden h-full items-center justify-center gap-1 lg:flex xl:gap-3">
         {
           links.map((link) => (
             <a
               href={link.path}
-              class={`group relative flex h-full items-center px-4 text-sm font-bold transition-all duration-300 xl:px-6 xl:text-base ${isActive(link.path) ? "text-amber-300" : "text-amber-100/80 hover:text-amber-200"}`}>
+              class={`group relative flex h-full items-center gap-2 px-3 text-sm font-bold transition-all duration-300 xl:px-5 xl:text-base ${isActive(link.path) ? "text-[#ffd84d]" : "text-[#ffe9c4]/80 hover:text-[#ff3d8a]"}`}>
               <div
                 aria-hidden="true"
-                class={`absolute inset-0 bg-gradient-to-b from-transparent to-amber-400/10 transition-opacity duration-300 ${isActive(link.path) ? "opacity-100" : "opacity-0 group-hover:opacity-100"}`}
+                class={`absolute inset-0 bg-gradient-to-b from-transparent to-[#e01b5d]/25 transition-opacity duration-300 ${isActive(link.path) ? "opacity-100" : "opacity-0 group-hover:opacity-100"}`}
               />
+              <span aria-hidden="true" class="relative z-10 text-base">
+                {link.icon}
+              </span>
               <span class="relative z-10">{link.name}</span>
-              <div class={`absolute bottom-0 left-1/2 h-[3px] -translate-x-1/2 bg-amber-400 transition-all duration-300 ${isActive(link.path) ? "w-full" : "w-0 group-hover:w-full"}`} />
+              <div
+                class={`absolute bottom-0 left-1/2 h-[3px] -translate-x-1/2 bg-gradient-to-r from-[#ffd84d] via-[#faad23] to-[#ff3d8a] transition-all duration-300 ${isActive(link.path) ? "w-full" : "w-0 group-hover:w-full"}`}
+              />
             </a>
           ))
         }
@@ -57,57 +74,67 @@ const links = [
       <div class="flex items-center gap-3 md:gap-4">
         <a
           href="/login"
-          class="hidden items-center justify-center rounded-full border border-amber-400/70 px-6 py-2.5 text-sm font-bold text-amber-300 shadow-[0_0_10px_rgba(212,175,90,0.2)] transition-all hover:bg-amber-400 hover:text-[#140f05] lg:flex">
+          class="hidden items-center justify-center rounded-full border border-[#ff3d8a]/70 px-6 py-2.5 text-sm font-bold text-[#ff8ab8] shadow-[0_0_12px_rgba(224,27,93,0.28)] transition-all hover:bg-[#e01b5d] hover:text-[#fff3d6] lg:flex">
           เข้าสู่ระบบ
         </a>
         <a
           href="/register"
-          class="hidden items-center justify-center rounded-full bg-gradient-to-r from-[#f6e4b4] via-[#e0bd72] to-[#b1873a] px-6 py-2.5 text-sm font-extrabold text-[#140f05] shadow-[0_0_20px_rgba(212,175,90,0.4)] transition-all hover:scale-105 hover:brightness-110 lg:flex">
+          class="hidden items-center justify-center rounded-full bg-gradient-to-r from-[#ffd84d] via-[#faad23] to-[#b8760f] px-6 py-2.5 text-sm font-extrabold text-[#2b0204] shadow-[0_0_20px_rgba(250,173,35,0.45)] transition-all hover:scale-105 hover:brightness-110 lg:flex">
           สมัครสมาชิก
         </a>
 
         <button
           id="hamburger-btn"
-          class="relative z-[60] flex h-10 w-10 flex-col items-center justify-center overflow-hidden rounded-full border-2 border-amber-900/70 bg-gradient-to-tr from-[#b1873a] to-[#f6e4b4] shadow-[0_0_15px_rgba(212,175,90,0.5)] lg:hidden"
-          aria-label="Menu">
-          <span class="hamburger-line absolute h-[2px] w-5 -translate-y-1.5 transform rounded-full bg-[#140f05] transition-all duration-300"></span>
-          <span class="hamburger-line absolute h-[2px] w-5 rounded-full bg-[#140f05] transition-all duration-300"></span>
-          <span class="hamburger-line absolute h-[2px] w-5 translate-y-1.5 transform rounded-full bg-[#140f05] transition-all duration-300"></span>
+          class="relative z-[60] flex h-10 w-10 flex-col items-center justify-center overflow-hidden rounded-full border-2 border-[#7a0426] bg-gradient-to-tr from-[#b8760f] to-[#ffd84d] shadow-[0_0_15px_rgba(250,173,35,0.55)] lg:hidden"
+          aria-label="เปิดเมนู"
+          aria-controls="mobile-circular-menu"
+          aria-expanded="false">
+          <span class="hamburger-line absolute h-[2px] w-5 -translate-y-1.5 transform rounded-full bg-[#2b0204] transition-all duration-300"></span>
+          <span class="hamburger-line absolute h-[2px] w-5 rounded-full bg-[#2b0204] transition-all duration-300"></span>
+          <span class="hamburger-line absolute h-[2px] w-5 translate-y-1.5 transform rounded-full bg-[#2b0204] transition-all duration-300"></span>
         </button>
       </div>
     </div>
   </nav>
 
-  <div id="mobile-circular-menu" class="pointer-events-none fixed inset-0 z-40 flex flex-col items-center justify-center bg-[#0b0906]/98 backdrop-blur-2xl lg:hidden">
-    <div class="flex w-full flex-col items-center space-y-6 px-6">
-      <Picture src={mainLogo!} alt="LAPDEE88 Logo" class="menu-item mb-6 h-[50px] w-auto opacity-0 drop-shadow-[0_0_15px_rgba(212,175,90,0.45)]" formats={["avif", "webp"]} fallbackFormat="webp" />
+  <div id="mobile-circular-menu" class="pointer-events-none fixed inset-0 z-40 flex flex-col items-center justify-center bg-[#1a0106]/98 backdrop-blur-2xl lg:hidden">
+    <div class="flex w-full flex-col items-center space-y-5 px-6">
+      <Picture
+        src={mainLogo!}
+        alt={logoAlt}
+        widths={[150, 300]}
+        sizes="150px"
+        class="menu-item mb-4 h-[50px] w-auto opacity-0 drop-shadow-[0_0_15px_rgba(250,173,35,0.55)]"
+        formats={["avif", "webp"]}
+        fallbackFormat="webp"
+      />
 
       {
         links.map((link) => (
           <a
             href={link.path}
-            class={`menu-item text-3xl font-black tracking-wider uppercase opacity-0 transition-all duration-300 ${isActive(link.path) ? "text-amber-300 drop-shadow-[0_0_8px_rgba(212,175,90,0.8)]" : "text-amber-100/80 hover:text-white"}`}>
+            class={`menu-item flex items-center gap-3 text-3xl font-black tracking-wider uppercase opacity-0 transition-all duration-300 ${isActive(link.path) ? "text-[#ffd84d] drop-shadow-[0_0_10px_rgba(250,173,35,0.85)]" : "text-[#ffe9c4]/80 hover:text-[#ff3d8a]"}`}>
+            <span aria-hidden="true" class="text-2xl">
+              {link.icon}
+            </span>
             {link.name}
           </a>
         ))
       }
 
-      <div class="menu-item mt-4 flex w-full max-w-[280px] flex-col gap-4 border-t border-amber-800/50 pt-8 opacity-0">
+      <div class="menu-item mt-4 flex w-full max-w-[280px] flex-col gap-4 border-t border-[#e01b5d]/50 pt-8 opacity-0">
         <a
           href="/register"
-          class="flex w-full items-center justify-center rounded-full bg-gradient-to-r from-[#f6e4b4] via-[#e0bd72] to-[#b1873a] py-3.5 text-lg font-extrabold text-[#140f05] shadow-[0_0_20px_rgba(212,175,90,0.4)]">
+          class="flex w-full items-center justify-center gap-2 rounded-full bg-gradient-to-r from-[#ffd84d] via-[#faad23] to-[#b8760f] py-3.5 text-lg font-extrabold text-[#2b0204] shadow-[0_0_20px_rgba(250,173,35,0.45)]">
           <span aria-hidden="true">🔥</span> สมัครสมาชิก
         </a>
-        <a href="/login" class="flex w-full items-center justify-center rounded-full border border-amber-400/50 py-3.5 text-lg font-bold text-amber-300 hover:bg-amber-400/10">เข้าสู่ระบบ</a>
+        <a href="/login" class="flex w-full items-center justify-center rounded-full border border-[#ff3d8a]/60 py-3.5 text-lg font-bold text-[#ff8ab8] hover:bg-[#e01b5d]/15">เข้าสู่ระบบ</a>
       </div>
     </div>
   </div>
 </header>
 
 <style is:global>
-  .font-sans {
-    font-family: var(--font-sans);
-  }
   /* อนิเมชั่น Hamburger กลายเป็น X (ตัวเส้นเป็น absolute เลยต้องกำหนดองศาใหม่) */
   #hamburger-btn.active .hamburger-line:nth-child(1) {
     transform: translateY(0) rotate(45deg);
@@ -119,7 +146,7 @@ const links = [
     transform: translateY(0) rotate(-45deg);
   }
 
-  /* 🌟 หัวใจสำคัญ: อนิเมชั่น Circular Reveal ด้วย clip-path */
+  /* หัวใจสำคัญ: อนิเมชั่น Circular Reveal ด้วย clip-path */
   /* วงกลมเริ่มต้นอยู่ที่มุมขวาบน (ซ่อนไว้ขนาด 0%) */
   #mobile-circular-menu {
     clip-path: circle(0% at calc(100% - 35px) 35px);
@@ -142,10 +169,10 @@ const links = [
     transform: translateY(0);
   }
 
-  /* หน่วงเวลาให้ข้อความเด้งขึ้นมาทีละอัน */
+  /* หน่วงเวลาให้ข้อความเด้งขึ้นมาทีละอัน — 8 ลูก: โลโก้ + 6 เมนู + กล่องปุ่ม */
   .menu-item:nth-child(1) {
     transition-delay: 0.2s;
-  } /* โลโก้ */
+  }
   .menu-item:nth-child(2) {
     transition-delay: 0.25s;
   }
@@ -163,7 +190,17 @@ const links = [
   }
   .menu-item:nth-child(7) {
     transition-delay: 0.5s;
-  } /* กล่องปุ่ม */
+  }
+  .menu-item:nth-child(8) {
+    transition-delay: 0.55s;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    #mobile-circular-menu,
+    .menu-item {
+      transition-duration: 0.01ms;
+    }
+  }
 </style>
 
 <script>
@@ -179,7 +216,9 @@ const links = [
     circularMenu?.classList.toggle("menu-open");
 
     // 3. ล็อกหน้าจอ & ใส่คลาสให้ตัวหนังสือเด้ง
-    if (circularMenu?.classList.contains("menu-open")) {
+    const open = circularMenu?.classList.contains("menu-open") ?? false;
+    hamburgerBtn?.setAttribute("aria-expanded", String(open));
+    if (open) {
       document.body.style.overflow = "hidden";
       menuItems.forEach((item) => item.classList.add("item-show"));
     } else {

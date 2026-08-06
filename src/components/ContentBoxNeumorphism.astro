@@ -5,16 +5,20 @@ export interface Props {
 }
 const { title, as: HeadingTag = "h1" } = Astro.props;
 const headingSize = HeadingTag === "h1" ? "text-3xl" : "text-2xl";
+
+// text-center lives on the <header>, never on the card or the <section>: an
+// ancestor's centering inherits straight into the slot and centers the body
+// paragraph too, which is the bug this file shipped before 2026-07-26.
 ---
 
 <section class="relative z-10 my-6 flex w-full justify-center px-4 font-sans">
   <div
-    class="w-full max-w-[1400px] rounded-[25px] border border-[#dab563]/20 bg-[#100d08] p-8 text-left text-base leading-relaxed text-[#ece3cf] shadow-[10px_10px_20px_#050403,-10px_-10px_20px_#1a1510]">
+    class="w-full max-w-[1400px] rounded-[25px] border border-[#faad23]/20 bg-[#3d0410] p-8 text-left text-base leading-relaxed text-[#ffe9c4] shadow-[10px_10px_20px_#12000a,-10px_-10px_20px_#5c0a1c]">
     {
       title && (
-        <header class="mb-8 border-b border-[#dab563]/25 pb-4 text-center">
+        <header class="mb-8 border-b border-[#faad23]/25 pb-4 text-center">
           <HeadingTag
-            class={`bg-gradient-to-r from-[#f5eb8b] via-[#dab563] to-[#dfe4e7] bg-clip-text ${headingSize} leading-normal font-black tracking-wide text-transparent`}>
+            class={`bg-gradient-to-r from-[#ffd84d] via-[#faad23] to-[#ff3d8a] bg-clip-text ${headingSize} leading-normal font-black tracking-wide text-transparent`}>
             {title}
           </HeadingTag>
         </header>

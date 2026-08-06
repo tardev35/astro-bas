@@ -5,8 +5,8 @@ import ogImage from "../assets/slide1.png";
 import "../styles/global.css";
 import { BRAND_NAME, BRAND_TEXT, brandProfile, fontStack, iconVersion, usesGoogleFonts } from "../lib/brandProfile";
 import { canonicalFor } from "../lib/schema";
-import Navbar from "../components/NavbarStyle6.astro";
-import Footer from "../components/FooterStyle3.astro";
+import Navbar from "../components/NavbarStyle9.astro";
+import Footer from "../components/FooterPremium.astro";
 
 // Only banner1 is ever rendered, so only banner1 is imported.
 //
@@ -55,8 +55,13 @@ const mobileBannerImg = mobileBanner
   : null;
 
 const {
-  title = "DEVA555 สล็อตเว็บตรงอันดับ 1 ฝากถอนออโต้ไว 3 วิ รองรับทรูวอเลท",
-  description = "DEVA555 สล็อตเว็บตรงอันดับ 1 สัมผัสพลังแห่งการทำกำไรระดับทวยเทพ ขับเคลื่อนด้วยระบบ ฝากถอนออโต้ไว 3 วิ ลื่นไหล รองรับทรูวอเลท มั่นคง ปลอดภัย 100%",
+  title = "LUCKYGAME689 เว็บสล็อตเจ้าใหญ่ โปรโมชั่นเด็ด บริการระดับ VVIP",
+  // 157 characters. The docx meta on its own is 145, and verify-build.mjs fails
+  // an indexable page outside 150–160 — so this default has to clear the floor
+  // too, not just the descriptions the pages pass in. Every page currently
+  // passes its own, which is exactly why a broken default would sit here
+  // unnoticed until the first page that forgot to.
+  description = "LUCKYGAME689 เว็บสล็อตเจ้าใหญ่ อาณาจักรการลงทุนเหนือระดับ คัดสรร โปรโมชั่นเด็ด สุดคุ้มค่า มอบประสบการณ์เอ็กซ์คลูซีฟผ่าน บริการระดับ VVIP แท้ 100% ตลอด 24 ชม.",
   robots = "index, follow",
 } = Astro.props;
 
@@ -178,7 +183,7 @@ const profile = brandProfile(Astro.site);
 
           {block === "appmeta" && (
             <Fragment>
-              {profile.showAppTitle && <meta name="apple-mobile-web-app-title" content="deva555" />}
+              {profile.showAppTitle && <meta name="apple-mobile-web-app-title" content="luckygame689" />}
               <link rel="manifest" href="/site.webmanifest" />
             </Fragment>
           )}
@@ -220,7 +225,7 @@ const profile = brandProfile(Astro.site);
         background-attachment: fixed;
         background-repeat: no-repeat;
         margin: 0;
-        background-color: #070502;
+        background-color: #1a0106;
         font-weight: 400;
         font-family: var(--font-sans) !important;
       }
@@ -273,7 +278,7 @@ const profile = brandProfile(Astro.site);
         }
         <Image
           src={mainBanner}
-          alt="แบนเนอร์ DEVA555 สล็อตเว็บตรงอันดับ 1 ตัวอักษรทองบนพื้นดำ พร้อมเลข 1 ใต้มงกุฎและช่อมะกอกทอง ข้อความ เล่นง่าย จ่ายจริง ไม่ผ่านเอเย่นต์ 100% และไอคอนสี่ช่อง ระบบปลอดภัยมั่นคง 100% ฝาก-ถอน ออโต้รวดเร็วทันใจ โบนัสจัดเต็มทุกวันทุกเวลา บริการลูกค้า 24 ชั่วโมง พร้อมข้อความ รวมทุกค่ายดัง เล่นได้จบในที่เดียว"
+          alt="แบนเนอร์ LUCKYGAME689 พื้นหลังสีแดงชมพูเข้มโรยเหรียญทอง ผู้หญิงในชุดราตรีสีทองชี้ไปที่ข้อความ ลุ้นรับทอง 1 บาท ตัวอักษรทองใต้โลโก้ LUCKYGAME689 SPORT BETTING AND CASINO ONLINE พร้อมตรา ของรางวัลมูลค่าจริง แถบข้อความ ร่วมสนุกง่ายๆ ลุ้นของรางวัลใหญ่ ไอคอนสี่ช่อง ร่วมสนุกง่ายไม่ยุ่งยาก ลุ้นรางวัลใหญ่ทองคำ 1 บาท ประกาศผลไวเชื่อถือได้ และมั่นใจ 100% ของรางวัลแท้ ปิดท้ายด้วยปุ่ม สมัครเลย มีสิทธิ์ลุ้นทันที"
           loading="eager"
           fetchpriority="high"
           widths={[412, 640, 828, 1024, 1280, 1600, 1900]}

@@ -1,74 +1,72 @@
 ---
 import MainLayout from "../layouts/MainLayout.astro";
-import Announcement from "../components/Announcement3.astro";
-import ContentBox from "../components/ContentBox.astro";
-import ContentBoxCyberCut from "../components/ContentBoxCyberCut.astro";
-import ContentBoxFloatingBadge from "../components/ContentBoxFloatingBadge.astro";
-import ContentBoxSevenThreeCyberCut from "../components/ContentBoxSevenThreeCyberCut.astro";
-import ContentBoxSevenThree from "../components/ContentBoxSevenThree.astro";
-import ContentBoxSpecial from "../components/ContentBoxSpecial.astro";
+import Announcement from "../components/AnnouncementPremium.astro";
+import ContentBoxPremium from "../components/ContentBoxPremium.astro";
+import ContentBoxNeumorphism from "../components/ContentBoxNeumorphism.astro";
+import ContentBoxSevenThreePremium from "../components/ContentBoxSevenThreePremium.astro";
+import ContentBoxTwoPremium from "../components/ContentBoxTwoPremium.astro";
 import FeatureHighlights from "../components/FeatureHighlights.astro";
 import LoginRtpSection from "../components/LoginRtpSection.astro";
 import ProviderGrid from "../components/ProviderGrid.astro";
 import GameRankingBoard from "../components/GameRankingBoard.astro";
 import ReviewCardSumo2 from "../components/ReviewCardSumo2.astro";
-import LatestWinners from "../components/LatestWinners2.astro";
+import LatestWinners from "../components/LatestWinnersPremium.astro";
 import SmoothCarousel from "../components/SmoothCarousel.astro";
-import Faq from "../components/Faq3.astro";
+import Faq from "../components/Faq4.astro";
 import Navfoot from "../components/Navfoot.astro";
 
 import { Picture } from "astro:assets";
 import { pageGraph } from "../lib/schema";
-import imgMotorbike from "../assets/slide2.png";
-import imgWelcomeBonus from "../assets/slide1.png";
+import imgCashback from "../assets/slide1.png";
 
-const pageTitle = "DEVA555 สล็อตเว็บตรงอันดับ 1 ฝากถอนออโต้ไว 3 วิ รองรับทรูวอเลท";
+const pageTitle = "LUCKYGAME689 เว็บสล็อตเจ้าใหญ่ โปรโมชั่นเด็ด บริการระดับ VVIP";
 
-// The docx meta stops at "ปลอดภัย 100%" (144 characters). tools/verify-build.mjs
-// requires 150–160, so the brief's wording is kept verbatim and a short factual
-// tail closes the gap.
-const pageDescription = "DEVA555 สล็อตเว็บตรงอันดับ 1 สัมผัสพลังแห่งการทำกำไรระดับทวยเทพ ขับเคลื่อนด้วยระบบ ฝากถอนออโต้ไว 3 วิ ลื่นไหล รองรับทรูวอเลท มั่นคง ปลอดภัย 100% ตลอด 24 ชม.";
+// The docx meta stops at "แท้ 100%" and is 145 characters — below
+// tools/verify-build.mjs's DESC_MIN of 150, which is a hard error. The brief's
+// sentence is kept byte-identical and the trailing " ตลอด 24 ชม." (which adds
+// nothing the brief does not already say) closes the gap at 157 characters.
+const pageDescription = "LUCKYGAME689 เว็บสล็อตเจ้าใหญ่ อาณาจักรการลงทุนเหนือระดับ คัดสรร โปรโมชั่นเด็ด สุดคุ้มค่า มอบประสบการณ์เอ็กซ์คลูซีฟผ่าน บริการระดับ VVIP แท้ 100% ตลอด 24 ชม.";
 
 // The three provider sub-points that sit under docx heading #2.
 // FeatureHighlights renders each `title` as an <h3>, which is the only place
-// this page is allowed to have one. Its accent union is "gold" | "silver".
+// this page is allowed to have one. Its accent union is "gold" | "magenta".
 const providerPoints = [
   {
-    icon: "🐉",
-    title: "PG Soft กราฟิกเหนือจินตนาการ โบนัสแตกไวระดับเทพ",
-    description: "นำเสนอโลกแห่ง 3D แอนิเมชันที่สวยงามและดึงดูดสายตา ฟีเจอร์ภายในเกมถูกออกแบบมาให้แจกรางวัลอย่างต่อเนื่อง ช่วยให้กอบโกยผลตอบแทนได้รวดเร็ว",
+    icon: "💥",
+    title: "Hacksaw Gaming มินิมอลสไตล์ โบนัสแตกหนักจัดเต็ม",
+    description: "สัมผัสความล้ำหน้าของเกมเพลย์ที่ฉีกกฎเกณฑ์เดิมๆ นำเสนอรูปแบบที่เรียบง่ายแต่มอบอัตราการคูณเงินรางวัลที่สูงลิ่ว เหมาะสำหรับสายทำกำไรแบบก้าวกระโดด",
     accent: "gold" as const,
   },
   {
-    icon: "⚡",
-    title: "Pragmatic Play ขีดสุดแห่งฟีเจอร์ แจกรางวัลรัวอย่างต่อเนื่อง",
-    description: "ค่ายเกมที่โดดเด่นด้วยกลไกการออกรางวัลที่โปร่งใสและหนักหน่วง เข้าถึงรอบแจ็กพอตได้ไว ตอบโจทย์นักลงทุนที่ชอบความตื่นเต้น",
-    accent: "silver" as const,
+    icon: "🔥",
+    title: "Nolimit City ขีดสุดแห่งฟีเจอร์ ท้าทายทุกความกล้า",
+    description: "ตอบโจทย์นักลงทุนที่คาดหวังความคุ้มค่าระดับไฮเอนด์ ฟีเจอร์ของเกมมีความแปลกใหม่และจ่ายหนักแบบจัดเต็ม สร้างความตื่นเต้นและมอบผลตอบแทนระดับพรีเมียมในทุกการหมุน",
+    accent: "magenta" as const,
   },
   {
-    icon: "👑",
-    title: "JILI เอฟเฟกต์สุดอลังการ ทำกำไรง่าย รองรับมือถือทุกรุ่น",
-    description: "นวัตกรรมเกมที่พัฒนามาเพื่อความเบาและเสถียร เข้าใช้งานได้อย่างสมูทบนหน้าจอสมาร์ทโฟน ช่วยให้คุณต่อยอดทุนได้อย่างไร้ข้อจำกัด",
+    icon: "🎬",
+    title: "Relax Gaming แอนิเมชันลื่นไหล เสถียรภาพไร้ที่ติ",
+    description: "โดดเด่นด้วยกราฟิกสุดอลังการและกลไกเกมที่เข้าถึงแจ็กพอตได้ไว โครงสร้างซอฟต์แวร์เบาและเสถียร เล่นได้อย่างราบรื่นบนทุกอุปกรณ์อย่างไร้ขีดจำกัด",
     accent: "gold" as const,
   },
 ];
 
 const faqs = [
   {
-    q: "ระบบ ฝากถอนออโต้ไว 3 วิ มีความแม่นยำมากน้อยแค่ไหน?",
-    a: "ระบบของ DEVA555 ควบคุมด้วย AI ขั้นสูง ทำให้การปรับยอดเครดิตมีความแม่นยำสูงสุดและรวดเร็วทันใจภายใน 3 วินาที",
+    q: "ทำไมถึงได้รับการยอมรับว่าเป็น เว็บสล็อตเจ้าใหญ่ ที่น่าเชื่อถือ?",
+    a: "เพราะแพลตฟอร์ม LUCKYGAME689 มีรากฐานการเงินมั่นคงระดับองค์กร ให้บริการด้วยความโปร่งใสและปลอดภัยขั้นสุด",
   },
   {
-    q: "ทำไมจึงยกให้ที่นี่เป็น สล็อตเว็บตรงอันดับ 1 ของยุคนี้?",
-    a: "เพราะ DEVA555 รวบรวมเกมลิขสิทธิ์แท้ มอบบริการที่โปร่งใส และมีความมั่นคงทางการเงินในระดับสูงสุด",
+    q: "วิธีการรับ โปรโมชั่นเด็ด มีขั้นตอนยุ่งยากหรือไม่?",
+    a: "ไม่ยุ่งยาก สมาชิกของ LUCKYGAME689 สามารถกดยอมรับโบนัสและแคมเปญต่างๆ ได้ด้วยตนเองผ่านระบบออโต้บนหน้าเว็บทุกวัน",
   },
   {
-    q: "การทำรายการผ่านแอปที่ รองรับทรูวอเลท มีการหักค่าบริการหรือไม่?",
-    a: "แพลตฟอร์ม DEVA555 ให้บริการฟรีทุกการเชื่อมต่อ ทำธุรกรรมได้เต็มยอดแบบไม่มีการหักค่าธรรมเนียมใดๆ ทั้งสิ้น",
+    q: "การดูแลผ่าน บริการระดับ VVIP มีความแตกต่างจากที่อื่นอย่างไร?",
+    a: "ทีมงานผู้เชี่ยวชาญพร้อมให้การดูแลแบบเอ็กซ์คลูซีฟ รวดเร็ว ใส่ใจ และแก้ปัญหาได้ตรงจุดตลอด 24 ชม.",
   },
   {
-    q: "ข้อมูลเครดิตและการใช้งานมีความ ปลอดภัย 100% จริงไหม?",
-    a: "จริงแน่นอน ระบบของ DEVA555 ใช้การเข้ารหัสมาตรฐานเดียวกับสถาบันการเงิน เพื่อปกป้องคุณในทุกขั้นตอน",
+    q: "ระบบความปลอดภัยในการใช้งานบนแพลตฟอร์ม LUCKYGAME689 เป็นอย่างไร?",
+    a: "เราใช้เทคโนโลยี Secure Popup Modal ในการเชื่อมต่อเข้าสู่แดชบอร์ด เพื่อความปลอดภัยและเป็นส่วนตัว 100%",
   },
 ];
 
@@ -84,27 +82,27 @@ const graph = pageGraph(Astro, {
 
   <Announcement />
 
-  <ContentBoxCyberCut as="h1" title="DEVA555 สล็อตเว็บตรงอันดับ 1 ฝากถอนออโต้ไว 3 วิ รองรับทรูวอเลท">
-    <p class="text-left text-base leading-relaxed text-[#e9ddbe]">
-      <strong class="text-[#fded9a]">DEVA555</strong> สล็อตเว็บตรงอันดับ 1 ที่พร้อมมอบพลังแห่งการทำกำไรระดับทวยเทพให้กับผู้เล่นทุกคน โครงสร้างระบบของเราถูกออกแบบมาเพื่อความเหนือชั้น ขับเคลื่อนด้วยเทคโนโลยี
-      ฝากถอนออโต้ไว 3 วิ ที่ทำงานได้อย่างแม่นยำและลื่นไหลที่สุดในยุคนี้ นอกจากนี้ยังเปิดกว้าง รองรับทรูวอเลท เพื่อเพิ่มความสะดวกสบายขั้นสุด การันตีความมั่นคงและ ปลอดภัย 100% ในทุกมิติของการใช้งาน
+  <ContentBoxPremium as="h1" title="LUCKYGAME689 เว็บสล็อตเจ้าใหญ่ โปรโมชั่นเด็ด บริการระดับ VVIP">
+    <p class="text-left text-base leading-relaxed text-[#ffe9c4]">
+      <strong class="text-[#fff3d6]">LUCKYGAME689</strong> เว็บสล็อตเจ้าใหญ่ ที่พร้อมยกระดับการสร้างรายได้ของคุณให้พรีเมียมขั้นสุด เรามุ่งเน้นการมอบประสบการณ์แบบเอ็กซ์คลูซีฟผ่านอินเทอร์เฟซสไตล์ Premium
+      Material ที่หรูหราและใช้งานง่าย พร้อมคัดสรร โปรโมชั่นเด็ด ที่คุ้มค่าที่สุดในตลาด เพื่อให้สมาชิกทุกท่านได้รับการดูแลอย่างเอาใจใส่ผ่าน บริการระดับ VVIP แท้ 100% ตอบโจทย์ทุกไลฟ์สไตล์การลงทุนอย่างเหนือชั้น
     </p>
-  </ContentBoxCyberCut>
+  </ContentBoxPremium>
 
-  <ContentBoxFloatingBadge as="h2" title="DEVA555 รวบรวมค่ายเกมระดับโลก สล็อตเว็บตรงอันดับ 1">
-    <p class="text-left text-base leading-relaxed text-[#e9ddbe]">
-      ก้าวข้ามขีดจำกัดของความสนุกด้วยการคัดสรรซอฟต์แวร์เกมชั้นนำจากทั่วทุกมุมโลกมาไว้บนแพลตฟอร์ม DEVA555 เพียงที่เดียว เราเน้นย้ำเรื่องคุณภาพและอัตราการจ่ายที่ยุติธรรม
-      ทุกการหมุนสปินของคุณจะเต็มไปด้วยความลื่นไหล ตอบสนองไว ไร้อาการสะดุดกวนใจ เพื่อให้คุณมุ่งสมาธิไปที่การทำกำไรได้อย่างเต็มที่
+  <ContentBoxNeumorphism as="h2" title="รวมเกมคุณภาพระดับโลกบนแพลตฟอร์ม LUCKYGAME689 เว็บสล็อตเจ้าใหญ่">
+    <p class="text-left text-base leading-relaxed text-[#ffe9c4]">
+      การเป็นผู้นำในวงการหมายถึงการส่งมอบสิ่งที่ดีที่สุด ระบบของ LUCKYGAME689 จึงได้รวบรวมซอฟต์แวร์เกมชั้นนำจากทั่วทุกมุมโลกมาเสิร์ฟให้คุณถึงมือ ทุกตัวเกมผ่านการคัดกรองอย่างพิถีพิถันเพื่อให้ได้มาตรฐานระดับสากล
+      กราฟิกสวยงาม โบนัสแตกง่าย และทำงานประสานกับเซิร์ฟเวอร์หลักได้อย่างสมบูรณ์แบบ
     </p>
     <FeatureHighlights items={providerPoints} />
-  </ContentBoxFloatingBadge>
+  </ContentBoxNeumorphism>
 
   <ProviderGrid />
 
-  <ContentBoxSevenThreeCyberCut titleright="DEVA555 นวัตกรรม ฝากถอนออโต้ไว 3 วิ ลื่นไหลที่สุด">
+  <ContentBoxSevenThreePremium titleright="LUCKYGAME689 คัดสรร โปรโมชั่นเด็ด รับสิทธิพิเศษเหนือระดับ">
     <Picture
       slot="left"
-      src={imgMotorbike}
+      src={imgCashback}
       loading="lazy"
       fetchpriority="low"
       widths={[200, 400, 600]}
@@ -113,46 +111,30 @@ const graph = pageGraph(Astro, {
       formats={["avif", "webp"]}
       fallbackFormat="webp"
       quality={80}
-      alt="แบนเนอร์โปรโมชั่น DEVA555 ฝากแรกลุ้นรับมอไซค์ ข้างภาพรถจักรยานยนต์สีทอง พร้อมข้อความ เริ่มต้นเพียง 1 บาท ก็มีสิทธิ์ลุ้นรับมอไซค์ และตรา ลุ้นรับมอไซค์ทุกเดือน ด้านล่างมีไอคอนสี่ช่อง ฝาก-ถอนรวดเร็วทันใจ ระบบปลอดภัยมั่นคง 100% โบนัสจัดเต็มทุกวันทุกเวลา และบริการลูกค้า 24 ชั่วโมง ปิดท้ายด้วยข้อความ เล่นง่าย จ่ายจริง โอกาสดีๆ ไม่ควรพลาด"
-      class="mx-auto h-auto w-full rounded-2xl border border-[#dfb85f]/30 shadow-[0_10px_30px_rgba(223,184,95,0.20)]"
+      alt="แบนเนอร์โปรโมชั่นคืนยอดเสีย CASHBACK 10% ของ LUCKYGAME689 ตัวอักษรสีทองบนพื้นสีชมพูบานเย็น ข้างภาพผู้หญิงในชุดราตรีสีทอง พร้อมข้อความ โปรดี คุ้มสุด คืนยอดทุกการช้อป และ ช้อปมาก ยิ่งได้คืนมาก ด้านล่างมีป้ายสี่ช่อง ช้อปครบรับเงินคืนทันที ปลอดภัย มั่นใจได้ 100% บริการดี ตอบไว 24 ชม. และ คุ้มค่า คืนจริง ทุกการใช้จ่าย"
+      class="mx-auto h-auto w-full rounded-2xl border border-[#faad23]/30 shadow-[0_10px_30px_rgba(250,173,35,0.20)]"
     />
-    <p slot="right" class="text-left text-base leading-relaxed text-[#e9ddbe]">
-      เวลาคือสิ่งมีค่าที่สุดสำหรับนักลงทุน ดังนั้นระบบของ DEVA555 จึงพัฒนาสถาปัตยกรรมทางการเงินที่ทำงานด้วย AI อัจฉริยะ ทำให้การประมวลผลเครดิตแบบ ฝากถอนออโต้ไว 3 วิ เป็นเรื่องที่เกิดขึ้นจริง
-      ยอดเงินจะถูกอัปเดตเข้ากระเป๋าอย่างรวดเร็วและแม่นยำ ช่วยให้คุณเดินหน้าคว้าโอกาสทองได้อย่างต่อเนื่องไม่มีสะดุด
+    <p slot="right" class="text-left text-base leading-relaxed text-[#ffe9c4]">
+      นอกเหนือจากระบบที่ยอดเยี่ยมแล้ว แพลตฟอร์ม LUCKYGAME689 ยังเตรียมทุนสนับสนุนเพื่อเพิ่มศักยภาพในการทำกำไรให้กับสมาชิกอย่างเต็มพิกัด เรามีการอัปเดตและแจก โปรโมชั่นเด็ด อย่างต่อเนื่อง
+      ไม่ว่าจะเป็นโบนัสต้อนรับหรือแคมเปญประจำวัน สมาชิกสามารถกดรับสิทธิ์ได้ง่ายๆ ผ่านแดชบอร์ดส่วนตัว เพื่อนำไปต่อยอดความสำเร็จได้ทันที
     </p>
-  </ContentBoxSevenThreeCyberCut>
+  </ContentBoxSevenThreePremium>
 
-  <LatestWinners />
-
-  <ContentBoxSevenThree titleright="รองรับทรูวอเลท ยกระดับความสะดวกสบาย ไร้ขีดจำกัด">
-    <Picture
-      slot="left"
-      src={imgWelcomeBonus}
-      loading="lazy"
-      fetchpriority="low"
-      widths={[200, 400, 600]}
-      sizes="(max-width: 768px) 100vw, 30vw"
-      decoding="async"
-      formats={["avif", "webp"]}
-      fallbackFormat="webp"
-      quality={80}
-      alt="แบนเนอร์โปรโมชั่น DEVA555 สมาชิกใหม่ รับเพิ่ม 300% พร้อมตรา WELCOME BONUS และข้อความ โบนัสจัดเต็ม คุ้มที่สุดสำหรับสมาชิกใหม่ ด้านล่างมีไอคอนสี่ช่อง สมัครง่ายใช้เบอร์มือถือ โบนัสจัดเต็ม ปลอดภัย 100% มั่นคงเชื่อถือได้ และบริการตลอด 24 ชม. ปิดท้ายด้วยข้อความ สมัครวันนี้ รับโบนัสสุดคุ้มไปเลย"
-      class="mx-auto h-auto w-full rounded-2xl border border-[#dfb85f]/30 shadow-[0_10px_30px_rgba(223,184,95,0.20)]"
-    />
-    <p slot="right" class="text-left text-base leading-relaxed text-[#e9ddbe]">
-      หมดปัญหาเรื่องช่องทางการทำธุรกรรมที่ยุ่งยาก เพราะเครือข่ายของ DEVA555 เปิดกว้างและ รองรับทรูวอเลท อย่างเต็มรูปแบบ การเชื่อมต่อกระเป๋าเงินดิจิทัลช่วยให้คุณสามารถโอนถ่ายเครดิตได้ทุกที่ทุกเวลา
-      ลดขั้นตอนที่ซับซ้อนและมอบอิสระทางการเงินอย่างแท้จริงให้กับสมาชิกทุกคน
+  <ContentBoxNeumorphism as="h2" title="ยกระดับประสบการณ์ด้วย บริการระดับ VVIP แท้ 100%">
+    <p class="text-left text-base leading-relaxed text-[#ffe9c4]">
+      เราเชื่อว่าการดูแลลูกค้าคือหัวใจสำคัญของการดำเนินงาน ทีมผู้เชี่ยวชาญของเราจึงผ่านการฝึกอบรมมาเป็นอย่างดี พร้อมสแตนด์บายคอยช่วยเหลือและให้คำปรึกษาตลอด 24 ชั่วโมง มอบการดูแลที่ใส่ใจในทุกรายละเอียด
+      เพื่อให้คุณสัมผัสได้ถึง บริการระดับ VVIP ตั้งแต่ก้าวแรกที่สมัครสมาชิก
     </p>
-  </ContentBoxSevenThree>
+  </ContentBoxNeumorphism>
 
-  <ContentBox as="h2" title="DEVA555 มั่นคง ปลอดภัย 100% ผ่านระบบ Secure Popup">
-    <p class="text-left text-base leading-relaxed text-[#e9ddbe]">
-      รากฐานแห่งความเป็นผู้นำคือความน่าเชื่อถือ สมาชิกของ DEVA555 สามารถวางใจได้ว่าข้อมูลส่วนบุคคลและยอดเครดิตจะถูกเข้ารหัสขั้นสูงเพื่อป้องกันการรั่วไหล อีกทั้งการเข้าสู่ระบบยังประมวลผลผ่าน Premium
-      Secure Popup ที่ป้องกันหน้าเว็บโหลดซ้ำ การันตีว่าคุณจะได้รับบริการที่มั่นคง ปลอดภัย 100% ตลอดการเชื่อมต่อ
+  <ContentBoxPremium as="h2" title="ความปลอดภัยของ LUCKYGAME689 มั่นคง ผ่านระบบ Premium Loader">
+    <p class="text-left text-base leading-relaxed text-[#ffe9c4]">
+      ปกป้องข้อมูลส่วนตัวและเงินทุนของคุณด้วยระบบรักษาความปลอดภัยที่ดีที่สุด การล็อกอินเข้าสู่ระบบบน LUCKYGAME689 จะทำงานผ่าน Secure Transition Popup แบบพรีเมียม ที่สวยงามและทันสมัย โหลดไว ลื่นไหล
+      ป้องกันการรีเฟรชหน้าเว็บซ้ำซ้อน ทำให้ทุกการเชื่อมต่อของคุณมีความเป็นส่วนตัวและปลอดภัยในระดับสูงสุด
     </p>
-  </ContentBox>
+  </ContentBoxPremium>
 
-  <Faq title="FAQ คำถามที่พบบ่อย เกี่ยวกับ DEVA555 สล็อตเว็บตรงอันดับ 1" faqs={faqs} />
+  <Faq title="FAQ คำถามที่พบบ่อย เกี่ยวกับ LUCKYGAME689 เว็บสล็อตเจ้าใหญ่" faqs={faqs} />
 
   <LoginRtpSection />
 
@@ -160,27 +142,39 @@ const graph = pageGraph(Astro, {
 
   <SmoothCarousel />
 
-  <ContentBoxSpecial label="เข้าสู่ระบบและสมัครสมาชิก DEVA555">
-    <div slot="left" class="flex flex-col gap-3">
-      <p class="text-base font-black tracking-wide text-[#fded9a]">เข้าสู่ระบบสมาชิกเดิม</p>
-      <p class="text-left text-base leading-relaxed text-[#e9ddbe]">เข้าแดชบอร์ดส่วนตัวผ่าน Premium Secure Popup เพื่อจัดการยอดฝากถอนออโต้ไว 3 วิ เลือกค่ายเกม และกดรับสิทธิพิเศษได้จากจุดเดียว</p>
+  <LatestWinners />
+
+  <ContentBoxTwoPremium label="เข้าสู่ระบบและสมัครสมาชิก LUCKYGAME689">
+    <div slot="left" class="flex flex-col gap-4">
+      <p class="flex items-center gap-3 border-b border-[#faad23]/30 pb-3 text-xl leading-normal font-black tracking-widest text-[#ffd84d] uppercase">
+        <span aria-hidden="true" class="h-6 w-1.5 shrink-0 rounded-full bg-gradient-to-b from-[#ffd84d] via-[#faad23] to-[#b8760f] shadow-[0_0_10px_rgba(250,173,35,0.45)]"></span>
+        เข้าสู่ระบบสมาชิกเดิม
+      </p>
+      <p class="text-left text-base leading-relaxed text-[#ffe9c4]">
+        เข้าแดชบอร์ดส่วนตัวผ่าน Secure Transition Popup เพื่อจัดการยอดฝากถอน เลือกค่ายเกมระดับโลก และกดรับ โปรโมชั่นเด็ด ได้จากจุดเดียว
+      </p>
       <a
         href="/login"
-        class="mt-1 inline-flex items-center justify-center rounded-full bg-gradient-to-r from-[#fded9a] via-[#dfb85f] to-[#a57a32] px-8 py-3 text-sm font-black whitespace-nowrap text-[#140d04] shadow-[0_10px_30px_rgba(223,184,95,0.28)] transition-all duration-300 hover:-translate-y-1 hover:scale-105 hover:shadow-[0_15px_40px_rgba(223,184,95,0.42)] sm:text-base">
+        class="mt-1 inline-flex items-center justify-center rounded-full bg-gradient-to-r from-[#ffd84d] via-[#faad23] to-[#b8760f] px-8 py-3 text-sm font-black whitespace-nowrap text-[#2b0204] shadow-[0_10px_30px_rgba(250,173,35,0.28)] transition-all duration-300 hover:-translate-y-1 hover:scale-105 hover:shadow-[0_15px_40px_rgba(250,173,35,0.42)] sm:text-base">
         เข้าสู่ระบบ
       </a>
     </div>
 
-    <div slot="right" class="flex flex-col gap-3">
-      <p class="text-base font-black tracking-wide text-[#dfe4e7]">สมัครสมาชิกใหม่</p>
-      <p class="text-left text-base leading-relaxed text-[#e9ddbe]">เปิดบัญชีเดียวใช้ได้ครบทุกค่ายลิขสิทธิ์แท้ รองรับทรูวอเลท เต็มรูปแบบ พร้อมรับสิทธิ์ของสมาชิกใหม่ตามเงื่อนไขของแต่ละแคมเปญ</p>
+    <div slot="right" class="flex flex-col gap-4">
+      <p class="flex items-center gap-3 border-b border-[#ff3d8a]/35 pb-3 text-xl leading-normal font-black tracking-widest text-[#ff3d8a] uppercase">
+        <span aria-hidden="true" class="h-6 w-1.5 shrink-0 rounded-full bg-gradient-to-b from-[#ff3d8a] via-[#e01b5d] to-[#7a0426] shadow-[0_0_10px_rgba(224,27,93,0.5)]"></span>
+        สมัครสมาชิกใหม่
+      </p>
+      <p class="text-left text-base leading-relaxed text-[#ffe9c4]">
+        เปิดบัญชีเดียวใช้ได้ครบทุกค่ายลิขสิทธิ์แท้ ทั้ง Hacksaw Gaming Nolimit City และ Relax Gaming พร้อมรับการดูแลด้วย บริการระดับ VVIP ตามเงื่อนไขของแต่ละแคมเปญ
+      </p>
       <a
         href="/register"
-        class="mt-1 inline-flex items-center justify-center rounded-full border border-[#dfe4e7]/60 bg-[#1e1408]/85 px-8 py-3 text-sm font-black whitespace-nowrap text-[#dfe4e7] backdrop-blur-sm transition-all duration-300 hover:scale-105 hover:border-[#dfe4e7] hover:bg-[#140d04]/85 hover:shadow-[0_15px_40px_rgba(223,228,231,0.28)] sm:text-base">
+        class="mt-1 inline-flex items-center justify-center rounded-full border border-[#ff3d8a]/60 bg-[#3d0410]/85 px-8 py-3 text-sm font-black whitespace-nowrap text-[#ff3d8a] backdrop-blur-sm transition-all duration-300 hover:scale-105 hover:border-[#ff3d8a] hover:bg-[#2b0204]/85 hover:shadow-[0_15px_40px_rgba(224,27,93,0.32)] sm:text-base">
         สมัครสมาชิก
       </a>
     </div>
-  </ContentBoxSpecial>
+  </ContentBoxTwoPremium>
 
   <ReviewCardSumo2 />
 
