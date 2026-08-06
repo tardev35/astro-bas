@@ -1,37 +1,37 @@
 ---
 import MainLayout from "../layouts/MainLayout.astro";
-import ContentBox from "../components/ContentBoxCyberCut.astro";
+import ContentBox from "../components/ContentBoxPremium.astro";
 import Navfoot from "../components/Navfoot.astro";
-import Announcement from "../components/AnnouncementCyber.astro";
+import Announcement from "../components/AnnouncementPremium.astro";
 
 import { Picture } from "astro:assets";
 import imgLine from "../assets/contact-line.webp";
 import { pageGraph } from "../lib/schema";
 import { BRAND_ADDRESS } from "../lib/brandProfile";
 
-// One string, used three times: MainLayout's <meta name="description">, the
-// WebPage node's description, and nothing else. Keeping it in a const is what
-// stops the meta tag and the structured data from drifting apart — they used to
-// be two hand-typed variants of the same sentence, and the JSON-LD copy was the
-// one nobody reread. 150–160 CHARACTERS (Thai is 3 bytes/char, so a byte count
-// reads ~3x too long and will send you rewriting a description that was fine).
+// This is a BUTTON PAGE, not an article: title → LINE image → address block →
+// button row, and nothing else. No <h2>, no explanatory paragraphs. The docx
+// gives this page a Title and a Meta and never a body; any prose found here in
+// a future round was invented by a rebrand and should be deleted again.
 //
-// The brief's own sentence stops at 138 characters, which verify-build.mjs
-// rejects for being under the 150 floor — the trailing clause brings it into
-// the window without changing what the brief says.
+// One string, used twice: MainLayout's <meta name="description"> and the
+// WebPage node's description. Keeping it in a const is what stops the meta tag
+// and the structured data from drifting apart. 150–160 CHARACTERS (Thai is
+// 3 bytes/char, so a byte count reads ~3x too long and will send you rewriting
+// a description that was fine). This one is 154.
 const pageDescription =
-  "ช่องทางการติดต่อ PGW44 ทีมงานผู้เชี่ยวชาญพร้อมให้คำปรึกษาและดูแลทุกความต้องการของคุณตลอด 24 ชั่วโมง แอด LINE เพื่อรับบริการที่รวดเร็วทันใจ ทั้งสมัคร ฝาก-ถอน";
+  "ช่องทางการติดต่อ TUNJAI123 ศูนย์บริการลูกค้ามาตรฐานสากล ทีมงานพร้อมดูแลและแก้ไขปัญหาให้คุณอย่างรวดเร็วทันใจตลอด 24 ชั่วโมง ทุกวันผ่านไลน์ออฟฟิเชียลของเว็บ";
 
 const graph = pageGraph(Astro, {
   type: "ContactPage",
-  name: "ติดต่อทีมงาน PGW44 ผ่าน LINE Official",
+  name: "TUNJAI123 ติดต่อเรา บริการรวดเร็วดั่งใจนึก ทีมงานดูแล 24 ชม.",
   description: pageDescription,
   breadcrumb: [
     { name: "หน้าแรก", path: "/" },
     { name: "ติดต่อเรา", path: "/contact-us" },
   ],
   org: {
-    alternateName: "PGW44 สล็อตเว็บใหญ่ ระบบออโต้ไม่มีขั้นต่ำ",
+    alternateName: "TUNJAI123 เว็บตรงอันดับ 1 ลิขสิทธิ์แท้ รวมทุกค่ายในเว็ปเดียว",
     contactPoints: [
       {
         contactType: "customer service",
@@ -53,20 +53,20 @@ const graph = pageGraph(Astro, {
 });
 ---
 
-<MainLayout title="PGW44 ติดต่อเรา บริการสุดพรีเมียม ทีมงานดูแลตลอด 24 ชม." description={pageDescription}>
+<MainLayout title="TUNJAI123 ติดต่อเรา บริการรวดเร็วดั่งใจนึก ทีมงานดูแล 24 ชม." description={pageDescription}>
   <script type="application/ld+json" set:html={graph} />
 
   <Announcement />
 
-  <ContentBox title="ติดต่อทีมงาน PGW44" as="h1">
+  <ContentBox title="ติดต่อทีมงาน TUNJAI123" as="h1">
     <Picture
       src={imgLine}
-      alt="พนักงานหญิงยิ้มในชุดเลื่อมสีชมพู ยืนกอดอกอยู่หลังปุ่มสีขาวที่มีโลโก้ LINE สีเขียวและคำว่า Support ช่องทางแชตกับทีมงาน PGW44"
+      alt="พนักงานหญิงยิ้มในชุดเลื่อมสีชมพู ยืนกอดอกอยู่หลังปุ่มสีขาวที่มีโลโก้ LINE สีเขียวและคำว่า Support ช่องทางแชตกับทีมงาน TUNJAI123"
       loading="lazy"
       fetchpriority="low"
       widths={[200, 400, 600]}
-      sizes="(max-width: 768px) 100vw"
-      class="mx-auto h-auto w-full max-w-[400px] object-contain shadow-[0_10px_30px_rgba(236,171,3,0.18)]"
+      sizes="(max-width: 768px) 100vw, 400px"
+      class="mx-auto h-auto w-full max-w-[400px] object-contain shadow-[0_10px_30px_rgba(218,181,99,0.18)]"
       decoding="async"
       formats={["avif", "webp"]}
       fallbackFormat="webp"
@@ -76,15 +76,15 @@ const graph = pageGraph(Astro, {
       BRAND_ADDRESS.lines.length > 0 && (
         <address
           aria-label={BRAND_ADDRESS.label}
-          class="mt-8 mb-8 border-l-4 border-[#8fd633] pl-6 text-left text-base leading-relaxed text-[#e8efd8] not-italic">
-          <p class="mb-1 font-bold text-[#ffd54a]">{BRAND_ADDRESS.label}</p>
+          class="mt-8 mb-8 border-l-4 border-[#dab563] pl-6 text-left text-base leading-relaxed text-[#ece3cf] not-italic">
+          <p class="mb-1 font-bold text-[#f5eb8b]">{BRAND_ADDRESS.label}</p>
           {BRAND_ADDRESS.lines.map((line) => (
             <span class="block">{line}</span>
           ))}
           {BRAND_ADDRESS.email && (
             <span class="mt-3 block">
               <span aria-hidden="true" class="mr-2">✉️</span>
-              <a href={`mailto:${BRAND_ADDRESS.email}`} class="font-bold text-[#ffd54a] underline decoration-current/40 underline-offset-4">
+              <a href={`mailto:${BRAND_ADDRESS.email}`} class="font-bold text-[#dab563] underline decoration-current/40 underline-offset-4">
                 {BRAND_ADDRESS.email}
               </a>
             </span>
@@ -97,14 +97,14 @@ const graph = pageGraph(Astro, {
       <a
         href="/register"
         aria-label="สมัครสมาชิก"
-        class="flex items-center justify-center rounded-lg border border-[#ecab03]/60 bg-gradient-to-b from-[#ffd54a] via-[#ecab03] to-[#a9760a] px-8 py-3 font-bold text-[#0a0f06] shadow-[0_10px_30px_rgba(236,171,3,0.18)] transition-transform hover:scale-105 hover:shadow-[0_15px_40px_rgba(236,171,3,0.30)]">
+        class="flex items-center justify-center rounded-lg border border-[#dab563]/60 bg-gradient-to-b from-[#f5eb8b] via-[#dab563] to-[#a97f28] px-8 py-3 font-bold text-[#120c04] shadow-[0_10px_30px_rgba(218,181,99,0.20)] transition-transform hover:scale-105 hover:shadow-[0_15px_40px_rgba(218,181,99,0.32)]">
         สมัครสมาชิก
       </a>
 
       <a
         href="/login"
         aria-label="เข้าสู่ระบบ"
-        class="flex items-center justify-center rounded-lg border border-[#ecab03]/60 bg-[#111a0a] px-8 py-3 font-extrabold text-[#ffd54a] shadow-[0_4px_14px_rgba(236,171,3,0.18)] transition-transform hover:scale-105 hover:bg-[#1a2610]">
+        class="flex items-center justify-center rounded-lg border border-[#dfe4e7]/50 bg-[#1a1510] px-8 py-3 font-extrabold text-[#dfe4e7] shadow-[0_4px_14px_rgba(223,228,231,0.18)] transition-transform hover:scale-105 hover:border-[#dfe4e7] hover:bg-[#241d14]">
         เข้าสู่ระบบ
       </a>
 

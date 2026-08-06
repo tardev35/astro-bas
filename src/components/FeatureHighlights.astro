@@ -3,7 +3,7 @@ export interface FeatureItem {
   icon: string;
   title: string;
   description: string;
-  accent?: "gold" | "lime";
+  accent?: "gold" | "silver";
 }
 
 export interface Props {
@@ -16,20 +16,20 @@ const { items } = Astro.props;
 <div class="mt-4 flex flex-col gap-5">
   {
     items.map((item) => {
-      const isGold = item.accent !== "lime";
+      const isGold = item.accent !== "silver";
       return (
         <div
-          class={`group flex flex-col items-start gap-4 rounded-2xl border border-[#4a8d14]/35 bg-[#0a0f06]/60 p-6 transition-all duration-300 hover:-translate-y-1 sm:flex-row ${
+          class={`group flex flex-col items-start gap-4 rounded-2xl border border-[#dab563]/25 bg-[#100d08]/70 p-6 transition-all duration-300 hover:-translate-y-1 sm:flex-row ${
             isGold
-              ? "hover:border-[#ecab03]/60 hover:bg-[#1a2610] hover:shadow-[0_10px_20px_rgba(236,171,3,0.16)]"
-              : "hover:border-[#8fd633]/60 hover:bg-[#1a2610] hover:shadow-[0_10px_20px_rgba(143,214,51,0.22)]"
+              ? "hover:border-[#dab563]/60 hover:bg-[#1a1510] hover:shadow-[0_10px_20px_rgba(218,181,99,0.20)]"
+              : "hover:border-[#dfe4e7]/60 hover:bg-[#1a1510] hover:shadow-[0_10px_20px_rgba(223,228,231,0.18)]"
           }`}>
           <div
             aria-hidden="true"
             class={`flex h-14 w-14 shrink-0 items-center justify-center rounded-xl text-3xl transition-transform duration-300 group-hover:scale-110 ${
               isGold
-                ? "border border-[#ffd54a]/50 bg-gradient-to-br from-[#ffd54a] to-[#a9760a] shadow-[0_0_15px_rgba(236,171,3,0.45)] group-hover:rotate-3"
-                : "border border-[#8fd633]/50 bg-gradient-to-br from-[#8fd633] to-[#2c5a0d] shadow-[0_0_15px_rgba(143,214,51,0.4)]"
+                ? "border border-[#f5eb8b]/50 bg-gradient-to-br from-[#f5eb8b] via-[#dab563] to-[#a97f28] shadow-[0_0_15px_rgba(218,181,99,0.45)] group-hover:rotate-3"
+                : "border border-[#dfe4e7]/50 bg-gradient-to-br from-[#f4f7f8] via-[#dfe4e7] to-[#b5bbbc] shadow-[0_0_15px_rgba(223,228,231,0.4)]"
             }`}>
             {item.icon}
           </div>
@@ -37,12 +37,12 @@ const { items } = Astro.props;
             <h3
               class={`text-xl leading-normal font-black tracking-wide drop-shadow-sm ${
                 isGold
-                  ? "bg-gradient-to-r from-[#ffd54a] to-[#ecab03] bg-clip-text text-transparent"
-                  : "bg-gradient-to-r from-[#8fd633] to-[#4a8d14] bg-clip-text text-transparent"
+                  ? "bg-gradient-to-r from-[#f5eb8b] to-[#d0a44c] bg-clip-text text-transparent"
+                  : "bg-gradient-to-r from-[#f4f7f8] to-[#b5bbbc] bg-clip-text text-transparent"
               }`}>
               {item.title}
             </h3>
-            <p class="text-left text-base leading-relaxed text-[#b9c4a6] transition-colors group-hover:text-[#e8efd8]">{item.description}</p>
+            <p class="text-left text-base leading-relaxed text-[#b5bbbc] transition-colors group-hover:text-[#ece3cf]">{item.description}</p>
           </div>
         </div>
       );

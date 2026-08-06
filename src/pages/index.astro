@@ -1,73 +1,75 @@
 ---
 import MainLayout from "../layouts/MainLayout.astro";
-import Announcement from "../components/AnnouncementCyber.astro";
+import Announcement from "../components/AnnouncementPremium.astro";
 import ContentBox from "../components/ContentBox.astro";
-import ContentBoxCyberCut from "../components/ContentBoxCyberCut.astro";
-import ContentBoxFloatingBadge from "../components/ContentBoxFloatingBadge.astro";
-import ContentBoxSevenThreeCyberCut from "../components/ContentBoxSevenThreeCyberCut.astro";
+import ContentBoxPremium from "../components/ContentBoxPremium.astro";
+import ContentBoxNeumorphism from "../components/ContentBoxNeumorphism.astro";
+import ContentBoxSpecial from "../components/ContentBoxSpecial.astro";
+import ContentBoxSevenThreePremium from "../components/ContentBoxSevenThreePremium.astro";
 import FeatureHighlights from "../components/FeatureHighlights.astro";
 import LoginRtpSection from "../components/LoginRtpSection.astro";
 import ProviderGrid from "../components/ProviderGrid.astro";
 import GameRankingBoard from "../components/GameRankingBoard.astro";
 import ReviewCardSumo2 from "../components/ReviewCardSumo2.astro";
-import LatestWinners from "../components/LatestWinnersPremium.astro";
+import LatestWinners from "../components/LatestWinnersCyber.astro";
 import SmoothCarousel from "../components/SmoothCarousel.astro";
-import Faq from "../components/Faq4.astro";
+import Faq from "../components/Faq2.astro";
 import Navfoot from "../components/Navfoot.astro";
 
 import { Picture } from "astro:assets";
 import { pageGraph } from "../lib/schema";
+import imgFirstDeposit from "../assets/slide2.png";
 import imgCashback from "../assets/slide1.png";
 
-const pageTitle = "PGW44 สล็อตเว็บใหญ่ ระบบออโต้ไม่มีขั้นต่ำ โปรลุ้นรับรางวัลเยอะ";
+const pageTitle = "TUNJAI123 เว็บตรงอันดับ 1 ลิขสิทธิ์แท้ จ่ายจริง รวมทุกค่ายในเว็ปเดียว";
 
-// The docx supplies this sentence up to "ทุกวัน" (146 characters). The build
-// gate in tools/verify-build.mjs requires 150–160 characters, so the factual
-// tail below closes the four-character gap without altering the brief's wording.
+// The docx meta stops at "ปลอดภัยขั้นสุด" (143 characters). tools/verify-build.mjs
+// requires 150–160, so the brief's wording is kept verbatim and a short factual
+// tail closes the gap.
 const pageDescription =
-  "PGW44 สล็อตเว็บใหญ่ อาณาจักรความบันเทิงที่มั่นคงที่สุด มอบอิสระด้วย ระบบออโต้ไม่มีขั้นต่ำ ลื่นไหล ปลอดภัย พร้อมจัดเต็ม โปรลุ้นรับรางวัลเยอะ ทุกวัน ตลอด 24 ชม.";
+  "TUNJAI123 เว็บตรงอันดับ 1 ลิขสิทธิ์แท้ 100% สัมผัสความรวดเร็วดั่งใจนึก ศูนย์ รวมทุกค่ายในเว็ปเดียว มั่นคง การันตี จ่ายจริง โอนไว ปลอดภัยขั้นสุด ตลอด 24 ชม.";
 
-// Docx headings #3, #4 and #5 — the three provider sub-points that sit under
-// heading #2. FeatureHighlights renders each `title` as an <h3>, which is the
-// only place this page is allowed to have one.
+// The three provider sub-points that sit under docx heading #2.
+// FeatureHighlights renders each `title` as an <h3>, which is the only place
+// this page is allowed to have one.
 const providerPoints = [
   {
     icon: "🐉",
-    title: "PG Soft อาณาจักรแห่ง 3D แอนิเมชัน โบนัสแตกไว",
+    title: "PG Soft กราฟิกเหนือชั้น แอนิเมชันสมจริง โบนัสแตกไว",
     description:
-      "ส่งมอบความบันเทิงผ่านกราฟิกที่สวยงามสมจริง ผสานกับฟีเจอร์เกมที่ไหลลื่น ช่วยให้คุณเข้าถึงรอบโบนัสแจ็กพอตได้อย่างรวดเร็วและต่อเนื่อง",
+      "ส่งมอบความบันเทิงผ่านเทคโนโลยี 3D ที่ตอบสนองฉับไว ฟีเจอร์ตัวคูณและฟรีสปินถูกออกแบบมาให้ผู้เล่นกอบโกยผลตอบแทนได้อย่างรวดเร็ว",
     accent: "gold" as const,
   },
   {
     icon: "⚡",
-    title: "Pragmatic Play แจกรางวัลรัว ฟีเจอร์ทันสมัย ตอบสนองฉับไว",
-    description: "ตอบสนองนักลงทุนที่ชอบความรวดเร็ว ด้วยกลไกการออกรางวัลที่โปร่งใสและจ่ายผลตอบแทนก้อนโตได้อย่างสะใจในทุกจังหวะ",
-    accent: "lime" as const,
+    title: "Pragmatic Play ฟีเจอร์ทันสมัย แจกรางวัลรัว ไม่มีสะดุด",
+    description: "เอาใจสายทำกำไรด้วยระบบเกมเพลย์ที่รวดเร็วและทรงพลัง สปินแต่ละรอบเต็มไปด้วยโอกาสลุ้นแจ็กพอตก้อนโตที่พร้อมแตกตลอดเวลา",
+    accent: "silver" as const,
   },
   {
-    icon: "🔥",
-    title: "Nolimit City ท้าทายทุกขีดจำกัด ตัวคูณมหาศาล",
-    description: "ฉีกกฎเกณฑ์เดิมๆ ด้วยฟีเจอร์การเล่นที่ดุดันและเน้นการทวีคูณเงินรางวัลแบบก้าวกระโดด โหลดไว ไร้ปัญหาอาการค้าง",
+    icon: "👑",
+    title: "JILI เอฟเฟกต์อลังการ ทำกำไรทะลุพิกัด รองรับทุกอุปกรณ์",
+    description: "นวัตกรรมเกมที่พัฒนามาเพื่อความเบาและเสถียร เข้าใช้งานได้อย่างสมูทบนสมาร์ทโฟน ช่วยให้คุณต่อยอดทุนได้อย่างไร้ข้อจำกัด",
     accent: "gold" as const,
   },
 ];
 
 const faqs = [
   {
-    q: "การใช้งานผ่าน ระบบออโต้ไม่มีขั้นต่ำ มีข้อดีอย่างไร?",
-    a: "ช่วยให้ผู้ใช้งานแพลตฟอร์ม PGW44 สามารถบริหารทุนของตนเองได้อย่างอิสระ ไร้ข้อผูกมัด และประมวลผลรวดเร็วทันใจ",
+    q: "ทำไมแพลตฟอร์มนี้ถึงเป็น เว็บตรงอันดับ 1 ที่ได้รับความนิยม?",
+    a: "เพราะเราคือศูนย์ รวมทุกค่ายในเว็ปเดียว ที่ให้บริการด้วย ลิขสิทธิ์แท้ 100% มีความมั่นคง และเชื่อถือได้ในทุกการใช้งาน",
   },
   {
-    q: "ทำไมจึงควรเลือกใช้งานแพลตฟอร์ม สล็อตเว็บใหญ่ ?",
-    a: "เพราะมีความมั่นคงทางการเงินสูง การันตีการจ่ายผลตอบแทนที่ยุติธรรม และมีเสถียรภาพในการให้บริการที่ยอดเยี่ยม",
+    q: "ระบบการฝากถอนเงินของ TUNJAI123 มีความเร็วระดับไหน?",
+    a: "ขับเคลื่อนด้วยระบบออโต้ที่ให้ความรวดเร็วดั่งใจนึก โอนไว และปรับยอดเครดิตสำเร็จภายในเวลาเพียงไม่กี่วินาที",
   },
   {
-    q: "เงื่อนไขการรับ โปรลุ้นรับรางวัลเยอะ ยุ่งยากหรือไม่?",
-    a: "ไม่ยุ่งยาก สมาชิกสามารถกดยอมรับสิทธิพิเศษและโบนัสต่างๆ ได้ด้วยตนเองผ่านหน้าแดชบอร์ดอัตโนมัติ",
+    q: "หากทำกำไรได้ยอดใหญ่ แพลตฟอร์มจะ จ่ายจริง หรือไม่?",
+    a: "การันตี จ่ายจริง ทุกยอดบิล ไม่ว่ายอดจะสูงแค่ไหน ทางระบบก็พร้อมโอนให้คุณเต็มจำนวนอย่างไร้เงื่อนไข",
   },
   {
-    q: "ข้อมูลส่วนบุคคลจะได้รับการปกป้องอย่างไร?",
-    a: "ระบบใช้การเข้ารหัสฐานข้อมูลขั้นสูง ทำให้ทุกการเชื่อมต่อมีความ ลื่นไหล ปลอดภัย ป้องกันการเข้าถึงจากบุคคลภายนอก 100%",
+    q: "ข้อมูลส่วนตัวของผู้ใช้งานจะ ปลอดภัยขั้นสุด ได้อย่างไร?",
+    a: "เราใช้เทคโนโลยีปกป้องข้อมูลระดับองค์กร และเข้าใช้งานผ่าน Secure Popup Loader เพื่อความปลอดภัยและเป็นส่วนตัวสูงสุด",
   },
 ];
 
@@ -81,41 +83,47 @@ const graph = pageGraph(Astro, {
 <MainLayout title={pageTitle} description={pageDescription}>
   <script type="application/ld+json" set:html={graph} />
 
-  <Announcement
-    message="PGW44 สล็อตเว็บใหญ่ ศูนย์รวมค่ายเกมระดับโลก PG Soft Pragmatic Play Nolimit City • ระบบออโต้ไม่มีขั้นต่ำ ฝาก-ถอนเสร็จในไม่กี่วินาที • โปรลุ้นรับรางวัลเยอะ แจกหนักทุกวัน คืนยอดเสีย 15% • ปลอดภัย 100% ผ่าน Secure Transition Popup • ตรวจเงื่อนไขทุกครั้งก่อนกดรับสิทธิ์"
-  />
+  <Announcement />
 
-  <ContentBoxCyberCut as="h1" title="PGW44 สล็อตเว็บใหญ่ ระบบออโต้ไม่มีขั้นต่ำ โปรลุ้นรับรางวัลเยอะ">
-    <p class="text-left text-base leading-relaxed text-[#e8efd8]">
-      <strong class="text-[#ffd54a]">PGW44</strong> สล็อตเว็บใหญ่ ที่ถูกสร้างขึ้นมาเพื่อรองรับผู้เล่นทุกระดับด้วยมาตรฐานความมั่นคงระดับสากล เราพร้อมมอบอิสระทางการเงินอย่างแท้จริงผ่านเทคโนโลยี ระบบออโต้ไม่มีขั้นต่ำ
-      ที่ประมวลผลได้อย่างรวดเร็วและแม่นยำ ทุกการเชื่อมต่อของคุณจะเต็มไปด้วยความลื่นไหล ปลอดภัยขั้นสุด พร้อมยกระดับความคุ้มค่าด้วยแคมเปญและ โปรลุ้นรับรางวัลเยอะ ที่จัดเตรียมไว้ซัพพอร์ตสมาชิกเพื่อต่อยอดผลกำไรในทุกๆ วัน
+  <ContentBoxPremium as="h1" title="TUNJAI123 เว็บตรงอันดับ 1 ลิขสิทธิ์แท้ จ่ายจริง รวมทุกค่ายในเว็ปเดียว">
+    <p class="text-left text-base leading-relaxed text-[#ece3cf]">
+      <strong class="text-[#f5eb8b]">TUNJAI123</strong> เว็บตรงอันดับ 1 ลิขสิทธิ์แท้ ที่ออกแบบระบบโครงสร้างมาเพื่อตอบสนองความต้องการของผู้เล่นยุคใหม่ สัมผัสประสบการณ์ความสนุกแบบไร้รอยต่อและมีความรวดเร็วดั่งใจนึก
+      แพลตฟอร์มของเรามีความมั่นคงสูง การันตี จ่ายจริง ทุกยอดการทำรายการ พร้อมเปิดศูนย์ รวมทุกค่ายในเว็ปเดียว ให้คุณเข้าถึงความบันเทิงระดับโกลบอลได้อย่างปลอดภัยขั้นสุดในทุกๆ คลิก
     </p>
-  </ContentBoxCyberCut>
+  </ContentBoxPremium>
 
-  <ContentBoxFloatingBadge as="h2" title="PGW44 สล็อตเว็บใหญ่ ศูนย์รวมค่ายเกมระดับโลก ลื่นไหล">
-    <p class="text-left text-base leading-relaxed text-[#e8efd8]">
-      อาณาจักรของ PGW44 ถูกออกแบบมาเพื่อเป็นศูนย์กลางของซอฟต์แวร์คุณภาพเยี่ยม โดยเราได้เชื่อมต่อกับผู้พัฒนาชั้นนำเพื่อนำเสนอประสบการณ์ที่สมบูรณ์แบบที่สุด ทุกเกมบนระบบผ่านการตรวจสอบเสถียรภาพ
-      เพื่อให้กราฟิกแสดงผลได้คมชัดและมีอัตราการจ่ายที่ยุติธรรม ตอบโจทย์นักลงทุนที่ต้องการความมั่นใจในทุกการกดสปิน
+  <ContentBoxNeumorphism as="h2" title="TUNJAI123 ศูนย์ รวมทุกค่ายในเว็ปเดียว ลิขสิทธิ์แท้ 100%">
+    <p class="text-left text-base leading-relaxed text-[#ece3cf]">
+      เพื่อความสะดวกสบายสูงสุด แพลตฟอร์ม TUNJAI123 ได้ทำการเชื่อมต่อ API ลิขสิทธิ์แท้จากผู้พัฒนาซอฟต์แวร์ระดับโลกมาไว้ในที่เดียวจบ คุณจะไม่ต้องเสียเวลาย้ายเงินหรือสลับบัญชีให้ยุ่งยากอีกต่อไป
+      ทุกเกมบนระบบผ่านการตรวจสอบมาตรฐานความโปร่งใส มอบอัตราการจ่ายรางวัลที่ยุติธรรมและภาพกราฟิกที่ไหลลื่นที่สุด
     </p>
     <FeatureHighlights items={providerPoints} />
-  </ContentBoxFloatingBadge>
+  </ContentBoxNeumorphism>
 
   <ProviderGrid />
 
-  <GameRankingBoard />
-
-  <ContentBox as="h2" title="PGW44 ขับเคลื่อนด้วย ระบบออโต้ไม่มีขั้นต่ำ รวดเร็วที่สุด">
-    <p class="text-left text-base leading-relaxed text-[#e8efd8]">
-      สัมผัสนวัตกรรมการเงินที่ล้ำหน้าไปอีกขั้นบนระบบของ PGW44 ด้วยสถาปัตยกรรมการประมวลผลที่ให้คุณจัดการงบประมาณได้อย่างอิสระเสรี การทำธุรกรรมทั้งหมดทำงานผ่าน AI อัจฉริยะที่ช่วยตัดความซับซ้อนออกไป
-      มอบความคล่องตัวแบบไม่มีเงื่อนไขผูกมัด ไม่ว่าจะเป็นยอดฝากหรือถอนก็สามารถดำเนินการเสร็จสิ้นภายในไม่กี่วินาทีอย่างแม่นยำ
+  <ContentBoxSevenThreePremium titleright="เทคโนโลยีออโต้สุดล้ำ สัมผัสความรวดเร็วดั่งใจนึก โอนไว">
+    <Picture
+      slot="left"
+      src={imgFirstDeposit}
+      loading="lazy"
+      fetchpriority="low"
+      widths={[200, 400, 600]}
+      sizes="(max-width: 768px) 100vw, 30vw"
+      decoding="async"
+      formats={["avif", "webp"]}
+      fallbackFormat="webp"
+      quality={80}
+      alt="แบนเนอร์โปรโมชั่น TUNJAI123 ฝากแรก ลุ้นรับทอง 1 บาท ง่ายๆ เพียงฝากครั้งแรกก็มีสิทธิ์ลุ้น พร้อมข้อความ ลุ้นรับทอง 1 บาท ทุกยอดฝากแรก โปรดีๆ จัดเต็มเฉพาะสมาชิกใหม่ มั่นคงปลอดภัย เชื่อถือได้ 100% และ ฝาก-ถอนรวดเร็ว ทันใจ 24 ชั่วโมง"
+      class="mx-auto h-auto w-full rounded-2xl border border-[#dab563]/30 shadow-[0_10px_30px_rgba(218,181,99,0.20)]"
+    />
+    <p slot="right" class="text-left text-base leading-relaxed text-[#ece3cf]">
+      หัวใจสำคัญที่ทำให้ระบบของเราเหนือกว่าคือความไวระดับเสี้ยววินาที เมื่อคุณทำธุรกรรมทางการเงิน เทคโนโลยี AI อัจฉริยะจะทำการตรวจสอบและปรับยอดเครดิตให้คุณโดยอัตโนมัติ ไม่ต้องส่งสลิปหรือรอการยืนยันให้เสียเวลา
+      มอบอิสระทางการเงินที่คล่องตัวและตอบโจทย์ไลฟ์สไตล์ของคนที่รักความเร็วอย่างแท้จริง
     </p>
-  </ContentBox>
+  </ContentBoxSevenThreePremium>
 
-  <LoginRtpSection />
-
-  <LatestWinners />
-
-  <ContentBoxSevenThreeCyberCut titleright="โปรลุ้นรับรางวัลเยอะ แจกหนักทุกวัน รับความคุ้มค่าเต็มพิกัด">
+  <ContentBoxSevenThreePremium titleright="TUNJAI123 เว็บตรงอันดับ 1 การันตี จ่ายจริง ไม่มีกั๊ก">
     <Picture
       slot="left"
       src={imgCashback}
@@ -127,39 +135,57 @@ const graph = pageGraph(Astro, {
       formats={["avif", "webp"]}
       fallbackFormat="webp"
       quality={80}
-      alt="แบนเนอร์โปรโมชั่น PGW44 คืนยอดเสีย 15% เสียเท่าไหร่ เราคืนให้! พร้อมข้อความ เล่นได้ทุกเกม สล็อต บาคาร่า ยิงปลา มั่นคง ปลอดภัย มาตรฐานระดับสากล และ ฝาก-ถอน AUTO รวดเร็ว ทันใจ 10 วินาที"
-      class="mx-auto h-auto w-full rounded-2xl border border-[#ecab03]/30 shadow-[0_10px_30px_rgba(236,171,3,0.20)]"
+      alt="แบนเนอร์โปรโมชั่น TUNJAI123 คืนยอดเสีย 15% เสียเท่าไหร่ เราคืนให้มากกว่าเดิม รับคืนทุกยอดเสีย ไม่มีเงื่อนไข พร้อมข้อความ มั่นคง ปลอดภัย มาตรฐานสากล ฝาก-ถอน ออโต้ รวดเร็วทันใจ โบนัสจัดเต็มทุกวัน และบริการลูกค้าตลอด 24 ชั่วโมง"
+      class="mx-auto h-auto w-full rounded-2xl border border-[#dab563]/30 shadow-[0_10px_30px_rgba(218,181,99,0.20)]"
     />
-    <p slot="right" class="text-left text-base leading-relaxed text-[#e8efd8]">
-      เพื่อเป็นการตอบแทนความไว้วางใจ ทางทีมงาน PGW44 ได้จัดเตรียมสิทธิพิเศษมากมายเพื่อเป็นทุนต่อยอดความสำเร็จให้กับสมาชิกทุกคน ไม่ว่าจะเป็นโบนัสต้อนรับหรือแคมเปญประจำวัน
-      คุณสามารถกดรับสิทธิ์เพื่อเพิ่มโอกาสในการทำกำไรได้อย่างง่ายดาย กิจกรรมต่างๆ ถูกออกแบบมาให้เข้าร่วมง่ายและแจกจริง เพื่อให้คุณกวาดผลตอบแทนกลับไปได้มากที่สุด
+    <p slot="right" class="text-left text-base leading-relaxed text-[#ece3cf]">
+      รากฐานของความน่าเชื่อถือคือสภาพคล่องทางการเงินที่แข็งแกร่ง สมาชิกของ TUNJAI123 สามารถวางใจได้เลยว่าทุกความสำเร็จของคุณจะได้รับผลตอบแทนอย่างเต็มเม็ดเต็มหน่วย ไม่ว่าคุณจะทำกำไรได้ในระดับใด
+      ระบบก็พร้อมโอนไวและจ่ายจริงครบถ้วนทุกบิล โดยไม่มีการหักค่าธรรมเนียมหรือเปอร์เซ็นต์แอบแฝง
     </p>
-  </ContentBoxSevenThreeCyberCut>
+  </ContentBoxSevenThreePremium>
+
+  <LatestWinners />
+
+  <ContentBox as="h2" title="TUNJAI123 มั่นคง ปลอดภัยขั้นสุด ผ่านระบบ Premium Popup">
+    <p class="text-left text-base leading-relaxed text-[#ece3cf]">
+      เรื่องความปลอดภัยของข้อมูลคือสิ่งที่เราให้ความสำคัญเป็นลำดับต้นๆ ฐานข้อมูลทั้งหมดของ TUNJAI123 ถูกเข้ารหัสด้วยเทคโนโลยีความปลอดภัยขั้นสูง นอกจากนี้ การเชื่อมต่อเข้าสู่แดชบอร์ดส่วนตัวจะแสดงผลผ่าน Premium
+      Loader ในรูปแบบ Secure Transition Popup ซึ่งช่วยป้องกันการโหลดเว็บซ้ำซ้อนและรักษาความเป็นส่วนตัวของคุณให้ปลอดภัย 100%
+    </p>
+  </ContentBox>
+
+  <Faq title="FAQ คำถามที่พบบ่อย เกี่ยวกับ TUNJAI123 เว็บตรงอันดับ 1" faqs={faqs} />
+
+  <LoginRtpSection />
+
+  <GameRankingBoard />
 
   <SmoothCarousel />
 
-  <ContentBoxCyberCut as="h2" title="PGW44 บริการพรีเมียม ปลอดภัย 100% ผ่าน Secure Popup">
-    <p class="text-left text-base leading-relaxed text-[#e8efd8]">
-      ความปลอดภัยคือเสาหลักที่ PGW44 ให้ความสำคัญสูงสุด ฐานข้อมูลและการเชื่อมต่อทั้งหมดถูกเข้ารหัสด้วยเทคโนโลยีที่เทียบเท่าสถาบันการเงิน นอกจากนี้ การเข้าสู่แดชบอร์ดส่วนตัวจะแสดงผลผ่าน Secure Transition Popup
-      Modal ที่ถูกออกแบบมาเพื่อป้องกันการรีเฟรชหน้าเว็บซ้ำซ้อน ทำให้การใช้งานลื่นไหลและปกป้องข้อมูลของคุณให้เป็นความลับในทุกมิติ
-    </p>
-  </ContentBoxCyberCut>
+  <ContentBoxSpecial label="เข้าสู่ระบบและสมัครสมาชิก TUNJAI123">
+    <div slot="left" class="flex flex-col gap-3">
+      <p class="text-base font-black tracking-wide text-[#f5eb8b]">เข้าสู่ระบบสมาชิกเดิม</p>
+      <p class="text-left text-base leading-relaxed text-[#ece3cf]">
+        เข้าแดชบอร์ดส่วนตัวผ่าน Secure Transition Popup เพื่อจัดการยอดฝากถอน เลือกค่ายเกม และกดรับสิทธิพิเศษได้จากจุดเดียว
+      </p>
+      <a
+        href="/login"
+        class="mt-1 inline-flex items-center justify-center rounded-full bg-gradient-to-r from-[#f5eb8b] via-[#dab563] to-[#a97f28] px-8 py-3 text-sm font-black whitespace-nowrap text-[#120c04] shadow-[0_10px_30px_rgba(218,181,99,0.28)] transition-all duration-300 hover:-translate-y-1 hover:scale-105 hover:shadow-[0_15px_40px_rgba(218,181,99,0.42)] sm:text-base">
+        เข้าสู่ระบบ
+      </a>
+    </div>
 
-  <div class="relative z-10 mx-auto mb-10 flex flex-nowrap justify-center gap-3 px-4 sm:gap-6">
-    <a
-      href="/login"
-      class="group relative flex flex-1 items-center justify-center rounded-full bg-gradient-to-r from-[#ffd54a] via-[#ecab03] to-[#a9760a] px-4 py-3 text-sm font-black whitespace-nowrap text-[#0a0f06] shadow-[0_10px_30px_rgba(236,171,3,0.28)] transition-all duration-300 hover:-translate-y-1 hover:scale-105 hover:shadow-[0_15px_40px_rgba(236,171,3,0.42)] sm:flex-none sm:px-10 sm:py-3.5 sm:text-base">
-      เข้าสู่ระบบ
-    </a>
-
-    <a
-      href="/register"
-      class="group relative flex flex-1 items-center justify-center rounded-full border border-[#4a8d14]/70 bg-[#111a0a]/85 px-4 py-3 text-sm font-black whitespace-nowrap text-[#b9c4a6] backdrop-blur-sm transition-all duration-300 hover:scale-105 hover:border-[#8fd633] hover:bg-[#1a2610]/85 hover:shadow-[0_15px_40px_rgba(143,214,51,0.35)] sm:flex-none sm:px-10 sm:py-3.5 sm:text-base">
-      สมัครสมาชิก
-    </a>
-  </div>
-
-  <Faq title="FAQ คำถามที่พบบ่อย เกี่ยวกับ PGW44 สล็อตเว็บใหญ่" faqs={faqs} />
+    <div slot="right" class="flex flex-col gap-3">
+      <p class="text-base font-black tracking-wide text-[#dfe4e7]">สมัครสมาชิกใหม่</p>
+      <p class="text-left text-base leading-relaxed text-[#ece3cf]">
+        เปิดบัญชีเดียวใช้ได้ครบทุกค่ายลิขสิทธิ์แท้ พร้อมรับสิทธิ์ฝากแรกลุ้นรับทอง 1 บาท และคืนยอดเสีย 15% ตามเงื่อนไขของแต่ละแคมเปญ
+      </p>
+      <a
+        href="/register"
+        class="mt-1 inline-flex items-center justify-center rounded-full border border-[#dfe4e7]/60 bg-[#1a1510]/85 px-8 py-3 text-sm font-black whitespace-nowrap text-[#dfe4e7] backdrop-blur-sm transition-all duration-300 hover:scale-105 hover:border-[#dfe4e7] hover:bg-[#100d08]/85 hover:shadow-[0_15px_40px_rgba(223,228,231,0.28)] sm:text-base">
+        สมัครสมาชิก
+      </a>
+    </div>
+  </ContentBoxSpecial>
 
   <ReviewCardSumo2 />
 

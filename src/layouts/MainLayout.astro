@@ -5,8 +5,8 @@ import ogImage from "../assets/slide1.png";
 import "../styles/global.css";
 import { BRAND_NAME, BRAND_TEXT, brandProfile, fontStack, iconVersion, usesGoogleFonts } from "../lib/brandProfile";
 import { canonicalFor } from "../lib/schema";
-import Navbar from "../components/NavbarStyle4.astro";
-import Footer from "../components/FooterStyle3.astro";
+import Navbar from "../components/NavbarPremium.astro";
+import Footer from "../components/FooterPremiumSumo.astro";
 
 // Only banner1 is ever rendered, so only banner1 is imported.
 //
@@ -55,8 +55,8 @@ const mobileBannerImg = mobileBanner
   : null;
 
 const {
-  title = "PGW44 สล็อตเว็บใหญ่ ระบบออโต้ไม่มีขั้นต่ำ โปรลุ้นรับรางวัลเยอะ",
-  description = "PGW44 สล็อตเว็บใหญ่ อาณาจักรความบันเทิงที่มั่นคงที่สุด มอบอิสระด้วย ระบบออโต้ไม่มีขั้นต่ำ ลื่นไหล ปลอดภัย พร้อมจัดเต็ม โปรลุ้นรับรางวัลเยอะ ทุกวัน ตลอด 24 ชม.",
+  title = "TUNJAI123 เว็บตรงอันดับ 1 ลิขสิทธิ์แท้ จ่ายจริง รวมทุกค่ายในเว็ปเดียว",
+  description = "TUNJAI123 เว็บตรงอันดับ 1 ลิขสิทธิ์แท้ 100% สัมผัสความรวดเร็วดั่งใจนึก ศูนย์ รวมทุกค่ายในเว็ปเดียว มั่นคง การันตี จ่ายจริง โอนไว ปลอดภัยขั้นสุด",
   robots = "index, follow",
 } = Astro.props;
 
@@ -178,7 +178,7 @@ const profile = brandProfile(Astro.site);
 
           {block === "appmeta" && (
             <Fragment>
-              {profile.showAppTitle && <meta name="apple-mobile-web-app-title" content="pgw44" />}
+              {profile.showAppTitle && <meta name="apple-mobile-web-app-title" content="tunjai123" />}
               <link rel="manifest" href="/site.webmanifest" />
             </Fragment>
           )}
@@ -220,7 +220,7 @@ const profile = brandProfile(Astro.site);
         background-attachment: fixed;
         background-repeat: no-repeat;
         margin: 0;
-        background-color: #0a0f06;
+        background-color: #050403;
         font-weight: 400;
         font-family: var(--font-sans) !important;
       }
@@ -273,7 +273,7 @@ const profile = brandProfile(Astro.site);
         }
         <Image
           src={mainBanner}
-          alt="แบนเนอร์ PGW44 สล็อตเว็บใหญ่ เกมเยอะ แตกง่าย จ่ายจริง พร้อมมังกรดำพ่นไฟและหีบสมบัติเหรียญทอง ระบุจุดเด่น เว็บตรง 100% ไม่ผ่านเอเย่นต์ ระบบออโต้ฝาก-ถอนรวดเร็ว ปลอดภัยมั่นคงมาตรฐานสากล สมัครวันนี้รับโบนัสพิเศษทันที"
+          alt="แบนเนอร์ TUNJAI123 เว็บตรงอันดับ 1 ตัวอักษรทองและเงินใต้มงกุฎเพชร พร้อมข้อความ มั่นคง ปลอดภัย จ่ายจริง ไม่ล็อคยูส และไอคอนสี่ช่อง ระบบปลอดภัยมาตรฐานสากล ฝาก-ถอน ออโต้รวดเร็วทันใจ โบนัสจัดเต็มทุกวัน แนะนำเพื่อนรับค่าคอมสูงสุด บริการตลอด 24 ชั่วโมง"
           loading="eager"
           fetchpriority="high"
           widths={[412, 640, 828, 1024, 1280, 1600, 1900]}

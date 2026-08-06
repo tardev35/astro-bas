@@ -29,15 +29,15 @@ import slide3 from "../assets/slide3.png";
 const images = [
   {
     src: slide1,
-    alt: "แบนเนอร์โปรโมชั่น PGW44 คืนยอดเสีย 15% เสียเท่าไหร่ เราคืนให้! พร้อมข้อความ เล่นได้ทุกเกม สล็อต บาคาร่า ยิงปลา มั่นคง ปลอดภัย มาตรฐานระดับสากล และ ฝาก-ถอน AUTO รวดเร็ว ทันใจ 10 วินาที",
+    alt: "แบนเนอร์โปรโมชั่น TUNJAI123 คืนยอดเสีย 15% เสียเท่าไหร่ เราคืนให้มากกว่าเดิม รับคืนทุกยอดเสีย ไม่มีเงื่อนไข พร้อมข้อความ มั่นคง ปลอดภัย มาตรฐานสากล ฝาก-ถอน ออโต้ รวดเร็วทันใจ โบนัสจัดเต็มทุกวัน และบริการลูกค้าตลอด 24 ชั่วโมง",
   },
   {
     src: slide2,
-    alt: "แบนเนอร์โปรโมชั่น PGW44 ฝากแรก 29 ลุ้นรับหม้อชาบู อร่อยฟิน ลุ้นของรางวัลสุดพรีเมียม มูลค่า 1,290 บาท พร้อมเงื่อนไขสมาชิกใหม่เท่านั้น ฝาก 29 รับสิทธิ์ลุ้นเลย",
+    alt: "แบนเนอร์โปรโมชั่น TUNJAI123 ฝากแรก ลุ้นรับทอง 1 บาท ง่ายๆ เพียงฝากครั้งแรกก็มีสิทธิ์ลุ้น พร้อมข้อความ ลุ้นรับทอง 1 บาท ทุกยอดฝากแรก โปรดีๆ จัดเต็มเฉพาะสมาชิกใหม่ มั่นคงปลอดภัย เชื่อถือได้ 100% และ ฝาก-ถอนรวดเร็ว ทันใจ 24 ชั่วโมง",
   },
   {
     src: slide3,
-    alt: "แบนเนอร์โปรโมชั่น PGW44 แทงผิด 10 ครั้งติดต่อกัน ลุ้นรับ iPhone 17 Pro Max เครื่องใหม่ล่าสุด ความจุ 256GB มูลค่า 46,900 บาท",
+    alt: "แบนเนอร์โปรโมชั่น TUNJAI123 แนะนำเพื่อน รับค่าคอม 0.8% ยิ่งแนะนำมาก ยิ่งรับเยอะ ไม่จำกัดยอด พร้อมข้อความ แนะนำเพื่อนได้ไม่จำกัดจำนวน รับค่าคอมสูงสุด 0.8% ไม่จำกัดเพดาน รายได้เสริมถอนได้จริง และระบบปลอดภัย มั่นคง 100%",
   },
 ];
 
@@ -51,13 +51,17 @@ const slides = Array.from({ length: COPIES }, () => images).flat();
 // once it has focus. Mouse users get the :hover pause in the stylesheet.
 // (The note lives in frontmatter because an HTML comment in the template is
 // shipped verbatim to every built page.)
+//
+// Every picture here is lazy/low priority on purpose: the LCP image is the hero
+// banner in MainLayout, and a second eager fetchpriority="high" image competes
+// with it for the same early bandwidth.
 ---
 
 <div class="marquee mx-auto w-full max-w-[1301px] overflow-hidden px-4 py-5">
   <input id="carousel-pause" type="checkbox" class="peer sr-only" />
   <label
     for="carousel-pause"
-    class="sr-only cursor-pointer peer-focus-visible:not-sr-only peer-focus-visible:mb-3 peer-focus-visible:inline-block peer-focus-visible:rounded-full peer-focus-visible:border peer-focus-visible:border-[#ecab03]/60 peer-focus-visible:px-4 peer-focus-visible:py-2 peer-focus-visible:text-sm peer-focus-visible:font-bold peer-focus-visible:text-[#ffd54a]">
+    class="sr-only cursor-pointer peer-focus-visible:not-sr-only peer-focus-visible:mb-3 peer-focus-visible:inline-block peer-focus-visible:rounded-full peer-focus-visible:border peer-focus-visible:border-[#dab563]/60 peer-focus-visible:px-4 peer-focus-visible:py-2 peer-focus-visible:text-sm peer-focus-visible:font-bold peer-focus-visible:text-[#f5eb8b]">
     หยุด / เล่นสไลด์ภาพ
   </label>
 
@@ -74,11 +78,11 @@ const slides = Array.from({ length: COPIES }, () => images).flat();
             <Picture
               src={slide.src}
               alt={isDuplicate ? "" : slide.alt}
-              class="block w-full rounded-xl border border-[#ecab03]/25 object-cover shadow-[0_10px_30px_rgba(236,171,3,0.20)]"
+              class="block w-full rounded-xl border border-[#dab563]/25 object-cover shadow-[0_10px_30px_rgba(218,181,99,0.20)]"
               width={slide.src.width}
               height={slide.src.height}
-              loading={index < 2 ? "eager" : "lazy"}
-              fetchpriority={index === 0 ? "high" : "auto"}
+              loading="lazy"
+              fetchpriority="low"
               decoding="async"
               widths={[200, 400, 600]}
               sizes="(max-width: 768px) 50vw, 33vw"
