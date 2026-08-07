@@ -2,78 +2,78 @@
 import ContentBoxTwo from "./ContentBoxTwo.astro";
 
 // Everything named here is this brand's own: the three camps the docx calls out
-// (Play'n GO, Red Tiger, Blueprint Gaming) plus the four system claims it makes,
-// so the table cannot contradict the prose the page sets above it.
+// (Quickspin, Evoplay, CQ9) plus the four system claims it makes, so the table
+// cannot contradict the prose the page sets above it.
 const menus = [
-  { icon: "🧭", name: "Play'n GO", detail: "เนื้อเรื่องน่าติดตาม กลไกการจ่ายเงินหลากหลายในทุกสปิน", tag: "โบนัสแตกหนัก" },
-  { icon: "🐯", name: "Red Tiger", detail: "แอนิเมชันลื่นไหล ระบบแจ็กพอตแตกง่ายและแตกบ่อย", tag: "ตัวคูณสุดคุ้ม" },
-  { icon: "⚙️", name: "Blueprint Gaming", detail: "กลไก Megaways เส้นทางการจ่ายเงินมหาศาล ระบบเสถียร โหลดไว", tag: "กำไรทวีคูณ" },
-  { icon: "🌐", name: "คัดสรรมาตรฐานระดับสากล", detail: "ทุกซอฟต์แวร์โปร่งใส ยุติธรรม อัตราการจ่ายแม่นยำ", tag: "เว็บสล็อตลิขสิทธิ์แท้" },
-  { icon: "🖱️", name: "อินเทอร์เฟซเป็นมิตรกับมือใหม่", detail: "ลดความซับซ้อนในทุกขั้นตอนของการเดิมพัน", tag: "เล่นง่าย" },
-  { icon: "⚡", name: "ระบบประมวลผลด้วย AI", detail: "ฝากหรือถอนแล้วเครดิตอัปเดตเข้าบัญชีทันที ไม่ต้องรอนาน", tag: "ได้เงินไว" },
-  { icon: "🎧", name: "ทีมซัพพอร์ตสแตนด์บาย", detail: "แก้ไขปัญหาและให้คำปรึกษาได้ตลอดเวลา ไม่มีวันหยุด", tag: "บริการ 24 ชม." },
+  { icon: "🎨", name: "Quickspin", detail: "เล่าเรื่องผ่านกราฟิกสุดพรีเมียม กลไกโบนัสแยบยลลุ้นสนุก", tag: "กราฟิกเหนือระดับ" },
+  { icon: "🕹️", name: "Evoplay", detail: "อินเทอร์เฟซเกม 3D ให้อารมณ์เหมือนวิดีโอเกมระดับโลก", tag: "นวัตกรรม 3D" },
+  { icon: "💥", name: "CQ9", detail: "ระบบเสถียร ฟีเจอร์คูณเงินรางวัลจัดจ้าน เล่นดีบนมือถือทุกรุ่น", tag: "ตอบสนองไว" },
+  { icon: "🛡️", name: "เกมลิขสิทธิ์แท้ตรวจสอบเข้มงวด", detail: "โปร่งใส อัตราจ่ายแม่นยำ ประมวลผลลื่นไหลไม่มีสะดุด", tag: "เว็บสล็อตใหม่ล่าสุด" },
+  { icon: "⚡", name: "เทคโนโลยี AI เฉพาะของแพลตฟอร์ม", detail: "ยอดเครดิตอัปเดตเข้าแดชบอร์ดภายในเสี้ยววินาที", tag: "ระบบออโต้" },
+  { icon: "💳", name: "บริหารเงินทุนได้อิสระเสรี", detail: "ฝากหรือถอนเท่าใดก็ได้ ไร้ข้อผูกมัดหรือเงื่อนไขที่น่าอึดอัด", tag: "ฝากถอนไม่มีขั้นต่ำ" },
+  { icon: "🎁", name: "เมนูรับสิทธิ์อัตโนมัติ", detail: "เลือกรับแคมเปญเองได้ทันที เสริมความแข็งแกร่งให้ฐานทุน", tag: "โปรเด็ด" },
 ];
 
-const chips = ["Play'n GO", "Red Tiger", "Blueprint Gaming", "เว็บสล็อตลิขสิทธิ์แท้", "เล่นง่าย", "ได้เงินไว", "บริการ 24 ชม."];
+const chips = ["Quickspin", "Evoplay", "CQ9", "เว็บสล็อตใหม่ล่าสุด", "ระบบออโต้", "ฝากถอนไม่มีขั้นต่ำ", "โปรเด็ด"];
 ---
 
 <ContentBoxTwo
-  titleleft="เข้าสู่ระบบ BUNNY555"
-  titleright="ค่ายเกมชั้นนำและระบบที่ใช้ได้ทั้งบนมือถือและคอมพิวเตอร์"
-  label="เข้าสู่ระบบ BUNNY555 และค่ายเกมชั้นนำที่รวมไว้ในบัญชีเดียว">
+  titleleft="เข้าสู่ระบบ PGW44"
+  titleright="ค่ายเกมระดับโลกและระบบที่ใช้ได้ทั้งบนมือถือและคอมพิวเตอร์"
+  label="เข้าสู่ระบบ PGW44 และค่ายเกมระดับโลกที่รวมไว้ในบัญชีเดียว">
   <div slot="left" class="flex h-full flex-col gap-4">
-    <div class="relative overflow-hidden rounded-2xl border border-[#ff4d9d]/25 bg-[#26050f]/92 p-6 shadow-[0_10px_30px_rgba(255,77,157,0.16)] backdrop-blur-md">
-      <div class="pointer-events-none absolute -top-10 -right-10 h-32 w-32 rounded-full bg-[#f02e7f]/25 blur-[50px]"></div>
+    <div class="relative overflow-hidden rounded-2xl border border-[#7fdc16]/25 bg-[#07120a]/92 p-6 shadow-[0_10px_30px_rgba(127,220,22,0.16)] backdrop-blur-md">
+      <div class="pointer-events-none absolute -top-10 -right-10 h-32 w-32 rounded-full bg-[#63b80f]/25 blur-[50px]"></div>
 
       <div class="relative z-10 mb-5 flex items-center gap-3">
         <span
           aria-hidden="true"
-          class="flex h-11 w-11 shrink-0 items-center justify-center rounded-xl border border-[#ff4d9d]/40 bg-gradient-to-br from-[#ffc2da] via-[#ff4d9d] to-[#a3134f] text-xl shadow-inner">
-          🐰
+          class="flex h-11 w-11 shrink-0 items-center justify-center rounded-xl border border-[#7fdc16]/40 bg-gradient-to-br from-[#cdf76b] via-[#7fdc16] to-[#3d7509] text-xl shadow-inner">
+          🐉
         </span>
         <div class="flex flex-col">
-          <p class="text-base font-black text-[#ff4d9d]">ยินดีต้อนรับกลับ</p>
-          <span class="text-[11px] text-[#e0a5bd]">บัญชีเดียวใช้เลือกค่ายเกมชั้นนำ กดรับโบนัส และทำรายการฝากถอนของ BUNNY555 ได้จากจุดเดียว</span>
+          <p class="text-base font-black text-[#7fdc16]">ยินดีต้อนรับกลับ</p>
+          <span class="text-[11px] text-[#a6cf7a]">บัญชีเดียวใช้เลือกค่ายเกมระดับโลก กดรับโปรเด็ด และทำรายการผ่านระบบออโต้ของ PGW44 ได้จากจุดเดียว</span>
         </div>
       </div>
 
       <div class="relative z-10 flex flex-col gap-3.5">
         <div class="relative">
-          <span aria-hidden="true" class="absolute top-3.5 left-4 text-[#ffc2da]">👤</span>
+          <span aria-hidden="true" class="absolute top-3.5 left-4 text-[#cdf76b]">👤</span>
           <input
             type="text"
             aria-label="เบอร์โทรศัพท์ หรือ ยูสเซอร์เนม"
             placeholder="เบอร์โทรศัพท์ / ยูสเซอร์เนม"
-            class="w-full rounded-xl border border-[#a3134f] bg-[#3a0818]/95 py-3 pr-4 pl-12 text-[#ffdcea] transition-all outline-none placeholder:text-[#e0a5bd]/70 focus:border-[#ff4d9d] focus:ring-1 focus:ring-[#ff4d9d]/50"
+            class="w-full rounded-xl border border-[#3d7509] bg-[#0e2410]/95 py-3 pr-4 pl-12 text-[#dff5c8] transition-all outline-none placeholder:text-[#a6cf7a]/70 focus:border-[#7fdc16] focus:ring-1 focus:ring-[#7fdc16]/50"
           />
         </div>
         <div class="relative">
-          <span aria-hidden="true" class="absolute top-3.5 left-4 text-[#ffc2da]">🔑</span>
+          <span aria-hidden="true" class="absolute top-3.5 left-4 text-[#cdf76b]">🔑</span>
           <input
             type="password"
             aria-label="รหัสผ่าน"
             placeholder="รหัสผ่าน"
-            class="w-full rounded-xl border border-[#a3134f] bg-[#3a0818]/95 py-3 pr-4 pl-12 text-[#ffdcea] transition-all outline-none placeholder:text-[#e0a5bd]/70 focus:border-[#ff4d9d] focus:ring-1 focus:ring-[#ff4d9d]/50"
+            class="w-full rounded-xl border border-[#3d7509] bg-[#0e2410]/95 py-3 pr-4 pl-12 text-[#dff5c8] transition-all outline-none placeholder:text-[#a6cf7a]/70 focus:border-[#7fdc16] focus:ring-1 focus:ring-[#7fdc16]/50"
           />
         </div>
 
         <div class="flex items-center justify-between px-1 text-xs">
-          <label class="flex items-center gap-2 text-[#e0a5bd]">
-            <input type="checkbox" class="h-3.5 w-3.5 rounded border-[#a3134f] bg-[#3a0818] accent-[#ff4d9d]" />
+          <label class="flex items-center gap-2 text-[#a6cf7a]">
+            <input type="checkbox" class="h-3.5 w-3.5 rounded border-[#3d7509] bg-[#0e2410] accent-[#7fdc16]" />
             จดจำฉันไว้
           </label>
-          <a href="/login" class="text-[#e0a5bd] transition-colors hover:text-[#ffc2da]">ลืมรหัสผ่าน?</a>
+          <a href="/login" class="text-[#a6cf7a] transition-colors hover:text-[#cdf76b]">ลืมรหัสผ่าน?</a>
         </div>
 
         <button
-          class="mt-1 w-full rounded-xl border border-[#ff4d9d]/40 bg-gradient-to-r from-[#ffc2da] via-[#ff4d9d] to-[#a3134f] p-3.5 font-black text-[#26050f] shadow-[0_10px_30px_rgba(255,77,157,0.28)] transition-all hover:scale-[1.02] hover:shadow-[0_15px_40px_rgba(255,77,157,0.4)]">
+          class="mt-1 w-full rounded-xl border border-[#7fdc16]/40 bg-gradient-to-r from-[#cdf76b] via-[#7fdc16] to-[#3d7509] p-3.5 font-black text-[#07120a] shadow-[0_10px_30px_rgba(127,220,22,0.28)] transition-all hover:scale-[1.02] hover:shadow-[0_15px_40px_rgba(127,220,22,0.4)]">
           เข้าสู่ระบบ
         </button>
 
-        <div class="flex items-center gap-3 py-1 text-[11px] text-[#e0a5bd]/70">
-          <span class="h-px flex-1 bg-[#a3134f]"></span>
+        <div class="flex items-center gap-3 py-1 text-[11px] text-[#a6cf7a]/70">
+          <span class="h-px flex-1 bg-[#3d7509]"></span>
           หรือ
-          <span class="h-px flex-1 bg-[#a3134f]"></span>
+          <span class="h-px flex-1 bg-[#3d7509]"></span>
         </div>
 
         <a
@@ -84,21 +84,21 @@ const chips = ["Play'n GO", "Red Tiger", "Blueprint Gaming", "เว็บสล
 
         <div class="mt-1 flex items-center justify-between px-1">
           <div class="flex gap-2">
-            <span class="rounded-full border border-[#ff4d9d]/25 bg-[#3a0818] px-2.5 py-1 text-[10px] font-bold text-[#ff4d9d]"><span aria-hidden="true">🔒</span> Secure Popup</span>
-            <span class="rounded-full border border-[#ffcf5c]/40 bg-[#3a0818]/80 px-2.5 py-1 text-[10px] font-bold text-[#ffcf5c]"><span aria-hidden="true">🕐</span> บริการ 24 ชม.</span>
+            <span class="rounded-full border border-[#7fdc16]/25 bg-[#0e2410] px-2.5 py-1 text-[10px] font-bold text-[#7fdc16]"><span aria-hidden="true">🔒</span> Secure Transition Popup</span>
+            <span class="rounded-full border border-[#f2b40b]/40 bg-[#0e2410]/80 px-2.5 py-1 text-[10px] font-bold text-[#f2b40b]"><span aria-hidden="true">⚡</span> ระบบออโต้</span>
           </div>
-          <a href="/register" class="text-xs font-bold text-[#ffc2da] transition-colors hover:text-[#ff4d9d]">สมัครสมาชิกใหม่</a>
+          <a href="/register" class="text-xs font-bold text-[#cdf76b] transition-colors hover:text-[#7fdc16]">สมัครสมาชิกใหม่</a>
         </div>
       </div>
     </div>
   </div>
 
   <div slot="right" class="h-full">
-    <div class="flex h-full flex-col rounded-2xl border border-[#ff4d9d]/25 bg-[#26050f]/92 p-5 shadow-[0_10px_30px_rgba(255,77,157,0.16)] backdrop-blur-md">
+    <div class="flex h-full flex-col rounded-2xl border border-[#7fdc16]/25 bg-[#07120a]/92 p-5 shadow-[0_10px_30px_rgba(127,220,22,0.16)] backdrop-blur-md">
       <div class="mb-5 flex items-center justify-between gap-3">
         <div>
-          <span class="text-xs font-bold tracking-wide text-[#e0a5bd]">ตารางอ้างอิงค่ายเกมและระบบภายในบัญชีเดียวของ BUNNY555</span>
-          <div class="bg-gradient-to-r from-[#ffc2da] via-[#ff4d9d] to-[#ffcf5c] bg-clip-text text-3xl font-black text-transparent sm:text-4xl">รวมค่ายชั้นนำไว้ในที่เดียว</div>
+          <span class="text-xs font-bold tracking-wide text-[#a6cf7a]">ตารางอ้างอิงค่ายเกมและระบบภายในบัญชีเดียวของ PGW44</span>
+          <div class="bg-gradient-to-r from-[#cdf76b] via-[#7fdc16] to-[#f2b40b] bg-clip-text text-3xl font-black text-transparent sm:text-4xl">รวมค่ายระดับโลกไว้ในที่เดียว</div>
         </div>
         <span class="flex items-center gap-1.5 self-start rounded-full border border-green-500/40 bg-green-900/40 px-2.5 py-1">
           <span class="h-1.5 w-1.5 animate-pulse rounded-full bg-green-500 shadow-[0_0_8px_rgba(34,197,94,0.7)]"></span>
@@ -106,7 +106,7 @@ const chips = ["Play'n GO", "Red Tiger", "Blueprint Gaming", "เว็บสล
         </span>
       </div>
 
-      <div class="mb-2 flex items-center justify-between text-[11px] font-bold tracking-widest text-[#e0a5bd]/70 uppercase">
+      <div class="mb-2 flex items-center justify-between text-[11px] font-bold tracking-widest text-[#a6cf7a]/70 uppercase">
         <span>ค่ายเกม / ระบบในเว็บ</span>
         <span>จุดเด่น</span>
       </div>
@@ -114,27 +114,27 @@ const chips = ["Play'n GO", "Red Tiger", "Blueprint Gaming", "เว็บสล
       <div class="flex flex-1 flex-col gap-2.5">
         {
           menus.map((m) => (
-            <div class="rounded-xl border border-[#a3134f] bg-[#3a0818]/95 px-3.5 py-2.5 transition-colors hover:border-[#ff4d9d]/50 hover:bg-[#26050f]">
+            <div class="rounded-xl border border-[#3d7509] bg-[#0e2410]/95 px-3.5 py-2.5 transition-colors hover:border-[#7fdc16]/50 hover:bg-[#07120a]">
               <div class="flex items-center justify-between gap-2 text-sm">
-                <span class="flex min-w-0 items-center gap-2 font-bold text-[#ffdcea]">
+                <span class="flex min-w-0 items-center gap-2 font-bold text-[#dff5c8]">
                   <span aria-hidden="true" class="w-5 shrink-0 text-center">
                     {m.icon}
                   </span>{" "}
                   <span class="truncate">{m.name}</span>
                 </span>
-                <span class="shrink-0 rounded-full border border-[#ff4d9d]/30 bg-[#150207] px-2.5 py-0.5 text-[10px] font-bold text-[#ffc2da]">{m.tag}</span>
+                <span class="shrink-0 rounded-full border border-[#7fdc16]/30 bg-[#050d07] px-2.5 py-0.5 text-[10px] font-bold text-[#cdf76b]">{m.tag}</span>
               </div>
-              <div class="mt-1.5 text-[11px] tracking-wide text-[#e0a5bd]">{m.detail}</div>
+              <div class="mt-1.5 text-[11px] tracking-wide text-[#a6cf7a]">{m.detail}</div>
             </div>
           ))
         }
       </div>
 
       <div class="mt-4 flex flex-wrap items-center justify-center gap-2">
-        {chips.map((c) => <span class="rounded-full border border-[#ff4d9d]/25 bg-[#3a0818] px-3 py-1 text-[10px] font-bold text-[#ff4d9d]">{c}</span>)}
+        {chips.map((c) => <span class="rounded-full border border-[#7fdc16]/25 bg-[#0e2410] px-3 py-1 text-[10px] font-bold text-[#7fdc16]">{c}</span>)}
       </div>
 
-      <div class="mt-3 text-center text-[10px] tracking-wide text-[#a8788b]">
+      <div class="mt-3 text-center text-[10px] tracking-wide text-[#7a9c5c]">
         รายละเอียดค่ายเกมและสิทธิพิเศษอาจปรับเปลี่ยนตามช่วงเวลา ควรตรวจเงื่อนไขของแต่ละแคมเปญจากหน้าโปรโมชั่นจริงก่อนกดรับสิทธิ์ทุกครั้ง
       </div>
     </div>

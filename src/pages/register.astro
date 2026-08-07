@@ -2,7 +2,7 @@
 import MainLayout from "../layouts/MainLayout.astro";
 import ContentBox from "../components/ContentBox.astro";
 import Navfoot from "../components/Navfoot.astro";
-import Announcement from "../components/Announcement5.astro";
+import Announcement from "../components/AnnouncementCyber.astro";
 import { pageGraph } from "../lib/schema";
 
 // BUTTON PAGE, not an article, and no longer an auto-forwarding interstitial:
@@ -10,15 +10,16 @@ import { pageGraph } from "../lib/schema";
 // Never add an <h2>, never write body copy here.
 //
 // 153 characters — this page is indexed now, so verify-build holds the
-// description to the 150–160 window like any other page. Count characters with
-// PowerShell `"...".Length`; a byte count reads ~3x too long on Thai.
-// The docx gives no Title/Meta for /register, so both are written here; they
-// describe the button page this route is now, not the old auto-forward.
+// description to the 150–160 window like any other page. Count CHARACTERS
+// (`node -e "console.log([...'…'].length)"`); a byte count reads ~3x too long
+// on Thai. The docx gives no Title/Meta for /register, so both are written
+// here from the brand's own positioning; they describe the button page this
+// route is now, not the old auto-forward.
 const pageDescription =
-  "หน้าสมัครสมาชิก BUNNY555 เว็บสล็อตลิขสิทธิ์แท้ กดปุ่มเดียวเข้าสู่หน้าสมัครของเว็บหลัก เปิดบัญชีใหม่ผ่านระบบออโต้ รับโปรโมชั่นและคืนยอดเสีย 15% ทุกสัปดาห์";
+  "หน้าสมัครสมาชิก PGW44 เว็บสล็อตใหม่ล่าสุด กดปุ่มเดียวเปิดบัญชีกับเว็บหลักผ่าน Secure Transition Popup ระบบออโต้ ฝากถอนไม่มีขั้นต่ำ พร้อมรับ โปรเด็ด ทันที";
 
 const graph = pageGraph(Astro, {
-  name: "สมัครสมาชิก BUNNY555 เว็บหลัก เปิดบัญชีใหม่ผ่านระบบออโต้",
+  name: "สมัครสมาชิก PGW44 เว็บหลัก เปิดบัญชีใหม่ผ่านระบบออโต้",
   description: pageDescription,
   breadcrumb: [
     { name: "หน้าแรก", path: "/" },
@@ -31,18 +32,18 @@ const graph = pageGraph(Astro, {
 const targetUrl = "https://tinyurl.com/pigbas";
 ---
 
-<MainLayout title="สมัครสมาชิก BUNNY555 เว็บหลัก เปิดบัญชีใหม่ผ่านระบบออโต้" description={pageDescription}>
+<MainLayout title="สมัครสมาชิก PGW44 เว็บหลัก เปิดบัญชีใหม่ผ่านระบบออโต้" description={pageDescription}>
   <script type="application/ld+json" set:html={graph} />
 
   <Announcement />
 
-  <ContentBox title="สมัครสมาชิก BUNNY555" as="h1">
+  <ContentBox title="สมัครสมาชิก PGW44" as="h1">
     <div class="flex justify-center py-8">
       <a
         href={targetUrl}
         rel="nofollow sponsored"
-        aria-label="สมัครสมาชิก BUNNY555 ที่เว็บหลัก"
-        class="group relative mx-auto flex w-full max-w-[320px] items-center justify-center gap-3 overflow-hidden rounded-xl border border-[#ff4d9d]/60 bg-gradient-to-r from-[#ffc2da] via-[#ff4d9d] to-[#a3134f] px-6 py-4 text-xl font-bold tracking-wide text-[#26050f] shadow-[0_10px_30px_rgba(255,77,157,0.20)] transition-all duration-300 hover:scale-105 hover:shadow-[0_15px_40px_rgba(255,77,157,0.32)]">
+        aria-label="สมัครสมาชิก PGW44 ที่เว็บหลัก"
+        class="group relative mx-auto flex w-full max-w-[320px] items-center justify-center gap-3 overflow-hidden rounded-xl border border-[#7fdc16]/60 bg-gradient-to-r from-[#cdf76b] via-[#7fdc16] to-[#3d7509] px-6 py-4 text-xl font-bold tracking-wide text-[#07120a] shadow-[0_10px_30px_rgba(127,220,22,0.20)] transition-all duration-300 hover:scale-105 hover:shadow-[0_15px_40px_rgba(127,220,22,0.32)]">
         สมัครสมาชิก
       </a>
     </div>

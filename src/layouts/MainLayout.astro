@@ -5,8 +5,8 @@ import ogImage from "../assets/slide1.png";
 import "../styles/global.css";
 import { BRAND_NAME, BRAND_TEXT, brandProfile, fontStack, iconVersion, usesGoogleFonts } from "../lib/brandProfile";
 import { canonicalFor } from "../lib/schema";
-import Navbar from "../components/NavbarStyle6.astro";
-import Footer from "../components/FooterStyle3.astro";
+import Navbar from "../components/NavbarCyber.astro";
+import Footer from "../components/FooterCyber.astro";
 
 // Only banner1 is ever rendered, so only banner1 is imported.
 //
@@ -55,13 +55,13 @@ const mobileBannerImg = mobileBanner
   : null;
 
 const {
-  title = "BUNNY555 เว็บสล็อตลิขสิทธิ์แท้ เล่นง่าย ได้เงินไว บริการ 24 ชม.",
-  // 157 characters. The docx meta on its own is 144, and verify-build.mjs fails
+  title = "PGW44 เว็บสล็อตใหม่ล่าสุด ระบบออโต้ ฝากถอนไม่มีขั้นต่ำ โปรเด็ด",
+  // 157 characters. The docx meta on its own is 129, and verify-build.mjs fails
   // an indexable page outside 150–160 — so this default has to clear the floor
   // too, not just the descriptions the pages pass in. Every page currently
   // passes its own, which is exactly why a broken default would sit here
   // unnoticed until the first page that forgot to.
-  description = "BUNNY555 เว็บสล็อตลิขสิทธิ์แท้ 100% สัมผัสประสบการณ์ทำกำไรเหนือระดับ เล่นง่าย ทะยานสู่ความมั่งคั่ง ได้เงินไว ปลอดภัย พร้อมดูแลด้วย บริการ 24 ชม. ไม่มีวันหยุด",
+  description = "PGW44 เว็บสล็อตใหม่ล่าสุด นวัตกรรมการลงทุนแห่งยุค ขับเคลื่อนความเร็วด้วย ระบบออโต้ ให้อิสระ ฝากถอนไม่มีขั้นต่ำ พร้อมคัดสรร โปรเด็ด โดนใจทุกยอดบิล ดูแลตลอด 24 ชม.",
   robots = "index, follow",
 } = Astro.props;
 
@@ -192,7 +192,7 @@ const profile = brandProfile(Astro.site);
 
           {block === "appmeta" && (
             <Fragment>
-              {profile.showAppTitle && <meta name="apple-mobile-web-app-title" content="bunny555" />}
+              {profile.showAppTitle && <meta name="apple-mobile-web-app-title" content="pgw44" />}
               <link rel="manifest" href="/site.webmanifest" />
             </Fragment>
           )}
@@ -234,7 +234,7 @@ const profile = brandProfile(Astro.site);
         background-attachment: fixed;
         background-repeat: no-repeat;
         margin: 0;
-        background-color: #150207;
+        background-color: #07120a;
         font-weight: 400;
         font-family: var(--font-sans) !important;
       }
@@ -287,7 +287,7 @@ const profile = brandProfile(Astro.site);
         }
         <Image
           src={mainBanner}
-          alt="แบนเนอร์ BUNNY555 พื้นหลังสีดำโรยเหรียญทองและหัวใจชมพู สาวสวยในชุดกระต่ายสีชมพูยืนข้างตู้สล็อต JACKPOT เลข 777 ข้อความ BUNNY555 เว็บสล็อตลิขสิทธิ์แท้ รวมค่ายดังระดับโลก พร้อมตรามั่นคง ปลอดภัย 100% และ จ่ายจริง โอนไว ไม่อั้น ไอคอนสี่ช่อง ระบบปลอดภัยมาตรฐานสากล เล่นลื่นไหลไม่มีสะดุด โบนัสจัดเต็มทุกวัน บริการลูกค้า 24 ชม. ปิดท้ายด้วยปุ่ม สมัครง่าย ใช้เพียง 1 นาที"
+          alt="แบนเนอร์ PGW44 พื้นหลังสีดำมีสายฟ้าสีเขียวนีออนและมังกรดำพ่นไฟ สาวสวยชุดหนังสีเขียวดำยืนข้างตู้สล็อต JACKPOT เลข 777 กับหีบสมบัติเหรียญทอง ข้อความ PGW44 เว็บสล็อตใหม่ล่าสุด รวมทุกค่ายดัง เล่นง่าย จ่ายจริง มั่นคง ปลอดภัย 100% ตราระบบออโต้ 24 ชม. รวดเร็วทันใจ เหรียญ สมัครใหม่รับโบนัสทันที 300% ไอคอนสี่ช่อง มั่นคงปลอดภัย 100% ฝาก-ถอนรวดเร็วไม่เกิน 1 นาที โบนัสจัดเต็มทั้งวันทุกเวลา บริการลูกค้า 24 ชม. ปิดท้ายด้วยแถบ สมัครง่าย ใช้เพียง 1 นาที"
           loading="eager"
           fetchpriority="high"
           widths={[412, 640, 828, 1024, 1280, 1600, 1900]}

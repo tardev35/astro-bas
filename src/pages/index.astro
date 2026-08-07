@@ -1,76 +1,76 @@
 ---
 import MainLayout from "../layouts/MainLayout.astro";
-import Announcement from "../components/Announcement5.astro";
-import ContentBoxFloatingBadge from "../components/ContentBoxFloatingBadge.astro";
+import Announcement from "../components/AnnouncementCyber.astro";
+import ContentBoxCyberCut from "../components/ContentBoxCyberCut.astro";
+import ContentBoxPremium from "../components/ContentBoxPremium.astro";
 import ContentBox from "../components/ContentBox.astro";
-import ContentBoxSevenThree from "../components/ContentBoxSevenThree.astro";
-import ContentBoxSevenThreeNeumorphism from "../components/ContentBoxSevenThreeNeumorphism.astro";
-import ContentBoxSpecial from "../components/ContentBoxSpecial.astro";
-import ContentBoxTwo from "../components/ContentBoxTwo.astro";
+import ContentBoxSevenThreeCyberCut from "../components/ContentBoxSevenThreeCyberCut.astro";
+import ContentBoxSevenThreePremium from "../components/ContentBoxSevenThreePremium.astro";
+import ContentBoxTwoCyberCut from "../components/ContentBoxTwoCyberCut.astro";
 import FeatureHighlights from "../components/FeatureHighlights.astro";
 import LoginRtpSection from "../components/LoginRtpSection.astro";
 import ProviderGrid from "../components/ProviderGrid.astro";
 import GameRankingBoard from "../components/GameRankingBoard.astro";
 import ReviewCardSumo2 from "../components/ReviewCardSumo2.astro";
-import LatestWinners from "../components/LatestWinners3.astro";
+import LatestWinners from "../components/LatestWinnersCyber.astro";
 import SmoothCarousel from "../components/SmoothCarousel.astro";
-import Faq from "../components/Faq2.astro";
+import Faq from "../components/Faq3.astro";
 import Navfoot from "../components/Navfoot.astro";
 
 import { Picture } from "astro:assets";
 import { pageGraph } from "../lib/schema";
 import imgCashback from "../assets/slide1.png";
-import imgGoldBonus from "../assets/slide2.png";
+import imgReferral from "../assets/slide2.png";
 
-const pageTitle = "BUNNY555 เว็บสล็อตลิขสิทธิ์แท้ เล่นง่าย ได้เงินไว บริการ 24 ชม.";
+const pageTitle = "PGW44 เว็บสล็อตใหม่ล่าสุด ระบบออโต้ ฝากถอนไม่มีขั้นต่ำ โปรเด็ด";
 
-// 157 characters. The docx meta stops at "บริการ 24 ชม." and is 146 — below
+// 159 characters. The docx meta ends at "โดนใจทุกยอดบิล" and counts 145 — below
 // tools/verify-build.mjs's DESC_MIN of 150, which is a hard error. The brief's
-// sentence is kept byte-identical and the trailing " ไม่มีวันหยุด" (a phrase the
-// docx already uses in its FAQ answer) closes the gap.
+// sentence is kept word for word and the trailing " ทำกำไรยั่งยืน" (the docx's
+// own closing phrase in the H1 paragraph) closes the gap without adding a claim.
 const pageDescription =
-  "BUNNY555 เว็บสล็อตลิขสิทธิ์แท้ 100% สัมผัสประสบการณ์ทำกำไรเหนือระดับ เล่นง่าย ทะยานสู่ความมั่งคั่ง ได้เงินไว ปลอดภัย พร้อมดูแลด้วย บริการ 24 ชม. ไม่มีวันหยุด";
+  "PGW44 เว็บสล็อตใหม่ล่าสุด นวัตกรรมการลงทุนแห่งยุค ขับเคลื่อนความเร็วด้วย ระบบออโต้ ให้อิสระ ฝากถอนไม่มีขั้นต่ำ พร้อมคัดสรร โปรเด็ด โดนใจทุกยอดบิล ทำกำไรยั่งยืน";
 
 // The three camp sub-points that sit under docx heading #2, in the docx's own
 // order. FeatureHighlights renders each `title` as an <h3>, which is the only
-// place this page is allowed to have one. Its accent union is "pink" | "gold".
+// place this page is allowed to have one. Its accent union is "green" | "gold".
 const providerPoints = [
   {
-    icon: "🧭",
-    title: "Play'n GO ผจญภัยไร้ขีดจำกัด โบนัสแตกหนัก",
-    description: "โดดเด่นด้วยเนื้อเรื่องที่น่าติดตามและกลไกการจ่ายเงินที่หลากหลาย สปินแต่ละรอบมอบโอกาสในการทำกำไรแบบก้าวกระโดดผ่านฟีเจอร์สุดล้ำ",
-    accent: "pink" as const,
+    icon: "🎨",
+    title: "Quickspin กราฟิกเหนือระดับ กลไกเกมล้ำสมัย",
+    description: "ผู้พัฒนาที่มุ่งเน้นการเล่าเรื่องผ่านภาพกราฟิกสุดพรีเมียม ผสานกลไกการออกโบนัสที่แยบยลและลุ้นสนุก สร้างความตื่นเต้นในทุกจังหวะการสปิน",
+    accent: "green" as const,
   },
   {
-    icon: "🐯",
-    title: "Red Tiger กราฟิกตระการตา ฟีเจอร์ตัวคูณสุดคุ้ม",
-    description: "สัมผัสความอลังการของภาพแอนิเมชันที่ลื่นไหล มาพร้อมกับระบบแจ็กพอตที่แตกง่ายและแตกบ่อย ช่วยให้คุณกอบโกยผลตอบแทนได้อย่างรวดเร็ว",
+    icon: "🕹️",
+    title: "Evoplay นวัตกรรม 3D สุดล้ำ ทลายทุกกฎเกณฑ์",
+    description: "ฉีกกรอบการเดิมพันแบบเดิมๆ ด้วยอินเทอร์เฟซเกมรูปแบบใหม่ที่ให้อารมณ์เหมือนเล่นวิดีโอเกมระดับโลก เข้าถึงง่ายและมีโอกาสทำกำไรสูง",
     accent: "gold" as const,
   },
   {
-    icon: "⚙️",
-    title: "Blueprint Gaming กลไก Megaways ลุ้นกำไรทวีคูณ",
-    description: "ค่ายเกมที่ขึ้นชื่อเรื่องเส้นทางการจ่ายเงินที่มหาศาล ระบบเสถียร โหลดไว ตอบโจทย์นักลงทุนที่ต้องการผลลัพธ์แบบฉับไวและคุ้มค่าที่สุด",
-    accent: "pink" as const,
+    icon: "💥",
+    title: "CQ9 เอฟเฟกต์จัดจ้าน ตอบสนองไว ทำกำไรคุ้มค่า",
+    description: "ซอฟต์แวร์เกมที่ขึ้นชื่อเรื่องความเสถียรและฟีเจอร์การคูณเงินรางวัลที่จัดจ้าน ตอบสนองได้ดีเยี่ยมบนมือถือทุกรุ่น ช่วยให้คุณทำกำไรได้อย่างลื่นไหล",
+    accent: "green" as const,
   },
 ];
 
 const faqs = [
   {
-    q: "ทำไมแพลตฟอร์มนี้จึงเป็น เว็บสล็อตลิขสิทธิ์แท้ ที่น่าลงทุน?",
-    a: "เพราะ BUNNY555 เชื่อมต่อ API โดยตรงจากค่ายเกมระดับโลก มั่นใจได้ในความโปร่งใส ปลอดภัย และไม่ถูกปรับลดอัตราการชนะ",
+    q: "ทำไมแพลตฟอร์มนี้ถึงเป็น เว็บสล็อตใหม่ล่าสุด ที่น่าจับตามอง?",
+    a: "เพราะ PGW44 ถูกพัฒนาด้วยนวัตกรรมซอฟต์แวร์แห่งอนาคต มุ่งเน้นความเสถียร ความโปร่งใส และรวบรวมเกมลิขสิทธิ์แท้ไว้มากที่สุด",
   },
   {
-    q: "ระบบการใช้งานที่บอกว่า เล่นง่าย เหมาะกับมือใหม่หรือไม่?",
-    a: "เหมาะสมอย่างยิ่ง อินเทอร์เฟซบนแพลตฟอร์ม BUNNY555 ออกแบบเมนูต่างๆ ให้เข้าใจง่าย ไม่ซับซ้อน มือใหม่ก็ทำกำไรได้ทันที",
+    q: "นโยบาย ฝากถอนไม่มีขั้นต่ำ ให้อิสระแก่ผู้เล่นอย่างไร?",
+    a: "ช่วยให้ผู้เล่นสามารถฝากหรือถอนเงินจำนวนเท่าใดก็ได้ตามต้องการ ไร้ข้อจำกัดเรื่องยอดขั้นต่ำ เพิ่มความยืดหยุ่นในการบริหารทุน",
   },
   {
-    q: "การทำรายการฝากและถอนที่ว่า ได้เงินไว ใช้เวลาเท่าไหร่?",
-    a: "ดำเนินการผ่านระบบ AI อัจฉริยะ ทำให้ยอดเงินโอนเข้าบัญชีของ BUNNY555 สำเร็จภายในเวลาเพียงเสี้ยววินาทีเท่านั้น",
+    q: "การรับสิทธิพิเศษและ โปรเด็ด มีเงื่อนไขที่ซับซ้อนหรือไม่?",
+    a: "ไม่มีเงื่อนไขซับซ้อน สมาชิกสามารถกดยอมรับสิทธิ์ด้วยตนเองผ่านระบบอัตโนมัติ นำไปต่อยอดทุนได้ทันที",
   },
   {
-    q: "หากมีข้อสงสัย สามารถติดต่อรับ บริการ 24 ชม. ได้ทางไหน?",
-    a: "สมาชิกสามารถติดต่อทีมงานของ BUNNY555 ได้โดยตรงผ่านช่องทางแชทบนหน้าเว็บ หรือ LINE Official ตลอดเวลา ไม่มีวันหยุด",
+    q: "หากทำรายการผ่าน ระบบออโต้ จะใช้เวลาประมาณเท่าใด?",
+    a: "ระบบ AI อัจฉริยะจะทำการประมวลผลและปรับยอดเครดิตให้คุณเสร็จสิ้นภายในเวลาเพียงเสี้ยววินาทีเท่านั้น",
   },
 ];
 
@@ -86,25 +86,53 @@ const graph = pageGraph(Astro, {
 
   <Announcement />
 
-  <ContentBoxFloatingBadge as="h1" title="BUNNY555 เว็บสล็อตลิขสิทธิ์แท้ เล่นง่าย ได้เงินไว บริการ 24 ชม.">
-    <p class="text-left text-base leading-relaxed text-[#ffdcea]">
-      เปิดประสบการณ์การทำกำไรที่เหนือระดับไปกับ <strong class="text-[#fff0f6]">BUNNY555</strong> เว็บสล็อตลิขสิทธิ์แท้ ที่ออกแบบมาเพื่อตอบโจทย์ผู้เล่นทุกกลุ่มด้วยระบบที่ทันสมัย
-      เรามุ่งเน้นการพัฒนารูปแบบการเดิมพันให้ เล่นง่าย ไม่ซับซ้อน เพื่อให้คุณก้าวสู่ความมั่งคั่งได้อย่างรวดเร็ว พร้อมมอบความมั่นใจด้วยระบบการจ่ายผลตอบแทนที่ ได้เงินไว แม่นยำ
-      และมีทีมงานมืออาชีพคอยดูแลคุณผ่าน บริการ 24 ชม. ให้คุณอุ่นใจในทุกครั้งที่เข้ามาทำกำไร
+  <ContentBoxCyberCut as="h1" title="PGW44 เว็บสล็อตใหม่ล่าสุด ระบบออโต้ ฝากถอนไม่มีขั้นต่ำ โปรเด็ด">
+    <p class="text-left text-base leading-relaxed text-[#dff5c8]">
+      ก้าวข้ามทุกขีดจำกัดเดิมๆ สู่โลกดิจิทัลใบใหม่กับแพลตฟอร์ม <strong class="text-[#f2ffe3]">PGW44</strong> เว็บสล็อตใหม่ล่าสุด ที่ถูกสร้างขึ้นเพื่อเป็นนวัตกรรมการลงทุนแห่งยุค
+      แพลตฟอร์มนี้โดดเด่นด้วยสถาปัตยกรรมซอฟต์แวร์ที่ทันสมัย มอบประสบการณ์ที่เหนือกว่าผ่านการขับเคลื่อนด้วย ระบบออโต้ อัจฉริยะ ให้คุณสัมผัสอิสระทางการเงินแบบ ฝากถอนไม่มีขั้นต่ำ อย่างแท้จริง
+      พร้อมจัดเตรียม โปรเด็ด มากมายที่พร้อมซัพพอร์ตให้ผู้เล่นทุกคนทำกำไรได้อย่างยั่งยืน
     </p>
-  </ContentBoxFloatingBadge>
+  </ContentBoxCyberCut>
 
-  <ContentBox as="h2" title="BUNNY555 ศูนย์รวมค่ายเกมชั้นนำ เว็บสล็อตลิขสิทธิ์แท้">
-    <p class="text-left text-base leading-relaxed text-[#ffdcea]">
-      แพลตฟอร์มของเราคัดสรรเฉพาะซอฟต์แวร์เกมที่ได้มาตรฐานระดับสากล การันตีว่าทุกซอฟต์แวร์บน BUNNY555 มีความโปร่งใสและยุติธรรมสูงสุด มอบอัตราการจ่ายที่แม่นยำ
-      พร้อมให้คุณสัมผัสกราฟิกที่ไหลลื่นและระบบที่ตอบสนองไวในทุกอุปกรณ์
+  <ContentBoxPremium as="h2" title="PGW44 คัดสรรค่ายเกมระดับโลก เว็บสล็อตใหม่ล่าสุด">
+    <p class="text-left text-base leading-relaxed text-[#dff5c8]">
+      การเริ่มต้นกับแพลตฟอร์ม PGW44 คือการเปิดประตูสู่ศูนย์รวมความบันเทิงระดับไฮเอนด์ เพราะเราได้เชื่อมต่อซอฟต์แวร์เกมลิขสิทธิ์แท้ที่ผ่านการตรวจสอบคุณภาพอย่างเข้มงวด
+      มั่นใจได้ในเรื่องความโปร่งใส อัตราการจ่ายผลตอบแทนที่แม่นยำ และระบบประมวลผลที่ลื่นไหลไม่มีสะดุด
     </p>
     <FeatureHighlights items={providerPoints} />
-  </ContentBox>
+  </ContentBoxPremium>
 
   <ProviderGrid />
 
-  <ContentBoxSevenThree titleright="สร้างกำไรง่ายๆ กับระบบของ BUNNY555 เล่นง่าย ทะลุขีดจำกัด">
+  <ContentBox as="h2" title="เทคโนโลยี ระบบออโต้ สุดล้ำ ลิขสิทธิ์เฉพาะของ PGW44">
+    <p class="text-left text-base leading-relaxed text-[#dff5c8]">
+      ยกระดับการทำธุรกรรมให้รวดเร็วและแม่นยำที่สุดด้วยเทคโนโลยี AI ที่ได้รับการพัฒนามาเพื่อระบบของ PGW44 โดยเฉพาะ เมื่อคุณทำรายการผ่าน ระบบออโต้
+      ยอดเครดิตจะถูกประมวลผลและอัปเดตเข้าสู่แดชบอร์ดส่วนตัวภายในเสี้ยววินาที ลดขั้นตอนที่ซับซ้อนและไม่ต้องรอคอยให้เสียเวลา
+    </p>
+  </ContentBox>
+
+  <ContentBoxSevenThreeCyberCut titleright="มอบอิสระทางการเงิน ฝากถอนไม่มีขั้นต่ำ ยืดหยุ่นสูงสุด">
+    <Picture
+      slot="left"
+      src={imgReferral}
+      loading="lazy"
+      fetchpriority="low"
+      widths={[200, 400, 600]}
+      sizes="(max-width: 768px) 100vw, 30vw"
+      decoding="async"
+      formats={["avif", "webp"]}
+      fallbackFormat="webp"
+      quality={80}
+      alt="แบนเนอร์โปรโมชั่น PGW44 แนะนำเพื่อน รับค่าคอม 0.8% ไม่อั้นทุกยอด ตัวอักษรสีขาวและทองบนพื้นดำเขียวที่มีสายฟ้าสีเขียวและมังกรดำ หญิงสาวชุดสีเขียวชี้มือข้างตู้สล็อต JACKPOT ข้อความ ยิ่งเพื่อนเล่นเยอะ ยิ่งรับเยอะ ไม่จำกัดเวลาการรับโบนัส พร้อมป้าย รับค่าคอมสูงสุด 0.8% ไอคอนสี่ช่อง ชวนง่ายผ่านลิงก์ของคุณ เพื่อนสมัครและเล่นเกม รับค่าคอมทันทีทุกยอดการเล่น ถอนง่ายไม่จำกัด และแถบ เริ่มสร้างรายได้ไปกับเรา วันนี้"
+      class="mx-auto h-auto w-full rounded-2xl border border-[#7fdc16]/30 shadow-[0_10px_30px_rgba(127,220,22,0.22)]"
+    />
+    <p slot="right" class="text-left text-base leading-relaxed text-[#dff5c8]">
+      ไม่ว่าคุณจะมีงบประมาณเท่าใด ทางทีมงานของ PGW44 พร้อมเปิดโอกาสให้ทุกคนเข้าถึงการลงทุนได้อย่างเท่าเทียม นโยบาย ฝากถอนไม่มีขั้นต่ำ ช่วยให้คุณบริหารจัดการเงินทุนได้อย่างอิสระเสรี
+      ปราศจากข้อผูกมัดหรือเงื่อนไขที่น่าอึดอัด มอบความคล่องตัวในทุกการตัดสินใจของคุณ
+    </p>
+  </ContentBoxSevenThreeCyberCut>
+
+  <ContentBoxSevenThreePremium titleright="รับความคุ้มค่าจาก โปรเด็ด บนระบบ PGW44 ทวีคูณผลกำไร">
     <Picture
       slot="left"
       src={imgCashback}
@@ -116,44 +144,14 @@ const graph = pageGraph(Astro, {
       formats={["avif", "webp"]}
       fallbackFormat="webp"
       quality={80}
-      alt="แบนเนอร์โปรโมชั่น BUNNY555 คืนยอดเสีย 15% ตัวเลขสีขาวขอบชมพูบนพื้นดำโรยเหรียญทอง สาวชุดกระต่ายสีชมพูข้างตู้สล็อต JACKPOT ข้อความ เสียเท่าไหร่ เราคืนให้ 15% พร้อมไอคอนสี่ช่อง ระบบปลอดภัยมาตรฐานสากล คืนยอดเสียอัตโนมัติ เล่นได้ทุกเกมไม่จำกัด บริการลูกค้า 24 ชม. และแถบ เล่นสนุก มั่นใจ ได้เงินจริง"
-      class="mx-auto h-auto w-full rounded-2xl border border-[#ff4d9d]/30 shadow-[0_10px_30px_rgba(255,77,157,0.22)]"
+      alt="แบนเนอร์โปรโมชั่น PGW44 คืนยอดเสีย 30% ตัวเลขสีขาวขอบทองบนพื้นดำเขียวที่มีสายฟ้าสีเขียวและมังกรดำพ่นไฟ หญิงสาวชุดสีเขียวยืนข้างตู้สล็อต JACKPOT 777 และกองเหรียญทอง ข้อความ เสียเท่าไหร่ เราคืนให้ 30% ทุกวัน พร้อมป้าย ระบบออโต้ 24 ชม. รวดเร็ว ทันใจ ป้าย สมัครใหม่ รับโบนัสทันที 300% และแถบ เล่นง่าย จ่ายจริง มั่นคง ปลอดภัย 100%"
+      class="mx-auto h-auto w-full rounded-2xl border border-[#f2b40b]/30 shadow-[0_10px_30px_rgba(242,180,11,0.22)]"
     />
-    <p slot="right" class="text-left text-base leading-relaxed text-[#ffdcea]">
-      ไม่ว่าคุณจะเป็นมือใหม่หรือมือโปร แพลตฟอร์มของ BUNNY555 ถูกออกแบบอินเทอร์เฟซมาให้ใช้งานได้อย่างเป็นมิตรและเป็นสัดส่วน ลดความซับซ้อนในทุกขั้นตอนของการเดิมพัน
-      ช่วยให้คุณโฟกัสกับการกอบโกยรางวัลได้อย่างเต็มที่ ไร้อุปสรรคขัดขวาง
+    <p slot="right" class="text-left text-base leading-relaxed text-[#dff5c8]">
+      เพื่อเป็นการสนับสนุนสมาชิกทุกท่าน แพลตฟอร์ม PGW44 ได้จัดเตรียมแคมเปญและสิทธิพิเศษเอาไว้อย่างครบครัน คุณสามารถเลือกรับ โปรเด็ด ได้ด้วยตนเองผ่านเมนูอัตโนมัติ
+      ซึ่งจะช่วยเสริมความแข็งแกร่งให้ฐานทุนของคุณ และนอกจากนี้ การเข้าสู่ระบบยังถูกปกป้องด้วยนวัตกรรม Secure Transition Popup ที่ลื่นไหล ปลอดภัย ไร้กังวลในทุกการคลิก
     </p>
-  </ContentBoxSevenThree>
-
-  <ContentBoxSevenThreeNeumorphism titleright="เทคโนโลยีออโต้สุดล้ำ การันตี ได้เงินไว ในเสี้ยววินาที">
-    <Picture
-      slot="left"
-      src={imgGoldBonus}
-      loading="lazy"
-      fetchpriority="low"
-      widths={[200, 400, 600]}
-      sizes="(max-width: 768px) 100vw, 30vw"
-      decoding="async"
-      formats={["avif", "webp"]}
-      fallbackFormat="webp"
-      quality={80}
-      alt="แบนเนอร์โปรโมชั่น BUNNY555 ฝากแรกลุ้นรับทอง 1 บาท ตัวอักษรสีชมพูบนพื้นดำโรยเหรียญทอง สาวชุดกระต่ายสีชมพูข้างตู้สล็อต JACKPOT มีทองคำแท่งและสร้อยทองด้านขวา ข้อความ ลุ้นง่าย จ่ายจริง ฟรีทุกยูสเซอร์ พร้อมไอคอนสี่ช่อง ระบบปลอดภัยมาตรฐานสากล ฝาก-ถอนรวดเร็วทันใจ โบนัสจัดเต็มทุกวัน บริการลูกค้า 24 ชม. และแถบ สมัครวันนี้ รับสิทธิ์ลุ้นทองทันที"
-      class="mx-auto h-auto w-full rounded-2xl border border-[#ff4d9d]/30 shadow-[0_10px_30px_rgba(255,77,157,0.22)]"
-    />
-    <p slot="right" class="text-left text-base leading-relaxed text-[#ffdcea]">
-      เราเข้าใจดีว่าเวลาคือสิ่งมีค่า ระบบประมวลผลของ BUNNY555 จึงถูกพัฒนาด้วย AI ที่ล้ำสมัยที่สุด เพียงทำรายการฝากหรือถอน เครดิตของคุณจะถูกอัปเดตเข้าบัญชีทันทีโดยไม่ต้องรอนาน
-      มอบความมั่นใจและสภาพคล่องทางการเงินให้คุณในทุกบิลที่ทำกำไรได้
-    </p>
-  </ContentBoxSevenThreeNeumorphism>
-
-  <ContentBoxSpecial as="h2" title="ดูแลทุกการเชื่อมต่อด้วย บริการ 24 ชม. จากทีมงาน BUNNY555">
-    <p slot="left" class="text-left text-base leading-relaxed text-[#ffdcea]">
-      เพื่อให้คุณก้าวเดินบนเส้นทางแห่งความสำเร็จอย่างราบรื่น ทีมซัพพอร์ตของ BUNNY555 ได้ผ่านการอบรมมาอย่างดีเยี่ยม พร้อมสแตนด์บายแก้ไขปัญหาและให้คำปรึกษาตลอดเวลา
-    </p>
-    <p slot="right" class="text-left text-base leading-relaxed text-[#ffdcea]">
-      ไม่ว่าคุณจะต้องการความช่วยเหลือเมื่อใด เราก็พร้อมเคียงข้างและดูแลคุณระดับวีไอพีเสมอ
-    </p>
-  </ContentBoxSpecial>
+  </ContentBoxSevenThreePremium>
 
   <Faq title="FAQ คำถามที่พบบ่อย" faqs={faqs} />
 
@@ -165,37 +163,38 @@ const graph = pageGraph(Astro, {
 
   <LatestWinners />
 
-  <ContentBoxTwo label="เข้าสู่ระบบและสมัครสมาชิก BUNNY555">
+  <ContentBoxTwoCyberCut label="เข้าสู่ระบบและสมัครสมาชิก PGW44">
     <div slot="left" class="flex flex-col gap-4">
-      <p class="flex items-center gap-3 border-b border-[#ff4d9d]/30 pb-3 text-xl leading-normal font-black tracking-widest text-[#ff4d9d] uppercase">
-        <span aria-hidden="true" class="h-6 w-1.5 shrink-0 rounded-full bg-gradient-to-b from-[#ffc2da] via-[#ff4d9d] to-[#a3134f] shadow-[0_0_10px_rgba(255,77,157,0.5)]"></span>
+      <p class="flex items-center gap-3 border-b border-[#7fdc16]/30 pb-3 text-xl leading-normal font-black tracking-widest text-[#7fdc16] uppercase">
+        <span aria-hidden="true" class="h-6 w-1.5 shrink-0 rounded-full bg-gradient-to-b from-[#cdf76b] via-[#7fdc16] to-[#3d7509] shadow-[0_0_10px_rgba(127,220,22,0.5)]"></span>
         เข้าสู่ระบบสมาชิกเดิม
       </p>
-      <p class="text-left text-base leading-relaxed text-[#ffdcea]">
-        เข้าแดชบอร์ดส่วนตัวเพื่อจัดการยอดฝากถอนผ่านระบบออโต้ที่ ได้เงินไว ในเสี้ยววินาที เลือกค่ายเกมชั้นนำ และกดรับโบนัสได้จากจุดเดียว
+      <p class="text-left text-base leading-relaxed text-[#dff5c8]">
+        เข้าแดชบอร์ดส่วนตัวเพื่อจัดการยอดฝากถอนผ่าน ระบบออโต้ ที่ประมวลผลเสร็จภายในเสี้ยววินาที เลือกค่ายเกมระดับโลก และกดรับ โปรเด็ด ได้จากจุดเดียว
       </p>
       <a
         href="/login"
-        class="mt-1 inline-flex items-center justify-center rounded-full bg-gradient-to-r from-[#ffc2da] via-[#ff4d9d] to-[#a3134f] px-8 py-3 text-sm font-black whitespace-nowrap text-[#26050f] shadow-[0_10px_30px_rgba(255,77,157,0.3)] transition-all duration-300 hover:-translate-y-1 hover:scale-105 hover:shadow-[0_15px_40px_rgba(255,77,157,0.45)] sm:text-base">
+        class="mt-1 inline-flex items-center justify-center rounded-full bg-gradient-to-r from-[#cdf76b] via-[#7fdc16] to-[#3d7509] px-8 py-3 text-sm font-black whitespace-nowrap text-[#07120a] shadow-[0_10px_30px_rgba(127,220,22,0.3)] transition-all duration-300 hover:-translate-y-1 hover:scale-105 hover:shadow-[0_15px_40px_rgba(127,220,22,0.45)] sm:text-base">
         เข้าสู่ระบบ
       </a>
     </div>
 
     <div slot="right" class="flex flex-col gap-4">
-      <p class="flex items-center gap-3 border-b border-[#ffcf5c]/40 pb-3 text-xl leading-normal font-black tracking-widest text-[#ffcf5c] uppercase">
-        <span aria-hidden="true" class="h-6 w-1.5 shrink-0 rounded-full bg-gradient-to-b from-[#ffe7a8] via-[#ffcf5c] to-[#c98a1c] shadow-[0_0_10px_rgba(255,207,92,0.5)]"></span>
+      <p class="flex items-center gap-3 border-b border-[#f2b40b]/40 pb-3 text-xl leading-normal font-black tracking-widest text-[#f2b40b] uppercase">
+        <span aria-hidden="true" class="h-6 w-1.5 shrink-0 rounded-full bg-gradient-to-b from-[#ffe08a] via-[#f2b40b] to-[#9c7304] shadow-[0_0_10px_rgba(242,180,11,0.5)]"></span>
         สมัครสมาชิกใหม่
       </p>
-      <p class="text-left text-base leading-relaxed text-[#ffdcea]">
-        เปิดบัญชีเดียวใช้ได้ครบทุกค่ายลิขสิทธิ์แท้ ทั้ง Play'n GO Red Tiger และ Blueprint Gaming พร้อมรับการดูแลจากทีมงานด้วย บริการ 24 ชม. ตามเงื่อนไขของแต่ละแคมเปญ
+      <p class="text-left text-base leading-relaxed text-[#dff5c8]">
+        เปิดบัญชีเดียวใช้ได้ครบทุกค่ายลิขสิทธิ์แท้ ทั้ง Quickspin Evoplay และ CQ9 พร้อมนโยบาย ฝากถอนไม่มีขั้นต่ำ และการเข้าสู่ระบบที่ปกป้องด้วย Secure Transition Popup
+        ตามเงื่อนไขของแต่ละแคมเปญ
       </p>
       <a
         href="/register"
-        class="mt-1 inline-flex items-center justify-center rounded-full border border-[#ffcf5c]/60 bg-[#3a0818]/85 px-8 py-3 text-sm font-black whitespace-nowrap text-[#ffcf5c] backdrop-blur-sm transition-all duration-300 hover:scale-105 hover:border-[#ffcf5c] hover:bg-[#26050f]/85 hover:shadow-[0_15px_40px_rgba(255,207,92,0.3)] sm:text-base">
+        class="mt-1 inline-flex items-center justify-center rounded-full border border-[#f2b40b]/60 bg-[#0e2410]/85 px-8 py-3 text-sm font-black whitespace-nowrap text-[#f2b40b] backdrop-blur-sm transition-all duration-300 hover:scale-105 hover:border-[#f2b40b] hover:bg-[#07120a]/85 hover:shadow-[0_15px_40px_rgba(242,180,11,0.3)] sm:text-base">
         สมัครสมาชิก
       </a>
     </div>
-  </ContentBoxTwo>
+  </ContentBoxTwoCyberCut>
 
   <ReviewCardSumo2 />
 

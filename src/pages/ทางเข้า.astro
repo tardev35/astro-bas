@@ -2,21 +2,21 @@
 import MainLayout from "../layouts/MainLayout.astro";
 import ContentBox from "../components/ContentBox.astro";
 import Navfoot from "../components/Navfoot.astro";
-import Announcement from "../components/Announcement5.astro";
+import Announcement from "../components/AnnouncementCyber.astro";
 import { pageGraph } from "../lib/schema";
 
 // BUTTON PAGE, not an article: one <h1> from the ContentBox title, then the
 // two-column button grid. No <h2>, no explanatory prose — the docx gives this
 // page a Title and a Meta and never a body.
 //
-// The brief's own sentence is 126 characters, under verify-build.mjs's 150
+// The brief's own sentence is 147 characters, under verify-build.mjs's 150
 // floor, so the trailing clause brings it into the 150–160 window without
 // changing what the brief says. This one is 158 characters (not bytes).
 const pageDescription =
-  "หน้าเข้าสู่ระบบ BUNNY555 ยกระดับความปลอดภัยด้วยเทคโนโลยี Secure Transition Popup โหลดไว ลื่นไหล ปกป้องข้อมูลส่วนตัวของคุณ 100% พร้อมปุ่มสมัครสมาชิกในหน้าเดียว";
+  "หน้าเข้าสู่ระบบ PGW44 มอบความปลอดภัยระดับสูงสุดผ่านเทคโนโลยี Secure Transition Popup โหลดไว ลื่นไหล ป้องกันข้อมูลของคุณอย่างรัดกุมในทุกการเชื่อมต่อ ทุกอุปกรณ์";
 
 const graph = pageGraph(Astro, {
-  name: "BUNNY555 เข้าสู่ระบบ ปลอดภัย ลื่นไหล ผ่าน Premium Popup",
+  name: "PGW44 เข้าสู่ระบบ ปลอดภัยขั้นสุด ผ่าน Secure Popup",
   description: pageDescription,
   breadcrumb: [
     { name: "หน้าแรก", path: "/" },
@@ -25,40 +25,40 @@ const graph = pageGraph(Astro, {
 });
 ---
 
-<MainLayout title="BUNNY555 เข้าสู่ระบบ ปลอดภัย ลื่นไหล ผ่าน Premium Popup" description={pageDescription}>
+<MainLayout title="PGW44 เข้าสู่ระบบ ปลอดภัยขั้นสุด ผ่าน Secure Popup" description={pageDescription}>
   <script type="application/ld+json" set:html={graph} />
 
   <Announcement />
 
-  <ContentBox title="ทางเข้า BUNNY555 เว็บหลัก" as="h1">
+  <ContentBox title="ทางเข้า PGW44 เว็บหลัก" as="h1">
     <div class="mb-5 grid grid-cols-1 gap-8 md:grid-cols-2">
       <div class="flex flex-col items-center justify-center gap-4">
         <a
           href="/login"
-          aria-label="เข้าสู่ระบบ BUNNY555"
-          class="group relative mx-auto flex w-full max-w-[320px] items-center justify-center gap-3 overflow-hidden rounded-xl border border-[#ff4d9d]/50 bg-[#26050f] px-6 py-4 shadow-[0_10px_30px_rgba(240,46,127,0.16)] transition-all duration-300 hover:scale-105 hover:border-[#ff4d9d] hover:bg-[#3a0818] hover:shadow-[0_15px_40px_rgba(240,46,127,0.28)]">
-          <div class="absolute inset-x-0 top-0 h-1/2 bg-gradient-to-b from-[#ff4d9d]/20 to-transparent"></div>
+          aria-label="เข้าสู่ระบบ PGW44"
+          class="group relative mx-auto flex w-full max-w-[320px] items-center justify-center gap-3 overflow-hidden rounded-xl border border-[#7fdc16]/50 bg-[#07120a] px-6 py-4 shadow-[0_10px_30px_rgba(99,184,15,0.16)] transition-all duration-300 hover:scale-105 hover:border-[#7fdc16] hover:bg-[#0e2410] hover:shadow-[0_15px_40px_rgba(99,184,15,0.28)]">
+          <div class="absolute inset-x-0 top-0 h-1/2 bg-gradient-to-b from-[#7fdc16]/20 to-transparent"></div>
 
-          <svg class="relative z-10 h-9 w-9 text-[#ff4d9d]" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+          <svg class="relative z-10 h-9 w-9 text-[#7fdc16]" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
             <path stroke-linecap="round" stroke-linejoin="round" d="M11 16l-4-4m0 0l4-4m-4 4h14m-5 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h7a3 3 0 013 3v1"></path>
           </svg>
 
-          <span class="relative z-10 text-3xl font-bold tracking-wide text-[#ff4d9d]">เข้าสู่ระบบ</span>
+          <span class="relative z-10 text-3xl font-bold tracking-wide text-[#7fdc16]">เข้าสู่ระบบ</span>
         </a>
       </div>
 
       <div class="flex flex-col items-center justify-center gap-4">
         <a
           href="/register"
-          aria-label="สมัครสมาชิก BUNNY555"
-          class="group relative mx-auto flex w-full max-w-[320px] items-center justify-center gap-3 overflow-hidden rounded-xl border border-[#ff4d9d]/60 bg-gradient-to-r from-[#ffc2da] via-[#ff4d9d] to-[#a3134f] px-6 py-4 shadow-[0_10px_30px_rgba(255,77,157,0.20)] transition-all duration-300 hover:scale-105 hover:shadow-[0_15px_40px_rgba(255,77,157,0.32)]">
+          aria-label="สมัครสมาชิก PGW44"
+          class="group relative mx-auto flex w-full max-w-[320px] items-center justify-center gap-3 overflow-hidden rounded-xl border border-[#7fdc16]/60 bg-gradient-to-r from-[#cdf76b] via-[#7fdc16] to-[#3d7509] px-6 py-4 shadow-[0_10px_30px_rgba(127,220,22,0.20)] transition-all duration-300 hover:scale-105 hover:shadow-[0_15px_40px_rgba(127,220,22,0.32)]">
           <div class="absolute inset-x-0 top-0 h-1/2 bg-gradient-to-b from-white/55 to-transparent"></div>
 
-          <svg class="relative z-10 h-9 w-9 text-[#26050f]" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+          <svg class="relative z-10 h-9 w-9 text-[#07120a]" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
             <path stroke-linecap="round" stroke-linejoin="round" d="M18 9v3m0 0v3m0-3h3m-3 0h-3m-2-5a4 4 0 11-8 0 4 4 0 018 0zM3 20a6 6 0 0112 0v1H3v-1z"></path>
           </svg>
 
-          <span class="relative z-10 text-3xl font-bold tracking-wide text-[#26050f]">สมัครสมาชิก</span>
+          <span class="relative z-10 text-3xl font-bold tracking-wide text-[#07120a]">สมัครสมาชิก</span>
         </a>
       </div>
     </div>

@@ -21,20 +21,20 @@ import slide2 from "../assets/slide2.png";
 // there were more pictures; these are promo banners whose whole content IS the
 // text printed on them, so that text is the alt.
 //
-// TWO slides, not three or four: slide3.png (2026-08-06, still carrying the
-// TUNJAI123 wordmark) and slide4.png (2026-08-01) predate this brand's asset
-// drop (slide1/slide2, 2026-08-07 07:06). Importing either would both ship a
+// TWO slides, not three or four: slide3.png (2026-08-06) and slide4.png
+// (2026-08-01) predate this brand's asset drop (slide1/slide2, 2026-08-07) and
+// still carry a previous brand's wordmark. Importing either would both ship a
 // stale picture and emit its asset into dist/, because an import IS an emit. If
 // a future brand uploads a real slide3, add it back here AND redo the --shift
 // arithmetic below for N=3.
 const images = [
   {
     src: slide1,
-    alt: "แบนเนอร์โปรโมชั่น BUNNY555 คืนยอดเสีย 15% ตัวเลขสีขาวขอบชมพูบนพื้นดำโรยเหรียญทอง สาวชุดกระต่ายสีชมพูข้างตู้สล็อต JACKPOT ข้อความ เสียเท่าไหร่ เราคืนให้ 15% พร้อมไอคอนสี่ช่อง ระบบปลอดภัยมาตรฐานสากล คืนยอดเสียอัตโนมัติ เล่นได้ทุกเกมไม่จำกัด บริการลูกค้า 24 ชม. และแถบ เล่นสนุก มั่นใจ ได้เงินจริง",
+    alt: "แบนเนอร์โปรโมชั่น PGW44 คืนยอดเสีย 30% ตัวเลขสีขาวขอบทองบนพื้นดำเขียวที่มีสายฟ้าสีเขียวและมังกรดำพ่นไฟ หญิงสาวชุดสีเขียวยืนข้างตู้สล็อต JACKPOT 777 และกองเหรียญทอง ข้อความ เสียเท่าไหร่ เราคืนให้ 30% ทุกวัน พร้อมป้าย ระบบออโต้ 24 ชม. รวดเร็ว ทันใจ ป้าย สมัครใหม่ รับโบนัสทันที 300% และแถบ เล่นง่าย จ่ายจริง มั่นคง ปลอดภัย 100%",
   },
   {
     src: slide2,
-    alt: "แบนเนอร์โปรโมชั่น BUNNY555 ฝากแรกลุ้นรับทอง 1 บาท ตัวอักษรสีชมพูบนพื้นดำโรยเหรียญทอง สาวชุดกระต่ายสีชมพูข้างตู้สล็อต JACKPOT มีทองคำแท่งและสร้อยทองด้านขวา ข้อความ ลุ้นง่าย จ่ายจริง ฟรีทุกยูสเซอร์ พร้อมไอคอนสี่ช่อง ระบบปลอดภัยมาตรฐานสากล ฝาก-ถอนรวดเร็วทันใจ โบนัสจัดเต็มทุกวัน บริการลูกค้า 24 ชม. และแถบ สมัครวันนี้ รับสิทธิ์ลุ้นทองทันที",
+    alt: "แบนเนอร์โปรโมชั่น PGW44 แนะนำเพื่อน รับค่าคอม 0.8% ไม่อั้นทุกยอด ตัวอักษรสีขาวและทองบนพื้นดำเขียวที่มีสายฟ้าสีเขียวและมังกรดำ หญิงสาวชุดสีเขียวชี้มือข้างตู้สล็อต JACKPOT ข้อความ ยิ่งเพื่อนเล่นเยอะ ยิ่งรับเยอะ ไม่จำกัดเวลาการรับโบนัส พร้อมป้าย รับค่าคอมสูงสุด 0.8% ไอคอนสี่ช่อง ชวนง่ายผ่านลิงก์ของคุณ เพื่อนสมัครและเล่นเกม รับค่าคอมทันทีทุกยอดการเล่น ถอนง่ายไม่จำกัด และแถบ เริ่มสร้างรายได้ไปกับเรา วันนี้",
   },
 ];
 
@@ -63,7 +63,7 @@ const slides = Array.from({ length: COPIES }, () => images).flat();
   <input id="carousel-pause" type="checkbox" class="peer sr-only" />
   <label
     for="carousel-pause"
-    class="sr-only cursor-pointer peer-focus-visible:not-sr-only peer-focus-visible:mb-3 peer-focus-visible:inline-block peer-focus-visible:rounded-full peer-focus-visible:border peer-focus-visible:border-[#ff4d9d]/60 peer-focus-visible:px-4 peer-focus-visible:py-2 peer-focus-visible:text-sm peer-focus-visible:font-bold peer-focus-visible:text-[#ffc2da]">
+    class="sr-only cursor-pointer peer-focus-visible:not-sr-only peer-focus-visible:mb-3 peer-focus-visible:inline-block peer-focus-visible:rounded-full peer-focus-visible:border peer-focus-visible:border-[#7fdc16]/60 peer-focus-visible:px-4 peer-focus-visible:py-2 peer-focus-visible:text-sm peer-focus-visible:font-bold peer-focus-visible:text-[#cdf76b]">
     หยุด / เล่นสไลด์ภาพ
   </label>
 
@@ -76,7 +76,7 @@ const slides = Array.from({ length: COPIES }, () => images).flat();
             <Picture
               src={slide.src}
               alt={isDuplicate ? "" : slide.alt}
-              class="block w-full rounded-xl border border-[#ff4d9d]/25 object-cover shadow-[0_10px_30px_rgba(255,77,157,0.22)]"
+              class="block w-full rounded-xl border border-[#7fdc16]/25 object-cover shadow-[0_10px_30px_rgba(127,220,22,0.22)]"
               width={slide.src.width}
               height={slide.src.height}
               loading="lazy"

@@ -2,29 +2,29 @@
 import MainLayout from "../layouts/MainLayout.astro";
 import ContentBox from "../components/ContentBox.astro";
 import Navfoot from "../components/Navfoot.astro";
-import Announcement from "../components/Announcement5.astro";
+import Announcement from "../components/AnnouncementCyber.astro";
 
 import { Picture } from "astro:assets";
 
-// Only the TWO slides that belong to THIS brand's drop (2026-08-07 07:06) are
-// imported. slide3.png (2026-08-06, still carries an earlier brand's wordmark
-// baked into the artwork) and slide4.png (2026-08-01) are previous brands'
-// promo art — and an image imported without being rendered still gets emitted
-// into dist/, so they are dropped here rather than left as unused imports.
+// Only the TWO slides that belong to THIS brand's drop (2026-08-07) are
+// imported. slide3.png (2026-08-06) and slide4.png (2026-08-01) are previous
+// brands' promo art — and an image imported without being rendered still gets
+// emitted into dist/, so they are dropped here rather than left as unused
+// imports.
 import pro1 from "../assets/slide1.png";
 import pro2 from "../assets/slide2.png";
 import { pageGraph } from "../lib/schema";
 
-// 158 CHARACTERS (not bytes — Thai is 3 bytes/char, so a byte count reads ~3x
-// too long). The brief's own sentence is 133 characters, under
+// 157 CHARACTERS (not bytes — Thai is 3 bytes/char, so a byte count reads ~3x
+// too long). The brief's own sentence is 127 characters, under
 // verify-build.mjs's 150 floor, so the trailing clause names the two campaigns
 // the artwork actually shows and brings it into the 150–160 window without
 // changing what the brief says.
 const pageDescription =
-  "อัปเดตสิทธิพิเศษและโปรโมชั่นสุดคุ้มจาก BUNNY555 กดรับโบนัสเพื่อต่อยอดทุนของคุณให้เติบโตอย่างมั่นคง เล่นง่าย รับสิทธิ์ได้ผ่านระบบออโต้ ทั้งคืนยอดเสียและลุ้นทอง";
+  "อัปเดตสิทธิพิเศษและโบนัสล่าสุดจาก PGW44 กดรับ โปรเด็ด สุดคุ้มค่าผ่านระบบอัตโนมัติ เพื่อเสริมศักยภาพให้การทำกำไรของคุณก้าวกระโดด คืนยอดเสีย 30% และค่าคอม 0.8%";
 
 const graph = pageGraph(Astro, {
-  name: "BUNNY555 โปรโมชั่น แจกหนักทุนเสริม เล่นง่าย ได้ทุกวัน",
+  name: "PGW44 โปรโมชั่น ศูนย์รวม โปรเด็ด ยกระดับการลงทุน",
   description: pageDescription,
   breadcrumb: [
     { name: "หน้าแรก", path: "/" },
@@ -34,23 +34,23 @@ const graph = pageGraph(Astro, {
 });
 ---
 
-<MainLayout title="BUNNY555 โปรโมชั่น แจกหนักทุนเสริม เล่นง่าย ได้ทุกวัน" description={pageDescription}>
+<MainLayout title="PGW44 โปรโมชั่น ศูนย์รวม โปรเด็ด ยกระดับการลงทุน" description={pageDescription}>
   <script type="application/ld+json" set:html={graph} />
 
   <Announcement />
 
-  <ContentBox title="โปรโมชั่น BUNNY555 แจกหนักทุนเสริม เล่นง่าย รับสิทธิ์ได้ทุกวัน" as="h1">
-    <h2 class="mb-4 text-2xl leading-normal font-bold text-[#ffc2da]">แคมเปญรอบนี้ของ BUNNY555 มีอะไรบ้าง และต้องอ่านเงื่อนไขตรงไหน</h2>
+  <ContentBox title="โปรโมชั่น PGW44 ศูนย์รวม โปรเด็ด กดรับเองได้ผ่านระบบออโต้" as="h1">
+    <h2 class="mb-4 text-2xl leading-normal font-bold text-[#cdf76b]">แคมเปญรอบนี้ของ PGW44 มีอะไรบ้าง และต้องอ่านเงื่อนไขตรงไหน</h2>
 
-    <p class="mb-5 text-left text-base leading-relaxed text-[#ffdcea]">
-      <strong class="text-[#ff4d9d]">BUNNY555</strong> คือ เว็บสล็อตลิขสิทธิ์แท้ ที่เชื่อมต่อ API ตรงจากค่ายเกมระดับโลกอย่าง Play'n GO, Red Tiger และ Blueprint Gaming ไว้ในบัญชีเดียว
-      สิทธิพิเศษบนหน้านี้จึงผูกอยู่กับยอดการเล่นและค่ายเกมที่ร่วมรายการ ไม่ได้ลอยอยู่เดี่ยว ๆ รอบนี้มีสองแคมเปญหลัก คือ คืนยอดเสีย 15% ที่คิดจากยอดที่เสียจริงและคืนให้อัตโนมัติ เล่นได้ทุกเกมไม่จำกัด
-      กับ ฝากแรกลุ้นรับทองคำ 1 บาท ที่เปิดสิทธิ์ให้ฟรีทุกยูสเซอร์ตั้งแต่บิลฝากแรก ตัวเลขใหญ่บนแบนเนอร์บอกได้แค่ว่ามีอะไรให้ ส่วนบรรทัดเล็กใต้ตัวเลขคือคนที่ตัดสินว่าเราได้จริงเท่าไร
-      ก่อนกดรับจึงควรไล่ให้ครบทั้งรอบการคำนวณ ยอดที่นับได้จริง ค่ายเกมที่ร่วมรายการ และเพดานการถอน
+    <p class="mb-5 text-left text-base leading-relaxed text-[#dff5c8]">
+      <strong class="text-[#7fdc16]">PGW44</strong> คือ เว็บสล็อตใหม่ล่าสุด ที่เชื่อมต่อซอฟต์แวร์เกมลิขสิทธิ์แท้จากค่ายระดับโลกอย่าง Quickspin, Evoplay และ CQ9 ไว้ในบัญชีเดียว
+      สิทธิพิเศษบนหน้านี้จึงผูกอยู่กับยอดการเล่นและค่ายเกมที่ร่วมรายการ ไม่ได้ลอยอยู่เดี่ยว ๆ รอบนี้มีสองแคมเปญหลัก คือ คืนยอดเสีย 30% ที่คิดจากยอดที่เสียจริงและคืนให้อัตโนมัติทุกวัน
+      กับ แนะนำเพื่อน รับค่าคอม 0.8% ไม่อั้นทุกยอด ที่จ่ายตามยอดการเล่นของเพื่อนที่สมัครผ่านลิงก์ของคุณ ส่วนสมาชิกที่เพิ่งเปิดยูสเซอร์แรกยังมี โบนัสต้อนรับ 300% รออยู่
+      ตัวเลขใหญ่บนแบนเนอร์บอกได้แค่ว่ามีอะไรให้ ส่วนบรรทัดเล็กใต้ตัวเลขคือคนที่ตัดสินว่าเราได้จริงเท่าไร ก่อนกดรับจึงควรไล่ให้ครบทั้งรอบการคำนวณ ยอดที่นับได้จริง ค่ายเกมที่ร่วมรายการ และเพดานการถอน
     </p>
 
-    <p class="mb-8 text-left text-base leading-relaxed text-[#ffdcea]">
-      สองแคมเปญนี้ทำงานคนละจังหวะกัน คืนยอดเสียจะสรุปเป็นรอบตามยอดที่เสียจริงในช่วงเวลาที่กำหนด ส่วนสิทธิ์ลุ้นทองคำผูกกับบิลฝากแรกของแต่ละยูสเซอร์ จึงเป็นสิทธิ์ที่ใช้ได้ครั้งเดียวและไม่สะสมข้ามรอบ
+    <p class="mb-8 text-left text-base leading-relaxed text-[#dff5c8]">
+      สองแคมเปญนี้ทำงานคนละจังหวะกัน คืนยอดเสียจะสรุปเป็นรอบตามยอดที่เสียจริงในช่วงเวลาที่กำหนด ส่วนค่าคอมจากการแนะนำเพื่อนจะเดินต่อเนื่องไปเรื่อย ๆ ตราบที่เพื่อนของคุณยังเล่นอยู่ จึงไม่มีเพดานเวลาให้ต้องรีบ
       ตัวเลขที่เห็นบนหน้านี้จึงควรใช้เป็นข้อมูลตั้งต้น แล้วตรวจจากหน้าโปรจริงอีกครั้งก่อนกด เพราะช่วงเวลาของสิทธิ์ ค่ายเกมที่ยกเว้น และการรับซ้อนกับรายการอื่นเป็นรายละเอียดที่ปรับได้ตามรอบ
       ถ้าแผนของเราคือหมุนตามงบแล้วปิดจบ การไม่รับสิทธิ์เลยก็เป็นทางเลือกที่สมเหตุสมผล เพราะโบนัสที่ยังติดเงื่อนไขไม่ได้แปลว่าเงินอยู่ในมือแล้ว
     </p>
@@ -58,12 +58,12 @@ const graph = pageGraph(Astro, {
     <div class="grid grid-cols-1 gap-6 sm:grid-cols-2">
       <Picture
         src={pro1}
-        alt="แบนเนอร์โปรโมชั่น BUNNY555 คืนยอดเสีย 15% ตัวเลขสีขาวขอบชมพูบนพื้นดำโรยเหรียญทอง สาวชุดกระต่ายสีชมพูข้างตู้สล็อต JACKPOT ข้อความ เสียเท่าไหร่ เราคืนให้ 15% พร้อมไอคอนสี่ช่อง ระบบปลอดภัยมาตรฐานสากล คืนยอดเสียอัตโนมัติ เล่นได้ทุกเกมไม่จำกัด บริการลูกค้า 24 ชม. และแถบ เล่นสนุก มั่นใจ ได้เงินจริง"
+        alt="แบนเนอร์โปรโมชั่น PGW44 คืนยอดเสีย 30% ตัวเลขสีทองบนพื้นดำที่มีมังกรพ่นไฟและสายฟ้าสีเขียวนีออน สาวชุดสีเขียวดำยืนข้างตู้สล็อต JACKPOT และกองเหรียญทอง ข้อความ เสียเท่าไหร่ เราคืนให้ 30% ทุกวัน ป้าย ระบบออโต้ 24 ชม. รวดเร็วทันใจ และ สมัครใหม่รับโบนัสทันที 300% พร้อมไอคอนสี่ช่อง มั่นคงปลอดภัย 100% ฝาก-ถอนรวดเร็วไม่เกิน 1 นาที โบนัสจัดเต็มทั้งวันทุกเวลา บริการลูกค้า 24 ชม. และแถบ เล่นง่าย จ่ายจริง มั่นคง ปลอดภัย 100%"
         loading="lazy"
         fetchpriority="low"
         widths={[320, 640, 960]}
         sizes="(max-width: 639px) 100vw, 50vw"
-        class="mx-auto h-auto w-full rounded-xl border border-[#f02e7f]/35 object-contain shadow-[0_10px_30px_rgba(255,77,157,0.18)] transition-transform duration-300 hover:-translate-y-1 hover:border-[#ff4d9d]/70 hover:shadow-[0_15px_40px_rgba(240,46,127,0.32)]"
+        class="mx-auto h-auto w-full rounded-xl border border-[#63b80f]/35 object-contain shadow-[0_10px_30px_rgba(127,220,22,0.18)] transition-transform duration-300 hover:-translate-y-1 hover:border-[#7fdc16]/70 hover:shadow-[0_15px_40px_rgba(99,184,15,0.32)]"
         decoding="async"
         formats={["avif", "webp"]}
         fallbackFormat="webp"
@@ -72,12 +72,12 @@ const graph = pageGraph(Astro, {
 
       <Picture
         src={pro2}
-        alt="แบนเนอร์โปรโมชั่น BUNNY555 ฝากแรกลุ้นรับทอง 1 บาท ตัวอักษรสีชมพูบนพื้นดำโรยเหรียญทอง สาวชุดกระต่ายสีชมพูข้างตู้สล็อต JACKPOT มีทองคำแท่งและสร้อยทองด้านขวา ข้อความ ลุ้นง่าย จ่ายจริง ฟรีทุกยูสเซอร์ พร้อมไอคอนสี่ช่อง ระบบปลอดภัยมาตรฐานสากล ฝาก-ถอนรวดเร็วทันใจ โบนัสจัดเต็มทุกวัน บริการลูกค้า 24 ชม. และแถบ สมัครวันนี้ รับสิทธิ์ลุ้นทองทันที"
+        alt="แบนเนอร์โปรโมชั่น PGW44 แนะนำเพื่อน รับค่าคอม 0.8% ไม่อั้นทุกยอด ตัวเลขสีทองบนพื้นดำที่มีมังกรและสายฟ้าสีเขียวนีออน สาวชุดสีเขียวดำชี้นิ้วข้างตู้สล็อต JACKPOT ข้อความ ยิ่งเพื่อนเล่นเยอะ ยิ่งรับเยอะ ไม่จำกัดเวลาการรับโบนัส ป้าย สร้างรายได้ง่ายๆ เพียงแค่บอกต่อ ชวนเพื่อนมาสนุก รับรายได้แบบต่อเนื่อง และ รับค่าคอมสูงสุด 0.8% พร้อมสี่ขั้นตอน ชวนเพื่อนผ่านลิงก์ของคุณ เพื่อนสมัครและเล่นเกม รับค่าคอมทันทีทุกยอดการเล่น ถอนง่ายไม่จำกัด และแถบ เริ่มสร้างรายได้ไปกับเรา วันนี้"
         loading="lazy"
         fetchpriority="low"
         widths={[320, 640, 960]}
         sizes="(max-width: 639px) 100vw, 50vw"
-        class="mx-auto h-auto w-full rounded-xl border border-[#f02e7f]/35 object-contain shadow-[0_10px_30px_rgba(255,77,157,0.18)] transition-transform duration-300 hover:-translate-y-1 hover:border-[#ff4d9d]/70 hover:shadow-[0_15px_40px_rgba(240,46,127,0.32)]"
+        class="mx-auto h-auto w-full rounded-xl border border-[#63b80f]/35 object-contain shadow-[0_10px_30px_rgba(127,220,22,0.18)] transition-transform duration-300 hover:-translate-y-1 hover:border-[#7fdc16]/70 hover:shadow-[0_15px_40px_rgba(99,184,15,0.32)]"
         decoding="async"
         formats={["avif", "webp"]}
         fallbackFormat="webp"
@@ -85,24 +85,25 @@ const graph = pageGraph(Astro, {
       />
     </div>
 
-    <h2 class="mt-10 mb-4 text-2xl leading-normal font-bold text-[#ffc2da]">กดรับโบนัสเองได้ผ่านระบบออโต้ ไม่ต้องรอทีมงานยืนยัน</h2>
+    <h2 class="mt-10 mb-4 text-2xl leading-normal font-bold text-[#cdf76b]">กดรับ โปรเด็ด เองได้ผ่าน ระบบออโต้ ไม่ต้องรอทีมงานยืนยัน</h2>
 
-    <p class="mb-5 text-left text-base leading-relaxed text-[#ffdcea]">
-      นอกเหนือจากระบบที่ยอดเยี่ยมแล้ว แพลตฟอร์ม BUNNY555 ยังเตรียมทุนสนับสนุนเพื่อเพิ่มศักยภาพในการทำกำไรให้กับสมาชิกอย่างเต็มพิกัด เรามีการอัปเดตและแจกโบนัสอย่างต่อเนื่อง
-      ไม่ว่าจะเป็นเงินคืนตามยอดที่เสียจริงหรือสิทธิ์ลุ้นทองจากบิลฝากแรก สมาชิกกดรับได้ง่าย ๆ ผ่านแดชบอร์ดส่วนตัวเพื่อนำไปต่อยอดได้ทันที ไม่ต้องส่งข้อความไปแจ้งทีมงานแล้วนั่งรอรอบตรวจ
-      และไม่ต้องแนบสลิปให้เสียเวลา นี่คือส่วนหนึ่งของระบบออโต้ที่ทำให้ทั้งการฝาก ถอน และรับสิทธิ์ เล่นง่าย พอกัน
+    <p class="mb-5 text-left text-base leading-relaxed text-[#dff5c8]">
+      นอกเหนือจากระบบที่ยอดเยี่ยมแล้ว แพลตฟอร์ม <strong class="text-[#7fdc16]">PGW44</strong> ยังเตรียมทุนสนับสนุนเพื่อเพิ่มศักยภาพในการทำกำไรให้กับสมาชิกอย่างเต็มพิกัด
+      เรามีการอัปเดตและแจก โปรเด็ด อย่างต่อเนื่อง ไม่ว่าจะเป็นเงินคืนตามยอดที่เสียจริงหรือค่าคอมจากยอดการเล่นของเพื่อนที่คุณชวนมา สมาชิกกดรับได้ด้วยตนเองผ่านเมนูอัตโนมัติบนแดชบอร์ดส่วนตัว
+      เพื่อนำไปต่อยอดทุนได้ทันที ไม่ต้องส่งข้อความไปแจ้งทีมงานแล้วนั่งรอรอบตรวจ และไม่ต้องแนบสลิปให้เสียเวลา นี่คือส่วนหนึ่งของ ระบบออโต้ ที่ขับเคลื่อนด้วย AI ซึ่งประมวลผลยอดเครดิตให้เสร็จภายในเสี้ยววินาที
+      ทำให้ทั้งการฝาก การถอน และการรับสิทธิ์ เร็วพอ ๆ กันหมด
     </p>
 
-    <p class="mb-8 text-left text-base leading-relaxed text-[#ffdcea]">
+    <p class="mb-8 text-left text-base leading-relaxed text-[#dff5c8]">
       หลังกดรับสิทธิ์แล้วควรเปิดหน้าประวัติรายการดูสักครั้งว่ายอดโบนัสเข้าครบ เงื่อนไขเดินถูกเกม และยอดคงเหลือตรงกับที่ระบบแสดง เพราะบางแคมเปญนับยอดเฉพาะสล็อตบางค่าย และอาจไม่นับยอดจากโต๊ะคาสิโนสดเลย
-      อีกจุดที่คนอ่านข้ามบ่อยคือคำว่าไม่มีขั้นต่ำ ซึ่งหมายถึงยอดบนระบบออโต้ ไม่ใช่ยอดเดิมพันขั้นต่ำของทุกเกม ทั้งสองส่วนใช้ตัวเลขคนละชุด จึงควรดูยอดบนหน้าธุรกรรมและหน้าเกมแยกกัน
+      อีกจุดที่คนอ่านข้ามบ่อยคือคำว่า ฝากถอนไม่มีขั้นต่ำ ซึ่งหมายถึงยอดบนระบบธุรกรรม ไม่ใช่ยอดเดิมพันขั้นต่ำของทุกเกม ทั้งสองส่วนใช้ตัวเลขคนละชุด จึงควรดูยอดบนหน้าธุรกรรมและหน้าเกมแยกกัน
       และถ้ายอดยังไม่ขยับก็ไม่ควรกดซ้ำทันที เพราะนิ้วที่กดสองรอบไม่ได้ทำให้ธนาคารขยันขึ้น
     </p>
 
-    <h2 class="mt-10 mb-4 text-2xl leading-normal font-bold text-[#ffc2da]">บริการ 24 ชม. และความปลอดภัยของทุกการเชื่อมต่อ</h2>
+    <h2 class="mt-10 mb-4 text-2xl leading-normal font-bold text-[#cdf76b]">บริการ 24 ชม. และความปลอดภัยของทุกการเชื่อมต่อ</h2>
 
-    <p class="mb-8 text-left text-base leading-relaxed text-[#ffdcea]">
-      เราเชื่อว่าการดูแลลูกค้าคือหัวใจสำคัญของการดำเนินงาน ทีมซัพพอร์ตของ BUNNY555 จึงผ่านการอบรมมาอย่างดีเยี่ยม พร้อมสแตนด์บายคอยช่วยเหลือและให้คำปรึกษาเรื่องเงื่อนไขของทุกแคมเปญผ่าน บริการ 24 ชม.
+    <p class="mb-8 text-left text-base leading-relaxed text-[#dff5c8]">
+      เราเชื่อว่าการดูแลลูกค้าคือหัวใจสำคัญของการดำเนินงาน ทีมซัพพอร์ตของ <strong class="text-[#7fdc16]">PGW44</strong> จึงผ่านการอบรมมาอย่างดีเยี่ยม พร้อมสแตนด์บายคอยช่วยเหลือและให้คำปรึกษาเรื่องเงื่อนไขของทุกแคมเปญตลอด 24 ชั่วโมง
       ไม่มีวันหยุด มอบการดูแลที่ใส่ใจในทุกรายละเอียด เพื่อให้คุณสัมผัสได้ถึงความต่างตั้งแต่ก้าวแรกที่สมัครสมาชิก ด้านความปลอดภัย การล็อกอินเข้าสู่ระบบจะทำงานผ่าน Secure Transition Popup
       ที่เปิดแดชบอร์ดขึ้นบนหน้าเดิม โหลดไว ลื่นไหล ป้องกันการรีเฟรชหน้าเว็บซ้ำซ้อน ทำให้ทุกการเชื่อมต่อของคุณมีความเป็นส่วนตัวและปลอดภัยในระดับสูงสุด ก่อนกรอกข้อมูลทุกครั้ง
       ควรตรวจว่าอยู่บนโดเมนจริงของเราและเชื่อมต่อแบบ HTTPS เท่านั้น ไม่ใช่ลิงก์ที่ส่งต่อกันมาในแชตพร้อมคำโฆษณา และทีมงานจะไม่ขอรหัสผ่านหรือรหัส OTP จากสมาชิกไม่ว่ากรณีใด
@@ -111,8 +112,8 @@ const graph = pageGraph(Astro, {
     <div class="mt-12 flex justify-center pb-4">
       <a
         href="/register"
-        class="flex items-center justify-center rounded-lg border border-[#ff4d9d]/50 bg-gradient-to-r from-[#ffc2da] via-[#ff4d9d] to-[#a3134f] px-10 py-3.5 text-lg font-black text-[#26050f] shadow-[0_10px_30px_rgba(255,77,157,0.22)] transition-transform hover:scale-105 hover:shadow-[0_15px_40px_rgba(240,46,127,0.35)]">
-        สมัครสมาชิก BUNNY555
+        class="flex items-center justify-center rounded-lg border border-[#7fdc16]/50 bg-gradient-to-r from-[#cdf76b] via-[#7fdc16] to-[#3d7509] px-10 py-3.5 text-lg font-black text-[#07120a] shadow-[0_10px_30px_rgba(127,220,22,0.22)] transition-transform hover:scale-105 hover:shadow-[0_15px_40px_rgba(99,184,15,0.35)]">
+        สมัครสมาชิก PGW44
       </a>
     </div>
   </ContentBox>
