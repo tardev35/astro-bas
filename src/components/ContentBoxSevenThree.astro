@@ -4,19 +4,24 @@ export interface Props {
   titleright?: string;
 }
 const { titleleft, titleright } = Astro.props;
+
+// BOTH titles render as <h2>. Pass exactly ONE of them per block, or a single
+// docx heading turns into two headings on the page and the Phase 5 inventory
+// stops matching the brief. The 3fr column is the image slot, the 7fr column
+// is the heading plus its paragraph.
 ---
 
 <section class="relative z-10 mx-auto mb-10 w-full max-w-[1400px] px-4 font-sans">
   <div
-    class="group relative isolate w-full overflow-hidden rounded-3xl border border-[#dfb85f]/30 bg-[#070502]/85 p-8 text-[#e9ddbe] shadow-[0_10px_30px_rgba(7,5,2,0.8)] backdrop-blur-xl transition-all duration-500 hover:border-[#fded9a]/50 md:p-10">
+    class="group relative isolate w-full overflow-hidden rounded-3xl border border-[#ff4d9d]/30 bg-[#150207]/85 p-8 text-[#ffdcea] shadow-[0_10px_30px_rgba(21,2,7,0.8)] backdrop-blur-xl transition-all duration-500 hover:border-[#ffc2da]/50 md:p-10">
     <div class="grid grid-cols-1 gap-8 md:grid-cols-[3fr_7fr] md:items-center">
-      <article class="flex flex-col gap-4 border-b border-[#6b4c17]/70 pb-6 text-left text-base leading-relaxed text-[#e9ddbe] md:border-r md:border-b-0 md:pr-6 md:pb-0">
-        {titleleft && <h2 class="text-center text-4xl leading-normal font-black tracking-wider text-[#fded9a] uppercase drop-shadow-[0_2px_10px_rgba(223,184,95,0.35)] md:text-left">{titleleft}</h2>}
+      <article class="flex flex-col gap-4 border-b border-[#a3134f]/70 pb-6 text-left text-base leading-relaxed text-[#ffdcea] md:border-r md:border-b-0 md:pr-6 md:pb-0">
+        {titleleft && <h2 class="text-center text-4xl leading-normal font-black tracking-wider text-[#ffc2da] uppercase drop-shadow-[0_2px_10px_rgba(255,77,157,0.4)] md:text-left">{titleleft}</h2>}
         <slot name="left" />
       </article>
 
-      <article class="flex flex-col gap-3 text-left text-base leading-relaxed text-[#e9ddbe] md:pl-6">
-        {titleright && <h2 class="flex items-center gap-2 text-2xl leading-normal font-black text-[#dfb85f] drop-shadow-[0_0_8px_rgba(223,184,95,0.35)]">{titleright}</h2>}
+      <article class="flex flex-col gap-3 text-left text-base leading-relaxed text-[#ffdcea] md:pl-6">
+        {titleright && <h2 class="flex items-center gap-2 text-2xl leading-normal font-black text-[#ff4d9d] drop-shadow-[0_0_8px_rgba(255,77,157,0.4)]">{titleright}</h2>}
         <slot name="right" />
       </article>
     </div>

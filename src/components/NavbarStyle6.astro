@@ -17,20 +17,22 @@ const links = [
   { name: "หน้าแรก", path: "/", icon: "🏠" },
   { name: "โปรโมชั่น", path: "/promotion", icon: "🎁" },
   { name: "ทดลองเล่น", path: "/ทดลองเล่น", icon: "🎰" },
-  { name: "ทางเข้า", path: "/ทางเข้า", icon: "🌐" },
-  { name: "เกี่ยวกับเรา", path: "/about-us", icon: "👑" },
+  { name: "ทางเข้า", path: "/ทางเข้า", icon: "🐰" },
+  { name: "เกี่ยวกับเรา", path: "/about-us", icon: "💗" },
   { name: "ติดต่อเรา", path: "/contact-us", icon: "📞" },
 ];
+
+const logoAlt = "โลโก้ BUNNY555 ตัวอักษรอวบสีชมพูหวานไล่เฉดขาว คำว่า BUNNY ต่อด้วยเลข 555 สีขาวมุกขอบชมพู";
 ---
 
 <header class="sticky top-0 z-50 w-full font-sans shadow-lg">
   <div class="pointer-events-none absolute top-0 left-0 z-50 hidden h-0 w-full items-start justify-center lg:flex">
     <div
-      class="pointer-events-auto flex h-[65px] w-[120px] items-center justify-center rounded-b-3xl border-x border-b border-[#dfb85f] bg-gradient-to-b from-[#1e1408] to-[#070502] shadow-[0_5px_15px_rgba(223,184,95,0.35)]">
-      <a href="/" class="drop-shadow-[0_0_8px_rgba(253,237,154,0.35)] transition-transform hover:scale-110">
+      class="pointer-events-auto flex h-[65px] w-[120px] items-center justify-center rounded-b-3xl border-x border-b border-[#ff4d9d] bg-gradient-to-b from-[#3a0818] to-[#150207] shadow-[0_5px_15px_rgba(255,77,157,0.35)]">
+      <a href="/" class="drop-shadow-[0_0_8px_rgba(255,194,218,0.45)] transition-transform hover:scale-110">
         <Picture
           src={mainLogo!}
-          alt="DEVA555 สล็อตเว็บตรงอันดับ 1 โลโก้"
+          alt={logoAlt}
           loading="eager"
           fetchpriority="high"
           widths={[100, 200, 300]}
@@ -44,21 +46,21 @@ const links = [
   </div>
 
   <aside
-    class="fixed top-1/2 left-3 z-40 hidden h-[500px] w-[90px] -translate-y-1/2 flex-col items-center justify-center rounded-2xl border border-[#dfb85f]/40 bg-[#0d0803]/95 p-2 shadow-[5px_0_20px_rgba(0,0,0,0.6)] backdrop-blur-md lg:flex"
+    class="fixed top-1/2 left-3 z-40 hidden h-[500px] w-[90px] -translate-y-1/2 flex-col items-center justify-center rounded-2xl border border-[#ff4d9d]/40 bg-[#26050f]/95 p-2 shadow-[5px_0_20px_rgba(0,0,0,0.6)] backdrop-blur-md lg:flex"
     aria-label="เมนูหลัก">
     <div class="relative flex h-full w-full flex-col gap-2 overflow-hidden rounded-xl">
       {
         links.map((link) => (
           <a
             href={link.path}
-            class={`group relative flex h-full w-full flex-col items-center justify-center rounded-lg transition-all ${isActive(link.path) ? "bg-[#1e1408]" : "hover:bg-[#1e1408]/70"}`}>
+            class={`group relative flex h-full w-full flex-col items-center justify-center rounded-lg transition-all ${isActive(link.path) ? "bg-[#3a0818]" : "hover:bg-[#3a0818]/70"}`}>
             <span aria-hidden="true" class="mb-1 text-3xl drop-shadow-md transition-transform group-hover:scale-110">
               {link.icon ?? "🔗"}
             </span>
-            <span class={`text-xs font-bold transition-colors ${isActive(link.path) ? "text-[#fded9a]" : "text-[#b6a582] group-hover:text-[#fded9a]"}`}>{link.name}</span>
+            <span class={`text-xs font-bold transition-colors ${isActive(link.path) ? "text-[#ffc2da]" : "text-[#e0a5bd] group-hover:text-[#ffc2da]"}`}>{link.name}</span>
             <div
               aria-hidden="true"
-              class={`absolute top-0 left-0 h-full w-[3px] origin-top bg-[#dfb85f] transition-transform duration-300 ${isActive(link.path) ? "scale-y-100" : "scale-y-0 group-hover:scale-y-100"}`}
+              class={`absolute top-0 left-0 h-full w-[3px] origin-top bg-[#ff4d9d] transition-transform duration-300 ${isActive(link.path) ? "scale-y-100" : "scale-y-0 group-hover:scale-y-100"}`}
             />
           </a>
         ))
@@ -66,17 +68,17 @@ const links = [
     </div>
   </aside>
 
-  <nav class="relative z-40 flex h-[60px] items-center justify-between border-b border-[#dfb85f]/35 bg-[#070502] px-3 shadow-xl lg:hidden">
+  <nav class="relative z-40 flex h-[60px] items-center justify-between border-b border-[#ff4d9d]/35 bg-[#150207] px-3 shadow-xl lg:hidden">
     <button id="hamburger-btn" class="flex flex-col items-center justify-center space-y-1.5 p-2" aria-label="เปิดเมนู">
-      <span class="hamburger-line h-0.5 w-6 origin-center bg-[#fded9a] transition-all duration-300"></span>
-      <span class="hamburger-line h-0.5 w-6 bg-[#fded9a] transition-all duration-300"></span>
-      <span class="hamburger-line h-0.5 w-6 origin-center bg-[#fded9a] transition-all duration-300"></span>
+      <span class="hamburger-line h-0.5 w-6 origin-center bg-[#ffc2da] transition-all duration-300"></span>
+      <span class="hamburger-line h-0.5 w-6 bg-[#ffc2da] transition-all duration-300"></span>
+      <span class="hamburger-line h-0.5 w-6 origin-center bg-[#ffc2da] transition-all duration-300"></span>
     </button>
 
     <a href="/" class="flex-shrink-0 transition-transform hover:scale-105">
       <Picture
         src={mainLogo!}
-        alt="DEVA555 สล็อตเว็บตรงอันดับ 1 โลโก้"
+        alt={logoAlt}
         loading="eager"
         fetchpriority="high"
         widths={[85, 170, 255]}
@@ -89,7 +91,7 @@ const links = [
 
     <a
       href="/login"
-      class="flex h-[32px] items-center justify-center rounded border border-[#dfb85f]/60 bg-gradient-to-r from-[#fded9a] to-[#a57a32] px-4 text-xs font-bold text-[#140d04] shadow-[0_0_12px_rgba(223,184,95,0.3)] transition-transform active:scale-95">
+      class="flex h-[32px] items-center justify-center rounded border border-[#ff4d9d]/60 bg-gradient-to-r from-[#ffc2da] to-[#f02e7f] px-4 text-xs font-bold text-[#26050f] shadow-[0_0_12px_rgba(255,77,157,0.35)] transition-transform active:scale-95">
       เข้าสู่ระบบ
     </a>
   </nav>
@@ -98,13 +100,13 @@ const links = [
 
   <div
     id="mobile-sidebar"
-    class="fixed top-0 left-0 z-50 h-screen w-[260px] -translate-x-full transform overflow-y-auto border-r border-[#dfb85f]/30 bg-[#070502] shadow-[10px_0_30px_rgba(0,0,0,0.8)] transition-transform duration-300 ease-out lg:hidden">
+    class="fixed top-0 left-0 z-50 h-screen w-[260px] -translate-x-full transform overflow-y-auto border-r border-[#ff4d9d]/30 bg-[#150207] shadow-[10px_0_30px_rgba(0,0,0,0.8)] transition-transform duration-300 ease-out lg:hidden">
     <div class="flex flex-col space-y-2.5 px-4 pt-16 pb-8">
       {
         links.map((link) => (
           <a
             href={link.path}
-            class={`sidebar-item flex items-center rounded-lg border px-4 py-3 transition-all ${isActive(link.path) ? "border-[#dfb85f] bg-[#1e1408] text-[#fded9a] shadow-inner" : "border-transparent bg-white/5 text-[#b6a582] hover:bg-white/10 hover:text-[#fded9a]"}`}>
+            class={`sidebar-item flex items-center rounded-lg border px-4 py-3 transition-all ${isActive(link.path) ? "border-[#ff4d9d] bg-[#3a0818] text-[#ffc2da] shadow-inner" : "border-transparent bg-white/5 text-[#e0a5bd] hover:bg-white/10 hover:text-[#ffc2da]"}`}>
             <span aria-hidden="true" class="mr-3 text-xl">
               {link.icon ?? "🔗"}
             </span>
@@ -113,11 +115,11 @@ const links = [
         ))
       }
 
-      <div class="mt-5 flex flex-col gap-2 border-t border-[#dfb85f]/25 pt-5">
+      <div class="mt-5 flex flex-col gap-2 border-t border-[#ff4d9d]/25 pt-5">
         <a
           href="/register"
-          class="sidebar-item flex justify-center gap-1.5 rounded border border-[#dfb85f]/60 bg-gradient-to-r from-[#fded9a] via-[#dfb85f] to-[#a57a32] py-3 text-sm font-bold text-[#140d04] shadow-md transition-transform active:scale-95">
-          <span aria-hidden="true">🔥</span> สมัครสมาชิกใหม่
+          class="sidebar-item flex justify-center gap-1.5 rounded border border-[#ff4d9d]/60 bg-gradient-to-r from-[#ffc2da] via-[#ff4d9d] to-[#a3134f] py-3 text-sm font-bold text-[#26050f] shadow-md transition-transform active:scale-95">
+          <span aria-hidden="true">🐰</span> สมัครสมาชิกใหม่
         </a>
       </div>
     </div>
@@ -126,12 +128,12 @@ const links = [
   <div class="fixed top-4 right-6 z-50 hidden items-center gap-3 lg:flex">
     <a
       href="/login"
-      class="group flex items-center gap-1.5 rounded border border-[#dfb85f]/60 bg-[#0d0803]/90 px-6 py-2 text-sm font-bold text-[#fded9a] shadow-md backdrop-blur-sm transition-all hover:border-[#dfb85f] hover:bg-[#1e1408]/90">
+      class="group flex items-center gap-1.5 rounded border border-[#ff4d9d]/60 bg-[#26050f]/90 px-6 py-2 text-sm font-bold text-[#ffc2da] shadow-md backdrop-blur-sm transition-all hover:border-[#ff4d9d] hover:bg-[#3a0818]/90">
       <span aria-hidden="true">🔒</span> เข้าสู่ระบบ
     </a>
     <a
       href="/register"
-      class="group flex items-center gap-1.5 rounded border border-[#dfb85f]/60 bg-gradient-to-r from-[#fded9a] via-[#dfb85f] to-[#a57a32] px-6 py-2 text-sm font-bold text-[#140d04] shadow-[0_0_15px_rgba(223,184,95,0.3)] transition-all hover:scale-105">
+      class="group flex items-center gap-1.5 rounded border border-[#ff4d9d]/60 bg-gradient-to-r from-[#ffc2da] via-[#ff4d9d] to-[#a3134f] px-6 py-2 text-sm font-bold text-[#26050f] shadow-[0_0_15px_rgba(255,77,157,0.35)] transition-all hover:scale-105">
       <span aria-hidden="true">👤</span> สมัครสมาชิก
     </a>
   </div>

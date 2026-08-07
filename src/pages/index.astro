@@ -1,72 +1,76 @@
 ---
 import MainLayout from "../layouts/MainLayout.astro";
-import Announcement from "../components/AnnouncementPremium.astro";
-import ContentBoxPremium from "../components/ContentBoxPremium.astro";
-import ContentBoxNeumorphism from "../components/ContentBoxNeumorphism.astro";
-import ContentBoxSevenThreePremium from "../components/ContentBoxSevenThreePremium.astro";
-import ContentBoxTwoPremium from "../components/ContentBoxTwoPremium.astro";
+import Announcement from "../components/Announcement5.astro";
+import ContentBoxFloatingBadge from "../components/ContentBoxFloatingBadge.astro";
+import ContentBox from "../components/ContentBox.astro";
+import ContentBoxSevenThree from "../components/ContentBoxSevenThree.astro";
+import ContentBoxSevenThreeNeumorphism from "../components/ContentBoxSevenThreeNeumorphism.astro";
+import ContentBoxSpecial from "../components/ContentBoxSpecial.astro";
+import ContentBoxTwo from "../components/ContentBoxTwo.astro";
 import FeatureHighlights from "../components/FeatureHighlights.astro";
 import LoginRtpSection from "../components/LoginRtpSection.astro";
 import ProviderGrid from "../components/ProviderGrid.astro";
 import GameRankingBoard from "../components/GameRankingBoard.astro";
 import ReviewCardSumo2 from "../components/ReviewCardSumo2.astro";
-import LatestWinners from "../components/LatestWinnersPremium.astro";
+import LatestWinners from "../components/LatestWinners3.astro";
 import SmoothCarousel from "../components/SmoothCarousel.astro";
-import Faq from "../components/Faq4.astro";
+import Faq from "../components/Faq2.astro";
 import Navfoot from "../components/Navfoot.astro";
 
 import { Picture } from "astro:assets";
 import { pageGraph } from "../lib/schema";
 import imgCashback from "../assets/slide1.png";
+import imgGoldBonus from "../assets/slide2.png";
 
-const pageTitle = "LUCKYGAME689 เว็บสล็อตเจ้าใหญ่ โปรโมชั่นเด็ด บริการระดับ VVIP";
+const pageTitle = "BUNNY555 เว็บสล็อตลิขสิทธิ์แท้ เล่นง่าย ได้เงินไว บริการ 24 ชม.";
 
-// The docx meta stops at "แท้ 100%" and is 145 characters — below
+// 157 characters. The docx meta stops at "บริการ 24 ชม." and is 146 — below
 // tools/verify-build.mjs's DESC_MIN of 150, which is a hard error. The brief's
-// sentence is kept byte-identical and the trailing " ตลอด 24 ชม." (which adds
-// nothing the brief does not already say) closes the gap at 157 characters.
-const pageDescription = "LUCKYGAME689 เว็บสล็อตเจ้าใหญ่ อาณาจักรการลงทุนเหนือระดับ คัดสรร โปรโมชั่นเด็ด สุดคุ้มค่า มอบประสบการณ์เอ็กซ์คลูซีฟผ่าน บริการระดับ VVIP แท้ 100% ตลอด 24 ชม.";
+// sentence is kept byte-identical and the trailing " ไม่มีวันหยุด" (a phrase the
+// docx already uses in its FAQ answer) closes the gap.
+const pageDescription =
+  "BUNNY555 เว็บสล็อตลิขสิทธิ์แท้ 100% สัมผัสประสบการณ์ทำกำไรเหนือระดับ เล่นง่าย ทะยานสู่ความมั่งคั่ง ได้เงินไว ปลอดภัย พร้อมดูแลด้วย บริการ 24 ชม. ไม่มีวันหยุด";
 
-// The three provider sub-points that sit under docx heading #2.
-// FeatureHighlights renders each `title` as an <h3>, which is the only place
-// this page is allowed to have one. Its accent union is "gold" | "magenta".
+// The three camp sub-points that sit under docx heading #2, in the docx's own
+// order. FeatureHighlights renders each `title` as an <h3>, which is the only
+// place this page is allowed to have one. Its accent union is "pink" | "gold".
 const providerPoints = [
   {
-    icon: "💥",
-    title: "Hacksaw Gaming มินิมอลสไตล์ โบนัสแตกหนักจัดเต็ม",
-    description: "สัมผัสความล้ำหน้าของเกมเพลย์ที่ฉีกกฎเกณฑ์เดิมๆ นำเสนอรูปแบบที่เรียบง่ายแต่มอบอัตราการคูณเงินรางวัลที่สูงลิ่ว เหมาะสำหรับสายทำกำไรแบบก้าวกระโดด",
+    icon: "🧭",
+    title: "Play'n GO ผจญภัยไร้ขีดจำกัด โบนัสแตกหนัก",
+    description: "โดดเด่นด้วยเนื้อเรื่องที่น่าติดตามและกลไกการจ่ายเงินที่หลากหลาย สปินแต่ละรอบมอบโอกาสในการทำกำไรแบบก้าวกระโดดผ่านฟีเจอร์สุดล้ำ",
+    accent: "pink" as const,
+  },
+  {
+    icon: "🐯",
+    title: "Red Tiger กราฟิกตระการตา ฟีเจอร์ตัวคูณสุดคุ้ม",
+    description: "สัมผัสความอลังการของภาพแอนิเมชันที่ลื่นไหล มาพร้อมกับระบบแจ็กพอตที่แตกง่ายและแตกบ่อย ช่วยให้คุณกอบโกยผลตอบแทนได้อย่างรวดเร็ว",
     accent: "gold" as const,
   },
   {
-    icon: "🔥",
-    title: "Nolimit City ขีดสุดแห่งฟีเจอร์ ท้าทายทุกความกล้า",
-    description: "ตอบโจทย์นักลงทุนที่คาดหวังความคุ้มค่าระดับไฮเอนด์ ฟีเจอร์ของเกมมีความแปลกใหม่และจ่ายหนักแบบจัดเต็ม สร้างความตื่นเต้นและมอบผลตอบแทนระดับพรีเมียมในทุกการหมุน",
-    accent: "magenta" as const,
-  },
-  {
-    icon: "🎬",
-    title: "Relax Gaming แอนิเมชันลื่นไหล เสถียรภาพไร้ที่ติ",
-    description: "โดดเด่นด้วยกราฟิกสุดอลังการและกลไกเกมที่เข้าถึงแจ็กพอตได้ไว โครงสร้างซอฟต์แวร์เบาและเสถียร เล่นได้อย่างราบรื่นบนทุกอุปกรณ์อย่างไร้ขีดจำกัด",
-    accent: "gold" as const,
+    icon: "⚙️",
+    title: "Blueprint Gaming กลไก Megaways ลุ้นกำไรทวีคูณ",
+    description: "ค่ายเกมที่ขึ้นชื่อเรื่องเส้นทางการจ่ายเงินที่มหาศาล ระบบเสถียร โหลดไว ตอบโจทย์นักลงทุนที่ต้องการผลลัพธ์แบบฉับไวและคุ้มค่าที่สุด",
+    accent: "pink" as const,
   },
 ];
 
 const faqs = [
   {
-    q: "ทำไมถึงได้รับการยอมรับว่าเป็น เว็บสล็อตเจ้าใหญ่ ที่น่าเชื่อถือ?",
-    a: "เพราะแพลตฟอร์ม LUCKYGAME689 มีรากฐานการเงินมั่นคงระดับองค์กร ให้บริการด้วยความโปร่งใสและปลอดภัยขั้นสุด",
+    q: "ทำไมแพลตฟอร์มนี้จึงเป็น เว็บสล็อตลิขสิทธิ์แท้ ที่น่าลงทุน?",
+    a: "เพราะ BUNNY555 เชื่อมต่อ API โดยตรงจากค่ายเกมระดับโลก มั่นใจได้ในความโปร่งใส ปลอดภัย และไม่ถูกปรับลดอัตราการชนะ",
   },
   {
-    q: "วิธีการรับ โปรโมชั่นเด็ด มีขั้นตอนยุ่งยากหรือไม่?",
-    a: "ไม่ยุ่งยาก สมาชิกของ LUCKYGAME689 สามารถกดยอมรับโบนัสและแคมเปญต่างๆ ได้ด้วยตนเองผ่านระบบออโต้บนหน้าเว็บทุกวัน",
+    q: "ระบบการใช้งานที่บอกว่า เล่นง่าย เหมาะกับมือใหม่หรือไม่?",
+    a: "เหมาะสมอย่างยิ่ง อินเทอร์เฟซบนแพลตฟอร์ม BUNNY555 ออกแบบเมนูต่างๆ ให้เข้าใจง่าย ไม่ซับซ้อน มือใหม่ก็ทำกำไรได้ทันที",
   },
   {
-    q: "การดูแลผ่าน บริการระดับ VVIP มีความแตกต่างจากที่อื่นอย่างไร?",
-    a: "ทีมงานผู้เชี่ยวชาญพร้อมให้การดูแลแบบเอ็กซ์คลูซีฟ รวดเร็ว ใส่ใจ และแก้ปัญหาได้ตรงจุดตลอด 24 ชม.",
+    q: "การทำรายการฝากและถอนที่ว่า ได้เงินไว ใช้เวลาเท่าไหร่?",
+    a: "ดำเนินการผ่านระบบ AI อัจฉริยะ ทำให้ยอดเงินโอนเข้าบัญชีของ BUNNY555 สำเร็จภายในเวลาเพียงเสี้ยววินาทีเท่านั้น",
   },
   {
-    q: "ระบบความปลอดภัยในการใช้งานบนแพลตฟอร์ม LUCKYGAME689 เป็นอย่างไร?",
-    a: "เราใช้เทคโนโลยี Secure Popup Modal ในการเชื่อมต่อเข้าสู่แดชบอร์ด เพื่อความปลอดภัยและเป็นส่วนตัว 100%",
+    q: "หากมีข้อสงสัย สามารถติดต่อรับ บริการ 24 ชม. ได้ทางไหน?",
+    a: "สมาชิกสามารถติดต่อทีมงานของ BUNNY555 ได้โดยตรงผ่านช่องทางแชทบนหน้าเว็บ หรือ LINE Official ตลอดเวลา ไม่มีวันหยุด",
   },
 ];
 
@@ -82,24 +86,25 @@ const graph = pageGraph(Astro, {
 
   <Announcement />
 
-  <ContentBoxPremium as="h1" title="LUCKYGAME689 เว็บสล็อตเจ้าใหญ่ โปรโมชั่นเด็ด บริการระดับ VVIP">
-    <p class="text-left text-base leading-relaxed text-[#ffe9c4]">
-      <strong class="text-[#fff3d6]">LUCKYGAME689</strong> เว็บสล็อตเจ้าใหญ่ ที่พร้อมยกระดับการสร้างรายได้ของคุณให้พรีเมียมขั้นสุด เรามุ่งเน้นการมอบประสบการณ์แบบเอ็กซ์คลูซีฟผ่านอินเทอร์เฟซสไตล์ Premium
-      Material ที่หรูหราและใช้งานง่าย พร้อมคัดสรร โปรโมชั่นเด็ด ที่คุ้มค่าที่สุดในตลาด เพื่อให้สมาชิกทุกท่านได้รับการดูแลอย่างเอาใจใส่ผ่าน บริการระดับ VVIP แท้ 100% ตอบโจทย์ทุกไลฟ์สไตล์การลงทุนอย่างเหนือชั้น
+  <ContentBoxFloatingBadge as="h1" title="BUNNY555 เว็บสล็อตลิขสิทธิ์แท้ เล่นง่าย ได้เงินไว บริการ 24 ชม.">
+    <p class="text-left text-base leading-relaxed text-[#ffdcea]">
+      เปิดประสบการณ์การทำกำไรที่เหนือระดับไปกับ <strong class="text-[#fff0f6]">BUNNY555</strong> เว็บสล็อตลิขสิทธิ์แท้ ที่ออกแบบมาเพื่อตอบโจทย์ผู้เล่นทุกกลุ่มด้วยระบบที่ทันสมัย
+      เรามุ่งเน้นการพัฒนารูปแบบการเดิมพันให้ เล่นง่าย ไม่ซับซ้อน เพื่อให้คุณก้าวสู่ความมั่งคั่งได้อย่างรวดเร็ว พร้อมมอบความมั่นใจด้วยระบบการจ่ายผลตอบแทนที่ ได้เงินไว แม่นยำ
+      และมีทีมงานมืออาชีพคอยดูแลคุณผ่าน บริการ 24 ชม. ให้คุณอุ่นใจในทุกครั้งที่เข้ามาทำกำไร
     </p>
-  </ContentBoxPremium>
+  </ContentBoxFloatingBadge>
 
-  <ContentBoxNeumorphism as="h2" title="รวมเกมคุณภาพระดับโลกบนแพลตฟอร์ม LUCKYGAME689 เว็บสล็อตเจ้าใหญ่">
-    <p class="text-left text-base leading-relaxed text-[#ffe9c4]">
-      การเป็นผู้นำในวงการหมายถึงการส่งมอบสิ่งที่ดีที่สุด ระบบของ LUCKYGAME689 จึงได้รวบรวมซอฟต์แวร์เกมชั้นนำจากทั่วทุกมุมโลกมาเสิร์ฟให้คุณถึงมือ ทุกตัวเกมผ่านการคัดกรองอย่างพิถีพิถันเพื่อให้ได้มาตรฐานระดับสากล
-      กราฟิกสวยงาม โบนัสแตกง่าย และทำงานประสานกับเซิร์ฟเวอร์หลักได้อย่างสมบูรณ์แบบ
+  <ContentBox as="h2" title="BUNNY555 ศูนย์รวมค่ายเกมชั้นนำ เว็บสล็อตลิขสิทธิ์แท้">
+    <p class="text-left text-base leading-relaxed text-[#ffdcea]">
+      แพลตฟอร์มของเราคัดสรรเฉพาะซอฟต์แวร์เกมที่ได้มาตรฐานระดับสากล การันตีว่าทุกซอฟต์แวร์บน BUNNY555 มีความโปร่งใสและยุติธรรมสูงสุด มอบอัตราการจ่ายที่แม่นยำ
+      พร้อมให้คุณสัมผัสกราฟิกที่ไหลลื่นและระบบที่ตอบสนองไวในทุกอุปกรณ์
     </p>
     <FeatureHighlights items={providerPoints} />
-  </ContentBoxNeumorphism>
+  </ContentBox>
 
   <ProviderGrid />
 
-  <ContentBoxSevenThreePremium titleright="LUCKYGAME689 คัดสรร โปรโมชั่นเด็ด รับสิทธิพิเศษเหนือระดับ">
+  <ContentBoxSevenThree titleright="สร้างกำไรง่ายๆ กับระบบของ BUNNY555 เล่นง่าย ทะลุขีดจำกัด">
     <Picture
       slot="left"
       src={imgCashback}
@@ -111,30 +116,46 @@ const graph = pageGraph(Astro, {
       formats={["avif", "webp"]}
       fallbackFormat="webp"
       quality={80}
-      alt="แบนเนอร์โปรโมชั่นคืนยอดเสีย CASHBACK 10% ของ LUCKYGAME689 ตัวอักษรสีทองบนพื้นสีชมพูบานเย็น ข้างภาพผู้หญิงในชุดราตรีสีทอง พร้อมข้อความ โปรดี คุ้มสุด คืนยอดทุกการช้อป และ ช้อปมาก ยิ่งได้คืนมาก ด้านล่างมีป้ายสี่ช่อง ช้อปครบรับเงินคืนทันที ปลอดภัย มั่นใจได้ 100% บริการดี ตอบไว 24 ชม. และ คุ้มค่า คืนจริง ทุกการใช้จ่าย"
-      class="mx-auto h-auto w-full rounded-2xl border border-[#faad23]/30 shadow-[0_10px_30px_rgba(250,173,35,0.20)]"
+      alt="แบนเนอร์โปรโมชั่น BUNNY555 คืนยอดเสีย 15% ตัวเลขสีขาวขอบชมพูบนพื้นดำโรยเหรียญทอง สาวชุดกระต่ายสีชมพูข้างตู้สล็อต JACKPOT ข้อความ เสียเท่าไหร่ เราคืนให้ 15% พร้อมไอคอนสี่ช่อง ระบบปลอดภัยมาตรฐานสากล คืนยอดเสียอัตโนมัติ เล่นได้ทุกเกมไม่จำกัด บริการลูกค้า 24 ชม. และแถบ เล่นสนุก มั่นใจ ได้เงินจริง"
+      class="mx-auto h-auto w-full rounded-2xl border border-[#ff4d9d]/30 shadow-[0_10px_30px_rgba(255,77,157,0.22)]"
     />
-    <p slot="right" class="text-left text-base leading-relaxed text-[#ffe9c4]">
-      นอกเหนือจากระบบที่ยอดเยี่ยมแล้ว แพลตฟอร์ม LUCKYGAME689 ยังเตรียมทุนสนับสนุนเพื่อเพิ่มศักยภาพในการทำกำไรให้กับสมาชิกอย่างเต็มพิกัด เรามีการอัปเดตและแจก โปรโมชั่นเด็ด อย่างต่อเนื่อง
-      ไม่ว่าจะเป็นโบนัสต้อนรับหรือแคมเปญประจำวัน สมาชิกสามารถกดรับสิทธิ์ได้ง่ายๆ ผ่านแดชบอร์ดส่วนตัว เพื่อนำไปต่อยอดความสำเร็จได้ทันที
+    <p slot="right" class="text-left text-base leading-relaxed text-[#ffdcea]">
+      ไม่ว่าคุณจะเป็นมือใหม่หรือมือโปร แพลตฟอร์มของ BUNNY555 ถูกออกแบบอินเทอร์เฟซมาให้ใช้งานได้อย่างเป็นมิตรและเป็นสัดส่วน ลดความซับซ้อนในทุกขั้นตอนของการเดิมพัน
+      ช่วยให้คุณโฟกัสกับการกอบโกยรางวัลได้อย่างเต็มที่ ไร้อุปสรรคขัดขวาง
     </p>
-  </ContentBoxSevenThreePremium>
+  </ContentBoxSevenThree>
 
-  <ContentBoxNeumorphism as="h2" title="ยกระดับประสบการณ์ด้วย บริการระดับ VVIP แท้ 100%">
-    <p class="text-left text-base leading-relaxed text-[#ffe9c4]">
-      เราเชื่อว่าการดูแลลูกค้าคือหัวใจสำคัญของการดำเนินงาน ทีมผู้เชี่ยวชาญของเราจึงผ่านการฝึกอบรมมาเป็นอย่างดี พร้อมสแตนด์บายคอยช่วยเหลือและให้คำปรึกษาตลอด 24 ชั่วโมง มอบการดูแลที่ใส่ใจในทุกรายละเอียด
-      เพื่อให้คุณสัมผัสได้ถึง บริการระดับ VVIP ตั้งแต่ก้าวแรกที่สมัครสมาชิก
+  <ContentBoxSevenThreeNeumorphism titleright="เทคโนโลยีออโต้สุดล้ำ การันตี ได้เงินไว ในเสี้ยววินาที">
+    <Picture
+      slot="left"
+      src={imgGoldBonus}
+      loading="lazy"
+      fetchpriority="low"
+      widths={[200, 400, 600]}
+      sizes="(max-width: 768px) 100vw, 30vw"
+      decoding="async"
+      formats={["avif", "webp"]}
+      fallbackFormat="webp"
+      quality={80}
+      alt="แบนเนอร์โปรโมชั่น BUNNY555 ฝากแรกลุ้นรับทอง 1 บาท ตัวอักษรสีชมพูบนพื้นดำโรยเหรียญทอง สาวชุดกระต่ายสีชมพูข้างตู้สล็อต JACKPOT มีทองคำแท่งและสร้อยทองด้านขวา ข้อความ ลุ้นง่าย จ่ายจริง ฟรีทุกยูสเซอร์ พร้อมไอคอนสี่ช่อง ระบบปลอดภัยมาตรฐานสากล ฝาก-ถอนรวดเร็วทันใจ โบนัสจัดเต็มทุกวัน บริการลูกค้า 24 ชม. และแถบ สมัครวันนี้ รับสิทธิ์ลุ้นทองทันที"
+      class="mx-auto h-auto w-full rounded-2xl border border-[#ff4d9d]/30 shadow-[0_10px_30px_rgba(255,77,157,0.22)]"
+    />
+    <p slot="right" class="text-left text-base leading-relaxed text-[#ffdcea]">
+      เราเข้าใจดีว่าเวลาคือสิ่งมีค่า ระบบประมวลผลของ BUNNY555 จึงถูกพัฒนาด้วย AI ที่ล้ำสมัยที่สุด เพียงทำรายการฝากหรือถอน เครดิตของคุณจะถูกอัปเดตเข้าบัญชีทันทีโดยไม่ต้องรอนาน
+      มอบความมั่นใจและสภาพคล่องทางการเงินให้คุณในทุกบิลที่ทำกำไรได้
     </p>
-  </ContentBoxNeumorphism>
+  </ContentBoxSevenThreeNeumorphism>
 
-  <ContentBoxPremium as="h2" title="ความปลอดภัยของ LUCKYGAME689 มั่นคง ผ่านระบบ Premium Loader">
-    <p class="text-left text-base leading-relaxed text-[#ffe9c4]">
-      ปกป้องข้อมูลส่วนตัวและเงินทุนของคุณด้วยระบบรักษาความปลอดภัยที่ดีที่สุด การล็อกอินเข้าสู่ระบบบน LUCKYGAME689 จะทำงานผ่าน Secure Transition Popup แบบพรีเมียม ที่สวยงามและทันสมัย โหลดไว ลื่นไหล
-      ป้องกันการรีเฟรชหน้าเว็บซ้ำซ้อน ทำให้ทุกการเชื่อมต่อของคุณมีความเป็นส่วนตัวและปลอดภัยในระดับสูงสุด
+  <ContentBoxSpecial as="h2" title="ดูแลทุกการเชื่อมต่อด้วย บริการ 24 ชม. จากทีมงาน BUNNY555">
+    <p slot="left" class="text-left text-base leading-relaxed text-[#ffdcea]">
+      เพื่อให้คุณก้าวเดินบนเส้นทางแห่งความสำเร็จอย่างราบรื่น ทีมซัพพอร์ตของ BUNNY555 ได้ผ่านการอบรมมาอย่างดีเยี่ยม พร้อมสแตนด์บายแก้ไขปัญหาและให้คำปรึกษาตลอดเวลา
     </p>
-  </ContentBoxPremium>
+    <p slot="right" class="text-left text-base leading-relaxed text-[#ffdcea]">
+      ไม่ว่าคุณจะต้องการความช่วยเหลือเมื่อใด เราก็พร้อมเคียงข้างและดูแลคุณระดับวีไอพีเสมอ
+    </p>
+  </ContentBoxSpecial>
 
-  <Faq title="FAQ คำถามที่พบบ่อย เกี่ยวกับ LUCKYGAME689 เว็บสล็อตเจ้าใหญ่" faqs={faqs} />
+  <Faq title="FAQ คำถามที่พบบ่อย" faqs={faqs} />
 
   <LoginRtpSection />
 
@@ -144,37 +165,37 @@ const graph = pageGraph(Astro, {
 
   <LatestWinners />
 
-  <ContentBoxTwoPremium label="เข้าสู่ระบบและสมัครสมาชิก LUCKYGAME689">
+  <ContentBoxTwo label="เข้าสู่ระบบและสมัครสมาชิก BUNNY555">
     <div slot="left" class="flex flex-col gap-4">
-      <p class="flex items-center gap-3 border-b border-[#faad23]/30 pb-3 text-xl leading-normal font-black tracking-widest text-[#ffd84d] uppercase">
-        <span aria-hidden="true" class="h-6 w-1.5 shrink-0 rounded-full bg-gradient-to-b from-[#ffd84d] via-[#faad23] to-[#b8760f] shadow-[0_0_10px_rgba(250,173,35,0.45)]"></span>
+      <p class="flex items-center gap-3 border-b border-[#ff4d9d]/30 pb-3 text-xl leading-normal font-black tracking-widest text-[#ff4d9d] uppercase">
+        <span aria-hidden="true" class="h-6 w-1.5 shrink-0 rounded-full bg-gradient-to-b from-[#ffc2da] via-[#ff4d9d] to-[#a3134f] shadow-[0_0_10px_rgba(255,77,157,0.5)]"></span>
         เข้าสู่ระบบสมาชิกเดิม
       </p>
-      <p class="text-left text-base leading-relaxed text-[#ffe9c4]">
-        เข้าแดชบอร์ดส่วนตัวผ่าน Secure Transition Popup เพื่อจัดการยอดฝากถอน เลือกค่ายเกมระดับโลก และกดรับ โปรโมชั่นเด็ด ได้จากจุดเดียว
+      <p class="text-left text-base leading-relaxed text-[#ffdcea]">
+        เข้าแดชบอร์ดส่วนตัวเพื่อจัดการยอดฝากถอนผ่านระบบออโต้ที่ ได้เงินไว ในเสี้ยววินาที เลือกค่ายเกมชั้นนำ และกดรับโบนัสได้จากจุดเดียว
       </p>
       <a
         href="/login"
-        class="mt-1 inline-flex items-center justify-center rounded-full bg-gradient-to-r from-[#ffd84d] via-[#faad23] to-[#b8760f] px-8 py-3 text-sm font-black whitespace-nowrap text-[#2b0204] shadow-[0_10px_30px_rgba(250,173,35,0.28)] transition-all duration-300 hover:-translate-y-1 hover:scale-105 hover:shadow-[0_15px_40px_rgba(250,173,35,0.42)] sm:text-base">
+        class="mt-1 inline-flex items-center justify-center rounded-full bg-gradient-to-r from-[#ffc2da] via-[#ff4d9d] to-[#a3134f] px-8 py-3 text-sm font-black whitespace-nowrap text-[#26050f] shadow-[0_10px_30px_rgba(255,77,157,0.3)] transition-all duration-300 hover:-translate-y-1 hover:scale-105 hover:shadow-[0_15px_40px_rgba(255,77,157,0.45)] sm:text-base">
         เข้าสู่ระบบ
       </a>
     </div>
 
     <div slot="right" class="flex flex-col gap-4">
-      <p class="flex items-center gap-3 border-b border-[#ff3d8a]/35 pb-3 text-xl leading-normal font-black tracking-widest text-[#ff3d8a] uppercase">
-        <span aria-hidden="true" class="h-6 w-1.5 shrink-0 rounded-full bg-gradient-to-b from-[#ff3d8a] via-[#e01b5d] to-[#7a0426] shadow-[0_0_10px_rgba(224,27,93,0.5)]"></span>
+      <p class="flex items-center gap-3 border-b border-[#ffcf5c]/40 pb-3 text-xl leading-normal font-black tracking-widest text-[#ffcf5c] uppercase">
+        <span aria-hidden="true" class="h-6 w-1.5 shrink-0 rounded-full bg-gradient-to-b from-[#ffe7a8] via-[#ffcf5c] to-[#c98a1c] shadow-[0_0_10px_rgba(255,207,92,0.5)]"></span>
         สมัครสมาชิกใหม่
       </p>
-      <p class="text-left text-base leading-relaxed text-[#ffe9c4]">
-        เปิดบัญชีเดียวใช้ได้ครบทุกค่ายลิขสิทธิ์แท้ ทั้ง Hacksaw Gaming Nolimit City และ Relax Gaming พร้อมรับการดูแลด้วย บริการระดับ VVIP ตามเงื่อนไขของแต่ละแคมเปญ
+      <p class="text-left text-base leading-relaxed text-[#ffdcea]">
+        เปิดบัญชีเดียวใช้ได้ครบทุกค่ายลิขสิทธิ์แท้ ทั้ง Play'n GO Red Tiger และ Blueprint Gaming พร้อมรับการดูแลจากทีมงานด้วย บริการ 24 ชม. ตามเงื่อนไขของแต่ละแคมเปญ
       </p>
       <a
         href="/register"
-        class="mt-1 inline-flex items-center justify-center rounded-full border border-[#ff3d8a]/60 bg-[#3d0410]/85 px-8 py-3 text-sm font-black whitespace-nowrap text-[#ff3d8a] backdrop-blur-sm transition-all duration-300 hover:scale-105 hover:border-[#ff3d8a] hover:bg-[#2b0204]/85 hover:shadow-[0_15px_40px_rgba(224,27,93,0.32)] sm:text-base">
+        class="mt-1 inline-flex items-center justify-center rounded-full border border-[#ffcf5c]/60 bg-[#3a0818]/85 px-8 py-3 text-sm font-black whitespace-nowrap text-[#ffcf5c] backdrop-blur-sm transition-all duration-300 hover:scale-105 hover:border-[#ffcf5c] hover:bg-[#26050f]/85 hover:shadow-[0_15px_40px_rgba(255,207,92,0.3)] sm:text-base">
         สมัครสมาชิก
       </a>
     </div>
-  </ContentBoxTwoPremium>
+  </ContentBoxTwo>
 
   <ReviewCardSumo2 />
 

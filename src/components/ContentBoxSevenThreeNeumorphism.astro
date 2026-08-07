@@ -6,19 +6,28 @@ export interface Props {
 }
 const { title, titleleft, titleright } = Astro.props;
 const rightHeading = titleright ?? title;
+
+// BOTH `titleleft` and the resolved right heading render as <h2>. Pass exactly
+// ONE of them per block, or a single docx heading becomes two page headings.
+// `title` is an alias for `titleright`, not a third slot.
+//
+// The neumorphic pair is derived from this brand's card surface (#26050f): the
+// dark side is a shade below it and the light side is the raised panel colour,
+// so the extrusion reads on the pink-black background instead of the previous
+// brand's warm brown one.
 ---
 
 <section class="relative z-10 mx-auto mb-8 w-full max-w-[1400px] px-4 font-sans">
   <div
-    class="w-full rounded-[25px] border border-[#3a2e1c]/70 bg-[#15110b] p-8 shadow-[10px_10px_20px_#040302,-10px_-10px_20px_#241a10] transition-all duration-300 hover:shadow-[15px_15px_30px_#020201,-15px_-15px_30px_#2c2114]">
+    class="w-full rounded-[25px] border border-[#a3134f]/40 bg-[#26050f] p-8 shadow-[10px_10px_20px_#0d0205,-10px_-10px_20px_#3a0818] transition-all duration-300 hover:shadow-[15px_15px_30px_#070103,-15px_-15px_30px_#450a1d]">
     <div class="grid grid-cols-1 gap-8 md:grid-cols-[3fr_7fr] md:items-center">
-      <article class="flex flex-col gap-4 text-left text-base leading-relaxed text-[#f4e3c8]">
-        {titleleft && <h2 class="text-2xl leading-normal font-black text-[#e8b43a]">{titleleft}</h2>}
+      <article class="flex flex-col gap-4 text-left text-base leading-relaxed text-[#ffdcea]">
+        {titleleft && <h2 class="text-2xl leading-normal font-black text-[#ff4d9d]">{titleleft}</h2>}
         <slot name="left" />
       </article>
 
-      <article class="flex flex-col gap-4 text-left text-base leading-relaxed text-[#f4e3c8] md:border-l md:border-[#3a2e1c] md:pl-8">
-        {rightHeading && <h2 class="text-2xl leading-normal font-black text-[#e8b43a]">{rightHeading}</h2>}
+      <article class="flex flex-col gap-4 text-left text-base leading-relaxed text-[#ffdcea] md:border-l md:border-[#a3134f]/50 md:pl-8">
+        {rightHeading && <h2 class="text-2xl leading-normal font-black text-[#ff4d9d]">{rightHeading}</h2>}
         <slot name="right" />
       </article>
     </div>

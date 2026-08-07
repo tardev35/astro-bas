@@ -1,30 +1,30 @@
 ---
 import MainLayout from "../layouts/MainLayout.astro";
-import ContentBox from "../components/ContentBoxPremium.astro";
+import ContentBox from "../components/ContentBox.astro";
 import Navfoot from "../components/Navfoot.astro";
-import Announcement from "../components/AnnouncementPremium.astro";
+import Announcement from "../components/Announcement5.astro";
 
 import { Picture } from "astro:assets";
 
-// Only the TWO slides that belong to THIS brand's drop (2026-08-06 15:02) are
-// imported. slide3.png (2026-08-06 12:41) and slide4.png (2026-08-01) are the
-// previous brands' promo art — slide3 still carries an earlier brand's wordmark
-// baked into the artwork — and an image imported without being rendered still
-// gets emitted into dist/, so they are dropped here rather than left as unused
-// imports.
+// Only the TWO slides that belong to THIS brand's drop (2026-08-07 07:06) are
+// imported. slide3.png (2026-08-06, still carries an earlier brand's wordmark
+// baked into the artwork) and slide4.png (2026-08-01) are previous brands'
+// promo art — and an image imported without being rendered still gets emitted
+// into dist/, so they are dropped here rather than left as unused imports.
 import pro1 from "../assets/slide1.png";
 import pro2 from "../assets/slide2.png";
 import { pageGraph } from "../lib/schema";
 
-// 157 CHARACTERS (not bytes — Thai is 3 bytes/char, so a byte count reads ~3x
-// too long). The brief's own sentence is 129 characters, under
+// 158 CHARACTERS (not bytes — Thai is 3 bytes/char, so a byte count reads ~3x
+// too long). The brief's own sentence is 133 characters, under
 // verify-build.mjs's 150 floor, so the trailing clause names the two campaigns
 // the artwork actually shows and brings it into the 150–160 window without
 // changing what the brief says.
-const pageDescription = "อัปเดตสิทธิพิเศษล่าสุดจาก LUCKYGAME689 คัดสรร โปรโมชั่นเด็ด จัดเต็มโบนัสเพื่อซัพพอร์ตทุกการลงทุนของคุณ รับสิทธิ์ง่ายผ่านระบบออโต้ ครบทุกแคมเปญคืนยอดและค่าคอม";
+const pageDescription =
+  "อัปเดตสิทธิพิเศษและโปรโมชั่นสุดคุ้มจาก BUNNY555 กดรับโบนัสเพื่อต่อยอดทุนของคุณให้เติบโตอย่างมั่นคง เล่นง่าย รับสิทธิ์ได้ผ่านระบบออโต้ ทั้งคืนยอดเสียและลุ้นทอง";
 
 const graph = pageGraph(Astro, {
-  name: "LUCKYGAME689 โปรโมชั่น ศูนย์รวม โปรโมชั่นเด็ด สุดคุ้มค่า",
+  name: "BUNNY555 โปรโมชั่น แจกหนักทุนเสริม เล่นง่าย ได้ทุกวัน",
   description: pageDescription,
   breadcrumb: [
     { name: "หน้าแรก", path: "/" },
@@ -34,22 +34,23 @@ const graph = pageGraph(Astro, {
 });
 ---
 
-<MainLayout title="LUCKYGAME689 โปรโมชั่น ศูนย์รวม โปรโมชั่นเด็ด สุดคุ้มค่า" description={pageDescription}>
+<MainLayout title="BUNNY555 โปรโมชั่น แจกหนักทุนเสริม เล่นง่าย ได้ทุกวัน" description={pageDescription}>
   <script type="application/ld+json" set:html={graph} />
 
   <Announcement />
 
-  <ContentBox title="โปรโมชั่น LUCKYGAME689 ศูนย์รวม โปรโมชั่นเด็ด สุดคุ้มค่า อัปเดตทุกวัน" as="h1">
-    <h2 class="mb-4 text-2xl leading-normal font-bold text-[#ffd84d]">แคมเปญรอบนี้ของ LUCKYGAME689 มีอะไรบ้าง และต้องอ่านเงื่อนไขตรงไหน</h2>
+  <ContentBox title="โปรโมชั่น BUNNY555 แจกหนักทุนเสริม เล่นง่าย รับสิทธิ์ได้ทุกวัน" as="h1">
+    <h2 class="mb-4 text-2xl leading-normal font-bold text-[#ffc2da]">แคมเปญรอบนี้ของ BUNNY555 มีอะไรบ้าง และต้องอ่านเงื่อนไขตรงไหน</h2>
 
-    <p class="mb-5 text-left text-base leading-relaxed text-[#ffe9c4]">
-      <strong class="text-[#faad23]">LUCKYGAME689</strong> คือ เว็บสล็อตเจ้าใหญ่ ที่รวบรวมซอฟต์แวร์เกมชั้นนำจากทั่วทุกมุมโลกอย่าง Hacksaw Gaming, Nolimit City และ Relax Gaming ไว้ในบัญชีเดียว สิทธิพิเศษบนหน้านี้จึงผูกอยู่กับยอดการเล่นและค่ายเกมที่ร่วมรายการ
-      ไม่ได้ลอยอยู่เดี่ยว ๆ รอบนี้มีสองแคมเปญหลัก คือ คืนยอดเสีย CASHBACK 10% ที่คิดจากยอดสะสมและไม่จำกัดยอดสูงสุด กับ ชวนเพื่อนรับค่าคอม 0.8% ที่คิดจากยอดของเพื่อนที่ชวนเข้ามา ไม่จำกัดจำนวนเพื่อน ตัวเลขใหญ่บนแบนเนอร์บอกได้แค่ว่ามีอะไรให้
-      ส่วนบรรทัดเล็กใต้ตัวเลขคือคนที่ตัดสินว่าเราได้จริงเท่าไร ก่อนกดรับจึงควรไล่ให้ครบทั้งรอบการคำนวณ ยอดที่นับได้จริง ค่ายเกมที่ร่วมรายการ และเพดานการถอน
+    <p class="mb-5 text-left text-base leading-relaxed text-[#ffdcea]">
+      <strong class="text-[#ff4d9d]">BUNNY555</strong> คือ เว็บสล็อตลิขสิทธิ์แท้ ที่เชื่อมต่อ API ตรงจากค่ายเกมระดับโลกอย่าง Play'n GO, Red Tiger และ Blueprint Gaming ไว้ในบัญชีเดียว
+      สิทธิพิเศษบนหน้านี้จึงผูกอยู่กับยอดการเล่นและค่ายเกมที่ร่วมรายการ ไม่ได้ลอยอยู่เดี่ยว ๆ รอบนี้มีสองแคมเปญหลัก คือ คืนยอดเสีย 15% ที่คิดจากยอดที่เสียจริงและคืนให้อัตโนมัติ เล่นได้ทุกเกมไม่จำกัด
+      กับ ฝากแรกลุ้นรับทองคำ 1 บาท ที่เปิดสิทธิ์ให้ฟรีทุกยูสเซอร์ตั้งแต่บิลฝากแรก ตัวเลขใหญ่บนแบนเนอร์บอกได้แค่ว่ามีอะไรให้ ส่วนบรรทัดเล็กใต้ตัวเลขคือคนที่ตัดสินว่าเราได้จริงเท่าไร
+      ก่อนกดรับจึงควรไล่ให้ครบทั้งรอบการคำนวณ ยอดที่นับได้จริง ค่ายเกมที่ร่วมรายการ และเพดานการถอน
     </p>
 
-    <p class="mb-8 text-left text-base leading-relaxed text-[#ffe9c4]">
-      สองแคมเปญนี้ทำงานคนละจังหวะกัน คืนยอดเสียจะสรุปเป็นรอบตามยอดที่เสียจริงในช่วงเวลาที่กำหนด ส่วนค่าคอมจากการชวนเพื่อนจะเดินต่อเนื่องไปเรื่อย ๆ ตราบที่เพื่อนยังใช้งานอยู่
+    <p class="mb-8 text-left text-base leading-relaxed text-[#ffdcea]">
+      สองแคมเปญนี้ทำงานคนละจังหวะกัน คืนยอดเสียจะสรุปเป็นรอบตามยอดที่เสียจริงในช่วงเวลาที่กำหนด ส่วนสิทธิ์ลุ้นทองคำผูกกับบิลฝากแรกของแต่ละยูสเซอร์ จึงเป็นสิทธิ์ที่ใช้ได้ครั้งเดียวและไม่สะสมข้ามรอบ
       ตัวเลขที่เห็นบนหน้านี้จึงควรใช้เป็นข้อมูลตั้งต้น แล้วตรวจจากหน้าโปรจริงอีกครั้งก่อนกด เพราะช่วงเวลาของสิทธิ์ ค่ายเกมที่ยกเว้น และการรับซ้อนกับรายการอื่นเป็นรายละเอียดที่ปรับได้ตามรอบ
       ถ้าแผนของเราคือหมุนตามงบแล้วปิดจบ การไม่รับสิทธิ์เลยก็เป็นทางเลือกที่สมเหตุสมผล เพราะโบนัสที่ยังติดเงื่อนไขไม่ได้แปลว่าเงินอยู่ในมือแล้ว
     </p>
@@ -57,12 +58,12 @@ const graph = pageGraph(Astro, {
     <div class="grid grid-cols-1 gap-6 sm:grid-cols-2">
       <Picture
         src={pro1}
-        alt="แบนเนอร์โปรโมชั่นคืนยอดเสีย CASHBACK 10% ตัวอักษรสีทองขนาดใหญ่บนพื้นสีชมพูบานเย็น ด้านบนมีข้อความ โปรดี คุ้มสุด คืนยอดทุกการช้อป ด้านล่างมีแถบ ช้อปมาก ยิ่งได้คืนมาก มีผู้หญิงในชุดเดรสสีทองยืนอยู่ทางขวา และไอคอนสี่ช่อง ช้อปครบรับเงินคืนทันที ปลอดภัยมั่นใจได้ 100% บริการดีตอบไว 24 ชม. คุ้มค่าคืนจริงทุกการใช้จ่าย ล้อมด้วยกรอบเครื่องเล่นเกมพกพา หีบสมบัติและเหรียญทอง"
+        alt="แบนเนอร์โปรโมชั่น BUNNY555 คืนยอดเสีย 15% ตัวเลขสีขาวขอบชมพูบนพื้นดำโรยเหรียญทอง สาวชุดกระต่ายสีชมพูข้างตู้สล็อต JACKPOT ข้อความ เสียเท่าไหร่ เราคืนให้ 15% พร้อมไอคอนสี่ช่อง ระบบปลอดภัยมาตรฐานสากล คืนยอดเสียอัตโนมัติ เล่นได้ทุกเกมไม่จำกัด บริการลูกค้า 24 ชม. และแถบ เล่นสนุก มั่นใจ ได้เงินจริง"
         loading="lazy"
         fetchpriority="low"
         widths={[320, 640, 960]}
         sizes="(max-width: 639px) 100vw, 50vw"
-        class="mx-auto h-auto w-full rounded-xl border border-[#e01b5d]/35 object-contain shadow-[0_10px_30px_rgba(250,173,35,0.18)] transition-transform duration-300 hover:-translate-y-1 hover:border-[#ff3d8a]/70 hover:shadow-[0_15px_40px_rgba(224,27,93,0.32)]"
+        class="mx-auto h-auto w-full rounded-xl border border-[#f02e7f]/35 object-contain shadow-[0_10px_30px_rgba(255,77,157,0.18)] transition-transform duration-300 hover:-translate-y-1 hover:border-[#ff4d9d]/70 hover:shadow-[0_15px_40px_rgba(240,46,127,0.32)]"
         decoding="async"
         formats={["avif", "webp"]}
         fallbackFormat="webp"
@@ -71,12 +72,12 @@ const graph = pageGraph(Astro, {
 
       <Picture
         src={pro2}
-        alt="แบนเนอร์โปรโมชั่นชวนเพื่อนรับค่าคอม ตัวเลข 0.8% สีทองขนาดใหญ่บนพื้นสีชมพูบานเย็น พร้อมข้อความ ยิ่งชวนมาก ยิ่งได้มาก ไม่จำกัดเพื่อน และแถบล่าง ชวนเพื่อนตอนนี้ รับโบนัสเลย มีผู้หญิงในชุดเดรสสีทองยืนชี้นิ้วอยู่ทางซ้าย และไอคอนสี่ช่อง ชวนง่ายแชร์ลิงก์ได้ทันที รับรายได้ไม่อั้นจากยอดเพื่อน ถอนได้จริงโอนไวไม่มีขั้นต่ำ ปลอดภัยมั่นใจได้ 100% ล้อมด้วยกรอบเครื่องเล่นเกมพกพา กล่องของขวัญและหีบสมบัติ"
+        alt="แบนเนอร์โปรโมชั่น BUNNY555 ฝากแรกลุ้นรับทอง 1 บาท ตัวอักษรสีชมพูบนพื้นดำโรยเหรียญทอง สาวชุดกระต่ายสีชมพูข้างตู้สล็อต JACKPOT มีทองคำแท่งและสร้อยทองด้านขวา ข้อความ ลุ้นง่าย จ่ายจริง ฟรีทุกยูสเซอร์ พร้อมไอคอนสี่ช่อง ระบบปลอดภัยมาตรฐานสากล ฝาก-ถอนรวดเร็วทันใจ โบนัสจัดเต็มทุกวัน บริการลูกค้า 24 ชม. และแถบ สมัครวันนี้ รับสิทธิ์ลุ้นทองทันที"
         loading="lazy"
         fetchpriority="low"
         widths={[320, 640, 960]}
         sizes="(max-width: 639px) 100vw, 50vw"
-        class="mx-auto h-auto w-full rounded-xl border border-[#e01b5d]/35 object-contain shadow-[0_10px_30px_rgba(250,173,35,0.18)] transition-transform duration-300 hover:-translate-y-1 hover:border-[#ff3d8a]/70 hover:shadow-[0_15px_40px_rgba(224,27,93,0.32)]"
+        class="mx-auto h-auto w-full rounded-xl border border-[#f02e7f]/35 object-contain shadow-[0_10px_30px_rgba(255,77,157,0.18)] transition-transform duration-300 hover:-translate-y-1 hover:border-[#ff4d9d]/70 hover:shadow-[0_15px_40px_rgba(240,46,127,0.32)]"
         decoding="async"
         formats={["avif", "webp"]}
         fallbackFormat="webp"
@@ -84,34 +85,34 @@ const graph = pageGraph(Astro, {
       />
     </div>
 
-    <h2 class="mt-10 mb-4 text-2xl leading-normal font-bold text-[#ffd84d]">กดรับ โปรโมชั่นเด็ด เองได้ผ่านระบบออโต้ ไม่ต้องรอทีมงานยืนยัน</h2>
+    <h2 class="mt-10 mb-4 text-2xl leading-normal font-bold text-[#ffc2da]">กดรับโบนัสเองได้ผ่านระบบออโต้ ไม่ต้องรอทีมงานยืนยัน</h2>
 
-    <p class="mb-5 text-left text-base leading-relaxed text-[#ffe9c4]">
-      นอกเหนือจากระบบที่ยอดเยี่ยมแล้ว แพลตฟอร์ม LUCKYGAME689 ยังเตรียมทุนสนับสนุนเพื่อเพิ่มศักยภาพในการทำกำไรให้กับสมาชิกอย่างเต็มพิกัด เรามีการอัปเดตและแจก โปรโมชั่นเด็ด อย่างต่อเนื่อง
-      ไม่ว่าจะเป็นโบนัสต้อนรับหรือแคมเปญประจำวัน สมาชิกสามารถกดรับสิทธิ์ได้ง่าย ๆ ผ่านแดชบอร์ดส่วนตัวเพื่อนำไปต่อยอดความสำเร็จได้ทันที ไม่ต้องส่งข้อความไปแจ้งทีมงานแล้วนั่งรอรอบตรวจ
-      และไม่ต้องแนบสลิปให้เสียเวลา
+    <p class="mb-5 text-left text-base leading-relaxed text-[#ffdcea]">
+      นอกเหนือจากระบบที่ยอดเยี่ยมแล้ว แพลตฟอร์ม BUNNY555 ยังเตรียมทุนสนับสนุนเพื่อเพิ่มศักยภาพในการทำกำไรให้กับสมาชิกอย่างเต็มพิกัด เรามีการอัปเดตและแจกโบนัสอย่างต่อเนื่อง
+      ไม่ว่าจะเป็นเงินคืนตามยอดที่เสียจริงหรือสิทธิ์ลุ้นทองจากบิลฝากแรก สมาชิกกดรับได้ง่าย ๆ ผ่านแดชบอร์ดส่วนตัวเพื่อนำไปต่อยอดได้ทันที ไม่ต้องส่งข้อความไปแจ้งทีมงานแล้วนั่งรอรอบตรวจ
+      และไม่ต้องแนบสลิปให้เสียเวลา นี่คือส่วนหนึ่งของระบบออโต้ที่ทำให้ทั้งการฝาก ถอน และรับสิทธิ์ เล่นง่าย พอกัน
     </p>
 
-    <p class="mb-8 text-left text-base leading-relaxed text-[#ffe9c4]">
+    <p class="mb-8 text-left text-base leading-relaxed text-[#ffdcea]">
       หลังกดรับสิทธิ์แล้วควรเปิดหน้าประวัติรายการดูสักครั้งว่ายอดโบนัสเข้าครบ เงื่อนไขเดินถูกเกม และยอดคงเหลือตรงกับที่ระบบแสดง เพราะบางแคมเปญนับยอดเฉพาะสล็อตบางค่าย และอาจไม่นับยอดจากโต๊ะคาสิโนสดเลย
       อีกจุดที่คนอ่านข้ามบ่อยคือคำว่าไม่มีขั้นต่ำ ซึ่งหมายถึงยอดบนระบบออโต้ ไม่ใช่ยอดเดิมพันขั้นต่ำของทุกเกม ทั้งสองส่วนใช้ตัวเลขคนละชุด จึงควรดูยอดบนหน้าธุรกรรมและหน้าเกมแยกกัน
       และถ้ายอดยังไม่ขยับก็ไม่ควรกดซ้ำทันที เพราะนิ้วที่กดสองรอบไม่ได้ทำให้ธนาคารขยันขึ้น
     </p>
 
-    <h2 class="mt-10 mb-4 text-2xl leading-normal font-bold text-[#ffd84d]">บริการระดับ VVIP แท้ 100% และความปลอดภัยผ่านระบบ Premium Loader</h2>
+    <h2 class="mt-10 mb-4 text-2xl leading-normal font-bold text-[#ffc2da]">บริการ 24 ชม. และความปลอดภัยของทุกการเชื่อมต่อ</h2>
 
-    <p class="mb-8 text-left text-base leading-relaxed text-[#ffe9c4]">
-      เราเชื่อว่าการดูแลลูกค้าคือหัวใจสำคัญของการดำเนินงาน ทีมผู้เชี่ยวชาญของ LUCKYGAME689 จึงผ่านการฝึกอบรมมาเป็นอย่างดี พร้อมสแตนด์บายคอยช่วยเหลือและให้คำปรึกษาเรื่องเงื่อนไขของทุกแคมเปญตลอด 24
-      ชั่วโมง มอบการดูแลที่ใส่ใจในทุกรายละเอียด เพื่อให้คุณสัมผัสได้ถึง บริการระดับ VVIP ตั้งแต่ก้าวแรกที่สมัครสมาชิก ด้านความปลอดภัย การล็อกอินเข้าสู่ระบบจะทำงานผ่าน Premium Loader และ Secure
-      Transition Popup แบบพรีเมียมที่สวยงามและทันสมัย โหลดไว ลื่นไหล ป้องกันการรีเฟรชหน้าเว็บซ้ำซ้อน ทำให้ทุกการเชื่อมต่อของคุณมีความเป็นส่วนตัวและปลอดภัยในระดับสูงสุด ก่อนกรอกข้อมูลทุกครั้ง
-      ควรตรวจว่าอยู่บนโดเมนจริงของเราและเชื่อมต่อแบบ HTTPS เท่านั้น ไม่ใช่ลิงก์ที่ส่งต่อกันมาในแชตพร้อมคำโฆษณา
+    <p class="mb-8 text-left text-base leading-relaxed text-[#ffdcea]">
+      เราเชื่อว่าการดูแลลูกค้าคือหัวใจสำคัญของการดำเนินงาน ทีมซัพพอร์ตของ BUNNY555 จึงผ่านการอบรมมาอย่างดีเยี่ยม พร้อมสแตนด์บายคอยช่วยเหลือและให้คำปรึกษาเรื่องเงื่อนไขของทุกแคมเปญผ่าน บริการ 24 ชม.
+      ไม่มีวันหยุด มอบการดูแลที่ใส่ใจในทุกรายละเอียด เพื่อให้คุณสัมผัสได้ถึงความต่างตั้งแต่ก้าวแรกที่สมัครสมาชิก ด้านความปลอดภัย การล็อกอินเข้าสู่ระบบจะทำงานผ่าน Secure Transition Popup
+      ที่เปิดแดชบอร์ดขึ้นบนหน้าเดิม โหลดไว ลื่นไหล ป้องกันการรีเฟรชหน้าเว็บซ้ำซ้อน ทำให้ทุกการเชื่อมต่อของคุณมีความเป็นส่วนตัวและปลอดภัยในระดับสูงสุด ก่อนกรอกข้อมูลทุกครั้ง
+      ควรตรวจว่าอยู่บนโดเมนจริงของเราและเชื่อมต่อแบบ HTTPS เท่านั้น ไม่ใช่ลิงก์ที่ส่งต่อกันมาในแชตพร้อมคำโฆษณา และทีมงานจะไม่ขอรหัสผ่านหรือรหัส OTP จากสมาชิกไม่ว่ากรณีใด
     </p>
 
     <div class="mt-12 flex justify-center pb-4">
       <a
         href="/register"
-        class="flex items-center justify-center rounded-lg border border-[#ff3d8a]/50 bg-gradient-to-r from-[#ffd84d] via-[#faad23] to-[#b8760f] px-10 py-3.5 text-lg font-black text-[#2b0204] shadow-[0_10px_30px_rgba(250,173,35,0.22)] transition-transform hover:scale-105 hover:shadow-[0_15px_40px_rgba(224,27,93,0.35)]">
-        สมัครสมาชิก LUCKYGAME689
+        class="flex items-center justify-center rounded-lg border border-[#ff4d9d]/50 bg-gradient-to-r from-[#ffc2da] via-[#ff4d9d] to-[#a3134f] px-10 py-3.5 text-lg font-black text-[#26050f] shadow-[0_10px_30px_rgba(255,77,157,0.22)] transition-transform hover:scale-105 hover:shadow-[0_15px_40px_rgba(240,46,127,0.35)]">
+        สมัครสมาชิก BUNNY555
       </a>
     </div>
   </ContentBox>

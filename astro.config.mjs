@@ -33,7 +33,7 @@ export default defineConfig({
     "/line": "https://tinyurl.com/4uw46sek",
   },
 
-  site: "https://luckygame689-play.net",
+  site: "https://bunny555-th.net",
   integrations: [
     sitemap({
       // /login, /register and /line are forwarding pages that all ship

@@ -6,24 +6,31 @@ export interface Props {
 const { title, as: HeadingTag = "h1" } = Astro.props;
 const headingSize = HeadingTag === "h1" ? "text-xl sm:text-2xl md:text-3xl" : "text-lg sm:text-xl md:text-2xl";
 
-// pt-32/md:pt-28 rather than the pt-28/md:pt-24 this file shipped with. The
+// pt-40/md:pt-32 rather than the pt-32/md:pt-28 this file shipped with. The
 // badge is anchored at -top-6 (24px above the card), so its bottom edge sits at
-// (badge height − 24px) from the card's top. A full-sentence Thai H2 wraps the
-// badge to two or three lines — up to ~108px tall on a phone — which put the
-// last line of the badge on top of the first line of body copy. Keep this value
-// in sync with ContentBoxSevenThreeFloatingBadge.astro, which uses the same
-// anchor.
+// (badge height − 24px) from the card's top. A full-sentence Thai heading wraps
+// the badge to three or four lines, which without the extra padding puts the
+// last line of the badge on top of the first line of body copy.
 //
-// Re-checked 2026-08-06 against this brand's real H2
-// ("DEVA555 รวบรวมค่ายเกมระดับโลก สล็อตเว็บตรงอันดับ 1", 49 chars):
-//   360px viewport — card 328px wide, badge w-[92%] ≈ 302px, minus px-4, the
-//   2px borders and the two ✦ spans leaves ~212px of text at text-lg/18px,
-//   leading-normal = 27px per line → 3 lines = 81px + py-2.5 (20px) + border
-//   (4px) = 105px. Bottom edge at 105 − 24 = 81px < pt-32 (128px). 47px clear.
-//   md — badge max-w-2xl (672px), text-2xl/24px, leading 36px → 2 lines = 72px
-//   + 24px = 96px; bottom edge at 72px < md:pt-28 (112px). 40px clear.
-// A four-line phone badge would still land at 108px, inside 128px. Do not
-// reduce these paddings without redoing this arithmetic with the live title.
+// Re-done 2026-08-07 for this brand, and note this round the badge carries the
+// page's H1, not an H2 — the h1 branch of `headingSize` is one step larger at
+// every breakpoint, which is half of why the previous numbers no longer hold.
+// Title: "BUNNY555 เว็บสล็อตลิขสิทธิ์แท้ เล่นง่าย ได้เงินไว บริการ 24 ชม."
+// (63 characters, vs 49 for the previous brand's H2).
+//   360px viewport — card 328px wide, badge w-[92%] ≈ 302px; minus px-4, the
+//   2px borders and the two ✦ spans leaves ~218px of text at text-xl/20px,
+//   leading-normal = 30px per line. The title measures ≈26.6em, i.e. ~532px at
+//   20px, and its longest space-delimited token (เว็บสล็อตลิขสิทธิ์แท้, ~154px)
+//   forces a break after BUNNY555 → 4 lines = 120px + py-2.5 (20px) + border
+//   (4px) = 144px. Bottom edge at 144 − 24 = 120px, inside pt-40 (160px), so
+//   40px clear. At 320px the line box drops to ~181px and the wrap is still 4
+//   lines (115px of the last line used), so the same 40px holds.
+//   md — badge max-w-2xl (672px), sm:px-8, ~556px of text at md:text-3xl/30px,
+//   leading 45px. 26.6em ≈ 798px → 2 lines = 90px + 24px = 114px; bottom edge
+//   at 90px, inside md:pt-32 (128px). 38px clear.
+// Keep this value in sync with ContentBoxSevenThreeFloatingBadge.astro, which
+// anchors its badge the same way — do not reduce either without redoing this
+// arithmetic against the live title.
 //
 // The badge itself is w-[92%] max-w-2xl + text-center, NOT whitespace-nowrap:
 // a real docx sentence in a nowrap badge blew past the viewport on mobile and
@@ -32,20 +39,20 @@ const headingSize = HeadingTag === "h1" ? "text-xl sm:text-2xl md:text-3xl" : "t
 
 <section class="my-10 flex w-full justify-center px-4 font-sans">
   <div
-    class="relative isolate w-full max-w-[1400px] rounded-2xl border-2 border-[#dfb85f]/25 bg-gradient-to-b from-[#140d04]/95 to-[#070502]/95 p-8 pt-32 text-left text-base leading-relaxed text-[#e9ddbe] shadow-[0_10px_30px_rgba(223,184,95,0.16)] md:pt-28">
-    <div class="pointer-events-none absolute -top-16 -right-10 -z-10 h-40 w-40 rounded-full bg-[#dfb85f]/25 blur-[60px]"></div>
-    <div class="pointer-events-none absolute -bottom-16 -left-10 -z-10 h-40 w-40 rounded-full bg-[#a57a32]/30 blur-[60px]"></div>
+    class="relative isolate w-full max-w-[1400px] rounded-2xl border-2 border-[#ff4d9d]/25 bg-gradient-to-b from-[#26050f]/95 to-[#150207]/95 p-8 pt-40 text-left text-base leading-relaxed text-[#ffdcea] shadow-[0_10px_30px_rgba(255,77,157,0.18)] md:pt-32">
+    <div class="pointer-events-none absolute -top-16 -right-10 -z-10 h-40 w-40 rounded-full bg-[#ff4d9d]/25 blur-[60px]"></div>
+    <div class="pointer-events-none absolute -bottom-16 -left-10 -z-10 h-40 w-40 rounded-full bg-[#a3134f]/35 blur-[60px]"></div>
 
     {
       title && (
-        <div class="absolute -top-6 left-1/2 flex w-[92%] max-w-2xl -translate-x-1/2 items-center justify-center gap-2 rounded-lg border-2 border-[#dfb85f]/35 bg-[#140d04] px-4 py-2.5 text-center shadow-[0_10px_30px_rgba(223,184,95,0.24)] sm:px-8">
-          <span aria-hidden="true" class="shrink-0 text-[#dfe4e7]">
+        <div class="absolute -top-6 left-1/2 flex w-[92%] max-w-2xl -translate-x-1/2 items-center justify-center gap-2 rounded-lg border-2 border-[#ff4d9d]/35 bg-[#26050f] px-4 py-2.5 text-center shadow-[0_10px_30px_rgba(255,77,157,0.26)] sm:px-8">
+          <span aria-hidden="true" class="shrink-0 text-[#fff0f6]">
             ✦
           </span>
-          <HeadingTag class={`bg-gradient-to-r from-[#fded9a] via-[#dfb85f] to-[#a57a32] bg-clip-text ${headingSize} leading-normal font-black tracking-tight text-transparent uppercase`}>
+          <HeadingTag class={`bg-gradient-to-r from-[#ffc2da] via-[#ff4d9d] to-[#a3134f] bg-clip-text ${headingSize} leading-normal font-black tracking-tight text-transparent uppercase`}>
             {title}
           </HeadingTag>
-          <span aria-hidden="true" class="shrink-0 text-[#dfe4e7]">
+          <span aria-hidden="true" class="shrink-0 text-[#fff0f6]">
             ✦
           </span>
         </div>

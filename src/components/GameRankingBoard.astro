@@ -12,11 +12,13 @@ import img6 from "../assets/providers/game6.avif";
 // / Sexy Slot). They used to be labelled with game titles ("Mahjong Ways 2",
 // "Gates of Olympus", …) that appear nowhere in the pictures, which also made
 // every alt describe something the image does not show. The rows name what is
-// drawn, and `alt` describes the drawing.
+// drawn, and `alt` describes the drawing. Do not rename them after this brand's
+// camps — the pictures would then contradict their own labels.
 //
 // This board is chrome, so its title is a <p> and the <section> carries the
-// accessible name. The docx's three highlighted camps live in ProviderGrid and
-// FeatureHighlights; this widget is the wider "camps we also carry" strip.
+// accessible name. The docx's three camps (Play'n GO / Red Tiger / Blueprint
+// Gaming) live in ProviderGrid and FeatureHighlights; this widget is the wider
+// "camps we also carry" strip.
 const games = [
   {
     rank: 1,
@@ -77,15 +79,15 @@ const games = [
 const medal = (rank: number) => (rank === 1 ? "🥇" : rank === 2 ? "🥈" : rank === 3 ? "🥉" : null);
 ---
 
-<section aria-label="ค่ายเกมระดับโลกยอดนิยมบน LUCKYGAME689" class="mx-auto w-full max-w-[1300px] px-4 py-8 font-sans">
+<section aria-label="ค่ายเกมชั้นนำยอดนิยมบน BUNNY555" class="mx-auto w-full max-w-[1300px] px-4 py-8 font-sans">
   <div class="mb-8 flex w-full flex-col items-center justify-center gap-2 text-center">
     <span aria-hidden="true" class="text-2xl">🏆</span>
-    <p class="bg-gradient-to-r from-[#ffd84d] via-[#faad23] to-[#ff3d8a] bg-clip-text text-2xl font-black tracking-widest text-transparent uppercase">ค่ายเกมระดับโลกยอดนิยมบน LUCKYGAME689</p>
-    <p class="max-w-3xl text-base leading-relaxed text-[#e0a6b5]">
-      ทุกตัวเกมบนแพลตฟอร์มผ่านการคัดกรองอย่างพิถีพิถันเพื่อให้ได้มาตรฐานระดับสากลก่อนเปิดให้บริการ กราฟิกจึงสวยงาม โบนัสแตกง่าย และทำงานประสานกับเซิร์ฟเวอร์หลักได้อย่างสมบูรณ์แบบ
+    <p class="bg-gradient-to-r from-[#ffc2da] via-[#ff4d9d] to-[#ffcf5c] bg-clip-text text-2xl font-black tracking-widest text-transparent uppercase">ค่ายเกมชั้นนำยอดนิยมบน BUNNY555</p>
+    <p class="max-w-3xl text-base leading-relaxed text-[#e0a5bd]">
+      แพลตฟอร์มคัดสรรเฉพาะซอฟต์แวร์เกมที่ได้มาตรฐานระดับสากล ทุกซอฟต์แวร์จึงโปร่งใส ยุติธรรม มอบอัตราการจ่ายที่แม่นยำ พร้อมกราฟิกที่ไหลลื่นและระบบที่ตอบสนองไวในทุกอุปกรณ์
       รายชื่อในกระดานนี้เปลี่ยนแปลงได้ตามช่วงเวลา และควรตรวจรายละเอียดจากหน้าเกมจริงอีกครั้งก่อนเริ่มเล่น
     </p>
-    <div class="mt-2 h-[3px] w-24 rounded-full bg-gradient-to-r from-transparent via-[#faad23] to-transparent"></div>
+    <div class="mt-2 h-[3px] w-24 rounded-full bg-gradient-to-r from-transparent via-[#ff4d9d] to-transparent"></div>
   </div>
 
   <div class="flex flex-col gap-3">
@@ -96,10 +98,10 @@ const medal = (rank: number) => (rank === 1 ? "🥇" : rank === 2 ? "🥈" : ran
           <article
             class={`group relative flex items-center gap-3 overflow-hidden rounded-2xl border p-3 backdrop-blur-md transition-all duration-300 hover:-translate-y-0.5 sm:gap-5 sm:p-4 ${
               top
-                ? "border-[#faad23]/50 bg-gradient-to-r from-[#3d0410]/95 via-[#2b0204]/92 to-[#2b0204]/92 shadow-[0_15px_40px_rgba(250,173,35,0.3)]"
-                : "border-[#faad23]/25 bg-[#2b0204]/92 shadow-[0_10px_30px_rgba(250,173,35,0.16)] hover:border-[#faad23]/50 hover:shadow-[0_15px_40px_rgba(224,27,93,0.28)]"
+                ? "border-[#ff4d9d]/50 bg-gradient-to-r from-[#3a0818]/95 via-[#26050f]/92 to-[#26050f]/92 shadow-[0_15px_40px_rgba(255,77,157,0.3)]"
+                : "border-[#ff4d9d]/25 bg-[#26050f]/92 shadow-[0_10px_30px_rgba(255,77,157,0.16)] hover:border-[#ff4d9d]/50 hover:shadow-[0_15px_40px_rgba(240,46,127,0.3)]"
             }`}>
-            <div class="pointer-events-none absolute top-1/2 -left-10 h-24 w-24 -translate-y-1/2 rounded-full bg-[#faad23]/25 blur-[40px] transition-all duration-500 group-hover:bg-[#e01b5d]/30" />
+            <div class="pointer-events-none absolute top-1/2 -left-10 h-24 w-24 -translate-y-1/2 rounded-full bg-[#ff4d9d]/25 blur-[40px] transition-all duration-500 group-hover:bg-[#f02e7f]/32" />
 
             <div class="relative z-10 flex w-8 shrink-0 flex-col items-center justify-center sm:w-12">
               {medal(g.rank) ? (
@@ -108,11 +110,11 @@ const medal = (rank: number) => (rank === 1 ? "🥇" : rank === 2 ? "🥈" : ran
                   <span class="sr-only">อันดับ {g.rank}</span>
                 </span>
               ) : (
-                <span class="text-xl font-black text-[#b8760f] sm:text-2xl">#{g.rank}</span>
+                <span class="text-xl font-black text-[#ffc2da] sm:text-2xl">#{g.rank}</span>
               )}
             </div>
 
-            <div class={`relative z-10 h-14 w-14 shrink-0 overflow-hidden rounded-xl border sm:h-16 sm:w-16 ${top ? "border-[#faad23]/50" : "border-[#faad23]/25"}`}>
+            <div class={`relative z-10 h-14 w-14 shrink-0 overflow-hidden rounded-xl border sm:h-16 sm:w-16 ${top ? "border-[#ff4d9d]/50" : "border-[#ff4d9d]/25"}`}>
               <Picture
                 src={g.img}
                 alt={g.alt}
@@ -129,22 +131,22 @@ const medal = (rank: number) => (rank === 1 ? "🥇" : rank === 2 ? "🥈" : ran
 
             <div class="relative z-10 min-w-0 flex-1">
               <div class="flex items-center gap-2">
-                <p class="truncate text-base font-black text-[#ffe9c4] sm:text-lg">{g.name}</p>
+                <p class="truncate text-base font-black text-[#ffdcea] sm:text-lg">{g.name}</p>
                 {top && (
-                  <span class="hidden shrink-0 rounded-full border border-[#ff3d8a]/50 bg-[#1a0106] px-2 py-0.5 text-[9px] font-black tracking-wider text-[#ff3d8a] sm:inline">ยอดนิยมสูงสุด</span>
+                  <span class="hidden shrink-0 rounded-full border border-[#ffcf5c]/50 bg-[#150207] px-2 py-0.5 text-[9px] font-black tracking-wider text-[#ffcf5c] sm:inline">ยอดนิยมสูงสุด</span>
                 )}
               </div>
-              <p class="truncate text-[11px] text-[#e0a6b5] sm:text-xs">{g.type}</p>
+              <p class="truncate text-[11px] text-[#e0a5bd] sm:text-xs">{g.type}</p>
 
               <div class="mt-2 flex flex-wrap items-center gap-1.5">
                 {g.menus.map((m) => (
-                  <span class="rounded-full border border-[#faad23]/25 bg-[#1a0106] px-2.5 py-0.5 text-[10px] font-bold text-[#faad23]">{m}</span>
+                  <span class="rounded-full border border-[#ff4d9d]/25 bg-[#150207] px-2.5 py-0.5 text-[10px] font-bold text-[#ff4d9d]">{m}</span>
                 ))}
               </div>
             </div>
 
             <div class="relative z-10 hidden shrink-0 flex-col items-end gap-1 sm:flex">
-              <span class="flex items-center gap-1.5 text-[11px] text-[#e0a6b5]">
+              <span class="flex items-center gap-1.5 text-[11px] text-[#e0a5bd]">
                 <span class="h-1.5 w-1.5 animate-pulse rounded-full bg-green-500 shadow-[0_0_6px_rgba(34,197,94,0.6)]" />
                 <span class="tabular-nums" data-players data-base={g.players}>
                   {g.players.toLocaleString("en-US")}
@@ -155,8 +157,8 @@ const medal = (rank: number) => (rank === 1 ? "🥇" : rank === 2 ? "🥈" : ran
                 href="/register"
                 class={`rounded-full px-4 py-1.5 text-xs font-black transition-transform hover:scale-105 ${
                   top
-                    ? "bg-gradient-to-r from-[#ffd84d] via-[#faad23] to-[#b8760f] text-[#2b0204] shadow-[0_10px_30px_rgba(250,173,35,0.24)]"
-                    : "border border-[#faad23]/60 bg-[#1a0106] text-[#faad23] hover:border-[#faad23] hover:bg-[#3d0410]"
+                    ? "bg-gradient-to-r from-[#ffc2da] via-[#ff4d9d] to-[#a3134f] text-[#26050f] shadow-[0_10px_30px_rgba(255,77,157,0.26)]"
+                    : "border border-[#ff4d9d]/60 bg-[#150207] text-[#ff4d9d] hover:border-[#ff4d9d] hover:bg-[#3a0818]"
                 }`}>
                 เข้าดูเกม
               </a>

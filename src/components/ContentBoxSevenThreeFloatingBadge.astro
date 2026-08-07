@@ -9,8 +9,15 @@ const { title, titleleft, titleright } = Astro.props;
 // pt-32/md:pt-28 — the badge hangs at -top-6, so its bottom edge lands
 // (badge height − 24px) below the card's top edge. A full-sentence Thai H2
 // wraps to two or three lines here, and the old pt-28/md:pt-24 left the last
-// line of the badge sitting on the image. Kept identical to
-// ContentBoxFloatingBadge.astro, which anchors its badge the same way.
+// line of the badge sitting on the image.
+//
+// This value is NOT meant to track ContentBoxFloatingBadge.astro's (which it
+// used to say it did, and no longer does — that file is on pt-40/md:pt-32 as of
+// BUNNY555). The anchor is the same but the badge is not: this one holds a
+// `titleleft`/`titleright` H2, that one holds the page's H1 one size step
+// larger at every breakpoint, so the same sentence wraps to more lines there.
+// Redo the arithmetic per file against the brand's real title; do not copy the
+// number across.
 ---
 
 <section class="my-10 flex w-full justify-center px-4 font-sans">
