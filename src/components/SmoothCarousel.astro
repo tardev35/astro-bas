@@ -22,7 +22,7 @@ import slide2 from "../assets/slide2.png";
 // text printed on them, so that text is the alt.
 //
 // TWO slides, not three or four: slide3.png (2026-08-06) and slide4.png
-// (2026-08-01) predate this brand's asset drop (slide1/slide2, 2026-08-07) and
+// (2026-08-01) predate this brand's asset drop (slide1/slide2, 2026-08-08) and
 // still carry a previous brand's wordmark. Importing either would both ship a
 // stale picture and emit its asset into dist/, because an import IS an emit. If
 // a future brand uploads a real slide3, add it back here AND redo the --shift
@@ -30,11 +30,11 @@ import slide2 from "../assets/slide2.png";
 const images = [
   {
     src: slide1,
-    alt: "แบนเนอร์โปรโมชั่น PGW44 คืนยอดเสีย 30% ตัวเลขสีขาวขอบทองบนพื้นดำเขียวที่มีสายฟ้าสีเขียวและมังกรดำพ่นไฟ หญิงสาวชุดสีเขียวยืนข้างตู้สล็อต JACKPOT 777 และกองเหรียญทอง ข้อความ เสียเท่าไหร่ เราคืนให้ 30% ทุกวัน พร้อมป้าย ระบบออโต้ 24 ชม. รวดเร็ว ทันใจ ป้าย สมัครใหม่ รับโบนัสทันที 300% และแถบ เล่นง่าย จ่ายจริง มั่นคง ปลอดภัย 100%",
+    alt: "แบนเนอร์โปรโมชั่น GARUDA369 คืนยอดเสีย 15% พร้อมข้อความ เล่นสนุกได้ทุกวัน เราดูแลคืนกำไรให้คุณ ป้ายมุมภาพ เสียเท่าไหร่ เราคืนให้ สูงสุด 15% ทุกวัน ตู้สล็อตขึ้นคำว่า JACKPOT และแถบด้านล่าง มั่นคง ปลอดภัย เชื่อถือได้ 100%",
   },
   {
     src: slide2,
-    alt: "แบนเนอร์โปรโมชั่น PGW44 แนะนำเพื่อน รับค่าคอม 0.8% ไม่อั้นทุกยอด ตัวอักษรสีขาวและทองบนพื้นดำเขียวที่มีสายฟ้าสีเขียวและมังกรดำ หญิงสาวชุดสีเขียวชี้มือข้างตู้สล็อต JACKPOT ข้อความ ยิ่งเพื่อนเล่นเยอะ ยิ่งรับเยอะ ไม่จำกัดเวลาการรับโบนัส พร้อมป้าย รับค่าคอมสูงสุด 0.8% ไอคอนสี่ช่อง ชวนง่ายผ่านลิงก์ของคุณ เพื่อนสมัครและเล่นเกม รับค่าคอมทันทีทุกยอดการเล่น ถอนง่ายไม่จำกัด และแถบ เริ่มสร้างรายได้ไปกับเรา วันนี้",
+    alt: "แบนเนอร์โปรโมชั่น GARUDA369 ฝาก29 ลุ้นรับ iPhone 17 Pro Max พร้อมข้อความ ลุ้นง่าย ได้จริง ทุกคนมีสิทธิ์ ป้ายมุมภาพ แจกจริง ทุกเดือน และแถบด้านล่าง ยิ่งฝาก ยิ่งมีสิทธิ์มาก ลุ้นรางวัลใหญ่ทุกเดือน",
   },
 ];
 
@@ -63,7 +63,7 @@ const slides = Array.from({ length: COPIES }, () => images).flat();
   <input id="carousel-pause" type="checkbox" class="peer sr-only" />
   <label
     for="carousel-pause"
-    class="sr-only cursor-pointer peer-focus-visible:not-sr-only peer-focus-visible:mb-3 peer-focus-visible:inline-block peer-focus-visible:rounded-full peer-focus-visible:border peer-focus-visible:border-[#7fdc16]/60 peer-focus-visible:px-4 peer-focus-visible:py-2 peer-focus-visible:text-sm peer-focus-visible:font-bold peer-focus-visible:text-[#cdf76b]">
+    class="sr-only cursor-pointer peer-focus-visible:not-sr-only peer-focus-visible:mb-3 peer-focus-visible:inline-block peer-focus-visible:rounded-full peer-focus-visible:border peer-focus-visible:border-[#7bbb0b]/60 peer-focus-visible:px-4 peer-focus-visible:py-2 peer-focus-visible:text-sm peer-focus-visible:font-bold peer-focus-visible:text-[#a8e81c]">
     หยุด / เล่นสไลด์ภาพ
   </label>
 
@@ -76,7 +76,7 @@ const slides = Array.from({ length: COPIES }, () => images).flat();
             <Picture
               src={slide.src}
               alt={isDuplicate ? "" : slide.alt}
-              class="block w-full rounded-xl border border-[#7fdc16]/25 object-cover shadow-[0_10px_30px_rgba(127,220,22,0.22)]"
+              class="block w-full rounded-xl border border-[#7bbb0b]/25 object-cover shadow-[0_10px_30px_rgba(123,187,11,0.22)]"
               width={slide.src.width}
               height={slide.src.height}
               loading="lazy"

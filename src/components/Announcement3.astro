@@ -1,22 +1,30 @@
 ---
+// The default IS the message for this brand: 8 pages render <Announcement />
+// bare, so a default left over from a previous brand ships sitewide. Every
+// variant in this family defaults to a different old brand's slogan.
+//
+// No leading emoji in the string — the marquee prints it twice and a screen
+// reader would read the emoji both times, and an emoji baked into a text prop
+// cannot be wrapped in aria-hidden. The 📢 badge beside it is markup, so it
+// can be (and is) hidden properly.
 const {
-  message = "DEVA555 สล็อตเว็บตรงอันดับ 1 รวมค่ายเกมระดับโลก PG Soft Pragmatic Play JILI • ฝากถอนออโต้ไว 3 วิ ด้วยระบบ AI แม่นยำทุกยอด • รองรับทรูวอเลทและแอปธนาคารชั้นนำ • เข้าสู่ระบบผ่าน Premium Secure Popup มั่นคง ปลอดภัย 100% • ตรวจเงื่อนไขทุกครั้งก่อนกดรับสิทธิ์",
+  message = "GARUDA369 สล็อตเว็บใหญ่ เว็บตรงไม่ผ่านเอเย่นต์ รวมเกมลิขสิทธิ์แท้ AvatarUX Spinomenal Relax Gaming • ฝากถอนไวด้วย ระบบออโต้ ประมวลผลด้วย AI ภายในเสี้ยววินาที • โปรจัดเต็ม กดรับสิทธิ์เองได้จากหน้าแดชบอร์ด • เข้าสู่ระบบผ่าน Secure Popup ปลอดภัย 100% • ตรวจเงื่อนไขทุกครั้งก่อนกดรับสิทธิ์",
 } = Astro.props;
 ---
 
 <div class="mx-auto mt-4 max-w-[900px] px-4 md:px-0">
   <div
-    class="relative flex h-[46px] items-center rounded-r-full border border-[#dfb85f]/35 bg-gradient-to-r from-[#1e1408]/70 to-[#070502] py-2 pr-4 pl-12 shadow-[0_0_20px_rgba(223,184,95,0.16)] backdrop-blur-md">
-    <div class="absolute top-1/2 -left-2 flex h-11 w-11 -translate-y-1/2 items-center justify-center rounded-full border-[3px] border-[#dfb85f] bg-[#070502] shadow-[0_0_15px_rgba(223,184,95,0.55)]">
+    class="relative flex h-[46px] items-center rounded-r-full border border-[#7bbb0b]/40 bg-gradient-to-r from-[#0d2606]/80 to-[#061405] py-2 pr-4 pl-12 shadow-[0_0_20px_rgba(123,187,11,0.18)] backdrop-blur-md">
+    <div class="absolute top-1/2 -left-2 flex h-11 w-11 -translate-y-1/2 items-center justify-center rounded-full border-[3px] border-[#7bbb0b] bg-[#061405] shadow-[0_0_15px_rgba(123,187,11,0.6)]">
       <span aria-hidden="true" class="animate-pulse text-xl">📢</span>
     </div>
 
-    <div class="mr-4 h-full w-[1px] bg-[#dfb85f]/30"></div>
+    <div class="mr-4 h-full w-[1px] bg-[#7bbb0b]/30"></div>
 
     <div class="flex-1 overflow-hidden [mask-image:linear-gradient(90deg,transparent_0%,#000_5%,#000_95%,transparent_100%)]">
-      <div class="flex w-max animate-[scroll_25s_linear_infinite] gap-12 text-sm font-bold whitespace-nowrap text-[#fded9a]">
-        <span class="drop-shadow-[0_0_5px_rgba(223,184,95,0.5)]">{message}</span>
-        <span class="drop-shadow-[0_0_5px_rgba(223,184,95,0.5)]">{message}</span>
+      <div class="flex w-max animate-[scroll_25s_linear_infinite] gap-12 text-sm font-bold whitespace-nowrap text-[#c9ec7e]">
+        <span class="drop-shadow-[0_0_5px_rgba(123,187,11,0.55)]">{message}</span>
+        <span class="drop-shadow-[0_0_5px_rgba(123,187,11,0.55)]">{message}</span>
       </div>
     </div>
   </div>

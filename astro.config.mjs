@@ -33,7 +33,7 @@ export default defineConfig({
     "/line": "https://tinyurl.com/4uw46sek",
   },
 
-  site: "https://pgw44-game.com",
+  site: "https://garuda369play.com",
   integrations: [
     sitemap({
       // /login, /register and /line are forwarding pages that all ship

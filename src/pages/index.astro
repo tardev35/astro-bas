@@ -1,84 +1,92 @@
 ---
 import MainLayout from "../layouts/MainLayout.astro";
-import Announcement from "../components/AnnouncementCyber.astro";
-import ContentBoxCyberCut from "../components/ContentBoxCyberCut.astro";
-import ContentBoxPremium from "../components/ContentBoxPremium.astro";
-import ContentBox from "../components/ContentBox.astro";
-import ContentBoxSevenThreeCyberCut from "../components/ContentBoxSevenThreeCyberCut.astro";
-import ContentBoxSevenThreePremium from "../components/ContentBoxSevenThreePremium.astro";
-import ContentBoxTwoCyberCut from "../components/ContentBoxTwoCyberCut.astro";
+import Announcement from "../components/Announcement3.astro";
+import ContentBoxNeumorphism from "../components/ContentBoxNeumorphism.astro";
+import ContentBoxFloatingBadge from "../components/ContentBoxFloatingBadge.astro";
+import ContentBoxSpecial from "../components/ContentBoxSpecial.astro";
+import ContentBoxSevenThreeNeumorphism from "../components/ContentBoxSevenThreeNeumorphism.astro";
+import ContentBoxSevenThreeFloatingBadge from "../components/ContentBoxSevenThreeFloatingBadge.astro";
+import ContentBoxTwoNeumorphism from "../components/ContentBoxTwoNeumorphism.astro";
 import FeatureHighlights from "../components/FeatureHighlights.astro";
 import LoginRtpSection from "../components/LoginRtpSection.astro";
 import ProviderGrid from "../components/ProviderGrid.astro";
 import GameRankingBoard from "../components/GameRankingBoard.astro";
 import ReviewCardSumo2 from "../components/ReviewCardSumo2.astro";
-import LatestWinners from "../components/LatestWinnersCyber.astro";
+import LatestWinners from "../components/LatestWinners2.astro";
 import SmoothCarousel from "../components/SmoothCarousel.astro";
-import Faq from "../components/Faq3.astro";
+import Faq from "../components/Faq2.astro";
 import Navfoot from "../components/Navfoot.astro";
 
 import { Picture } from "astro:assets";
 import { pageGraph } from "../lib/schema";
 import imgCashback from "../assets/slide1.png";
-import imgReferral from "../assets/slide2.png";
+import imgGiveaway from "../assets/slide2.png";
 
-const pageTitle = "PGW44 เว็บสล็อตใหม่ล่าสุด ระบบออโต้ ฝากถอนไม่มีขั้นต่ำ โปรเด็ด";
+const pageTitle = "GARUDA369 สล็อตเว็บใหญ่ ระบบออโต้ โปรจัดเต็ม ทำเงินได้จริง";
 
-// 159 characters. The docx meta ends at "โดนใจทุกยอดบิล" and counts 145 — below
-// tools/verify-build.mjs's DESC_MIN of 150, which is a hard error. The brief's
-// sentence is kept word for word and the trailing " ทำกำไรยั่งยืน" (the docx's
-// own closing phrase in the H1 paragraph) closes the gap without adding a claim.
-const pageDescription =
-  "PGW44 เว็บสล็อตใหม่ล่าสุด นวัตกรรมการลงทุนแห่งยุค ขับเคลื่อนความเร็วด้วย ระบบออโต้ ให้อิสระ ฝากถอนไม่มีขั้นต่ำ พร้อมคัดสรร โปรเด็ด โดนใจทุกยอดบิล ทำกำไรยั่งยืน";
+// 155 characters, inside verify-build.mjs's 150–160 window (it counts
+// CHARACTERS, not bytes — Thai is 3 bytes each, so a byte count lies). The
+// docx meta ends at "สำหรับนักลงทุน" and counts 148; the trailing "ยุคใหม่" is
+// the docx's own wording from the H1 paragraph, so the gap closes without
+// adding a claim the brief never made.
+const pageDescription = "ร่วมสนุกกับ GARUDA369 สล็อตเจ้าใหญ่ เว็บตรงไม่ผ่านเอเย่นต์ ทำรายการไวด้วยระบบฝาก-ถอนออโต้ พร้อมโปรโมชั่นจัดเต็ม แหล่งทำเงินที่ดีที่สุดสำหรับนักลงทุนยุคใหม่";
 
 // The three camp sub-points that sit under docx heading #2, in the docx's own
 // order. FeatureHighlights renders each `title` as an <h3>, which is the only
 // place this page is allowed to have one. Its accent union is "green" | "gold".
 const providerPoints = [
   {
-    icon: "🎨",
-    title: "Quickspin กราฟิกเหนือระดับ กลไกเกมล้ำสมัย",
-    description: "ผู้พัฒนาที่มุ่งเน้นการเล่าเรื่องผ่านภาพกราฟิกสุดพรีเมียม ผสานกลไกการออกโบนัสที่แยบยลและลุ้นสนุก สร้างความตื่นเต้นในทุกจังหวะการสปิน",
+    icon: "🪶",
+    title: "AvatarUX นวัตกรรม PopWins สุดล้ำ ทวีคูณรางวัลไม่รู้จบ",
+    description: "โดดเด่นด้วยกลไกการขยายเพย์ไลน์ที่แปลกใหม่ ทุกครั้งที่ชนะรางวัล กระดานจะขยายใหญ่ขึ้นเพื่อมอบโอกาสทำกำไรที่ทวีคูณอย่างต่อเนื่อง",
     accent: "green" as const,
   },
   {
-    icon: "🕹️",
-    title: "Evoplay นวัตกรรม 3D สุดล้ำ ทลายทุกกฎเกณฑ์",
-    description: "ฉีกกรอบการเดิมพันแบบเดิมๆ ด้วยอินเทอร์เฟซเกมรูปแบบใหม่ที่ให้อารมณ์เหมือนเล่นวิดีโอเกมระดับโลก เข้าถึงง่ายและมีโอกาสทำกำไรสูง",
+    icon: "🎆",
+    title: "Spinomenal กราฟิกตระการตา ฟีเจอร์แตกหนัก โบนัสเข้าไว",
+    description: "นำเสนอความบันเทิงที่ล้ำหน้าด้วยภาพแอนิเมชันสุดตระการตา ฟีเจอร์ภายในเกมถูกปรับจูนมาให้เข้าถึงรอบแจ็กพอตได้อย่างรวดเร็วและคุ้มค่า",
     accent: "gold" as const,
   },
   {
-    icon: "💥",
-    title: "CQ9 เอฟเฟกต์จัดจ้าน ตอบสนองไว ทำกำไรคุ้มค่า",
-    description: "ซอฟต์แวร์เกมที่ขึ้นชื่อเรื่องความเสถียรและฟีเจอร์การคูณเงินรางวัลที่จัดจ้าน ตอบสนองได้ดีเยี่ยมบนมือถือทุกรุ่น ช่วยให้คุณทำกำไรได้อย่างลื่นไหล",
+    icon: "🧩",
+    title: "Relax Gaming เสถียรภาพยอดเยี่ยม ทำกำไรเพลิน ไม่มีสะดุด",
+    description: "ค่ายเกมที่มุ่งเน้นการสร้างสถาปัตยกรรมซอฟต์แวร์ที่แข็งแกร่ง โหลดไว ตอบสนองฉับไวบนทุกอุปกรณ์ ให้คุณลุ้นผลตอบแทนได้อย่างราบรื่น",
     accent: "green" as const,
   },
 ];
 
 const faqs = [
   {
-    q: "ทำไมแพลตฟอร์มนี้ถึงเป็น เว็บสล็อตใหม่ล่าสุด ที่น่าจับตามอง?",
-    a: "เพราะ PGW44 ถูกพัฒนาด้วยนวัตกรรมซอฟต์แวร์แห่งอนาคต มุ่งเน้นความเสถียร ความโปร่งใส และรวบรวมเกมลิขสิทธิ์แท้ไว้มากที่สุด",
+    q: "ทำไมแพลตฟอร์มนี้จึงถูกยกย่องว่าเป็น สล็อตเว็บใหญ่ ที่ดีที่สุด?",
+    a: "เพราะ GARUDA369 มีระบบที่เสถียร รวมเกมลิขสิทธิ์แท้ และมีฐานการเงินที่มั่นคงระดับองค์กร",
   },
   {
-    q: "นโยบาย ฝากถอนไม่มีขั้นต่ำ ให้อิสระแก่ผู้เล่นอย่างไร?",
-    a: "ช่วยให้ผู้เล่นสามารถฝากหรือถอนเงินจำนวนเท่าใดก็ได้ตามต้องการ ไร้ข้อจำกัดเรื่องยอดขั้นต่ำ เพิ่มความยืดหยุ่นในการบริหารทุน",
+    q: "การประมวลผลผ่าน ระบบออโต้ ใช้เวลานานแค่ไหน?",
+    a: "ทำงานด้วยความเร็วสูงผ่าน AI อัจฉริยะ ยอดเงินอัปเดตเข้ากระเป๋าสำเร็จภายในเวลาเพียงไม่กี่วินาที",
   },
   {
-    q: "การรับสิทธิพิเศษและ โปรเด็ด มีเงื่อนไขที่ซับซ้อนหรือไม่?",
-    a: "ไม่มีเงื่อนไขซับซ้อน สมาชิกสามารถกดยอมรับสิทธิ์ด้วยตนเองผ่านระบบอัตโนมัติ นำไปต่อยอดทุนได้ทันที",
+    q: "สามารถกดยอมรับสิทธิ์ โปรจัดเต็ม ได้จากช่องทางใด?",
+    a: "สมาชิกสามารถรับโบนัสและสิทธิพิเศษต่างๆ ได้ด้วยตนเองผ่านหน้าแดชบอร์ดอัตโนมัติได้อย่างสะดวกรวดเร็ว",
   },
   {
-    q: "หากทำรายการผ่าน ระบบออโต้ จะใช้เวลาประมาณเท่าใด?",
-    a: "ระบบ AI อัจฉริยะจะทำการประมวลผลและปรับยอดเครดิตให้คุณเสร็จสิ้นภายในเวลาเพียงเสี้ยววินาทีเท่านั้น",
+    q: "มือใหม่สามารถ ทำเงินได้จริง จากแพลตฟอร์มนี้หรือไม่?",
+    a: "ทำได้อย่างแน่นอน ด้วยระบบที่ใช้งานง่าย โปร่งใส และมีอัตราการจ่ายที่ยุติธรรม เปิดโอกาสให้ทุกคนเข้าถึงกำไรได้จริง",
   },
 ];
 
+// No `breadcrumb` — this is the homepage, so a trail would only point at
+// itself. The URL comes from Astro, never typed out here.
 const graph = pageGraph(Astro, {
   name: pageTitle,
   description: pageDescription,
   faqs,
 });
+
+const altCashback =
+  "แบนเนอร์โปรโมชั่น GARUDA369 คืนยอดเสีย 15% พร้อมข้อความ เล่นสนุกได้ทุกวัน เราดูแลคืนกำไรให้คุณ ป้ายมุมภาพ เสียเท่าไหร่ เราคืนให้ สูงสุด 15% ทุกวัน ตู้สล็อตขึ้นคำว่า JACKPOT และแถบด้านล่าง มั่นคง ปลอดภัย เชื่อถือได้ 100%";
+
+const altGiveaway =
+  "แบนเนอร์โปรโมชั่น GARUDA369 ฝาก29 ลุ้นรับ iPhone 17 Pro Max พร้อมข้อความ ลุ้นง่าย ได้จริง ทุกคนมีสิทธิ์ ป้ายมุมภาพ แจกจริง ทุกเดือน และแถบด้านล่าง ยิ่งฝาก ยิ่งมีสิทธิ์มาก ลุ้นรางวัลใหญ่ทุกเดือน";
 ---
 
 <MainLayout title={pageTitle} description={pageDescription}>
@@ -86,35 +94,27 @@ const graph = pageGraph(Astro, {
 
   <Announcement />
 
-  <ContentBoxCyberCut as="h1" title="PGW44 เว็บสล็อตใหม่ล่าสุด ระบบออโต้ ฝากถอนไม่มีขั้นต่ำ โปรเด็ด">
-    <p class="text-left text-base leading-relaxed text-[#dff5c8]">
-      ก้าวข้ามทุกขีดจำกัดเดิมๆ สู่โลกดิจิทัลใบใหม่กับแพลตฟอร์ม <strong class="text-[#f2ffe3]">PGW44</strong> เว็บสล็อตใหม่ล่าสุด ที่ถูกสร้างขึ้นเพื่อเป็นนวัตกรรมการลงทุนแห่งยุค
-      แพลตฟอร์มนี้โดดเด่นด้วยสถาปัตยกรรมซอฟต์แวร์ที่ทันสมัย มอบประสบการณ์ที่เหนือกว่าผ่านการขับเคลื่อนด้วย ระบบออโต้ อัจฉริยะ ให้คุณสัมผัสอิสระทางการเงินแบบ ฝากถอนไม่มีขั้นต่ำ อย่างแท้จริง
-      พร้อมจัดเตรียม โปรเด็ด มากมายที่พร้อมซัพพอร์ตให้ผู้เล่นทุกคนทำกำไรได้อย่างยั่งยืน
+  <ContentBoxNeumorphism as="h1" title="GARUDA369 สล็อตเว็บใหญ่ ระบบออโต้ โปรจัดเต็ม ทำเงินได้จริง">
+    <p class="text-left text-base leading-relaxed text-[#dcefc2]">
+      เปิดมิติใหม่แห่งการลงทุนที่ทรงพลังและมั่นคงไปกับ <strong class="text-[#e9f8cf]">GARUDA369</strong> สล็อตเว็บใหญ่ ที่ถูกสร้างขึ้นมาเพื่อตอบสนองนักเดิมพันที่ต้องการความเป็นเลิศ แพลตฟอร์มนี้ถือเป็นแหล่งทำเงินที่ดีที่สุดสำหรับนักลงทุนยุคใหม่
+      ขับเคลื่อนการทำธุรกรรมด้วยเทคโนโลยี ระบบออโต้ ที่รวดเร็วและแม่นยำ พร้อมมอบความคุ้มค่าผ่านแคมเปญและ โปรจัดเต็ม มากมาย เพื่อให้ทุกการเชื่อมต่อของคุณสามารถต่อยอดและ ทำเงินได้จริง อย่างยั่งยืนในระยะยาว
     </p>
-  </ContentBoxCyberCut>
+  </ContentBoxNeumorphism>
 
-  <ContentBoxPremium as="h2" title="PGW44 คัดสรรค่ายเกมระดับโลก เว็บสล็อตใหม่ล่าสุด">
-    <p class="text-left text-base leading-relaxed text-[#dff5c8]">
-      การเริ่มต้นกับแพลตฟอร์ม PGW44 คือการเปิดประตูสู่ศูนย์รวมความบันเทิงระดับไฮเอนด์ เพราะเราได้เชื่อมต่อซอฟต์แวร์เกมลิขสิทธิ์แท้ที่ผ่านการตรวจสอบคุณภาพอย่างเข้มงวด
-      มั่นใจได้ในเรื่องความโปร่งใส อัตราการจ่ายผลตอบแทนที่แม่นยำ และระบบประมวลผลที่ลื่นไหลไม่มีสะดุด
+  <ContentBoxFloatingBadge as="h2" title="GARUDA369 ศูนย์รวมเกมลิขสิทธิ์แท้ สล็อตเว็บใหญ่ ระดับโลก">
+    <p class="text-left text-base leading-relaxed text-[#dcefc2]">
+      การก้าวเข้ามาเป็นส่วนหนึ่งของแพลตฟอร์ม GARUDA369 คือการเปิดประตูสู่อาณาจักรเกมที่ยิ่งใหญ่ที่สุด เราได้รวบรวมซอฟต์แวร์คุณภาพจากค่ายดังทั่วโลกมาไว้ในที่เดียว ทุกเกมทำงานบนเซิร์ฟเวอร์หลักโดยตรง
+      มั่นใจได้ในความลื่นไหล กราฟิกคมชัด และอัตราการจ่ายที่โปร่งใส
     </p>
     <FeatureHighlights items={providerPoints} />
-  </ContentBoxPremium>
+  </ContentBoxFloatingBadge>
 
   <ProviderGrid />
 
-  <ContentBox as="h2" title="เทคโนโลยี ระบบออโต้ สุดล้ำ ลิขสิทธิ์เฉพาะของ PGW44">
-    <p class="text-left text-base leading-relaxed text-[#dff5c8]">
-      ยกระดับการทำธุรกรรมให้รวดเร็วและแม่นยำที่สุดด้วยเทคโนโลยี AI ที่ได้รับการพัฒนามาเพื่อระบบของ PGW44 โดยเฉพาะ เมื่อคุณทำรายการผ่าน ระบบออโต้
-      ยอดเครดิตจะถูกประมวลผลและอัปเดตเข้าสู่แดชบอร์ดส่วนตัวภายในเสี้ยววินาที ลดขั้นตอนที่ซับซ้อนและไม่ต้องรอคอยให้เสียเวลา
-    </p>
-  </ContentBox>
-
-  <ContentBoxSevenThreeCyberCut titleright="มอบอิสระทางการเงิน ฝากถอนไม่มีขั้นต่ำ ยืดหยุ่นสูงสุด">
+  <ContentBoxSevenThreeNeumorphism titleright="ขับเคลื่อนความเร็วด้วย ระบบออโต้ นวัตกรรมล้ำสมัยจาก GARUDA369">
     <Picture
       slot="left"
-      src={imgReferral}
+      src={imgGiveaway}
       loading="lazy"
       fetchpriority="low"
       widths={[200, 400, 600]}
@@ -123,16 +123,16 @@ const graph = pageGraph(Astro, {
       formats={["avif", "webp"]}
       fallbackFormat="webp"
       quality={80}
-      alt="แบนเนอร์โปรโมชั่น PGW44 แนะนำเพื่อน รับค่าคอม 0.8% ไม่อั้นทุกยอด ตัวอักษรสีขาวและทองบนพื้นดำเขียวที่มีสายฟ้าสีเขียวและมังกรดำ หญิงสาวชุดสีเขียวชี้มือข้างตู้สล็อต JACKPOT ข้อความ ยิ่งเพื่อนเล่นเยอะ ยิ่งรับเยอะ ไม่จำกัดเวลาการรับโบนัส พร้อมป้าย รับค่าคอมสูงสุด 0.8% ไอคอนสี่ช่อง ชวนง่ายผ่านลิงก์ของคุณ เพื่อนสมัครและเล่นเกม รับค่าคอมทันทีทุกยอดการเล่น ถอนง่ายไม่จำกัด และแถบ เริ่มสร้างรายได้ไปกับเรา วันนี้"
-      class="mx-auto h-auto w-full rounded-2xl border border-[#7fdc16]/30 shadow-[0_10px_30px_rgba(127,220,22,0.22)]"
+      alt={altGiveaway}
+      class="mx-auto h-auto w-full rounded-2xl border border-[#7bbb0b]/30 shadow-[0_10px_30px_rgba(123,187,11,0.22)]"
     />
-    <p slot="right" class="text-left text-base leading-relaxed text-[#dff5c8]">
-      ไม่ว่าคุณจะมีงบประมาณเท่าใด ทางทีมงานของ PGW44 พร้อมเปิดโอกาสให้ทุกคนเข้าถึงการลงทุนได้อย่างเท่าเทียม นโยบาย ฝากถอนไม่มีขั้นต่ำ ช่วยให้คุณบริหารจัดการเงินทุนได้อย่างอิสระเสรี
-      ปราศจากข้อผูกมัดหรือเงื่อนไขที่น่าอึดอัด มอบความคล่องตัวในทุกการตัดสินใจของคุณ
+    <p slot="right" class="text-left text-base leading-relaxed text-[#dcefc2]">
+      ตอบโจทย์คนรักความรวดเร็วด้วยนวัตกรรมทางการเงินที่ดีที่สุด สมาชิกของ GARUDA369 สามารถจัดการยอดฝากและถอนได้อย่างอิสระผ่านระบบ AI อัจฉริยะ การประมวลผลเครดิตจะเสร็จสิ้นภายในเสี้ยววินาที
+      ลดขั้นตอนที่ยุ่งยาก เพื่อให้คุณเดินหน้าทำกำไรได้อย่างต่อเนื่องและมีสภาพคล่องทางการเงินสูงสุด
     </p>
-  </ContentBoxSevenThreeCyberCut>
+  </ContentBoxSevenThreeNeumorphism>
 
-  <ContentBoxSevenThreePremium titleright="รับความคุ้มค่าจาก โปรเด็ด บนระบบ PGW44 ทวีคูณผลกำไร">
+  <ContentBoxSevenThreeFloatingBadge title="รับความคุ้มค่าจาก โปรจัดเต็ม ทวีคูณผลกำไรทุกยอดบิล">
     <Picture
       slot="left"
       src={imgCashback}
@@ -144,14 +144,23 @@ const graph = pageGraph(Astro, {
       formats={["avif", "webp"]}
       fallbackFormat="webp"
       quality={80}
-      alt="แบนเนอร์โปรโมชั่น PGW44 คืนยอดเสีย 30% ตัวเลขสีขาวขอบทองบนพื้นดำเขียวที่มีสายฟ้าสีเขียวและมังกรดำพ่นไฟ หญิงสาวชุดสีเขียวยืนข้างตู้สล็อต JACKPOT 777 และกองเหรียญทอง ข้อความ เสียเท่าไหร่ เราคืนให้ 30% ทุกวัน พร้อมป้าย ระบบออโต้ 24 ชม. รวดเร็ว ทันใจ ป้าย สมัครใหม่ รับโบนัสทันที 300% และแถบ เล่นง่าย จ่ายจริง มั่นคง ปลอดภัย 100%"
-      class="mx-auto h-auto w-full rounded-2xl border border-[#f2b40b]/30 shadow-[0_10px_30px_rgba(242,180,11,0.22)]"
+      alt={altCashback}
+      class="mx-auto h-auto w-full rounded-2xl border border-[#f5c518]/30 shadow-[0_10px_30px_rgba(245,197,24,0.22)]"
     />
-    <p slot="right" class="text-left text-base leading-relaxed text-[#dff5c8]">
-      เพื่อเป็นการสนับสนุนสมาชิกทุกท่าน แพลตฟอร์ม PGW44 ได้จัดเตรียมแคมเปญและสิทธิพิเศษเอาไว้อย่างครบครัน คุณสามารถเลือกรับ โปรเด็ด ได้ด้วยตนเองผ่านเมนูอัตโนมัติ
-      ซึ่งจะช่วยเสริมความแข็งแกร่งให้ฐานทุนของคุณ และนอกจากนี้ การเข้าสู่ระบบยังถูกปกป้องด้วยนวัตกรรม Secure Transition Popup ที่ลื่นไหล ปลอดภัย ไร้กังวลในทุกการคลิก
+    <p slot="right" class="text-left text-base leading-relaxed text-[#dcefc2]">
+      เพื่อยกระดับความสำเร็จให้กับนักลงทุน ทางทีมงานได้เตรียมสิทธิพิเศษและทุนสนับสนุนเอาไว้อย่างมหาศาล คุณสามารถเลือกรับแคมเปญเสริมได้ด้วยตนเองผ่านเมนูอัตโนมัติ
+      เป็นการเพิ่มขีดความสามารถในการเดิมพันให้กว้างขึ้นและลดความเสี่ยงได้อย่างมีประสิทธิภาพ ตอบโจทย์ผู้เล่นทุกระดับทุน
     </p>
-  </ContentBoxSevenThreePremium>
+  </ContentBoxSevenThreeFloatingBadge>
+
+  <ContentBoxSpecial as="h2" title="พิสูจน์ผลลัพธ์บน GARUDA369 แพลตฟอร์มที่ ทำเงินได้จริง ปลอดภัย 100%">
+    <p slot="left" class="text-left text-base leading-relaxed text-[#dcefc2]">
+      รากฐานของความยิ่งใหญ่คือความน่าเชื่อถือและการรักษาความปลอดภัยระดับองค์กร ข้อมูลส่วนบุคคลและกระเป๋าเงินของคุณบน GARUDA369 จะถูกเข้ารหัสอย่างแน่นหนา
+    </p>
+    <p slot="right" class="text-left text-base leading-relaxed text-[#dcefc2]">
+      นอกจากนี้การเข้าสู่ระบบผ่าน Secure Popup ยังช่วยให้ทุกการเชื่อมต่อเป็นส่วนตัว การันตีผลตอบแทนที่ถอนออกได้ครบทุกบาทอย่างไร้กังวล
+    </p>
+  </ContentBoxSpecial>
 
   <Faq title="FAQ คำถามที่พบบ่อย" faqs={faqs} />
 
@@ -163,38 +172,29 @@ const graph = pageGraph(Astro, {
 
   <LatestWinners />
 
-  <ContentBoxTwoCyberCut label="เข้าสู่ระบบและสมัครสมาชิก PGW44">
+  <ContentBoxTwoNeumorphism titleleft="เข้าสู่ระบบสมาชิกเดิม" titleright="สมัครสมาชิกใหม่" label="เข้าสู่ระบบและสมัครสมาชิก GARUDA369">
     <div slot="left" class="flex flex-col gap-4">
-      <p class="flex items-center gap-3 border-b border-[#7fdc16]/30 pb-3 text-xl leading-normal font-black tracking-widest text-[#7fdc16] uppercase">
-        <span aria-hidden="true" class="h-6 w-1.5 shrink-0 rounded-full bg-gradient-to-b from-[#cdf76b] via-[#7fdc16] to-[#3d7509] shadow-[0_0_10px_rgba(127,220,22,0.5)]"></span>
-        เข้าสู่ระบบสมาชิกเดิม
-      </p>
-      <p class="text-left text-base leading-relaxed text-[#dff5c8]">
-        เข้าแดชบอร์ดส่วนตัวเพื่อจัดการยอดฝากถอนผ่าน ระบบออโต้ ที่ประมวลผลเสร็จภายในเสี้ยววินาที เลือกค่ายเกมระดับโลก และกดรับ โปรเด็ด ได้จากจุดเดียว
+      <p class="text-left text-base leading-relaxed text-[#dcefc2]">
+        เข้าแดชบอร์ดส่วนตัวเพื่อจัดการยอดฝากถอนผ่าน ระบบออโต้ ที่ประมวลผลเครดิตเสร็จภายในเสี้ยววินาที เลือกค่ายเกมลิขสิทธิ์แท้ และกดรับ โปรจัดเต็ม ได้จากจุดเดียว
       </p>
       <a
         href="/login"
-        class="mt-1 inline-flex items-center justify-center rounded-full bg-gradient-to-r from-[#cdf76b] via-[#7fdc16] to-[#3d7509] px-8 py-3 text-sm font-black whitespace-nowrap text-[#07120a] shadow-[0_10px_30px_rgba(127,220,22,0.3)] transition-all duration-300 hover:-translate-y-1 hover:scale-105 hover:shadow-[0_15px_40px_rgba(127,220,22,0.45)] sm:text-base">
+        class="mt-1 inline-flex items-center justify-center rounded-full bg-gradient-to-r from-[#a8e81c] via-[#7bbb0b] to-[#3c6b07] px-8 py-3 text-sm font-black whitespace-nowrap text-[#061405] shadow-[0_10px_30px_rgba(123,187,11,0.3)] transition-all duration-300 hover:-translate-y-1 hover:scale-105 hover:shadow-[0_15px_40px_rgba(123,187,11,0.45)] sm:text-base">
         เข้าสู่ระบบ
       </a>
     </div>
 
     <div slot="right" class="flex flex-col gap-4">
-      <p class="flex items-center gap-3 border-b border-[#f2b40b]/40 pb-3 text-xl leading-normal font-black tracking-widest text-[#f2b40b] uppercase">
-        <span aria-hidden="true" class="h-6 w-1.5 shrink-0 rounded-full bg-gradient-to-b from-[#ffe08a] via-[#f2b40b] to-[#9c7304] shadow-[0_0_10px_rgba(242,180,11,0.5)]"></span>
-        สมัครสมาชิกใหม่
-      </p>
-      <p class="text-left text-base leading-relaxed text-[#dff5c8]">
-        เปิดบัญชีเดียวใช้ได้ครบทุกค่ายลิขสิทธิ์แท้ ทั้ง Quickspin Evoplay และ CQ9 พร้อมนโยบาย ฝากถอนไม่มีขั้นต่ำ และการเข้าสู่ระบบที่ปกป้องด้วย Secure Transition Popup
-        ตามเงื่อนไขของแต่ละแคมเปญ
+      <p class="text-left text-base leading-relaxed text-[#dcefc2]">
+        เปิดบัญชีเดียวใช้ได้ครบทุกค่ายลิขสิทธิ์แท้ ทั้ง AvatarUX Spinomenal และ Relax Gaming พร้อมระบบฝาก-ถอนออโต้ และการเข้าสู่ระบบที่ปกป้องด้วย Secure Popup ตามเงื่อนไขของแต่ละแคมเปญ
       </p>
       <a
         href="/register"
-        class="mt-1 inline-flex items-center justify-center rounded-full border border-[#f2b40b]/60 bg-[#0e2410]/85 px-8 py-3 text-sm font-black whitespace-nowrap text-[#f2b40b] backdrop-blur-sm transition-all duration-300 hover:scale-105 hover:border-[#f2b40b] hover:bg-[#07120a]/85 hover:shadow-[0_15px_40px_rgba(242,180,11,0.3)] sm:text-base">
+        class="mt-1 inline-flex items-center justify-center rounded-full border border-[#f5c518]/60 bg-[#0d2606]/85 px-8 py-3 text-sm font-black whitespace-nowrap text-[#f5c518] backdrop-blur-sm transition-all duration-300 hover:scale-105 hover:border-[#f5c518] hover:bg-[#061405]/85 hover:shadow-[0_15px_40px_rgba(245,197,24,0.3)] sm:text-base">
         สมัครสมาชิก
       </a>
     </div>
-  </ContentBoxTwoCyberCut>
+  </ContentBoxTwoNeumorphism>
 
   <ReviewCardSumo2 />
 

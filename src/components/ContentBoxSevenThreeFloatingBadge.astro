@@ -8,28 +8,39 @@ const { title, titleleft, titleright } = Astro.props;
 
 // pt-32/md:pt-28 — the badge hangs at -top-6, so its bottom edge lands
 // (badge height − 24px) below the card's top edge. A full-sentence Thai H2
-// wraps to two or three lines here, and the old pt-28/md:pt-24 left the last
+// wraps to two or three lines here, and an earlier pt-28/md:pt-24 left the last
 // line of the badge sitting on the image.
 //
-// This value is NOT meant to track ContentBoxFloatingBadge.astro's (which it
-// used to say it did, and no longer does — that file is on pt-40/md:pt-32 as of
-// BUNNY555). The anchor is the same but the badge is not: this one holds a
-// `titleleft`/`titleright` H2, that one holds the page's H1 one size step
-// larger at every breakpoint, so the same sentence wraps to more lines there.
+// This value is NOT meant to track ContentBoxFloatingBadge.astro's. The anchor
+// is the same but neither the card width nor the title is: that file is
+// max-w-[1400px] with two ✦ spans eating the mobile line box, this one is
+// max-w-7xl with a bare badge, so the same sentence wraps to fewer lines here.
 // Redo the arithmetic per file against the brand's real title; do not copy the
 // number across.
+//
+// GARUDA369 check (2026-08-08), title
+// "รับความคุ้มค่าจาก โปรจัดเต็ม ทวีคูณผลกำไรทุกยอดบิล" (48 characters):
+//   320px viewport — card 288px, badge w-[92%] ≈ 265px; minus px-4 and the 2px
+//   borders leaves ~229px of text at text-lg/18px, leading-normal = 27px. The
+//   title measures ≈400px at 18px → 2 lines = 54px + py-2.5 (20px) + border
+//   (4px) = 78px. Bottom edge at 78 − 24 = 54px, well inside pt-32 (128px).
+//   Even a pessimistic 3-line wrap lands at 81px, still clear.
+//   md — badge max-w-2xl (672px), sm:px-8 → ~604px of text at md:text-2xl/24px;
+//   the title is ≈533px at 24px, so 1 line = 36 + 24 = 60px, bottom edge 36px,
+//   inside md:pt-28 (112px).
+// The badge is w-[92%] max-w-2xl + text-center, never whitespace-nowrap.
 ---
 
 <section class="my-10 flex w-full justify-center px-4 font-sans">
   <div
-    class="relative isolate w-full max-w-7xl rounded-2xl border-2 border-[#ff3d9a]/25 bg-gradient-to-b from-[#1c0614]/95 to-[#100309]/95 p-8 pt-32 shadow-[0_10px_30px_rgba(255,61,154,0.16)] md:pt-28">
-    <div class="pointer-events-none absolute -right-10 -bottom-16 -z-10 h-40 w-40 rounded-full bg-[#22d3ee]/35 blur-[60px]"></div>
-    <div class="pointer-events-none absolute -top-16 -left-10 -z-10 h-40 w-40 rounded-full bg-[#ff3d9a]/25 blur-[60px]"></div>
+    class="relative isolate w-full max-w-7xl rounded-2xl border-2 border-[#7bbb0b]/25 bg-gradient-to-b from-[#0d2606]/95 to-[#061405]/95 p-8 pt-32 shadow-[0_10px_30px_rgba(123,187,11,0.16)] md:pt-28">
+    <div class="pointer-events-none absolute -right-10 -bottom-16 -z-10 h-40 w-40 rounded-full bg-[#f5c518]/25 blur-[60px]"></div>
+    <div class="pointer-events-none absolute -top-16 -left-10 -z-10 h-40 w-40 rounded-full bg-[#7bbb0b]/25 blur-[60px]"></div>
 
     {
       title && (
-        <div class="absolute -top-6 left-1/2 w-[92%] max-w-2xl -translate-x-1/2 rounded-lg border-2 border-[#ff3d9a]/35 bg-[#1c0614] px-4 py-2.5 text-center shadow-[0_10px_30px_rgba(255,61,154,0.22)] sm:px-8">
-          <h2 class="bg-gradient-to-r from-[#ffa6d2] via-[#ff3d9a] to-[#c21a70] bg-clip-text text-lg leading-normal font-black tracking-tight text-transparent uppercase sm:text-xl md:text-2xl">
+        <div class="absolute -top-6 left-1/2 w-[92%] max-w-2xl -translate-x-1/2 rounded-lg border-2 border-[#7bbb0b]/35 bg-[#0d2606] px-4 py-2.5 text-center shadow-[0_10px_30px_rgba(123,187,11,0.22)] sm:px-8">
+          <h2 class="bg-gradient-to-r from-[#a8e81c] via-[#7bbb0b] to-[#3c6b07] bg-clip-text text-lg leading-normal font-black tracking-tight text-transparent uppercase sm:text-xl md:text-2xl">
             {title}
           </h2>
         </div>
@@ -37,13 +48,13 @@ const { title, titleleft, titleright } = Astro.props;
     }
 
     <div class="grid grid-cols-1 gap-10 md:grid-cols-[3fr_7fr] md:items-center">
-      <article class="flex flex-col gap-4 text-left text-base leading-relaxed text-[#fdeaf4]">
-        {titleleft && <h2 class="text-2xl leading-normal font-bold text-[#ff3d9a]">{titleleft}</h2>}
+      <article class="flex flex-col gap-4 text-left text-base leading-relaxed text-[#dcefc2]">
+        {titleleft && <h2 class="text-2xl leading-normal font-bold text-[#a8e81c]">{titleleft}</h2>}
         <slot name="left" />
       </article>
 
-      <article class="flex flex-col gap-4 text-left text-base leading-relaxed text-[#fdeaf4] md:border-l md:border-[#ff3d9a]/25 md:pl-10">
-        {titleright && <h2 class="text-2xl leading-normal font-bold text-[#ff3d9a]">{titleright}</h2>}
+      <article class="flex flex-col gap-4 text-left text-base leading-relaxed text-[#dcefc2] md:border-l md:border-[#7bbb0b]/25 md:pl-10">
+        {titleright && <h2 class="text-2xl leading-normal font-bold text-[#a8e81c]">{titleright}</h2>}
         <slot name="right" />
       </article>
     </div>

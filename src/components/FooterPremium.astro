@@ -13,12 +13,12 @@ const mainLogo = imagePaths.length > 0 ? images[imagePaths[0]].default : null;
 //
 // Its label is a <p>, never a heading: the footer renders on every page, so one
 // <h2> here would be an <h2> sitewide and would break the docx heading diff.
-const logoAlt = "โลโก้ LUCKYGAME689 เครื่องเกมพกพาสีทอง หน้าจอสีชมพูบานเย็น มีตัวอักษร LUCKY GAME 689";
+const logoAlt = "โลโก้ GARUDA369 ตัวอักษร GARUDA สีเขียวมะนาวไล่เฉดโครเมียม เหนือเลข 369 สีขาวขอบเขียว มีแสงเรืองสีเขียวรอบตัวอักษร";
 ---
 
 <footer
-  class="relative mt-16 w-full overflow-hidden rounded-t-[3rem] border-t border-[#faad23]/40 bg-[#1a0106] pt-16 pb-8 font-sans text-[#ffe9c4] shadow-[0_-15px_40px_rgba(250,173,35,0.22)]">
-  <div aria-hidden="true" class="pointer-events-none absolute inset-x-0 -top-20 mx-auto h-[250px] w-full max-w-4xl rounded-full bg-[#e01b5d]/25 blur-[100px]"></div>
+  class="relative mt-16 w-full overflow-hidden rounded-t-[3rem] border-t border-[#7bbb0b]/40 bg-[#0a1c04] pt-16 pb-8 font-sans text-[#dcefc2] shadow-[0_-15px_40px_rgba(123,187,11,0.22)]">
+  <div aria-hidden="true" class="pointer-events-none absolute inset-x-0 -top-20 mx-auto h-[250px] w-full max-w-4xl rounded-full bg-[#7bbb0b]/25 blur-[100px]"></div>
 
   <div class="relative z-10 mx-auto w-full max-w-[1200px] px-6">
     <div class="mb-12 grid grid-cols-1 gap-12 md:grid-cols-12">
@@ -31,44 +31,44 @@ const logoAlt = "โลโก้ LUCKYGAME689 เครื่องเกมพ�
                 alt={logoAlt}
                 widths={[150, 300, 450]}
                 sizes="150px"
-                class="h-[65px] w-auto drop-shadow-[0_5px_15px_rgba(250,173,35,0.4)]"
+                class="h-[65px] w-auto drop-shadow-[0_5px_15px_rgba(123,187,11,0.45)]"
                 formats={["avif", "webp"]}
                 fallbackFormat="webp"
               />
             ) : (
-              <span class="bg-gradient-to-r from-[#fff3d6] to-[#b8760f] bg-clip-text text-4xl font-black tracking-widest text-transparent">
-                LUCKYGAME<span class="bg-gradient-to-r from-[#ffd84d] to-[#ff3d8a] bg-clip-text text-transparent">689</span>
+              <span class="bg-gradient-to-r from-[#e9f8cf] to-[#3c6b07] bg-clip-text text-4xl font-black tracking-widest text-transparent">
+                GARUDA<span class="bg-gradient-to-r from-[#a8e81c] to-[#f5c518] bg-clip-text text-transparent">369</span>
               </span>
             )
           }
         </a>
-        <p class="border-l-2 border-[#faad23]/50 pl-4 text-sm leading-relaxed text-[#ffe9c4]/65">
-          LUCKYGAME689 เว็บสล็อตเจ้าใหญ่ ที่รวมค่ายเกมลิขสิทธิ์แท้ระดับโลกไว้ในบัญชีเดียว คัดสรร โปรโมชั่นเด็ด สุดคุ้มค่าอัปเดตต่อเนื่อง ดูแลทุกการใช้งานด้วย บริการระดับ VVIP
-          ตลอด 24 ชั่วโมง เข้าเล่นผ่านมือถือได้ทันทีโดยไม่ต้องดาวน์โหลด
+        <p class="border-l-2 border-[#7bbb0b]/50 pl-4 text-sm leading-relaxed text-[#dcefc2]/70">
+          GARUDA369 สล็อตเว็บใหญ่ เว็บตรงไม่ผ่านเอเย่นต์ รวมเกมลิขสิทธิ์แท้จากค่ายดังระดับโลกไว้ในบัญชีเดียว ทำรายการไวด้วย ระบบออโต้ พร้อม โปรจัดเต็ม
+          อัปเดตต่อเนื่อง ดูแลตลอด 24 ชั่วโมง เข้าเล่นผ่านมือถือได้ทันทีโดยไม่ต้องดาวน์โหลด
         </p>
         <div class="mt-4 flex flex-wrap gap-3">
-          <span class="rounded-full border border-[#faad23]/35 bg-[#7a0426]/40 px-4 py-1 text-xs font-medium text-[#ffd84d] backdrop-blur-sm">VVIP SERVICE</span>
-          <span class="rounded-full border border-[#ff3d8a]/40 bg-[#7a0426]/40 px-4 py-1 text-xs font-medium text-[#ff8ab8] backdrop-blur-sm">AUTO 24 HRS</span>
+          <span class="rounded-full border border-[#7bbb0b]/35 bg-[#0d2606]/60 px-4 py-1 text-xs font-medium text-[#a8e81c] backdrop-blur-sm">AUTO 24 HRS</span>
+          <span class="rounded-full border border-[#f5c518]/40 bg-[#0d2606]/60 px-4 py-1 text-xs font-medium text-[#ffe27a] backdrop-blur-sm">SECURE POPUP</span>
         </div>
       </div>
 
       <nav class="flex flex-col gap-4 md:col-span-3 lg:pl-8" aria-label="ทางลัดหน้าเว็บ">
-        <p class="text-lg font-black tracking-widest text-[#fff3d6] uppercase drop-shadow-sm">QUICK LINKS</p>
-        <div aria-hidden="true" class="h-[1px] w-12 bg-gradient-to-r from-[#faad23] to-[#ff3d8a]"></div>
-        <ul class="flex flex-col gap-3 text-sm font-medium text-[#ffe9c4]/65">
-          <li><a href="/" class="transition-colors hover:text-[#ffd84d]">หน้าหลัก (Home)</a></li>
-          <li><a href="/promotion" class="transition-colors hover:text-[#ffd84d]">โปรโมชั่น (Promotions)</a></li>
-          <li><a href="/ทางเข้า" class="transition-colors hover:text-[#ffd84d]">ทางเข้า (Access)</a></li>
-          <li><a href="/ทดลองเล่น" class="transition-colors hover:text-[#ffd84d]">ทดลองเล่น (Demo)</a></li>
-          <li><a href="/register" class="transition-colors hover:text-[#ffd84d]">สมัครสมาชิก (Join Us)</a></li>
-          <li><a href="/login" class="transition-colors hover:text-[#ffd84d]">เข้าสู่ระบบ (Login)</a></li>
-          <li><a href="/about-us" class="transition-colors hover:text-[#ffd84d]">เกี่ยวกับเรา</a></li>
+        <p class="text-lg font-black tracking-widest text-[#e9f8cf] uppercase drop-shadow-sm">QUICK LINKS</p>
+        <div aria-hidden="true" class="h-[1px] w-12 bg-gradient-to-r from-[#7bbb0b] to-[#f5c518]"></div>
+        <ul class="flex flex-col gap-3 text-sm font-medium text-[#dcefc2]/70">
+          <li><a href="/" class="transition-colors hover:text-[#a8e81c]">หน้าหลัก (Home)</a></li>
+          <li><a href="/promotion" class="transition-colors hover:text-[#a8e81c]">โปรโมชั่น (Promotions)</a></li>
+          <li><a href="/ทางเข้า" class="transition-colors hover:text-[#a8e81c]">ทางเข้า (Access)</a></li>
+          <li><a href="/ทดลองเล่น" class="transition-colors hover:text-[#a8e81c]">ทดลองเล่น (Demo)</a></li>
+          <li><a href="/register" class="transition-colors hover:text-[#a8e81c]">สมัครสมาชิก (Join Us)</a></li>
+          <li><a href="/login" class="transition-colors hover:text-[#a8e81c]">เข้าสู่ระบบ (Login)</a></li>
+          <li><a href="/about-us" class="transition-colors hover:text-[#a8e81c]">เกี่ยวกับเรา</a></li>
         </ul>
       </nav>
 
       <div class="flex flex-col gap-5 md:col-span-4">
-        <p class="text-lg font-black tracking-widest text-[#fff3d6] uppercase drop-shadow-sm">CUSTOMER SUPPORT</p>
-        <div aria-hidden="true" class="h-[1px] w-12 bg-gradient-to-r from-[#ff3d8a] to-[#faad23]"></div>
+        <p class="text-lg font-black tracking-widest text-[#e9f8cf] uppercase drop-shadow-sm">CUSTOMER SUPPORT</p>
+        <div aria-hidden="true" class="h-[1px] w-12 bg-gradient-to-r from-[#f5c518] to-[#7bbb0b]"></div>
 
         <a
           href="/line"
@@ -102,17 +102,17 @@ const logoAlt = "โลโก้ LUCKYGAME689 เครื่องเกมพ�
           )
         }
 
-        <div class="mt-4 text-xs font-medium tracking-widest text-[#ffd84d]/60 uppercase">Supported Payments</div>
+        <div class="mt-4 text-xs font-medium tracking-widest text-[#a8e81c]/60 uppercase">Supported Payments</div>
         <BankStrip size={30} />
       </div>
     </div>
 
-    <div class="flex flex-col items-center justify-between border-t border-[#b8760f]/45 pt-8 text-xs font-medium tracking-wide text-[#ffe9c4]/45 md:flex-row">
-      <p>COPYRIGHT &copy; {new Date().getFullYear()} LUCKYGAME689. ALL RIGHTS RESERVED.</p>
+    <div class="flex flex-col items-center justify-between border-t border-[#3c6b07]/60 pt-8 text-xs font-medium tracking-wide text-[#dcefc2]/50 md:flex-row">
+      <p>COPYRIGHT &copy; {new Date().getFullYear()} GARUDA369. ALL RIGHTS RESERVED.</p>
       <div class="mt-4 flex gap-4 md:mt-0">
-        <a href="/terms/" class="transition-colors hover:text-[#ffd84d]">TERMS &amp; CONDITIONS</a>
-        <a href="/privacy/" class="transition-colors hover:text-[#ffd84d]">PRIVACY POLICY</a>
-        <a href="#top" class="transition-colors hover:text-[#ffd84d]">กลับขึ้นบน</a>
+        <a href="/terms/" class="transition-colors hover:text-[#a8e81c]">TERMS &amp; CONDITIONS</a>
+        <a href="/privacy/" class="transition-colors hover:text-[#a8e81c]">PRIVACY POLICY</a>
+        <a href="#top" class="transition-colors hover:text-[#a8e81c]">กลับขึ้นบน</a>
       </div>
     </div>
   </div>

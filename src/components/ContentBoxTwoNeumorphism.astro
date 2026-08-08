@@ -1,21 +1,51 @@
 ---
-const { titleleft, titleright } = Astro.props;
+export interface Props {
+  titleleft?: string;
+  titleright?: string;
+  label?: string;
+}
+const { titleleft, titleright, label } = Astro.props;
+
+// Both column titles are deliberately <p>, not headings — they used to be <h3>.
+// This block is the login/register panel: UI furniture, not a docx section, so
+// promoting its labels would add heading levels the brief never asked for and
+// would break the page's h1/h2/h3 inventory. The section carries its own
+// accessible name instead, which is what `label` is for.
+//
+// Left half takes the brand's primary lime, right half the gold that echoes the
+// coins in the artwork — the same two-accent convention as ContentBoxTwo and
+// ContentBoxSpecial. The neumorphic pair is derived from the card surface
+// (#0d2606): #050f02 below it, #153a09 above.
+const sectionLabel = label ?? titleleft ?? titleright ?? "ข้อมูลประกอบ";
 ---
 
-<section class="mx-auto mb-8 w-full max-w-7xl px-4 font-sans">
+<section aria-label={sectionLabel} class="mx-auto mb-8 w-full max-w-7xl px-4 font-sans">
   <div
-    class="w-full rounded-[25px] bg-[#0d1811] p-8 shadow-[10px_10px_20px_#060c08,-10px_-10px_20px_#14241a] transition-all duration-300 hover:shadow-[15px_15px_30px_#040805,-15px_-15px_30px_#1a2f22]">
+    class="w-full rounded-[25px] bg-[#0d2606] p-8 shadow-[10px_10px_20px_#050f02,-10px_-10px_20px_#153a09] transition-all duration-300 hover:shadow-[15px_15px_30px_#030a01,-15px_-15px_30px_#1a4a0b]">
     <div class="grid grid-cols-1 gap-8 md:grid-cols-2">
-      <article class="flex flex-col gap-4 text-left text-base leading-relaxed text-gray-400">
-        {titleleft && <h3 class="text-2xl leading-normal font-black tracking-wide text-white">{titleleft}</h3>}
+      <article class="flex flex-col gap-4 text-left text-base leading-relaxed text-[#dcefc2]">
+        {
+          titleleft && (
+            <p class="flex items-center gap-3 border-b border-[#7bbb0b]/30 pb-3 text-xl leading-normal font-black tracking-widest text-[#a8e81c] uppercase">
+              <span aria-hidden="true" class="h-6 w-1.5 shrink-0 rounded-full bg-gradient-to-b from-[#a8e81c] via-[#7bbb0b] to-[#3c6b07] shadow-[0_0_10px_rgba(123,187,11,0.5)]" />
+              {titleleft}
+            </p>
+          )
+        }
         <slot name="left" />
       </article>
 
-      <article class="flex flex-col gap-4 text-left text-base leading-relaxed text-gray-400 md:border-l md:border-lime-400/10 md:pl-8">
-        {titleright && <h3 class="text-2xl leading-normal font-black tracking-wide text-white">{titleright}</h3>}
+      <article class="flex flex-col gap-4 text-left text-base leading-relaxed text-[#dcefc2] md:border-l md:border-[#3c6b07]/50 md:pl-8">
+        {
+          titleright && (
+            <p class="flex items-center gap-3 border-b border-[#f5c518]/40 pb-3 text-xl leading-normal font-black tracking-widest text-[#f5c518] uppercase">
+              <span aria-hidden="true" class="h-6 w-1.5 shrink-0 rounded-full bg-gradient-to-b from-[#ffe27a] via-[#f5c518] to-[#a87c05] shadow-[0_0_10px_rgba(245,197,24,0.5)]" />
+              {titleright}
+            </p>
+          )
+        }
         <slot name="right" />
       </article>
     </div>
   </div>
 </section>
-
