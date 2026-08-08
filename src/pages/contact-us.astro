@@ -22,11 +22,11 @@ import { BRAND_ADDRESS } from "../lib/brandProfile";
 // under verify-build.mjs's 150 floor, so the trailing clause brings it into
 // the window without changing what the brief says. This one is 157.
 const pageDescription =
-  "ช่องทางการติดต่อ GARUDA369 ทีมงานผู้เชี่ยวชาญพร้อมดูแลและแก้ไขปัญหาให้คุณอย่างมืออาชีพ รวดเร็วทันใจตลอด 24 ชั่วโมง ทุกเรื่องสมัครสมาชิกและเข้าสู่ระบบเว็บหลัก";
+  "ช่องทางการติดต่อ TT1BET ศูนย์บริการลูกค้ามาตรฐานสากล ทีมงานพร้อมดูแลและให้คำปรึกษาอย่างรวดเร็วทันใจตลอด 24 ชั่วโมง";
 
 const graph = pageGraph(Astro, {
   type: "ContactPage",
-  name: "GARUDA369 ติดต่อเรา บริการเหนือระดับ ทีมงานซัพพอร์ต 24 ชม.",
+  name: "TT1BET ติดต่อเรา บริการครบวงจร ทีมงานมืออาชีพดูแล 24 ชม.",
   description: pageDescription,
   breadcrumb: [
     { name: "หน้าแรก", path: "/" },
@@ -55,7 +55,7 @@ const graph = pageGraph(Astro, {
 });
 ---
 
-<MainLayout title="GARUDA369 ติดต่อเรา บริการเหนือระดับ ทีมงานซัพพอร์ต 24 ชม." description={pageDescription}>
+<MainLayout title="TT1BET ติดต่อเรา บริการครบวงจร ทีมงานมืออาชีพดูแล 24 ชม." description={pageDescription}>
   <script type="application/ld+json" set:html={graph} />
 
   <Announcement />

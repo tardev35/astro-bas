@@ -50,12 +50,12 @@ const gameList = demoGames.map((game) => ({ name: game.name, imagePath: game.src
 // brand's own vocabulary and brings it into the window without changing what
 // the brief says.
 const pageDescription =
-  "โหมดทดลองเล่นฟรีบนแพลตฟอร์ม GARUDA369 เปิดโอกาสให้คุณศึกษาระบบและฟีเจอร์เกมลิขสิทธิ์แท้ได้อย่างอิสระ ไร้ขีดจำกัด ไม่มีค่าใช้จ่าย ครบทุกค่ายบนสล็อตเว็บใหญ่";
+  "โหมดทดลองเล่นฟรีบนแพลตฟอร์ม TT1BET สัมผัสความสนุกและเรียนรู้ฟีเจอร์เกมระดับโลกได้อย่างอิสระ ไม่มีขีดจำกัด ไม่มีค่าใช้จ่าย";
 
 const ctx = schemaCtx(Astro);
 const graph = pageGraph(Astro, {
   type: "CollectionPage",
-  name: "GARUDA369 ทดลองเล่นฟรี สล็อตเว็บใหญ่ สัมผัสระบบจริง",
+  name: "TT1BET ทดลองเล่นฟรี รวมเกมแตกง่าย ศึกษาเทคนิคก่อนลงสนาม",
   description: pageDescription,
   breadcrumb: [
     { name: "หน้าแรก", path: "/" },
@@ -72,7 +72,7 @@ const graph = pageGraph(Astro, {
 });
 ---
 
-<MainLayout title="GARUDA369 ทดลองเล่นฟรี สล็อตเว็บใหญ่ สัมผัสระบบจริง" description={pageDescription}>
+<MainLayout title="TT1BET ทดลองเล่นฟรี รวมเกมแตกง่าย ศึกษาเทคนิคก่อนลงสนาม" description={pageDescription}>
   <script type="application/ld+json" set:html={graph} />
 
   <Announcement />
