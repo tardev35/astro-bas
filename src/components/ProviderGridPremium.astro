@@ -7,39 +7,88 @@ import img4 from "../assets/providers/game4.avif";
 import img5 from "../assets/providers/game5.avif";
 import img6 from "../assets/providers/game6.avif";
 
+// The six tiles are CAMP artwork with a software house's wordmark printed on
+// them (PG / PP Slot / Slotxo / Joker / JILI / Sexy Slot), so each `alt`
+// describes the picture and each name matches the wordmark that is actually
+// drawn on it. Do not relabel them after this brand's three docx camps
+// (Thunderkick / Playtech / Habanero) — those live in FeatureHighlights and the
+// LoginRtpSection table; this strip is the wider "camps we also carry" set, and
+// renaming the tiles would make every picture contradict its own caption.
+//
+// This grid is chrome: its title is a <p> and the <section> carries the
+// accessible name.
 const providers = [
-  { alt: "PG Soft", users: "4,592", isHot: true, img: img1 },
-  { alt: "Joker Gaming", users: "2,184", isHot: true, img: img2 },
-  { alt: "JILI", users: "3,845", isHot: true, img: img3 },
-  { alt: "Evolution", users: "2,901", isHot: true, img: img4 },
-  { alt: "SA Gaming", users: "1,754", isHot: false, img: img5 },
-  { alt: "Sexy Baccarat", users: "3,245", isHot: true, img: img6 },
+  {
+    name: "PG Soft",
+    users: "4,592",
+    isHot: true,
+    img: img1,
+    alt: "ตราสัญลักษณ์ค่ายเกม PG Pocket Games Soft บนภาพหญิงสาวสวมเครื่องประดับขนนกสไตล์อารยธรรมโบราณ ล้อมรอบด้วยตัวการ์ตูนหลายตัวบนพื้นหลังสีทอง",
+  },
+  {
+    name: "Pragmatic Play",
+    users: "3,842",
+    isHot: true,
+    img: img6,
+    alt: "ตราสัญลักษณ์ PP Slot ของค่าย Pragmatic Play บนภาพเทพเจ้าเคราขาวสวมมงกุฎ กำสายฟ้าไว้ในมือ ยืนอยู่หน้าเสาหินสไตล์กรีก",
+  },
+  {
+    name: "JILI",
+    users: "3,517",
+    isHot: true,
+    img: img5,
+    alt: "ตราสัญลักษณ์ค่ายเกม JILI บนภาพนักรบสวมเครื่องประดับทองคำและหมวกขนนก ถือขวานศึกด้ามยาวบนพื้นหลังสีทอง",
+  },
+  {
+    name: "Joker Gaming",
+    users: "2,905",
+    isHot: true,
+    img: img4,
+    alt: "ตราสัญลักษณ์ค่ายเกม Joker บนภาพนักรบสวมหมวกเหล็กและผ้าคลุมสีแดง ถือโล่ยืนอยู่หน้าสนามกีฬาโคลอสเซียม",
+  },
+  {
+    name: "Slotxo",
+    users: "2,431",
+    isHot: false,
+    img: img3,
+    alt: "ตราสัญลักษณ์ค่ายเกม Slotxo บนภาพวัวกระทิงสวมหมวกคาวบอยและแว่นกันแดด ถือถุงเงินกลางทะเลทราย",
+  },
+  {
+    name: "Sexy Slot",
+    users: "3,245",
+    isHot: true,
+    img: img2,
+    alt: "ตราสัญลักษณ์ค่ายเกม Sexy Slot บนภาพคู่ชายหญิงในชุดทำงาน มีหัวใจสีแดงลอยอยู่ด้านข้าง",
+  },
 ];
 ---
 
-<div class="mx-auto w-full max-w-[1300px] px-4 py-8 font-sans sm:px-6 lg:px-8">
+<section aria-label="ค่ายเกมลิขสิทธิ์แท้ที่เปิดให้บริการบน TT1BET" class="mx-auto w-full max-w-[1300px] px-4 py-8 font-sans sm:px-6 lg:px-8">
   <div class="mb-8 flex w-full flex-col items-center justify-center gap-2 text-center">
-    <span aria-hidden="true" class="text-2xl drop-shadow-[0_0_10px_rgba(234,179,8,0.8)]">🎰</span>
-    <h2 class="bg-gradient-to-r from-yellow-300 to-yellow-600 bg-clip-text text-3xl font-black tracking-widest text-transparent uppercase drop-shadow-sm">PREMIUM PARTNERS</h2>
-    <div class="mt-2 h-[2px] w-24 rounded-full bg-gradient-to-r from-transparent via-purple-500 to-transparent"></div>
+    <span aria-hidden="true" class="text-2xl drop-shadow-[0_0_10px_rgba(243,196,60,0.8)]">🎰</span>
+    <p class="bg-gradient-to-r from-[#fcf6ab] via-[#f3c43c] to-[#a8790f] bg-clip-text text-3xl font-black tracking-widest text-transparent uppercase drop-shadow-sm">ค่ายเกมลิขสิทธิ์แท้บน TT1BET</p>
+    <div class="mt-2 h-[2px] w-24 rounded-full bg-gradient-to-r from-transparent via-[#ebdd65] to-transparent"></div>
   </div>
 
   <div class="grid grid-cols-2 gap-4 sm:grid-cols-3 lg:grid-cols-6 lg:gap-6">
     {
       providers.map((p) => (
-        <div class="group relative flex cursor-pointer flex-col overflow-hidden rounded-2xl bg-[#1b0638] shadow-[0_5px_15px_rgba(0,0,0,0.4)] transition-all duration-500 hover:-translate-y-2 hover:shadow-[0_15px_35px_rgba(147,51,234,0.3)]">
-          <div class="pointer-events-none absolute inset-0 z-20 rounded-2xl border border-purple-700/50 transition-all duration-500 group-hover:border-yellow-500/50 group-hover:shadow-[inset_0_0_20px_rgba(234,179,8,0.15)]" />
+        <div class="group relative flex cursor-pointer flex-col overflow-hidden rounded-2xl bg-[#171106] shadow-[0_5px_15px_rgba(0,0,0,0.5)] transition-all duration-500 hover:-translate-y-2 hover:shadow-[0_15px_35px_rgba(235,221,101,0.3)]">
+          <div class="pointer-events-none absolute inset-0 z-20 rounded-2xl border border-[#34230b] transition-all duration-500 group-hover:border-[#f3c43c]/60 group-hover:shadow-[inset_0_0_20px_rgba(243,196,60,0.18)]" />
 
-          <div class="absolute top-0 left-0 z-10 flex items-center gap-1.5 rounded-br-xl border-r border-b border-purple-700/50 bg-[#120322]/80 px-3 py-1.5 text-[10px] font-medium text-purple-200 backdrop-blur-md transition-colors group-hover:text-yellow-300">
-            <svg xmlns="http://www.w3.org/2000/svg" class="h-3 w-3" viewBox="0 0 20 20" fill="currentColor">
+          <div class="absolute top-0 left-0 z-10 flex items-center gap-1.5 rounded-br-xl border-r border-b border-[#34230b] bg-[#0a0704]/85 px-3 py-1.5 text-[10px] font-medium text-[#c9bb96] backdrop-blur-md transition-colors group-hover:text-[#fcf6ab]">
+            <svg xmlns="http://www.w3.org/2000/svg" class="h-3 w-3" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
               <path fill-rule="evenodd" d="M10 9a3 3 0 100-6 3 3 0 000 6zm-7 9a7 7 0 1114 0H3z" clip-rule="evenodd" />
             </svg>
             {p.users}
           </div>
 
           {p.isHot && (
-            <div class="absolute top-0 right-0 z-10 flex items-center gap-1 rounded-bl-xl border-b border-l border-red-400/50 bg-gradient-to-r from-red-600 to-orange-500 px-3 py-1.5 text-[10px] font-black tracking-wide text-white shadow-md">
-              <span aria-hidden="true" class="animate-pulse">🔥</span> HOT
+            <div class="absolute top-0 right-0 z-10 flex items-center gap-1 rounded-bl-xl border-b border-l border-[#fcf6ab]/50 bg-gradient-to-r from-[#f3c43c] to-[#a8790f] px-3 py-1.5 text-[10px] font-black tracking-wide text-[#1a1204] shadow-md">
+              <span aria-hidden="true" class="animate-pulse">
+                🔥
+              </span>{" "}
+              HOT
             </div>
           )}
 
@@ -55,9 +104,11 @@ const providers = [
             class="block aspect-square w-full object-cover opacity-90 transition-transform duration-700 group-hover:scale-110 group-hover:opacity-100"
           />
 
-          <div aria-hidden="true" class="pointer-events-none absolute -bottom-10 left-0 h-20 w-full bg-gradient-to-t from-purple-600/40 to-transparent opacity-0 transition-opacity duration-500 group-hover:opacity-100" />
+          <div class="relative z-10 border-t border-[#34230b] bg-[#0a0704]/85 px-2 py-2 text-center text-[11px] font-bold tracking-wide text-[#f0e6cc] transition-colors group-hover:text-[#fcf6ab]">{p.name}</div>
+
+          <div aria-hidden="true" class="pointer-events-none absolute -bottom-10 left-0 h-20 w-full bg-gradient-to-t from-[#a8790f]/45 to-transparent opacity-0 transition-opacity duration-500 group-hover:opacity-100" />
         </div>
       ))
     }
   </div>
-</div>
+</section>

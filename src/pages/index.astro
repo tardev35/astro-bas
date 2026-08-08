@@ -1,76 +1,76 @@
 ---
 import MainLayout from "../layouts/MainLayout.astro";
-import Announcement from "../components/Announcement3.astro";
-import ContentBoxNeumorphism from "../components/ContentBoxNeumorphism.astro";
-import ContentBoxFloatingBadge from "../components/ContentBoxFloatingBadge.astro";
-import ContentBoxSpecial from "../components/ContentBoxSpecial.astro";
-import ContentBoxSevenThreeNeumorphism from "../components/ContentBoxSevenThreeNeumorphism.astro";
-import ContentBoxSevenThreeFloatingBadge from "../components/ContentBoxSevenThreeFloatingBadge.astro";
-import ContentBoxTwoNeumorphism from "../components/ContentBoxTwoNeumorphism.astro";
+import Announcement from "../components/AnnouncementPremium.astro";
+import ContentBoxPremium from "../components/ContentBoxPremium.astro";
+import ContentBoxCyberCut from "../components/ContentBoxCyberCut.astro";
+import ContentBox from "../components/ContentBox.astro";
+import ContentBoxSevenThreePremium from "../components/ContentBoxSevenThreePremium.astro";
+import ContentBoxSevenThreeCyberCut from "../components/ContentBoxSevenThreeCyberCut.astro";
+import ContentBoxTwoPremium from "../components/ContentBoxTwoPremium.astro";
 import FeatureHighlights from "../components/FeatureHighlights.astro";
 import LoginRtpSection from "../components/LoginRtpSection.astro";
-import ProviderGrid from "../components/ProviderGrid.astro";
+import ProviderGrid from "../components/ProviderGridPremium.astro";
 import GameRankingBoard from "../components/GameRankingBoard.astro";
 import ReviewCardSumo2 from "../components/ReviewCardSumo2.astro";
-import LatestWinners from "../components/LatestWinners2.astro";
+import LatestWinners from "../components/LatestWinnersPremium.astro";
 import SmoothCarousel from "../components/SmoothCarousel.astro";
-import Faq from "../components/Faq2.astro";
+import Faq from "../components/Faq4.astro";
 import Navfoot from "../components/Navfoot.astro";
 
 import { Picture } from "astro:assets";
 import { pageGraph } from "../lib/schema";
 import imgCashback from "../assets/slide1.png";
-import imgGiveaway from "../assets/slide2.png";
+import imgReferral from "../assets/slide2.png";
 
-const pageTitle = "GARUDA369 สล็อตเว็บใหญ่ ระบบออโต้ โปรจัดเต็ม ทำเงินได้จริง";
+const pageTitle = "TT1BET คาสิโนออนไลน์ครบวงจร รวมเกมแตกง่าย จ่ายจริง สมัครง่าย";
 
-// 155 characters, inside verify-build.mjs's 150–160 window (it counts
-// CHARACTERS, not bytes — Thai is 3 bytes each, so a byte count lies). The
-// docx meta ends at "สำหรับนักลงทุน" and counts 148; the trailing "ยุคใหม่" is
+// 157 characters, inside verify-build.mjs's 150–160 window (it counts
+// CHARACTERS, not bytes — Thai is 3 bytes each, so a byte count lies). The docx
+// meta ends at "ปลอดภัย 100%" and counts 141; the trailing "เพียงไม่กี่คลิก" is
 // the docx's own wording from the H1 paragraph, so the gap closes without
 // adding a claim the brief never made.
-const pageDescription = "ร่วมสนุกกับ GARUDA369 สล็อตเจ้าใหญ่ เว็บตรงไม่ผ่านเอเย่นต์ ทำรายการไวด้วยระบบฝาก-ถอนออโต้ พร้อมโปรโมชั่นจัดเต็ม แหล่งทำเงินที่ดีที่สุดสำหรับนักลงทุนยุคใหม่";
+const pageDescription = "TT1BET คาสิโนออนไลน์ครบวงจร ความบันเทิงเหนือระดับ แหล่งรวมเกมแตกง่าย ทำกำไรลื่นไหล การันตี จ่ายจริง ทุกยอดบิล เริ่มต้น สมัครง่าย ปลอดภัย 100% เพียงไม่กี่คลิก";
 
 // The three camp sub-points that sit under docx heading #2, in the docx's own
 // order. FeatureHighlights renders each `title` as an <h3>, which is the only
-// place this page is allowed to have one. Its accent union is "green" | "gold".
+// place this page is allowed to have one. Its accent union is "gold" | "silver".
 const providerPoints = [
   {
-    icon: "🪶",
-    title: "AvatarUX นวัตกรรม PopWins สุดล้ำ ทวีคูณรางวัลไม่รู้จบ",
-    description: "โดดเด่นด้วยกลไกการขยายเพย์ไลน์ที่แปลกใหม่ ทุกครั้งที่ชนะรางวัล กระดานจะขยายใหญ่ขึ้นเพื่อมอบโอกาสทำกำไรที่ทวีคูณอย่างต่อเนื่อง",
-    accent: "green" as const,
-  },
-  {
-    icon: "🎆",
-    title: "Spinomenal กราฟิกตระการตา ฟีเจอร์แตกหนัก โบนัสเข้าไว",
-    description: "นำเสนอความบันเทิงที่ล้ำหน้าด้วยภาพแอนิเมชันสุดตระการตา ฟีเจอร์ภายในเกมถูกปรับจูนมาให้เข้าถึงรอบแจ็กพอตได้อย่างรวดเร็วและคุ้มค่า",
+    icon: "⚡",
+    title: "Thunderkick นวัตกรรมเกมสุดล้ำ กราฟิกแปลกใหม่ โบนัสแตกกระจาย",
+    description: "ค่ายเกมที่โดดเด่นด้วยไอเดียการสร้างสรรค์ที่ไม่เหมือนใคร นำเสนอกลไกการเล่นที่แหวกแนวแต่สามารถทวีคูณเงินรางวัลให้คุณได้อย่างมหาศาล",
     accent: "gold" as const,
   },
   {
-    icon: "🧩",
-    title: "Relax Gaming เสถียรภาพยอดเยี่ยม ทำกำไรเพลิน ไม่มีสะดุด",
-    description: "ค่ายเกมที่มุ่งเน้นการสร้างสถาปัตยกรรมซอฟต์แวร์ที่แข็งแกร่ง โหลดไว ตอบสนองฉับไวบนทุกอุปกรณ์ ให้คุณลุ้นผลตอบแทนได้อย่างราบรื่น",
-    accent: "green" as const,
+    icon: "🏛️",
+    title: "Playtech ยักษ์ใหญ่แห่งวงการ ระบบเสถียร แจกแจ็กพอตหนัก",
+    description: "สัมผัสความยิ่งใหญ่จากผู้พัฒนาซอฟต์แวร์ระดับโกลบอล ระบบตัวเกมถูกออกแบบมาให้รองรับการใช้งานอย่างลื่นไหล พร้อมฟีเจอร์แจ็กพอตที่จ่ายหนักจัดเต็ม",
+    accent: "silver" as const,
+  },
+  {
+    icon: "🌶️",
+    title: "Habanero เกมเพลย์สุดคลาสสิก อัตราจ่ายสูง ทำกำไรเพลิน",
+    description: "ผสมผสานความคลาสสิกเข้ากับเทคโนโลยีสมัยใหม่ เล่นง่าย เข้าใจง่าย และขึ้นชื่อเรื่องการออกรางวัลโบนัสที่ต่อเนื่อง ช่วยให้กอบโกยกำไรได้อย่างรวดเร็ว",
+    accent: "gold" as const,
   },
 ];
 
 const faqs = [
   {
-    q: "ทำไมแพลตฟอร์มนี้จึงถูกยกย่องว่าเป็น สล็อตเว็บใหญ่ ที่ดีที่สุด?",
-    a: "เพราะ GARUDA369 มีระบบที่เสถียร รวมเกมลิขสิทธิ์แท้ และมีฐานการเงินที่มั่นคงระดับองค์กร",
+    q: "ทำไมแพลตฟอร์มนี้จึงเป็น คาสิโนออนไลน์ครบวงจร ที่ได้รับความนิยมสูงสุด?",
+    a: "เพราะ TT1BET รวบรวมเกมลิขสิทธิ์แท้ไว้ทุกประเภท มีความเสถียรสูง และตอบโจทย์ทุกสไตล์การเดิมพันในที่เดียวอย่างสมบูรณ์แบบ",
   },
   {
-    q: "การประมวลผลผ่าน ระบบออโต้ ใช้เวลานานแค่ไหน?",
-    a: "ทำงานด้วยความเร็วสูงผ่าน AI อัจฉริยะ ยอดเงินอัปเดตเข้ากระเป๋าสำเร็จภายในเวลาเพียงไม่กี่วินาที",
+    q: "จุดเด่นของการ รวมเกมแตกง่าย บนแพลตฟอร์มนี้คืออะไร?",
+    a: "ช่วยเพิ่มโอกาสในการทำกำไรให้ผู้เล่นได้อย่างรวดเร็ว ระบบของ TT1BET จ่ายรางวัลอย่างยุติธรรมและออกโบนัสบ่อยที่สุด",
   },
   {
-    q: "สามารถกดยอมรับสิทธิ์ โปรจัดเต็ม ได้จากช่องทางใด?",
-    a: "สมาชิกสามารถรับโบนัสและสิทธิพิเศษต่างๆ ได้ด้วยตนเองผ่านหน้าแดชบอร์ดอัตโนมัติได้อย่างสะดวกรวดเร็ว",
+    q: "หากทำรายการถอนเงินจำนวนหลักล้าน ระบบจะ จ่ายจริง หรือไม่?",
+    a: "เรามีสภาพคล่องทางการเงินสูงมาก TT1BET การันตีโอนไวและจ่ายเต็มจำนวนทุกยอดบิล ไร้ปัญหาการอั้นยอด 100%",
   },
   {
-    q: "มือใหม่สามารถ ทำเงินได้จริง จากแพลตฟอร์มนี้หรือไม่?",
-    a: "ทำได้อย่างแน่นอน ด้วยระบบที่ใช้งานง่าย โปร่งใส และมีอัตราการจ่ายที่ยุติธรรม เปิดโอกาสให้ทุกคนเข้าถึงกำไรได้จริง",
+    q: "ขั้นตอนการลงทะเบียน สมัครง่าย และปลอดภัยแค่ไหน?",
+    a: "ดำเนินการผ่านระบบ AI อัตโนมัติที่ใช้เวลาไม่ถึงนาที ข้อมูลของสมาชิก TT1BET จะถูกเข้ารหัสความปลอดภัยระดับองค์กรสูงสุด",
   },
 ];
 
@@ -83,10 +83,10 @@ const graph = pageGraph(Astro, {
 });
 
 const altCashback =
-  "แบนเนอร์โปรโมชั่น GARUDA369 คืนยอดเสีย 15% พร้อมข้อความ เล่นสนุกได้ทุกวัน เราดูแลคืนกำไรให้คุณ ป้ายมุมภาพ เสียเท่าไหร่ เราคืนให้ สูงสุด 15% ทุกวัน ตู้สล็อตขึ้นคำว่า JACKPOT และแถบด้านล่าง มั่นคง ปลอดภัย เชื่อถือได้ 100%";
+  "แบนเนอร์โปรโมชั่น TT1BET คืนยอดเสีย 15% ตัวเลขสีทองบนพื้นดำ พร้อมข้อความ เสียเท่าไหร่ เราคืนให้ ทุกวัน ป้ายมุมขวา เสียทุกวัน รับคืนทุกวัน 15% มีวงล้อสล็อตขึ้นเลข 777 และกองเหรียญทอง ปิดท้ายด้วยแถบไอคอน ระบบปลอดภัยมาตรฐานสากล ฝาก-ถอนรวดเร็วทันใจ โปรโมชั่นจัดเต็มทุกวัน บริการลูกค้า 24 ชั่วโมง และสล็อตแตกง่ายจ่ายจริง 100%";
 
-const altGiveaway =
-  "แบนเนอร์โปรโมชั่น GARUDA369 ฝาก29 ลุ้นรับ iPhone 17 Pro Max พร้อมข้อความ ลุ้นง่าย ได้จริง ทุกคนมีสิทธิ์ ป้ายมุมภาพ แจกจริง ทุกเดือน และแถบด้านล่าง ยิ่งฝาก ยิ่งมีสิทธิ์มาก ลุ้นรางวัลใหญ่ทุกเดือน";
+const altReferral =
+  "แบนเนอร์โปรโมชั่น TT1BET แนะนำเพื่อน รับค่าคอม 0.8% ตัวอักษรสีทองบนพื้นดำ ป้ายมุมขวา เพื่อนเล่น คุณรับทันที พร้อมข้อความ ยิ่งแนะนำมาก ยิ่งรับมาก ไม่จำกัดยอดถอน และแถบไอคอน แนะนำเพื่อนได้ไม่จำกัด รับค่าคอมมิชชั่น 0.8% ยอดเพื่อนได้ถอนรับค่าคอมทันที ยิ่งเพื่อนเล่นมาก ยิ่งรับมาก ทีมงานดูแลตลอด 24 ชม. ปิดท้ายด้วยแถบ ชวนเพื่อนมาสนุก สร้างรายได้ไปด้วยกัน";
 ---
 
 <MainLayout title={pageTitle} description={pageDescription}>
@@ -94,45 +94,25 @@ const altGiveaway =
 
   <Announcement />
 
-  <ContentBoxNeumorphism as="h1" title="GARUDA369 สล็อตเว็บใหญ่ ระบบออโต้ โปรจัดเต็ม ทำเงินได้จริง">
-    <p class="text-left text-base leading-relaxed text-[#dcefc2]">
-      เปิดมิติใหม่แห่งการลงทุนที่ทรงพลังและมั่นคงไปกับ <strong class="text-[#e9f8cf]">GARUDA369</strong> สล็อตเว็บใหญ่ ที่ถูกสร้างขึ้นมาเพื่อตอบสนองนักเดิมพันที่ต้องการความเป็นเลิศ แพลตฟอร์มนี้ถือเป็นแหล่งทำเงินที่ดีที่สุดสำหรับนักลงทุนยุคใหม่
-      ขับเคลื่อนการทำธุรกรรมด้วยเทคโนโลยี ระบบออโต้ ที่รวดเร็วและแม่นยำ พร้อมมอบความคุ้มค่าผ่านแคมเปญและ โปรจัดเต็ม มากมาย เพื่อให้ทุกการเชื่อมต่อของคุณสามารถต่อยอดและ ทำเงินได้จริง อย่างยั่งยืนในระยะยาว
+  <ContentBoxPremium as="h1" title="TT1BET คาสิโนออนไลน์ครบวงจร รวมเกมแตกง่าย จ่ายจริง สมัครง่าย">
+    <p class="text-left text-base leading-relaxed text-[#f0e6cc]">
+      ก้าวเข้าสู่มิติใหม่ของการลงทุนกับ <strong class="text-[#fdf7dc]">TT1BET</strong> คาสิโนออนไลน์ครบวงจร ที่ถูกพัฒนาขึ้นเพื่อตอบโจทย์ทุกไลฟ์สไตล์ของนักเดิมพันยุคดิจิทัล
+      แพลตฟอร์มนี้เปรียบเสมือนศูนย์กลางความบันเทิงระดับพรีเมียมที่ รวมเกมแตกง่าย เอาไว้มากที่สุด ให้คุณกวาดผลกำไรได้อย่างลื่นไหลไร้รอยต่อ เรายึดมั่นในความโปร่งใสพร้อมการันตี จ่ายจริง
+      ในทุกยอดบิล ไม่ว่ายอดจะสูงแค่ไหนก็มั่นใจได้ 100% เริ่มต้นสัมผัสประสบการณ์เหนือระดับด้วยขั้นตอนที่ สมัครง่าย เพียงไม่กี่คลิก
     </p>
-  </ContentBoxNeumorphism>
+  </ContentBoxPremium>
 
-  <ContentBoxFloatingBadge as="h2" title="GARUDA369 ศูนย์รวมเกมลิขสิทธิ์แท้ สล็อตเว็บใหญ่ ระดับโลก">
-    <p class="text-left text-base leading-relaxed text-[#dcefc2]">
-      การก้าวเข้ามาเป็นส่วนหนึ่งของแพลตฟอร์ม GARUDA369 คือการเปิดประตูสู่อาณาจักรเกมที่ยิ่งใหญ่ที่สุด เราได้รวบรวมซอฟต์แวร์คุณภาพจากค่ายดังทั่วโลกมาไว้ในที่เดียว ทุกเกมทำงานบนเซิร์ฟเวอร์หลักโดยตรง
-      มั่นใจได้ในความลื่นไหล กราฟิกคมชัด และอัตราการจ่ายที่โปร่งใส
+  <ContentBoxCyberCut as="h2" title="TT1BET รวบรวมเกมระดับโลก คาสิโนออนไลน์ครบวงจร ไว้ในที่เดียว">
+    <p class="text-left text-base leading-relaxed text-[#f0e6cc]">
+      การเปิดประสบการณ์กับ TT1BET คือการเข้าถึงโลกแห่งความสนุกที่ไร้ขีดจำกัด เพราะเราได้คัดสรรซอฟต์แวร์ลิขสิทธิ์แท้จากผู้พัฒนาชั้นนำทั่วโลกมาให้บริการอย่างเต็มรูปแบบ
+      ทุกเกมผ่านการทดสอบมาตรฐานว่าทำงานอย่างเสถียรและจ่ายรางวัลอย่างเป็นธรรมที่สุด มอบอรรถรสเหนือระดับในทุกการสปิน
     </p>
     <FeatureHighlights items={providerPoints} />
-  </ContentBoxFloatingBadge>
+  </ContentBoxCyberCut>
 
   <ProviderGrid />
 
-  <ContentBoxSevenThreeNeumorphism titleright="ขับเคลื่อนความเร็วด้วย ระบบออโต้ นวัตกรรมล้ำสมัยจาก GARUDA369">
-    <Picture
-      slot="left"
-      src={imgGiveaway}
-      loading="lazy"
-      fetchpriority="low"
-      widths={[200, 400, 600]}
-      sizes="(max-width: 768px) 100vw, 30vw"
-      decoding="async"
-      formats={["avif", "webp"]}
-      fallbackFormat="webp"
-      quality={80}
-      alt={altGiveaway}
-      class="mx-auto h-auto w-full rounded-2xl border border-[#7bbb0b]/30 shadow-[0_10px_30px_rgba(123,187,11,0.22)]"
-    />
-    <p slot="right" class="text-left text-base leading-relaxed text-[#dcefc2]">
-      ตอบโจทย์คนรักความรวดเร็วด้วยนวัตกรรมทางการเงินที่ดีที่สุด สมาชิกของ GARUDA369 สามารถจัดการยอดฝากและถอนได้อย่างอิสระผ่านระบบ AI อัจฉริยะ การประมวลผลเครดิตจะเสร็จสิ้นภายในเสี้ยววินาที
-      ลดขั้นตอนที่ยุ่งยาก เพื่อให้คุณเดินหน้าทำกำไรได้อย่างต่อเนื่องและมีสภาพคล่องทางการเงินสูงสุด
-    </p>
-  </ContentBoxSevenThreeNeumorphism>
-
-  <ContentBoxSevenThreeFloatingBadge title="รับความคุ้มค่าจาก โปรจัดเต็ม ทวีคูณผลกำไรทุกยอดบิล">
+  <ContentBoxSevenThreePremium titleright="สัมผัสแหล่ง รวมเกมแตกง่าย บนระบบของ TT1BET ที่ทำกำไรได้ไวที่สุด">
     <Picture
       slot="left"
       src={imgCashback}
@@ -145,22 +125,41 @@ const altGiveaway =
       fallbackFormat="webp"
       quality={80}
       alt={altCashback}
-      class="mx-auto h-auto w-full rounded-2xl border border-[#f5c518]/30 shadow-[0_10px_30px_rgba(245,197,24,0.22)]"
+      class="mx-auto h-auto w-full rounded-2xl border border-[#f3c43c]/30 shadow-[0_10px_30px_rgba(243,196,60,0.22)]"
     />
-    <p slot="right" class="text-left text-base leading-relaxed text-[#dcefc2]">
-      เพื่อยกระดับความสำเร็จให้กับนักลงทุน ทางทีมงานได้เตรียมสิทธิพิเศษและทุนสนับสนุนเอาไว้อย่างมหาศาล คุณสามารถเลือกรับแคมเปญเสริมได้ด้วยตนเองผ่านเมนูอัตโนมัติ
-      เป็นการเพิ่มขีดความสามารถในการเดิมพันให้กว้างขึ้นและลดความเสี่ยงได้อย่างมีประสิทธิภาพ ตอบโจทย์ผู้เล่นทุกระดับทุน
+    <p slot="right" class="text-left text-base leading-relaxed text-[#f0e6cc]">
+      สำหรับนักลงทุนที่ต้องการเห็นผลลัพธ์อย่างรวดเร็ว แพลตฟอร์ม TT1BET ได้จัดเตรียมโครงสร้างระบบอัลกอริทึมที่เอื้อต่อการทำกำไรเอาไว้ให้คุณแล้ว
+      ทุกจังหวะการเดิมพันเต็มไปด้วยโอกาสทองที่พร้อมจะเปลี่ยนเป็นเงินก้อนโต มอบความลื่นไหลในทุกการเชื่อมต่อ ไม่มีอาการค้างหรือหลุดให้เสียจังหวะอย่างแน่นอน
     </p>
-  </ContentBoxSevenThreeFloatingBadge>
+  </ContentBoxSevenThreePremium>
 
-  <ContentBoxSpecial as="h2" title="พิสูจน์ผลลัพธ์บน GARUDA369 แพลตฟอร์มที่ ทำเงินได้จริง ปลอดภัย 100%">
-    <p slot="left" class="text-left text-base leading-relaxed text-[#dcefc2]">
-      รากฐานของความยิ่งใหญ่คือความน่าเชื่อถือและการรักษาความปลอดภัยระดับองค์กร ข้อมูลส่วนบุคคลและกระเป๋าเงินของคุณบน GARUDA369 จะถูกเข้ารหัสอย่างแน่นหนา
+  <ContentBox as="h2" title="มั่นคง ปลอดภัย การันตี จ่ายจริง ครบทุกยอดบิล 100%">
+    <p class="text-left text-base leading-relaxed text-[#f0e6cc]">
+      ความน่าเชื่อถือคือเสาหลักสำคัญของการดำเนินธุรกิจ แพลตฟอร์มของเราจึงมีรากฐานทางการเงินที่แข็งแกร่งระดับองค์กรใหญ่ เมื่อสมาชิกสามารถทำกำไรได้ตามเป้าหมาย
+      ระบบออโต้จะทำการประมวลผลและโอนเงินเข้ากระเป๋าของคุณทันที จ่ายจริงครบทุกบาททุกสตางค์โดยไม่มีการหักค่าธรรมเนียมหรือเปอร์เซ็นต์ใดๆ ทั้งสิ้น
     </p>
-    <p slot="right" class="text-left text-base leading-relaxed text-[#dcefc2]">
-      นอกจากนี้การเข้าสู่ระบบผ่าน Secure Popup ยังช่วยให้ทุกการเชื่อมต่อเป็นส่วนตัว การันตีผลตอบแทนที่ถอนออกได้ครบทุกบาทอย่างไร้กังวล
+  </ContentBox>
+
+  <ContentBoxSevenThreeCyberCut titleright="เริ่มต้นความสนุกด้วยขั้นตอน สมัครง่าย ไปกับ TT1BET">
+    <Picture
+      slot="left"
+      src={imgReferral}
+      loading="lazy"
+      fetchpriority="low"
+      widths={[200, 400, 600]}
+      sizes="(max-width: 768px) 100vw, 30vw"
+      decoding="async"
+      formats={["avif", "webp"]}
+      fallbackFormat="webp"
+      quality={80}
+      alt={altReferral}
+      class="mx-auto h-auto w-full rounded-2xl border border-[#ebdd65]/30 shadow-[0_10px_30px_rgba(235,221,101,0.22)]"
+    />
+    <p slot="right" class="text-left text-base leading-relaxed text-[#f0e6cc]">
+      ทลายทุกความยุ่งยากในอดีตด้วยเทคโนโลยีการจัดการฐานข้อมูลที่ทันสมัยที่สุด การเริ่มต้นใช้งานบน TT1BET ถูกออกแบบมาให้รวดเร็วและใช้เวลาเพียงไม่กี่วินาที
+      คุณก็สามารถล็อกอินเข้าสู่แดชบอร์ดส่วนตัวได้ทันที พร้อมรับการปกป้องข้อมูลด้วยระบบความปลอดภัยขั้นสูง (Secure Popup Loader) ในทุกๆ ครั้งที่เข้าใช้งาน
     </p>
-  </ContentBoxSpecial>
+  </ContentBoxSevenThreeCyberCut>
 
   <Faq title="FAQ คำถามที่พบบ่อย" faqs={faqs} />
 
@@ -172,29 +171,37 @@ const altGiveaway =
 
   <LatestWinners />
 
-  <ContentBoxTwoNeumorphism titleleft="เข้าสู่ระบบสมาชิกเดิม" titleright="สมัครสมาชิกใหม่" label="เข้าสู่ระบบและสมัครสมาชิก GARUDA369">
+  <ContentBoxTwoPremium label="เข้าสู่ระบบและสมัครสมาชิก TT1BET">
     <div slot="left" class="flex flex-col gap-4">
-      <p class="text-left text-base leading-relaxed text-[#dcefc2]">
-        เข้าแดชบอร์ดส่วนตัวเพื่อจัดการยอดฝากถอนผ่าน ระบบออโต้ ที่ประมวลผลเครดิตเสร็จภายในเสี้ยววินาที เลือกค่ายเกมลิขสิทธิ์แท้ และกดรับ โปรจัดเต็ม ได้จากจุดเดียว
+      <p class="flex items-center gap-3 border-b border-[#f3c43c]/30 pb-3 text-xl leading-normal font-black tracking-widest text-[#fcf6ab] uppercase">
+        <span aria-hidden="true" class="h-6 w-1.5 shrink-0 rounded-full bg-gradient-to-b from-[#fcf6ab] via-[#f3c43c] to-[#a8790f] shadow-[0_0_10px_rgba(243,196,60,0.45)]"></span>
+        เข้าสู่ระบบสมาชิกเดิม
+      </p>
+      <p class="text-left text-base leading-relaxed text-[#f0e6cc]">
+        ล็อกอินเข้าสู่แดชบอร์ดส่วนตัวเพื่อจัดการยอดฝากถอนผ่านระบบออโต้ที่โอนเข้ากระเป๋าทันที เลือกเล่นเกมลิขสิทธิ์แท้จากทุกค่าย และรับการปกป้องข้อมูลด้วย Secure Popup Loader ทุกครั้งที่เข้าใช้งาน
       </p>
       <a
         href="/login"
-        class="mt-1 inline-flex items-center justify-center rounded-full bg-gradient-to-r from-[#a8e81c] via-[#7bbb0b] to-[#3c6b07] px-8 py-3 text-sm font-black whitespace-nowrap text-[#061405] shadow-[0_10px_30px_rgba(123,187,11,0.3)] transition-all duration-300 hover:-translate-y-1 hover:scale-105 hover:shadow-[0_15px_40px_rgba(123,187,11,0.45)] sm:text-base">
+        class="mt-1 inline-flex items-center justify-center rounded-full bg-gradient-to-r from-[#fcf6ab] via-[#ebdd65] to-[#a8790f] px-8 py-3 text-sm font-black whitespace-nowrap text-[#1a1204] shadow-[0_10px_30px_rgba(235,221,101,0.3)] transition-all duration-300 hover:-translate-y-1 hover:scale-105 hover:shadow-[0_15px_40px_rgba(235,221,101,0.45)] sm:text-base">
         เข้าสู่ระบบ
       </a>
     </div>
 
     <div slot="right" class="flex flex-col gap-4">
-      <p class="text-left text-base leading-relaxed text-[#dcefc2]">
-        เปิดบัญชีเดียวใช้ได้ครบทุกค่ายลิขสิทธิ์แท้ ทั้ง AvatarUX Spinomenal และ Relax Gaming พร้อมระบบฝาก-ถอนออโต้ และการเข้าสู่ระบบที่ปกป้องด้วย Secure Popup ตามเงื่อนไขของแต่ละแคมเปญ
+      <p class="flex items-center gap-3 border-b border-[#dfe4e7]/35 pb-3 text-xl leading-normal font-black tracking-widest text-[#dfe4e7] uppercase">
+        <span aria-hidden="true" class="h-6 w-1.5 shrink-0 rounded-full bg-gradient-to-b from-[#dfe4e7] via-[#b5bbbc] to-[#34230b] shadow-[0_0_10px_rgba(181,187,188,0.5)]"></span>
+        สมัครสมาชิกใหม่
+      </p>
+      <p class="text-left text-base leading-relaxed text-[#f0e6cc]">
+        ลงทะเบียนผ่านระบบ AI อัตโนมัติที่ใช้เวลาไม่ถึงนาที เปิดบัญชีเดียวใช้ได้ครบทุกค่ายลิขสิทธิ์แท้ ทั้ง Thunderkick Playtech และ Habanero ข้อมูลของคุณถูกเข้ารหัสความปลอดภัยระดับองค์กรสูงสุด
       </p>
       <a
         href="/register"
-        class="mt-1 inline-flex items-center justify-center rounded-full border border-[#f5c518]/60 bg-[#0d2606]/85 px-8 py-3 text-sm font-black whitespace-nowrap text-[#f5c518] backdrop-blur-sm transition-all duration-300 hover:scale-105 hover:border-[#f5c518] hover:bg-[#061405]/85 hover:shadow-[0_15px_40px_rgba(245,197,24,0.3)] sm:text-base">
+        class="mt-1 inline-flex items-center justify-center rounded-full border border-[#f3c43c]/60 bg-[#241a08]/85 px-8 py-3 text-sm font-black whitespace-nowrap text-[#f3c43c] backdrop-blur-sm transition-all duration-300 hover:scale-105 hover:border-[#f3c43c] hover:bg-[#0a0704]/85 hover:shadow-[0_15px_40px_rgba(243,196,60,0.3)] sm:text-base">
         สมัครสมาชิก
       </a>
     </div>
-  </ContentBoxTwoNeumorphism>
+  </ContentBoxTwoPremium>
 
   <ReviewCardSumo2 />
 

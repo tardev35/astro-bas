@@ -2,7 +2,7 @@
 import MainLayout from "../layouts/MainLayout.astro";
 import ContentBox from "../components/ContentBox.astro";
 import Navfoot from "../components/Navfoot.astro";
-import Announcement from "../components/Announcement3.astro";
+import Announcement from "../components/AnnouncementPremium.astro";
 import CtaRedirect from "../components/CtaRedirect.astro";
 import { pageGraph } from "../lib/schema";
 
@@ -10,17 +10,17 @@ import { pageGraph } from "../lib/schema";
 // one <h1> from the ContentBox title and one button to the affiliate link.
 // Never add an <h2>, never write body copy here.
 //
-// 159 characters — this page is indexed now, so verify-build holds the
+// 152 characters — this page is indexed now, so verify-build holds the
 // description to the 150–160 window like any other page. Count CHARACTERS
 // (`node -e "console.log([...'…'].length)"`); a byte count reads ~3x too long
 // on Thai. The docx gives no Title/Meta for /login, so both are written here
 // from the brand's own positioning; they describe the button page this route
 // is now, not the old auto-forward.
 const pageDescription =
-  "หน้าเข้าสู่ระบบ GARUDA369 สล็อตเว็บใหญ่ กดปุ่มเดียวเชื่อมต่อเว็บหลักผ่าน Secure Popup เว็บตรงไม่ผ่านเอเย่นต์ ระบบออโต้ ฝาก-ถอนไว พร้อม โปรจัดเต็ม ทำเงินได้จริง";
+  "หน้าเข้าสู่ระบบ TT1BET คาสิโนออนไลน์ครบวงจร กดปุ่มเดียวเชื่อมต่อเว็บหลักผ่าน Secure Popup Loader ปลอดภัยขั้นสูง รวมเกมแตกง่าย การันตี จ่ายจริง ทุกยอดบิล";
 
 const graph = pageGraph(Astro, {
-  name: "เข้าสู่ระบบ GARUDA369 เว็บหลัก ปลอดภัยด้วย Secure Popup",
+  name: "เข้าสู่ระบบ TT1BET เว็บหลัก ปลอดภัยด้วย Secure Popup Loader",
   description: pageDescription,
   breadcrumb: [
     { name: "หน้าแรก", path: "/" },
@@ -33,19 +33,19 @@ const graph = pageGraph(Astro, {
 const targetUrl = "https://tinyurl.com/pigbas";
 ---
 
-<MainLayout title="เข้าสู่ระบบ GARUDA369 เว็บหลัก ปลอดภัยด้วย Secure Popup" description={pageDescription}>
+<MainLayout title="เข้าสู่ระบบ TT1BET เว็บหลัก ปลอดภัยด้วย Secure Popup Loader" description={pageDescription}>
   <script type="application/ld+json" set:html={graph} />
 
   <Announcement />
 
-  <ContentBox title="เข้าสู่ระบบ GARUDA369" as="h1">
+  <ContentBox title="เข้าสู่ระบบ TT1BET" as="h1">
     <div class="flex justify-center py-8">
       <a
         href={targetUrl}
         rel="nofollow sponsored"
         data-cta-redirect
-        aria-label="เข้าสู่ระบบ GARUDA369 ที่เว็บหลัก"
-        class="group relative mx-auto flex w-full max-w-[320px] items-center justify-center gap-3 overflow-hidden rounded-xl border border-[#7bbb0b]/50 bg-[#061405] px-6 py-4 text-xl font-bold tracking-wide text-[#7bbb0b] shadow-[0_10px_30px_rgba(99,163,12,0.16)] transition-all duration-300 hover:scale-105 hover:border-[#7bbb0b] hover:bg-[#0d2606] hover:shadow-[0_15px_40px_rgba(99,163,12,0.28)]">
+        aria-label="เข้าสู่ระบบ TT1BET ที่เว็บหลัก"
+        class="group relative mx-auto flex w-full max-w-[320px] items-center justify-center gap-3 overflow-hidden rounded-xl border border-[#ebdd65]/50 bg-[#0a0704] px-6 py-4 text-xl font-bold tracking-wide text-[#ebdd65] shadow-[0_10px_30px_rgba(212,180,51,0.16)] transition-all duration-300 hover:scale-105 hover:border-[#ebdd65] hover:bg-[#241a08] hover:shadow-[0_15px_40px_rgba(212,180,51,0.28)]">
         เข้าสู่ระบบ
       </a>
     </div>

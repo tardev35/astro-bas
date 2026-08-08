@@ -1,5 +1,5 @@
-name = "tt1bet-games"
-account_id = "dfe9dd264d8f86a3e588bddeb04b0b2b"
+name = "tt1bet"
+account_id = "940d711305ac3fcab5dec35f3d69522c"
 compatibility_date = "2026-07-27"
 
 workers_dev = false

@@ -2,7 +2,7 @@
 import MainLayout from "../layouts/MainLayout.astro";
 import ContentBox from "../components/ContentBox.astro";
 import Navfoot from "../components/Navfoot.astro";
-import Announcement from "../components/Announcement3.astro";
+import Announcement from "../components/AnnouncementPremium.astro";
 
 import { Picture } from "astro:assets";
 
@@ -15,13 +15,18 @@ import pro1 from "../assets/slide1.png";
 import pro2 from "../assets/slide2.png";
 import { pageGraph } from "../lib/schema";
 
+// This is an IMAGE page, not an article: one h1 (the ContentBox title), ONE
+// short intro paragraph, the slide grid, one CTA. h2×0 by design — each slide
+// already states its own offer in large type, so prose under it just re-types
+// what the visitor can already read. Do not add section headings back.
+
 // 159 CHARACTERS (not bytes — Thai is 3 bytes/char, so a byte count reads ~3x
-// too long). The brief's own sentence is 118 characters, under
+// too long). The brief's own sentence is 120 characters, under
 // verify-build.mjs's 150 floor, so the trailing clause is built from this
 // brand's own vocabulary and brings it into the 150–160 window without
 // changing what the brief says.
 const pageDescription =
-  "อัปเดตโปรโมชั่นที่ดีที่สุดจาก TT1BET รับสิทธิพิเศษและโบนัสเสริมทุนง่ายๆ ผ่านระบบออโต้ มอบความคุ้มค่าให้คุณอย่างเต็มพิกัด";
+  "อัปเดตโปรโมชั่นที่ดีที่สุดจาก TT1BET รับสิทธิพิเศษและโบนัสเสริมทุนง่ายๆ ผ่านระบบออโต้ มอบความคุ้มค่าให้คุณอย่างเต็มพิกัด กดรับเองได้เพียงไม่กี่คลิก ตลอด 24 ชม.";
 
 const graph = pageGraph(Astro, {
   name: "TT1BET โปรโมชั่น รับโบนัสสุดคุ้ม สมัครง่าย แจกจริงทุกวัน",
@@ -39,22 +44,22 @@ const graph = pageGraph(Astro, {
 
   <Announcement />
 
-  <ContentBox title="โปรโมชั่น GARUDA369 รวม โปรจัดเต็ม ทุกแคมเปญ" as="h1">
-    <p class="mb-8 text-left text-base leading-relaxed text-[#dcefc2]">
-      หน้านี้คือที่รวมสิทธิพิเศษและ <strong class="text-[#7bbb0b]">โปรจัดเต็ม</strong> ที่ GARUDA369 เปิดให้สมาชิกกดรับเองได้ผ่าน ระบบออโต้ บนแดชบอร์ดส่วนตัว
-      รายละเอียดของแต่ละแคมเปญอยู่บนภาพด้านล่างนี้ทั้งหมด ทั้งยอดที่ได้รับ รอบการแจก และสิ่งที่ต้องทำเพื่อรับสิทธิ์ เงื่อนไข รอบการคำนวณ
-      และยอดที่นับได้จริงของแต่ละแคมเปญไม่เหมือนกัน จึงควรอ่านให้จบก่อนกดรับทุกครั้ง
+  <ContentBox title="โปรโมชั่น TT1BET รับโบนัสสุดคุ้ม แจกจริงทุกวัน" as="h1">
+    <p class="mb-8 text-left text-base leading-relaxed text-[#f0e6cc]">
+      หน้านี้คือที่รวมสิทธิพิเศษและโบนัสเสริมทุนทุกแคมเปญที่ <strong class="text-[#ebdd65]">TT1BET</strong> เปิดให้สมาชิกกดรับเองได้ผ่าน ระบบออโต้ บนแดชบอร์ดส่วนตัว
+      รายละเอียดของแต่ละแคมเปญอยู่บนภาพด้านล่างนี้ทั้งหมด ทั้งยอดที่ได้รับ รอบการแจก และสิ่งที่ต้องทำเพื่อรับสิทธิ์ เงื่อนไขและรอบการคำนวณของแต่ละแคมเปญไม่เหมือนกัน
+      จึงควรอ่านให้จบก่อนกดรับทุกครั้ง
     </p>
 
     <div class="grid grid-cols-1 gap-6 sm:grid-cols-2">
       <Picture
         src={pro1}
-        alt="แบนเนอร์โปรโมชั่น GARUDA369 คืนยอดเสีย 15% ตัวเลขสีทองบนพื้นเขียวเข้ม พร้อมข้อความ เล่นสนุกได้ทุกวัน เราดูแลคืนกำไรให้คุณ มุมภาพระบุ เสียเท่าไหร่ เราคืนให้ สูงสุด 15% ทุกวัน มีวงล้อสล็อต JACKPOT และกองเหรียญทอง ด้านล่างเป็นแถบข้อความ มั่นคง ปลอดภัย เชื่อถือได้ 100%"
+        alt="แบนเนอร์โปรโมชั่น TT1BET คืนยอดเสีย 15% ตัวเลขสีทองบนพื้นดำ พร้อมข้อความ เสียเท่าไหร่ เราคืนให้ ทุกวัน ป้ายมุมขวาระบุ เสียทุกวัน รับคืนทุกวัน 15% มีวงล้อสล็อต 777 และกองเหรียญทอง ด้านล่างเป็นแถบไอคอน ระบบปลอดภัยมาตรฐานสากล ฝาก-ถอนรวดเร็วทันใจ โปรโมชั่นจัดเต็มทุกวัน บริการลูกค้า 24 ชั่วโมง สล็อตแตกง่ายจ่ายจริง 100%"
         loading="lazy"
         fetchpriority="low"
         widths={[320, 640, 960]}
         sizes="(max-width: 639px) 100vw, 50vw"
-        class="mx-auto h-auto w-full rounded-xl border border-[#63a30c]/35 object-contain shadow-[0_10px_30px_rgba(123,187,11,0.18)] transition-transform duration-300 hover:-translate-y-1 hover:border-[#7bbb0b]/70 hover:shadow-[0_15px_40px_rgba(99,163,12,0.32)]"
+        class="mx-auto h-auto w-full rounded-xl border border-[#d4b433]/35 object-contain shadow-[0_10px_30px_rgba(235,221,101,0.18)] transition-transform duration-300 hover:-translate-y-1 hover:border-[#ebdd65]/70 hover:shadow-[0_15px_40px_rgba(212,180,51,0.32)]"
         decoding="async"
         formats={["avif", "webp"]}
         fallbackFormat="webp"
@@ -63,12 +68,12 @@ const graph = pageGraph(Astro, {
 
       <Picture
         src={pro2}
-        alt="แบนเนอร์โปรโมชั่น GARUDA369 ฝาก29 ลุ้นรับ iPhone 17 Pro Max ตัวอักษรสีทองบนพื้นเขียวเข้ม พร้อมข้อความ ลุ้นง่าย ได้จริง ทุกคนมีสิทธิ์ มุมภาพระบุ แจกจริง ทุกเดือน และแถบด้านล่าง ยิ่งฝาก ยิ่งมีสิทธิ์มาก ลุ้นรางวัลใหญ่ทุกเดือน"
+        alt="แบนเนอร์โปรโมชั่น TT1BET แนะนำเพื่อน รับค่าคอม 0.8% ตัวอักษรสีทองบนพื้นดำ ป้ายมุมขวาระบุ เพื่อนเล่น คุณรับทันที พร้อมข้อความ ยิ่งแนะนำมาก ยิ่งรับมาก ไม่จำกัดยอดถอน ด้านล่างเป็นแถบไอคอน แนะนำเพื่อนได้ไม่จำกัด รับค่าคอมมิชชั่น 0.8% ยอดเพื่อนได้ถอน รับค่าคอมทันที ยิ่งเพื่อนเล่นมาก ยิ่งรับมาก ทีมงานดูแลตลอด 24 ชม. ปิดท้ายด้วยแถบ ชวนเพื่อนมาสนุก สร้างรายได้ไปด้วยกัน"
         loading="lazy"
         fetchpriority="low"
         widths={[320, 640, 960]}
         sizes="(max-width: 639px) 100vw, 50vw"
-        class="mx-auto h-auto w-full rounded-xl border border-[#63a30c]/35 object-contain shadow-[0_10px_30px_rgba(123,187,11,0.18)] transition-transform duration-300 hover:-translate-y-1 hover:border-[#7bbb0b]/70 hover:shadow-[0_15px_40px_rgba(99,163,12,0.32)]"
+        class="mx-auto h-auto w-full rounded-xl border border-[#d4b433]/35 object-contain shadow-[0_10px_30px_rgba(235,221,101,0.18)] transition-transform duration-300 hover:-translate-y-1 hover:border-[#ebdd65]/70 hover:shadow-[0_15px_40px_rgba(212,180,51,0.32)]"
         decoding="async"
         formats={["avif", "webp"]}
         fallbackFormat="webp"
@@ -79,8 +84,8 @@ const graph = pageGraph(Astro, {
     <div class="mt-12 flex justify-center pb-4">
       <a
         href="/register"
-        class="flex items-center justify-center rounded-lg border border-[#7bbb0b]/50 bg-gradient-to-r from-[#a8e81c] via-[#7bbb0b] to-[#3c6b07] px-10 py-3.5 text-lg font-black text-[#061405] shadow-[0_10px_30px_rgba(123,187,11,0.22)] transition-transform hover:scale-105 hover:shadow-[0_15px_40px_rgba(99,163,12,0.35)]">
-        สมัครสมาชิก GARUDA369
+        class="flex items-center justify-center rounded-lg border border-[#ebdd65]/50 bg-gradient-to-r from-[#fcf6ab] via-[#ebdd65] to-[#a8790f] px-10 py-3.5 text-lg font-black text-[#1a1204] shadow-[0_10px_30px_rgba(235,221,101,0.22)] transition-transform hover:scale-105 hover:shadow-[0_15px_40px_rgba(212,180,51,0.35)]">
+        สมัครสมาชิก TT1BET
       </a>
     </div>
   </ContentBox>
