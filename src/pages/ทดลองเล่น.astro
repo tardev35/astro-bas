@@ -2,7 +2,7 @@
 import MainLayout from "../layouts/MainLayout.astro";
 import ContentBox from "../components/ContentBox.astro";
 import Navfoot from "../components/Navfoot.astro";
-import Announcement from "../components/AnnouncementPremium.astro";
+import Announcement from "../components/Announcement3.astro";
 
 import { Picture } from "astro:assets";
 import { itemList, pageGraph, schemaCtx } from "../lib/schema";
@@ -45,17 +45,17 @@ const demoGames = [
 // slash and the Thai encoding wrong on every one of them.
 const gameList = demoGames.map((game) => ({ name: game.name, imagePath: game.src.src }));
 
-// 159 CHARACTERS (not bytes). The docx sentence ends at 121, under
+// 155 CHARACTERS (not bytes). The docx sentence ends at 118, under
 // verify-build.mjs's 150 floor, so the trailing clause is built from this
 // brand's own vocabulary and brings it into the window without changing what
 // the brief says.
 const pageDescription =
-  "โหมดทดลองเล่นฟรีบนแพลตฟอร์ม TT1BET สัมผัสความสนุกและเรียนรู้ฟีเจอร์เกมระดับโลกได้อย่างอิสระ ไม่มีขีดจำกัด ไม่มีค่าใช้จ่าย ศึกษาเทคนิคก่อนลงสนามจริง ตลอด 24 ชม.";
+  "โหมดทดลองเล่นฟรีบนแพลตฟอร์ม ROMAN555 เปิดโอกาสให้คุณศึกษากลไกเกมระดับโลกได้อย่างอิสระ ไร้ขีดจำกัด ทันทีโดยไม่ต้องลงทุน ครบทุก ค่ายใหญ่ลิขสิทธิ์แท้ ระดับโลก";
 
 const ctx = schemaCtx(Astro);
 const graph = pageGraph(Astro, {
   type: "CollectionPage",
-  name: "TT1BET ทดลองเล่นฟรี รวมเกมแตกง่าย ศึกษาเทคนิคก่อนลงสนาม",
+  name: "ROMAN555 ทดลองเล่นฟรี ค่ายใหญ่ลิขสิทธิ์แท้ สัมผัสความยิ่งใหญ่",
   description: pageDescription,
   breadcrumb: [
     { name: "หน้าแรก", path: "/" },
@@ -63,8 +63,8 @@ const graph = pageGraph(Astro, {
   ],
   extra: [
     itemList(ctx, {
-      name: "ทดลองเล่นเกมสล็อตของ TT1BET",
-      alternateName: "TT1BET โหมดทดลองเล่นสล็อตจากค่ายเกมลิขสิทธิ์แท้บนมือถือ ก่อนเล่นด้วยเงินจริง",
+      name: "ทดลองเล่นเกมสล็อตของ ROMAN555",
+      alternateName: "ROMAN555 โหมดทดลองเล่นสล็อตจาก ค่ายใหญ่ลิขสิทธิ์แท้ บนมือถือ ก่อนเล่นด้วยเงินจริง",
       itemType: "Game",
       items: gameList,
     }),
@@ -72,23 +72,22 @@ const graph = pageGraph(Astro, {
 });
 ---
 
-<MainLayout title="TT1BET ทดลองเล่นฟรี รวมเกมแตกง่าย ศึกษาเทคนิคก่อนลงสนาม" description={pageDescription}>
+<MainLayout title="ROMAN555 ทดลองเล่นฟรี ค่ายใหญ่ลิขสิทธิ์แท้ สัมผัสความยิ่งใหญ่" description={pageDescription}>
   <script type="application/ld+json" set:html={graph} />
 
   <Announcement />
 
-  <ContentBox title="ทดลองเล่นฟรี TT1BET คาสิโนออนไลน์ครบวงจร ครบทุกค่ายไม่ต้องฝาก" as="h1">
-    <h2 class="mb-6 bg-gradient-to-r from-[#fcf6ab] via-[#ebdd65] to-[#d4b433] bg-clip-text text-2xl leading-normal font-bold text-transparent">
-      โหมดทดลองของ TT1BET มีไว้ทำอะไร และควรดูอะไรก่อนเลือกเกม
+  <ContentBox title="ทดลองเล่นฟรี ROMAN555 ทางเข้าหลักเว็บตรง ครบทุกค่ายใหญ่ลิขสิทธิ์แท้ ไม่ต้องฝาก" as="h1">
+    <h2 class="mb-6 bg-gradient-to-r from-[#fbeab0] via-[#f6cf6a] to-[#a8690a] bg-clip-text text-2xl leading-normal font-bold text-transparent">
+      โหมดทดลองของ ROMAN555 มีไว้ทำอะไร และควรดูอะไรก่อนเลือกเกม
     </h2>
 
-    <p class="mb-8 text-left text-base leading-relaxed text-[#f0e6cc]">
-      TT1BET เป็น คาสิโนออนไลน์ครบวงจร ที่คัดสรรซอฟต์แวร์ลิขสิทธิ์แท้จากผู้พัฒนาชั้นนำทั่วโลกมาไว้ในบัญชีเดียว ทั้ง Thunderkick ที่โดดเด่นด้วยไอเดียการสร้างสรรค์ไม่เหมือนใคร
-      กราฟิกแปลกใหม่และกลไกที่ทวีคูณเงินรางวัลได้มหาศาล Playtech ยักษ์ใหญ่ระดับโกลบอลที่ระบบตัวเกมรองรับการใช้งานอย่างลื่นไหล พร้อมฟีเจอร์แจ็กพอตที่จ่ายหนักจัดเต็ม และ Habanero
-      ที่ผสมผสานเกมเพลย์สุดคลาสสิกเข้ากับเทคโนโลยีสมัยใหม่ เล่นง่าย เข้าใจง่าย และออกรางวัลโบนัสต่อเนื่อง หน้านี้จึงเป็นที่ให้กดเปิดดูหน้าเกมก่อนว่าหน้าตาระบบเป็นแบบไหน
-      ปุ่มปรับเดิมพันอยู่ตรงไหน ฟีเจอร์โบนัสทำงานอย่างไร และหนึ่งรอบกินเวลาแค่ไหน โดยยังไม่ต้องฝาก ไม่ต้องใส่เงินจริง และไม่มีการได้เสียเกิดขึ้น สิ่งที่ควรดูจริงคือเดิมพันเริ่มต้นต่อรอบ
-      ความผันผวน และรูปแบบการจ่าย มากกว่าดูว่าเกมไหนกำลังดังที่สุด เกมดังช่วยให้หารีวิวง่าย แต่ไม่ได้ช่วยเจรจากับระบบสุ่มเป็นการส่วนตัว ถือเป็นการอ่านคู่มือก่อนขับ
-      ซึ่งน่าเบื่อกว่าการลองขับเลยอยู่แล้ว แต่ค่าซ่อมมันถูกกว่ากันเยอะ
+    <p class="mb-8 text-left text-base leading-relaxed text-[#f2e4c4]">
+      ROMAN555 คือ ทางเข้าหลักเว็บตรง ที่เชื่อมต่อซอฟต์แวร์เกมมาตรฐานสากลจาก ค่ายใหญ่ลิขสิทธิ์แท้ ระดับโลกมาไว้ในบัญชีเดียว ทั้ง Microgaming ผู้บุกเบิกเทคโนโลยีซอฟต์แวร์ที่แข็งแกร่ง
+      พร้อมเครือข่ายแจ็กพอตขนาดใหญ่ NetEnt ที่โดดเด่นด้วยแอนิเมชันระดับพรีเมียมและกลไกการออกรางวัลที่ออกแบบมาอย่างแยบยล และ Novomatic ต้นตำรับเกมเพลย์คลาสสิกที่โหลดไว
+      ตอบสนองดีเยี่ยมบนทุกอุปกรณ์ หน้านี้จึงเป็นที่ให้กดเปิดดูหน้าเกมก่อนว่าหน้าตาระบบเป็นแบบไหน ปุ่มปรับเดิมพันอยู่ตรงไหน ฟีเจอร์โบนัสทำงานอย่างไร และหนึ่งรอบกินเวลาแค่ไหน
+      โดยยังไม่ต้องฝาก ไม่ต้องใส่เงินจริง และไม่มีการได้เสียเกิดขึ้น สิ่งที่ควรดูจริงคือเดิมพันเริ่มต้นต่อรอบ ความผันผวน และรูปแบบการจ่าย มากกว่าดูว่าเกมไหนกำลังดังที่สุด
+      เกมดังช่วยให้หารีวิวง่าย แต่ไม่ได้ช่วยเจรจากับระบบสุ่มเป็นการส่วนตัว ถือเป็นการอ่านคู่มือก่อนขับ ซึ่งน่าเบื่อกว่าการลองขับเลยอยู่แล้ว แต่ค่าซ่อมมันถูกกว่ากันเยอะ
     </p>
 
     <div class="mb-5 grid grid-cols-2 gap-5 sm:grid-cols-2 md:grid-cols-4">
@@ -102,7 +101,7 @@ const graph = pageGraph(Astro, {
               fetchpriority="low"
               widths={[200, 400, 600]}
               sizes="(max-width: 767px) 50vw, 25vw"
-              class="block h-auto w-full object-cover shadow-[0_10px_30px_rgba(235,221,101,0.18)] transition-transform duration-300 group-hover/game:scale-105"
+              class="block h-auto w-full object-cover shadow-[0_10px_30px_rgba(246,207,106,0.18)] transition-transform duration-300 group-hover/game:scale-105"
               decoding="async"
               formats={["avif", "webp"]}
               fallbackFormat="webp"
@@ -112,9 +111,9 @@ const graph = pageGraph(Astro, {
               href="/register"
               target="_blank"
               rel="noopener noreferrer"
-              aria-label={`สมัครสมาชิกเพื่อเล่น ${game.name} ที่ TT1BET`}
-              class="absolute inset-0 flex items-center justify-center bg-[#0a0704]/80 opacity-0 transition-opacity duration-300 group-hover/game:opacity-100 focus-visible:opacity-100">
-              <span class="rounded-full border border-[#ebdd65]/50 bg-gradient-to-r from-[#fcf6ab] via-[#ebdd65] to-[#a8790f] px-6 py-2 font-bold text-[#1a1204] shadow-[0_10px_30px_rgba(235,221,101,0.30)] transition-transform hover:scale-110">
+              aria-label={`สมัครสมาชิกเพื่อเล่น ${game.name} ที่ ROMAN555`}
+              class="absolute inset-0 flex items-center justify-center bg-[#120a02]/80 opacity-0 transition-opacity duration-300 group-hover/game:opacity-100 focus-visible:opacity-100">
+              <span class="rounded-full border border-[#f6cf6a]/50 bg-gradient-to-r from-[#fbeab0] via-[#f6cf6a] to-[#7a4405] px-6 py-2 font-bold text-[#1a1002] shadow-[0_10px_30px_rgba(246,207,106,0.30)] transition-transform hover:scale-110">
                 เล่นเลย
               </span>
             </a>
@@ -123,31 +122,31 @@ const graph = pageGraph(Astro, {
       }
     </div>
 
-    <h2 class="mt-8 mb-6 bg-gradient-to-r from-[#fcf6ab] via-[#ebdd65] to-[#d4b433] bg-clip-text text-2xl leading-normal font-bold text-transparent">โหมดทดลองบอกอะไรได้ และบอกอะไรไม่ได้</h2>
+    <h2 class="mt-8 mb-6 bg-gradient-to-r from-[#fbeab0] via-[#f6cf6a] to-[#a8690a] bg-clip-text text-2xl leading-normal font-bold text-transparent">โหมดทดลองบอกอะไรได้ และบอกอะไรไม่ได้</h2>
 
-    <p class="mb-4 text-left text-base leading-relaxed text-[#f0e6cc]">
+    <p class="mb-4 text-left text-base leading-relaxed text-[#f2e4c4]">
       โหมดทดลองบอกได้ว่าเกมทำงานอย่างไร เมนูอยู่ตรงไหน ฟีเจอร์ซื้อฟรีสปินเรียกใช้ยังไง และหนึ่งรอบใช้เวลาเท่าไร แต่เครดิตในโหมดนี้เป็นยอดสมมติ ถอนไม่ได้
       และผลที่ออกมาก็ไม่ได้บอกว่าเล่นจริงจะได้ผลเหมือนกัน ต่อให้กดในโหมดทดลองแล้วจังหวะเข้ามือ ก็ไม่ใช่หลักฐานว่าเกมนั้นกำลังอารมณ์ดีรอเราอยู่ โหมดนี้มีไว้ศึกษาระบบ ไม่ใช่ไว้ดูดวงผ่านหน้าจอ
     </p>
 
-    <p class="mb-4 text-left text-base leading-relaxed text-[#f0e6cc]">
+    <p class="mb-4 text-left text-base leading-relaxed text-[#f2e4c4]">
       อีกเรื่องที่ควรเผื่อใจคือโหมดทดลองไม่ได้มีให้ครบทุกเกม จึงควรเปิดหน้ารายละเอียดของเกมดูก่อนเลือก และยอดที่หมุนในโหมดทดลองไม่นับเป็นยอดสะสมของบัญชีหรือของโปรโมชั่นใด
-      ถ้าเกมที่อยากลองไม่มีปุ่มทดลอง ให้ถือว่าวันนี้โชคไม่ดี ไม่ใช่สัญญาณลับที่ระบบส่งมาให้เราคนเดียว และเกมที่โบนัสแตกกระจายอย่างฝั่ง Thunderkick มักเหวี่ยงแรงกว่าที่โหมดทดลองรอบสั้น ๆ
-      จะสะท้อนออกมาได้ จึงควรอ่านตารางการจ่ายและกติกาของเกมประกอบด้วยเสมอ
+      ถ้าเกมที่อยากลองไม่มีปุ่มทดลอง ให้ถือว่าวันนี้โชคไม่ดี ไม่ใช่สัญญาณลับที่ระบบส่งมาให้เราคนเดียว และเกมที่รอบโบนัสเหวี่ยงแรงอย่างฝั่ง Microgaming ที่พ่วงเครือข่ายแจ็กพอต
+      มักแกว่งกว่าที่โหมดทดลองรอบสั้น ๆ จะสะท้อนออกมาได้ จึงควรอ่านตารางการจ่ายและกติกาของเกมประกอบด้วยเสมอ
     </p>
 
-    <h2 class="mt-8 mb-6 bg-gradient-to-r from-[#fcf6ab] via-[#ebdd65] to-[#d4b433] bg-clip-text text-2xl leading-normal font-bold text-transparent">
-      จากโหมดทดลองไปเล่นจริงบน TT1BET ควรเช็กอะไรก่อน
+    <h2 class="mt-8 mb-6 bg-gradient-to-r from-[#fbeab0] via-[#f6cf6a] to-[#a8690a] bg-clip-text text-2xl leading-normal font-bold text-transparent">
+      จากโหมดทดลองไปเล่นจริงบน ROMAN555 ควรเช็กอะไรก่อน
     </h2>
 
-    <p class="mb-2 text-left text-base leading-relaxed text-[#f0e6cc]">
+    <p class="mb-2 text-left text-base leading-relaxed text-[#f2e4c4]">
       ถ้าจะขยับจากโหมดทดลองไปเล่นด้วยเงินจริง เรื่องที่ควรดูก่อนคือบัญชี งบต่อรอบ โปรโมชั่น และลิงก์ ด้านบัญชี ควรเตรียมเบอร์โทรที่ใช้งานจริงและรับข้อความได้
-      ตั้งรหัสผ่านที่เดายากและไม่ใช้ซ้ำกับบัญชีอื่น แล้วตรวจชื่อบัญชีธนาคารกับข้อมูลสมาชิกให้ครบก่อนยืนยัน เพราะขั้นตอน สมัครง่าย ผ่านระบบ AI อัตโนมัติใช้เวลาไม่ถึงนาทีก็จริง
-      แต่กรอกผิดแล้วตามแก้ทีหลัง ความเร็วก็หายหมด ด้านงบ ระบบออโต้จะประมวลผลยอดฝากและถอนให้จบทันที จ่ายจริงครบทุกบาททุกสตางค์โดยไม่หักค่าธรรมเนียม จึงเริ่มด้วยทุนเท่าไรก็บริหารได้อิสระ
-      ส่วนเดิมพันต่อรอบของเกมสล็อตงบน้อยอาจเริ่มที่ประมาณ 1–10 บาท ตัวเลขนี้เป็นเดิมพันของเกมที่รองรับ ไม่ใช่เงื่อนไขของการฝากหรือการถอน และถ้าติดขัดตรงไหน ทีมงานของ TT1BET
-      ก็พร้อมดูแลตลอด 24 ชั่วโมง ไม่มีวันหยุด ตั้งแต่ก้าวแรกที่สมัครสมาชิก ถ้าจะกดรับแคมเปญ คืนยอดเสีย 15% หรือค่าคอมมิชชั่นจากการแนะนำเพื่อน 0.8%
-      ก็ต้องอ่านรอบการคำนวณ ยอดที่นับได้จริง ค่ายเกมที่ร่วมรายการ และเพดานการถอนให้จบก่อน สุดท้ายควรเข้าใช้งานผ่านทางเข้าจริงของ TT1BET ที่ล็อกอินผ่าน Secure Popup Loader
-      และเชื่อมต่อแบบ HTTPS ไม่ใช่ลิงก์ที่ส่งต่อกันมาในแชตพร้อมคำโฆษณา
+      ตั้งรหัสผ่านที่เดายากและไม่ใช้ซ้ำกับบัญชีอื่น แล้วตรวจข้อมูลสมาชิกให้ครบก่อนยืนยัน เพราะขั้นตอนสมัครผ่านระบบออโต้ใช้เวลาไม่ถึงนาทีก็จริง แต่กรอกผิดแล้วตามแก้ทีหลัง
+      ความเร็วก็หายหมด ด้านงบ ระบบการเงินของเราเชื่อมต่อกับกระเป๋าเงินดิจิทัลโดยตรงและ รองรับทรูวอเลท อย่างเต็มรูปแบบ ฝากถอนได้อิสระโดยไม่ต้องพึ่งพาบัญชีธนาคารแบบเดิม
+      ยอดอัปเดตไวในเสี้ยววินาที จึงเริ่มด้วยทุนเท่าไรก็บริหารได้อิสระ ส่วนเดิมพันต่อรอบของเกมสล็อตงบน้อยอาจเริ่มที่ประมาณ 1–10 บาท ตัวเลขนี้เป็นเดิมพันของเกมที่รองรับ
+      ไม่ใช่เงื่อนไขของการฝากหรือการถอน ถ้าจะกดรับแคมเปญ คืนยอดเสีย 15% หรือค่าคอมมิชชั่นจากการแนะนำเพื่อน 0.8% ก็กดรับเองได้จากแดชบอร์ดบนระบบออโต้
+      แต่ต้องอ่านรอบการคำนวณ ยอดที่นับได้จริง ค่ายเกมที่ร่วมรายการ และเพดานการถอนให้จบก่อน สุดท้ายควรเข้าใช้งานผ่าน ทางเข้าหลักเว็บตรง ของ ROMAN555
+      ที่ล็อกอินผ่าน Secure Transition Popup และเชื่อมต่อแบบ HTTPS ไม่ใช่ลิงก์ที่ส่งต่อกันมาในแชตพร้อมคำโฆษณา
     </p>
   </ContentBox>
 

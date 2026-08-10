@@ -12,22 +12,22 @@ const { titleleft, titleright, label } = Astro.props;
 // would break the page's h1/h2/h3 inventory. The section carries its own
 // accessible name instead, which is what `label` is for.
 //
-// Left half takes the brand's primary lime, right half the gold that echoes the
-// coins in the artwork — the same two-accent convention as ContentBoxTwo and
+// Left half takes the brand's primary violet, right half the lighter purple the
+// logo's lightning uses — the same two-accent convention as ContentBoxTwo and
 // ContentBoxSpecial. The neumorphic pair is derived from the card surface
-// (#0d2606): #050f02 below it, #153a09 above.
+// (#160a2b): #0b0518 below it, #22103f above.
 const sectionLabel = label ?? titleleft ?? titleright ?? "ข้อมูลประกอบ";
 ---
 
 <section aria-label={sectionLabel} class="mx-auto mb-8 w-full max-w-7xl px-4 font-sans">
   <div
-    class="w-full rounded-[25px] bg-[#0d2606] p-8 shadow-[10px_10px_20px_#050f02,-10px_-10px_20px_#153a09] transition-all duration-300 hover:shadow-[15px_15px_30px_#030a01,-15px_-15px_30px_#1a4a0b]">
+    class="w-full rounded-[25px] bg-[#160a2b] p-8 shadow-[10px_10px_20px_#0b0518,-10px_-10px_20px_#22103f] transition-all duration-300 hover:shadow-[15px_15px_30px_#060310,-15px_-15px_30px_#2e1554]">
     <div class="grid grid-cols-1 gap-8 md:grid-cols-2">
-      <article class="flex flex-col gap-4 text-left text-base leading-relaxed text-[#dcefc2]">
+      <article class="flex flex-col gap-4 text-left text-base leading-relaxed text-[#e4dcf7]">
         {
           titleleft && (
-            <p class="flex items-center gap-3 border-b border-[#7bbb0b]/30 pb-3 text-xl leading-normal font-black tracking-widest text-[#a8e81c] uppercase">
-              <span aria-hidden="true" class="h-6 w-1.5 shrink-0 rounded-full bg-gradient-to-b from-[#a8e81c] via-[#7bbb0b] to-[#3c6b07] shadow-[0_0_10px_rgba(123,187,11,0.5)]" />
+            <p class="flex items-center gap-3 border-b border-[#8b3fe0]/30 pb-3 text-xl leading-normal font-black tracking-widest text-[#b662ff] uppercase">
+              <span aria-hidden="true" class="h-6 w-1.5 shrink-0 rounded-full bg-gradient-to-b from-[#b662ff] via-[#8b3fe0] to-[#4c1d95] shadow-[0_0_10px_rgba(139,63,224,0.5)]" />
               {titleleft}
             </p>
           )
@@ -35,11 +35,11 @@ const sectionLabel = label ?? titleleft ?? titleright ?? "ข้อมูลป�
         <slot name="left" />
       </article>
 
-      <article class="flex flex-col gap-4 text-left text-base leading-relaxed text-[#dcefc2] md:border-l md:border-[#3c6b07]/50 md:pl-8">
+      <article class="flex flex-col gap-4 text-left text-base leading-relaxed text-[#e4dcf7] md:border-l md:border-[#4c1d95]/50 md:pl-8">
         {
           titleright && (
-            <p class="flex items-center gap-3 border-b border-[#f5c518]/40 pb-3 text-xl leading-normal font-black tracking-widest text-[#f5c518] uppercase">
-              <span aria-hidden="true" class="h-6 w-1.5 shrink-0 rounded-full bg-gradient-to-b from-[#ffe27a] via-[#f5c518] to-[#a87c05] shadow-[0_0_10px_rgba(245,197,24,0.5)]" />
+            <p class="flex items-center gap-3 border-b border-[#c084fc]/40 pb-3 text-xl leading-normal font-black tracking-widest text-[#c084fc] uppercase">
+              <span aria-hidden="true" class="h-6 w-1.5 shrink-0 rounded-full bg-gradient-to-b from-[#ead6ff] via-[#c084fc] to-[#6b21a8] shadow-[0_0_10px_rgba(192,132,252,0.5)]" />
               {titleright}
             </p>
           )

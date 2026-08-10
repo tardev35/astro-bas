@@ -6,7 +6,7 @@ import "../styles/global.css";
 import { BRAND_NAME, BRAND_TEXT, brandProfile, fontStack, iconVersion, usesGoogleFonts } from "../lib/brandProfile";
 import { canonicalFor } from "../lib/schema";
 import Navbar from "../components/NavbarPremium.astro";
-import Footer from "../components/FooterStyle2.astro";
+import Footer from "../components/FooterPremium.astro";
 
 // Only banner1 is ever rendered, so only banner1 is imported.
 //
@@ -55,13 +55,14 @@ const mobileBannerImg = mobileBanner
   : null;
 
 const {
-  title = "TT1BET คาสิโนออนไลน์ครบวงจร รวมเกมแตกง่าย จ่ายจริง สมัครง่าย",
-  // 156 characters. The docx meta on its own is 148, and verify-build.mjs fails
-  // an indexable page outside 150–160 — so this default has to clear the floor
-  // too, not just the descriptions the pages pass in. Every page currently
-  // passes its own, which is exactly why a broken default would sit here
-  // unnoticed until the first page that forgot to.
-  description = "TT1BET คาสิโนออนไลน์ครบวงจร ความบันเทิงเหนือระดับ แหล่งรวมเกมแตกง่าย ทำกำไรลื่นไหล การันตี จ่ายจริง ทุกยอดบิล เริ่มต้น สมัครง่าย ปลอดภัย 100% เพียงไม่กี่คลิก",
+  title = "ROMAN555 ทางเข้าหลักเว็บตรง ค่ายใหญ่ลิขสิทธิ์แท้ รองรับทรูวอเลท",
+  // The docx meta on its own is 148, and verify-build.mjs fails an indexable
+  // page outside 150–160 — so this default has to clear the floor too, not just
+  // the descriptions the pages pass in. Every page currently passes its own,
+  // which is exactly why a broken default would sit here unnoticed until the
+  // first page that forgot to. The tail "ในทุกมิติ" is the docx's own wording
+  // from the H1 paragraph, so closing the gap adds no claim the brief never made.
+  description = "ROMAN555 ทางเข้าหลักเว็บตรง สู่อาณาจักรความมั่งคั่ง สัมผัสความยิ่งใหญ่จาก ค่ายใหญ่ลิขสิทธิ์แท้ 100% สะดวกรวดเร็ว รองรับทรูวอเลท ปลอดภัย มั่นคงสูงสุดในทุกมิติ",
   robots = "index, follow",
 } = Astro.props;
 
@@ -192,7 +193,7 @@ const profile = brandProfile(Astro.site);
 
           {block === "appmeta" && (
             <Fragment>
-              {profile.showAppTitle && <meta name="apple-mobile-web-app-title" content="tt1bet" />}
+              {profile.showAppTitle && <meta name="apple-mobile-web-app-title" content="roman555" />}
               <link rel="manifest" href="/site.webmanifest" />
             </Fragment>
           )}
@@ -234,7 +235,7 @@ const profile = brandProfile(Astro.site);
         background-attachment: fixed;
         background-repeat: no-repeat;
         margin: 0;
-        background-color: #0a0704;
+        background-color: #120a02;
         font-weight: 400;
         font-family: var(--font-sans) !important;
       }
@@ -287,7 +288,7 @@ const profile = brandProfile(Astro.site);
         }
         <Image
           src={mainBanner}
-          alt="แบนเนอร์ TT1BET พื้นหลังสีดำมีประกายทองและเหรียญทองปลิว สาวสวยชุดดำขลิบทองยืนชี้มือข้างตู้สล็อต 777 ที่ขึ้นคำว่า JACKPOT ข้อความ TT1BET เว็บตรง ลิขสิทธิ์แท้ มั่นคง ปลอดภัย เชื่อถือได้ 100% ป้ายด้านขวา ระบบปลอดภัยมาตรฐานสากล ข้อมูลส่วนตัวปลอดภัย 100% ฝาก-ถอนรวดเร็วทันใจ บริการลูกค้า 24 ชม. แถบไอคอน ค่ายดังครบทุกเกม เกมหลากหลายกว่า 1,000+ เกม โบนัสจัดเต็มคุ้มค่าทุกวัน กิจกรรมพิเศษมากมาย ปิดท้ายด้วยแถบ สมัครง่าย เล่นได้ทันที"
+          alt="แบนเนอร์ ROMAN555 พื้นหลังสีดำแดงมีเหรียญทองและชิปคาสิโนกระจายทั่วภาพ หญิงสาวชุดราตรีสีทองยืนอยู่ด้านซ้าย ตรงกลางเป็นโลโก้โจ๊กเกอร์สวมหมวกตัวตลกบนวงล้อคาสิโนสีทองถือไพ่โพดำ เหนือตัวอักษร ROMAN555 ข้อความ เว็บตรงสล็อต ไม่ผ่านเอเย่นต์ ป้ายด้านขวา ระบบปลอดภัยมาตรฐานสากล ฝาก-ถอนรวดเร็วทันใจ บริการลูกค้า 24 ชั่วโมง ป้าย มั่นคง ปลอดภัย 100% และ ฝาก-ถอนรวดเร็ว ภายใน 30 วินาที แถบไอคอน โปรโมชั่นจัดเต็มทุกวัน สล็อตแตกง่ายจ่ายจริง 100% คืนยอดเสียสูงสุด 15% แนะนำเพื่อนรับค่าคอม 0.8% โบนัสพิเศษอีกมากมาย ปิดท้ายด้วยแถบ สมัครง่าย เล่นได้ทันที"
           loading="eager"
           fetchpriority="high"
           widths={[412, 640, 828, 1024, 1280, 1600, 1900]}

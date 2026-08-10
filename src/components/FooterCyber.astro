@@ -22,12 +22,12 @@ const directory = [
 ---
 
 <footer
-  class="relative mt-10 w-full overflow-hidden border-t border-[#7fdc16]/30 bg-[#07120a] pt-16 pb-8 font-sans text-[#dff5c8]"
+  class="relative mt-10 w-full overflow-hidden border-t border-[#a855f7]/30 bg-[#080414] pt-16 pb-8 font-sans text-[#e4dcf7]"
   style="clip-path: polygon(0 30px, 50vw 0, 100% 30px, 100% 100%, 0 100%);">
   <div
     aria-hidden="true"
     class="pointer-events-none absolute inset-0 opacity-[0.14]"
-    style="background-image: linear-gradient(#7fdc16 1px, transparent 1px), linear-gradient(90deg, #f2b40b 1px, transparent 1px); background-size: 30px 30px;">
+    style="background-image: linear-gradient(#a855f7 1px, transparent 1px), linear-gradient(90deg, #c084fc 1px, transparent 1px); background-size: 30px 30px;">
   </div>
 
   <div class="relative z-10 mx-auto w-full max-w-[1200px] px-6">
@@ -38,34 +38,34 @@ const directory = [
             mainLogo ? (
               <Picture
                 src={mainLogo}
-                alt="โลโก้ PGW44 มังกรดำพ่นไฟเหนือตัวอักษร PGW44 ไล่สีเขียวนีออนไปทอง"
+                alt="โลโก้ PHANTOM569 ยมทูตสวมฮู้ดถือเคียวเรืองแสงสีม่วง เหนือตัวอักษรโลหะ PHANTOM569"
                 widths={[130, 260, 390]}
                 sizes="130px"
-                class="h-[60px] w-auto drop-shadow-[0_4px_12px_rgba(127,220,22,0.35)]"
+                class="h-[60px] w-auto drop-shadow-[0_4px_12px_rgba(168,85,247,0.35)]"
                 formats={["avif", "webp"]}
                 fallbackFormat="webp"
               />
             ) : (
-              <p class="text-3xl font-black tracking-widest text-[#7fdc16]">PGW44</p>
+              <p class="text-3xl font-black tracking-widest text-[#a855f7]">PHANTOM569</p>
             )
           }
         </a>
-        <p class="border-l-2 border-[#7fdc16] pl-4 text-sm leading-relaxed text-[#b8d9a0]">
-          PGW44 เว็บสล็อตใหม่ล่าสุด รวมค่ายเกมลิขสิทธิ์แท้ระดับโลกไว้ในบัญชีเดียว ขับเคลื่อนด้วย ระบบออโต้ อัจฉริยะ ฝากถอนไม่มีขั้นต่ำ พร้อม โปรเด็ด และทีมงานดูแลตลอด 24 ชม.
+        <p class="border-l-2 border-[#a855f7] pl-4 text-sm leading-relaxed text-[#bcaee0]">
+          PHANTOM569 เว็บตรงไม่ผ่านเอเย่นต์ เชื่อมต่อซอฟต์แวร์เกมแท้จากค่ายยักษ์ใหญ่ทั่วโลกไว้ในบัญชีเดียว ขับเคลื่อนด้วยโครงสร้าง ระบบเสถียร ที่ทำงานเงียบเชียบแต่ทรงพลัง การันตี จ่ายจริงทุกยอด พร้อมทีมงานดูแลตลอด 24 ชม.
         </p>
         <div class="mt-4 flex gap-3">
-          <span class="border border-[#7fdc16]/40 bg-[#0e2410] px-3 py-1 font-mono text-xs text-[#cdf76b]">AUTO_SYSTEM</span>
-          <span class="border border-[#f2b40b]/40 bg-[#0e2410] px-3 py-1 font-mono text-xs text-[#ffe08a]">LIVE_24H</span>
+          <span class="border border-[#a855f7]/40 bg-[#1a0c33] px-3 py-1 font-mono text-xs text-[#e2c9ff]">STABLE_CORE</span>
+          <span class="border border-[#c084fc]/40 bg-[#1a0c33] px-3 py-1 font-mono text-xs text-[#ead6ff]">LIVE_24H</span>
         </div>
       </div>
 
       <nav class="flex flex-col gap-4 md:col-span-3 lg:pl-8">
-        <p class="text-lg font-black tracking-widest text-[#7fdc16] uppercase">/// DIRECTORY</p>
-        <ul class="flex flex-col gap-3 font-mono text-sm text-[#b8d9a0]">
+        <p class="text-lg font-black tracking-widest text-[#a855f7] uppercase">/// DIRECTORY</p>
+        <ul class="flex flex-col gap-3 font-mono text-sm text-[#bcaee0]">
           {
             directory.map((item) => (
               <li>
-                <a href={item.path} class="transition-colors hover:text-[#cdf76b]">
+                <a href={item.path} class="transition-colors hover:text-[#e2c9ff]">
                   &gt; {item.name}
                 </a>
               </li>
@@ -75,7 +75,7 @@ const directory = [
       </nav>
 
       <div class="flex flex-col gap-5 md:col-span-4">
-        <p class="text-lg font-black tracking-widest text-[#7fdc16] uppercase">/// SUPPORT_LINK</p>
+        <p class="text-lg font-black tracking-widest text-[#a855f7] uppercase">/// SUPPORT_LINK</p>
 
         <a
           href="/line"
@@ -108,17 +108,17 @@ const directory = [
           )
         }
 
-        <p class="mt-2 font-mono text-xs text-[#8fae76]">ACCEPTED_PAYMENTS</p>
+        <p class="mt-2 font-mono text-xs text-[#8f83b5]">ACCEPTED_PAYMENTS</p>
         <BankStrip size={28} />
       </div>
     </div>
 
-    <div class="flex flex-col items-center justify-between border-t border-[#7fdc16]/25 pt-6 font-mono text-xs text-[#8fae76] md:flex-row">
-      <p>SYSTEM_COPYRIGHT &copy; {new Date().getFullYear()} PGW44</p>
+    <div class="flex flex-col items-center justify-between border-t border-[#a855f7]/25 pt-6 font-mono text-xs text-[#8f83b5] md:flex-row">
+      <p>SYSTEM_COPYRIGHT &copy; {new Date().getFullYear()} PHANTOM569</p>
       <div class="mt-4 flex gap-4 md:mt-0">
-        <a href="/terms/" class="hover:text-[#cdf76b]">TERMS_OF_SERVICE</a>
-        <a href="/privacy/" class="hover:text-[#cdf76b]">PRIVACY_POLICY</a>
-        <a href="#top" class="hover:text-[#cdf76b]">BACK_TO_TOP</a>
+        <a href="/terms/" class="hover:text-[#e2c9ff]">TERMS_OF_SERVICE</a>
+        <a href="/privacy/" class="hover:text-[#e2c9ff]">PRIVACY_POLICY</a>
+        <a href="#top" class="hover:text-[#e2c9ff]">BACK_TO_TOP</a>
       </div>
     </div>
   </div>

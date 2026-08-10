@@ -21,20 +21,20 @@ import slide2 from "../assets/slide2.png";
 // there were more pictures; these are promo banners whose whole content IS the
 // text printed on them, so that text is the alt.
 //
-// TWO slides, not three or four: slide3.png (2026-08-06) and slide4.png
-// (2026-08-01) predate this brand's asset drop (slide1/slide2, 2026-08-08) and
-// still carry a previous brand's wordmark. Importing either would both ship a
-// stale picture and emit its asset into dist/, because an import IS an emit. If
-// a future brand uploads a real slide3, add it back here AND redo the --shift
-// arithmetic below for N=3.
+// TWO slides, and on this brand that is all there is: slide1 and slide2 are the
+// only artwork in this drop. The higher-numbered slide files still on disk are a
+// PREVIOUS brand's banners with that brand's logo printed on them — importing
+// one would emit it into dist/ whether or not anything renders it. The --shift
+// arithmetic below is also a two-slide sum; if a future brand wants three, redo
+// that arithmetic for N=3 rather than adding an import and hoping.
 const images = [
   {
     src: slide1,
-    alt: "แบนเนอร์โปรโมชั่น TT1BET คืนยอดเสีย 15% ตัวเลขสีทองบนพื้นดำ พร้อมข้อความ เสียเท่าไหร่ เราคืนให้ ทุกวัน ป้ายมุมขวา เสียทุกวัน รับคืนทุกวัน 15% มีวงล้อสล็อตขึ้นเลข 777 และกองเหรียญทอง ปิดท้ายด้วยแถบไอคอน ระบบปลอดภัยมาตรฐานสากล ฝาก-ถอนรวดเร็วทันใจ โปรโมชั่นจัดเต็มทุกวัน บริการลูกค้า 24 ชั่วโมง และสล็อตแตกง่ายจ่ายจริง 100%",
+    alt: "แบนเนอร์โปรโมชั่น ROMAN555 คืนยอดเสีย 15% ตัวเลขสีทองขนาดใหญ่บนพื้นดำ พร้อมข้อความ เสียเท่าไหร่ เราคืนให้ 15% มีโลโก้โจ๊กเกอร์ ROMAN555 หญิงสาวชุดทอง เหรียญทองกระจายรอบภาพ แถบไอคอนด้านล่าง โปรโมชั่นจัดเต็มทุกวัน สล็อตแตกง่ายจ่ายจริง 100% คืนยอดเสียสูงสุด 15% แนะนำเพื่อนรับค่าคอม 0.8% บริการลูกค้า 24 ชั่วโมง และแถบ ฝาก-ถอน รวดเร็ว ภายใน 30 วินาที",
   },
   {
     src: slide2,
-    alt: "แบนเนอร์โปรโมชั่น TT1BET แนะนำเพื่อน รับค่าคอม 0.8% ตัวอักษรสีทองบนพื้นดำ ป้ายมุมขวา เพื่อนเล่น คุณรับทันที พร้อมข้อความ ยิ่งแนะนำมาก ยิ่งรับมาก ไม่จำกัดยอดถอน และแถบไอคอน แนะนำเพื่อนได้ไม่จำกัด รับค่าคอมมิชชั่น 0.8% ยอดเพื่อนได้ถอนรับค่าคอมทันที ยิ่งเพื่อนเล่นมาก ยิ่งรับมาก ทีมงานดูแลตลอด 24 ชม. ปิดท้ายด้วยแถบ ชวนเพื่อนมาสนุก สร้างรายได้ไปด้วยกัน",
+    alt: "แบนเนอร์โปรโมชั่น ROMAN555 แนะนำเพื่อน รับค่าคอม 0.8% ตัวเลขสีทองบนพื้นดำ พร้อมข้อความ ชวนเพื่อนมาสนุก รับรายได้ไม่จำกัด มีโลโก้โจ๊กเกอร์ ROMAN555 หญิงสาวชุดทอง และขั้นตอน 3 ข้อ รับลิงก์ชวนเพื่อนจากหน้าเว็บ แนะนำเพื่อนให้มาสมัคร เพื่อนเล่น คุณรับค่าคอมทันที 0.8% แถบไอคอนด้านล่าง โปรโมชั่นจัดเต็มทุกวัน สล็อตแตกง่ายจ่ายจริง 100% คืนยอดเสียสูงสุด 15% และแถบ สมัครง่าย เล่นได้ทันที",
   },
 ];
 
@@ -63,7 +63,7 @@ const slides = Array.from({ length: COPIES }, () => images).flat();
   <input id="carousel-pause" type="checkbox" class="peer sr-only" />
   <label
     for="carousel-pause"
-    class="sr-only cursor-pointer peer-focus-visible:not-sr-only peer-focus-visible:mb-3 peer-focus-visible:inline-block peer-focus-visible:rounded-full peer-focus-visible:border peer-focus-visible:border-[#ebdd65]/60 peer-focus-visible:px-4 peer-focus-visible:py-2 peer-focus-visible:text-sm peer-focus-visible:font-bold peer-focus-visible:text-[#fcf6ab]">
+    class="sr-only cursor-pointer peer-focus-visible:not-sr-only peer-focus-visible:mb-3 peer-focus-visible:inline-block peer-focus-visible:rounded-full peer-focus-visible:border peer-focus-visible:border-[#d99a1c]/60 peer-focus-visible:px-4 peer-focus-visible:py-2 peer-focus-visible:text-sm peer-focus-visible:font-bold peer-focus-visible:text-[#fbeab0]">
     หยุด / เล่นสไลด์ภาพ
   </label>
 
@@ -76,7 +76,7 @@ const slides = Array.from({ length: COPIES }, () => images).flat();
             <Picture
               src={slide.src}
               alt={isDuplicate ? "" : slide.alt}
-              class="block w-full rounded-xl border border-[#ebdd65]/25 object-cover shadow-[0_10px_30px_rgba(235,221,101,0.22)]"
+              class="block w-full rounded-xl border border-[#d99a1c]/25 object-cover shadow-[0_10px_30px_rgba(217,154,28,0.22)]"
               width={slide.src.width}
               height={slide.src.height}
               loading="lazy"
@@ -103,8 +103,7 @@ const slides = Array.from({ length: COPIES }, () => images).flat();
 
      With N slides per copy, P per view and gap g:
        copy width = N * (100% - (P-1)*g) / P + N*g
-     This brand ships N=2 (slide1 + slide2; slide3/slide4 belong to previous
-     brands — see the frontmatter note):
+     This strip ships N=2 (slide1 + slide2 — see the frontmatter note):
      mobile  N=2 P=2 g=12px -> 100% + 12px
      desktop N=2 P=3 g=16px -> 200%/3 + 32px/3 */
   .marquee {

@@ -1,15 +1,14 @@
 ---
 import MainLayout from "../layouts/MainLayout.astro";
-import Announcement from "../components/AnnouncementPremium.astro";
+import Announcement from "../components/Announcement3.astro";
 import ContentBoxPremium from "../components/ContentBoxPremium.astro";
 import ContentBoxCyberCut from "../components/ContentBoxCyberCut.astro";
-import ContentBox from "../components/ContentBox.astro";
 import ContentBoxSevenThreePremium from "../components/ContentBoxSevenThreePremium.astro";
-import ContentBoxSevenThreeCyberCut from "../components/ContentBoxSevenThreeCyberCut.astro";
-import ContentBoxTwoPremium from "../components/ContentBoxTwoPremium.astro";
+import ContentBoxSpecial from "../components/ContentBoxSpecial.astro";
+import ContentBoxTwoCyberCut from "../components/ContentBoxTwoCyberCut.astro";
 import FeatureHighlights from "../components/FeatureHighlights.astro";
 import LoginRtpSection from "../components/LoginRtpSection.astro";
-import ProviderGrid from "../components/ProviderGridPremium.astro";
+import ProviderGrid from "../components/ProviderGrid.astro";
 import GameRankingBoard from "../components/GameRankingBoard.astro";
 import ReviewCardSumo2 from "../components/ReviewCardSumo2.astro";
 import LatestWinners from "../components/LatestWinnersPremium.astro";
@@ -19,58 +18,60 @@ import Navfoot from "../components/Navfoot.astro";
 
 import { Picture } from "astro:assets";
 import { pageGraph } from "../lib/schema";
-import imgCashback from "../assets/slide1.png";
-import imgReferral from "../assets/slide2.png";
+import imgWallet from "../assets/slide2.png";
+import imgBonus from "../assets/slide1.png";
 
-const pageTitle = "TT1BET คาสิโนออนไลน์ครบวงจร รวมเกมแตกง่าย จ่ายจริง สมัครง่าย";
+const pageTitle = "ROMAN555 ทางเข้าหลักเว็บตรง ค่ายใหญ่ลิขสิทธิ์แท้ รองรับทรูวอเลท";
 
-// 157 characters, inside verify-build.mjs's 150–160 window (it counts
+// 158 characters, inside verify-build.mjs's 150–160 window (it counts
 // CHARACTERS, not bytes — Thai is 3 bytes each, so a byte count lies). The docx
-// meta ends at "ปลอดภัย 100%" and counts 141; the trailing "เพียงไม่กี่คลิก" is
-// the docx's own wording from the H1 paragraph, so the gap closes without
-// adding a claim the brief never made.
-const pageDescription = "TT1BET คาสิโนออนไลน์ครบวงจร ความบันเทิงเหนือระดับ แหล่งรวมเกมแตกง่าย ทำกำไรลื่นไหล การันตี จ่ายจริง ทุกยอดบิล เริ่มต้น สมัครง่าย ปลอดภัย 100% เพียงไม่กี่คลิก";
+// meta ends at "มั่นคงสูงสุด" and counts 148; the trailing "ในทุกมิติ" is the
+// docx's own wording from heading #1, so the gap closes without adding a claim
+// the brief never made.
+const pageDescription =
+  "ROMAN555 ทางเข้าหลักเว็บตรง สู่อาณาจักรความมั่งคั่ง สัมผัสความยิ่งใหญ่จาก ค่ายใหญ่ลิขสิทธิ์แท้ 100% สะดวกรวดเร็ว รองรับทรูวอเลท ปลอดภัย มั่นคงสูงสุด ในทุกมิติ";
 
 // The three camp sub-points that sit under docx heading #2, in the docx's own
 // order. FeatureHighlights renders each `title` as an <h3>, which is the only
-// place this page is allowed to have one. Its accent union is "gold" | "silver".
+// place this page is allowed to have one. Its accent union is
+// "gold" | "crimson".
 const providerPoints = [
   {
-    icon: "⚡",
-    title: "Thunderkick นวัตกรรมเกมสุดล้ำ กราฟิกแปลกใหม่ โบนัสแตกกระจาย",
-    description: "ค่ายเกมที่โดดเด่นด้วยไอเดียการสร้างสรรค์ที่ไม่เหมือนใคร นำเสนอกลไกการเล่นที่แหวกแนวแต่สามารถทวีคูณเงินรางวัลให้คุณได้อย่างมหาศาล",
+    icon: "👑",
+    title: "Microgaming ตำนานแห่งวงการ แจ็กพอตมหาศาล",
+    description: "ผู้บุกเบิกเทคโนโลยีซอฟต์แวร์ที่แข็งแกร่งที่สุด นำเสนอระบบเกมที่มีเสถียรภาพสูง พร้อมเครือข่ายแจ็กพอตที่พร้อมเปลี่ยนให้คุณกลายเป็นมหาเศรษฐีในชั่วข้ามคืน",
     accent: "gold" as const,
   },
   {
-    icon: "🏛️",
-    title: "Playtech ยักษ์ใหญ่แห่งวงการ ระบบเสถียร แจกแจ็กพอตหนัก",
-    description: "สัมผัสความยิ่งใหญ่จากผู้พัฒนาซอฟต์แวร์ระดับโกลบอล ระบบตัวเกมถูกออกแบบมาให้รองรับการใช้งานอย่างลื่นไหล พร้อมฟีเจอร์แจ็กพอตที่จ่ายหนักจัดเต็ม",
-    accent: "silver" as const,
+    icon: "💎",
+    title: "NetEnt กราฟิกสุดอลังการ ฟีเจอร์แตกหนักสมจริง",
+    description: "สัมผัสความยิ่งใหญ่ผ่านแอนิเมชันระดับพรีเมียม กลไกการออกรางวัลถูกออกแบบมาอย่างแยบยล ช่วยให้ลุ้นรอบโบนัสได้อย่างต่อเนื่องและคุ้มค่า",
+    accent: "crimson" as const,
   },
   {
-    icon: "🌶️",
-    title: "Habanero เกมเพลย์สุดคลาสสิก อัตราจ่ายสูง ทำกำไรเพลิน",
-    description: "ผสมผสานความคลาสสิกเข้ากับเทคโนโลยีสมัยใหม่ เล่นง่าย เข้าใจง่าย และขึ้นชื่อเรื่องการออกรางวัลโบนัสที่ต่อเนื่อง ช่วยให้กอบโกยกำไรได้อย่างรวดเร็ว",
+    icon: "🎰",
+    title: "Novomatic มนต์ขลังแห่งความคลาสสิก ทำกำไรต่อเนื่อง",
+    description: "ส่งมอบความสนุกผ่านรูปแบบเกมเพลย์สุดคลาสสิกที่ทรงพลัง อัตราการคูณเงินรางวัลสูง โหลดไว ตอบสนองดีเยี่ยมบนทุกอุปกรณ์",
     accent: "gold" as const,
   },
 ];
 
 const faqs = [
   {
-    q: "ทำไมแพลตฟอร์มนี้จึงเป็น คาสิโนออนไลน์ครบวงจร ที่ได้รับความนิยมสูงสุด?",
-    a: "เพราะ TT1BET รวบรวมเกมลิขสิทธิ์แท้ไว้ทุกประเภท มีความเสถียรสูง และตอบโจทย์ทุกสไตล์การเดิมพันในที่เดียวอย่างสมบูรณ์แบบ",
+    q: "ทำไมแพลตฟอร์มนี้ถึงได้รับการขนานนามว่าเป็น ทางเข้าหลักเว็บตรง ที่ดีที่สุด?",
+    a: "เพราะ ROMAN555 มีรากฐานเซิร์ฟเวอร์ที่มั่นคง ให้บริการด้วยความโปร่งใส ปลอดภัย และไม่ผ่านตัวแทนใดๆ ทั้งสิ้น",
   },
   {
-    q: "จุดเด่นของการ รวมเกมแตกง่าย บนแพลตฟอร์มนี้คืออะไร?",
-    a: "ช่วยเพิ่มโอกาสในการทำกำไรให้ผู้เล่นได้อย่างรวดเร็ว ระบบของ TT1BET จ่ายรางวัลอย่างยุติธรรมและออกโบนัสบ่อยที่สุด",
+    q: "การเชื่อมต่อเกมจาก ค่ายใหญ่ลิขสิทธิ์แท้ มีข้อดีต่อนักลงทุนอย่างไร?",
+    a: "มั่นใจได้ในเรื่องของอัตราการจ่ายที่ยุติธรรม ไม่มีการล็อกผล และระบบตัวเกมมีความเสถียร ลื่นไหล ไม่กระตุก",
   },
   {
-    q: "หากทำรายการถอนเงินจำนวนหลักล้าน ระบบจะ จ่ายจริง หรือไม่?",
-    a: "เรามีสภาพคล่องทางการเงินสูงมาก TT1BET การันตีโอนไวและจ่ายเต็มจำนวนทุกยอดบิล ไร้ปัญหาการอั้นยอด 100%",
+    q: "ระบบการเงินที่ รองรับทรูวอเลท ใช้เวลาประมวลผลนานหรือไม่?",
+    a: "ประมวลผลรวดเร็วผ่านเทคโนโลยี AI อัจฉริยะ ยอดเครดิตจะถูกปรับเข้าสู่บัญชีของคุณภายในเวลาเพียงเสี้ยววินาที",
   },
   {
-    q: "ขั้นตอนการลงทะเบียน สมัครง่าย และปลอดภัยแค่ไหน?",
-    a: "ดำเนินการผ่านระบบ AI อัตโนมัติที่ใช้เวลาไม่ถึงนาที ข้อมูลของสมาชิก TT1BET จะถูกเข้ารหัสความปลอดภัยระดับองค์กรสูงสุด",
+    q: "สิทธิพิเศษและแคมเปญสนับสนุนบน ROMAN555 รับได้ผ่านช่องทางใด?",
+    a: "สมาชิกสามารถเลือกรับโบนัสและสิทธิพิเศษต่างๆ ได้ด้วยตนเองอย่างอิสระ ผ่านแดชบอร์ดส่วนตัวบนระบบออโต้",
   },
 ];
 
@@ -82,11 +83,12 @@ const graph = pageGraph(Astro, {
   faqs,
 });
 
-const altCashback =
-  "แบนเนอร์โปรโมชั่น TT1BET คืนยอดเสีย 15% ตัวเลขสีทองบนพื้นดำ พร้อมข้อความ เสียเท่าไหร่ เราคืนให้ ทุกวัน ป้ายมุมขวา เสียทุกวัน รับคืนทุกวัน 15% มีวงล้อสล็อตขึ้นเลข 777 และกองเหรียญทอง ปิดท้ายด้วยแถบไอคอน ระบบปลอดภัยมาตรฐานสากล ฝาก-ถอนรวดเร็วทันใจ โปรโมชั่นจัดเต็มทุกวัน บริการลูกค้า 24 ชั่วโมง และสล็อตแตกง่ายจ่ายจริง 100%";
+// Both alts are the text printed on the artwork, read off the file itself.
+const altWallet =
+  "แบนเนอร์โปรโมชั่น ROMAN555 แนะนำเพื่อน รับค่าคอม 0.8% ตัวเลขสีทองบนพื้นดำ พร้อมข้อความ ชวนเพื่อนมาสนุก รับรายได้ไม่จำกัด มีโลโก้โจ๊กเกอร์ ROMAN555 หญิงสาวชุดทอง และขั้นตอน 3 ข้อ รับลิงก์ชวนเพื่อนจากหน้าเว็บ แนะนำเพื่อนให้มาสมัคร เพื่อนเล่น คุณรับค่าคอมทันที 0.8% แถบไอคอนด้านล่าง โปรโมชั่นจัดเต็มทุกวัน สล็อตแตกง่ายจ่ายจริง 100% คืนยอดเสียสูงสุด 15% และแถบ สมัครง่าย เล่นได้ทันที";
 
-const altReferral =
-  "แบนเนอร์โปรโมชั่น TT1BET แนะนำเพื่อน รับค่าคอม 0.8% ตัวอักษรสีทองบนพื้นดำ ป้ายมุมขวา เพื่อนเล่น คุณรับทันที พร้อมข้อความ ยิ่งแนะนำมาก ยิ่งรับมาก ไม่จำกัดยอดถอน และแถบไอคอน แนะนำเพื่อนได้ไม่จำกัด รับค่าคอมมิชชั่น 0.8% ยอดเพื่อนได้ถอนรับค่าคอมทันที ยิ่งเพื่อนเล่นมาก ยิ่งรับมาก ทีมงานดูแลตลอด 24 ชม. ปิดท้ายด้วยแถบ ชวนเพื่อนมาสนุก สร้างรายได้ไปด้วยกัน";
+const altBonus =
+  "แบนเนอร์โปรโมชั่น ROMAN555 คืนยอดเสีย 15% ตัวเลขสีทองขนาดใหญ่บนพื้นดำ พร้อมข้อความ เสียเท่าไหร่ เราคืนให้ 15% มีโลโก้โจ๊กเกอร์ ROMAN555 หญิงสาวชุดทอง เหรียญทองกระจายรอบภาพ แถบไอคอนด้านล่าง โปรโมชั่นจัดเต็มทุกวัน สล็อตแตกง่ายจ่ายจริง 100% คืนยอดเสียสูงสุด 15% แนะนำเพื่อนรับค่าคอม 0.8% บริการลูกค้า 24 ชั่วโมง และแถบ ฝาก-ถอน รวดเร็ว ภายใน 30 วินาที";
 ---
 
 <MainLayout title={pageTitle} description={pageDescription}>
@@ -94,28 +96,28 @@ const altReferral =
 
   <Announcement />
 
-  <ContentBoxPremium as="h1" title="TT1BET คาสิโนออนไลน์ครบวงจร รวมเกมแตกง่าย จ่ายจริง สมัครง่าย">
-    <p class="text-left text-base leading-relaxed text-[#f0e6cc]">
-      ก้าวเข้าสู่มิติใหม่ของการลงทุนกับ <strong class="text-[#fdf7dc]">TT1BET</strong> คาสิโนออนไลน์ครบวงจร ที่ถูกพัฒนาขึ้นเพื่อตอบโจทย์ทุกไลฟ์สไตล์ของนักเดิมพันยุคดิจิทัล
-      แพลตฟอร์มนี้เปรียบเสมือนศูนย์กลางความบันเทิงระดับพรีเมียมที่ รวมเกมแตกง่าย เอาไว้มากที่สุด ให้คุณกวาดผลกำไรได้อย่างลื่นไหลไร้รอยต่อ เรายึดมั่นในความโปร่งใสพร้อมการันตี จ่ายจริง
-      ในทุกยอดบิล ไม่ว่ายอดจะสูงแค่ไหนก็มั่นใจได้ 100% เริ่มต้นสัมผัสประสบการณ์เหนือระดับด้วยขั้นตอนที่ สมัครง่าย เพียงไม่กี่คลิก
+  <ContentBoxPremium as="h1" title="ROMAN555 ทางเข้าหลักเว็บตรง ค่ายใหญ่ลิขสิทธิ์แท้ รองรับทรูวอเลท">
+    <p class="text-left text-base leading-relaxed text-[#f2e4c4]">
+      <strong class="text-[#fff6e0]">ROMAN555</strong> ทางเข้าหลักเว็บตรง ที่พร้อมเปิดประตูสู่ขุมทรัพย์แห่งความมั่งคั่งระดับตำนาน แพลตฟอร์มของเราถูกสร้างขึ้นด้วยรากฐานระบบที่แข็งแกร่ง
+      นำเสนอความบันเทิงเหนือระดับจาก ค่ายใหญ่ลิขสิทธิ์แท้ ที่ส่งตรงถึงหน้าจอคุณ มอบความสะดวกสบายสูงสุดด้วยเทคโนโลยีทางการเงินที่ รองรับทรูวอเลท อย่างเต็มรูปแบบ
+      ให้ทุกการลงทุนของคุณเต็มไปด้วยความลื่นไหล มั่นคง และกวาดผลกำไรได้อย่างปลอดภัยสูงสุดในทุกมิติ
     </p>
   </ContentBoxPremium>
 
-  <ContentBoxCyberCut as="h2" title="TT1BET รวบรวมเกมระดับโลก คาสิโนออนไลน์ครบวงจร ไว้ในที่เดียว">
-    <p class="text-left text-base leading-relaxed text-[#f0e6cc]">
-      การเปิดประสบการณ์กับ TT1BET คือการเข้าถึงโลกแห่งความสนุกที่ไร้ขีดจำกัด เพราะเราได้คัดสรรซอฟต์แวร์ลิขสิทธิ์แท้จากผู้พัฒนาชั้นนำทั่วโลกมาให้บริการอย่างเต็มรูปแบบ
-      ทุกเกมผ่านการทดสอบมาตรฐานว่าทำงานอย่างเสถียรและจ่ายรางวัลอย่างเป็นธรรมที่สุด มอบอรรถรสเหนือระดับในทุกการสปิน
+  <ContentBoxCyberCut as="h2" title="ROMAN555 ศูนย์รวมความบันเทิงจาก ค่ายใหญ่ลิขสิทธิ์แท้ ระดับโลก">
+    <p class="text-left text-base leading-relaxed text-[#f2e4c4]">
+      การเดิมพันบนแพลตฟอร์ม ROMAN555 คือการสัมผัสประสบการณ์ที่เหนือกว่าด้วยการรวบรวมซอฟต์แวร์เกมมาตรฐานสากลมาไว้ในที่เดียว ทุกเกมบนอาณาจักรแห่งนี้ผ่านการรับรองความโปร่งใส
+      มอบกราฟิกที่ตระการตาและอัตราการจ่ายผลตอบแทนที่ยุติธรรม ให้คุณกอบโกยรางวัลได้อย่างไร้ขีดจำกัด
     </p>
     <FeatureHighlights items={providerPoints} />
   </ContentBoxCyberCut>
 
   <ProviderGrid />
 
-  <ContentBoxSevenThreePremium titleright="สัมผัสแหล่ง รวมเกมแตกง่าย บนระบบของ TT1BET ที่ทำกำไรได้ไวที่สุด">
+  <ContentBoxSevenThreePremium titleright="สัมผัสความรวดเร็วบน ROMAN555 ผ่านระบบที่ รองรับทรูวอเลท">
     <Picture
       slot="left"
-      src={imgCashback}
+      src={imgWallet}
       loading="lazy"
       fetchpriority="low"
       widths={[200, 400, 600]}
@@ -124,26 +126,29 @@ const altReferral =
       formats={["avif", "webp"]}
       fallbackFormat="webp"
       quality={80}
-      alt={altCashback}
-      class="mx-auto h-auto w-full rounded-2xl border border-[#f3c43c]/30 shadow-[0_10px_30px_rgba(243,196,60,0.22)]"
+      alt={altWallet}
+      class="mx-auto h-auto w-full rounded-2xl border border-[#d99a1c]/30 shadow-[0_10px_30px_rgba(217,154,28,0.22)]"
     />
-    <p slot="right" class="text-left text-base leading-relaxed text-[#f0e6cc]">
-      สำหรับนักลงทุนที่ต้องการเห็นผลลัพธ์อย่างรวดเร็ว แพลตฟอร์ม TT1BET ได้จัดเตรียมโครงสร้างระบบอัลกอริทึมที่เอื้อต่อการทำกำไรเอาไว้ให้คุณแล้ว
-      ทุกจังหวะการเดิมพันเต็มไปด้วยโอกาสทองที่พร้อมจะเปลี่ยนเป็นเงินก้อนโต มอบความลื่นไหลในทุกการเชื่อมต่อ ไม่มีอาการค้างหรือหลุดให้เสียจังหวะอย่างแน่นอน
+    <p slot="right" class="text-left text-base leading-relaxed text-[#f2e4c4]">
+      เพื่อการตอบสนองที่ฉับไวเหนือใคร ระบบการเงินของ ROMAN555 ได้รับการพัฒนาให้เชื่อมต่อกับกระเป๋าเงินดิจิทัลโดยตรง โครงสร้างนี้ รองรับทรูวอเลท อย่างเต็มรูปแบบ
+      ช่วยให้สมาชิกทำรายการฝากและถอนได้อย่างอิสระเสรี ไม่ต้องพึ่งพาบัญชีธนาคารแบบเดิมๆ ยอดเงินอัปเดตไวในเสี้ยววินาที มอบสภาพคล่องสูงสุดในทุกจังหวะการทำกำไร
     </p>
   </ContentBoxSevenThreePremium>
 
-  <ContentBox as="h2" title="มั่นคง ปลอดภัย การันตี จ่ายจริง ครบทุกยอดบิล 100%">
-    <p class="text-left text-base leading-relaxed text-[#f0e6cc]">
-      ความน่าเชื่อถือคือเสาหลักสำคัญของการดำเนินธุรกิจ แพลตฟอร์มของเราจึงมีรากฐานทางการเงินที่แข็งแกร่งระดับองค์กรใหญ่ เมื่อสมาชิกสามารถทำกำไรได้ตามเป้าหมาย
-      ระบบออโต้จะทำการประมวลผลและโอนเงินเข้ากระเป๋าของคุณทันที จ่ายจริงครบทุกบาททุกสตางค์โดยไม่มีการหักค่าธรรมเนียมหรือเปอร์เซ็นต์ใดๆ ทั้งสิ้น
+  <ContentBoxSpecial as="h2" title="การันตีความปลอดภัย ทางเข้าหลักเว็บตรง ต้องที่ ROMAN555">
+    <p slot="left" class="text-left text-base leading-relaxed text-[#f2e4c4]">
+      ความน่าเชื่อถือคือรากฐานที่สำคัญที่สุด ผู้ใช้งาน ROMAN555 จึงมั่นใจได้ว่าข้อมูลส่วนบุคคลและยอดเครดิตของคุณจะได้รับการปกป้องด้วยระบบเข้ารหัสขั้นสูง
     </p>
-  </ContentBox>
+    <p slot="right" class="text-left text-base leading-relaxed text-[#f2e4c4]">
+      นอกจากนี้ การเปลี่ยนหน้าเข้าสู่ระบบยังประมวลผลผ่าน Secure Transition Popup Modal ที่ป้องกันการรีเฟรชหน้าเว็บซ้ำซ้อน ช่วยให้ ทางเข้าหลักเว็บตรง ของเรามีความปลอดภัย มั่นคง
+      และเป็นส่วนตัว 100%
+    </p>
+  </ContentBoxSpecial>
 
-  <ContentBoxSevenThreeCyberCut titleright="เริ่มต้นความสนุกด้วยขั้นตอน สมัครง่าย ไปกับ TT1BET">
+  <ContentBoxSevenThreePremium titleright="เริ่มต้นกอบโกยผลกำไร ด้วยสิทธิพิเศษและโปรโมชั่นสุดคุ้ม">
     <Picture
       slot="left"
-      src={imgReferral}
+      src={imgBonus}
       loading="lazy"
       fetchpriority="low"
       widths={[200, 400, 600]}
@@ -152,14 +157,14 @@ const altReferral =
       formats={["avif", "webp"]}
       fallbackFormat="webp"
       quality={80}
-      alt={altReferral}
-      class="mx-auto h-auto w-full rounded-2xl border border-[#ebdd65]/30 shadow-[0_10px_30px_rgba(235,221,101,0.22)]"
+      alt={altBonus}
+      class="mx-auto h-auto w-full rounded-2xl border border-[#f6cf6a]/30 shadow-[0_10px_30px_rgba(246,207,106,0.22)]"
     />
-    <p slot="right" class="text-left text-base leading-relaxed text-[#f0e6cc]">
-      ทลายทุกความยุ่งยากในอดีตด้วยเทคโนโลยีการจัดการฐานข้อมูลที่ทันสมัยที่สุด การเริ่มต้นใช้งานบน TT1BET ถูกออกแบบมาให้รวดเร็วและใช้เวลาเพียงไม่กี่วินาที
-      คุณก็สามารถล็อกอินเข้าสู่แดชบอร์ดส่วนตัวได้ทันที พร้อมรับการปกป้องข้อมูลด้วยระบบความปลอดภัยขั้นสูง (Secure Popup Loader) ในทุกๆ ครั้งที่เข้าใช้งาน
+    <p slot="right" class="text-left text-base leading-relaxed text-[#f2e4c4]">
+      เพื่อเป็นการเสริมสร้างความแข็งแกร่งให้กับเงินทุนของคุณ แพลตฟอร์มนี้จึงได้เตรียมแคมเปญและโบนัสสนับสนุนเอาไว้อย่างมากมาย สมาชิกสามารถกดยอมรับสิทธิพิเศษต่างๆ ได้ด้วยตนเองผ่านเมนูอัตโนมัติ
+      นำไปใช้ต่อยอดความสำเร็จและเพิ่มขีดความสามารถในการเดิมพันให้กว้างไกลยิ่งขึ้น
     </p>
-  </ContentBoxSevenThreeCyberCut>
+  </ContentBoxSevenThreePremium>
 
   <Faq title="FAQ คำถามที่พบบ่อย" faqs={faqs} />
 
@@ -171,37 +176,31 @@ const altReferral =
 
   <LatestWinners />
 
-  <ContentBoxTwoPremium label="เข้าสู่ระบบและสมัครสมาชิก TT1BET">
+  <ContentBoxTwoCyberCut titleleft="เข้าสู่ระบบสมาชิกเดิม" titleright="สมัครสมาชิกใหม่" label="เข้าสู่ระบบและสมัครสมาชิก ROMAN555">
     <div slot="left" class="flex flex-col gap-4">
-      <p class="flex items-center gap-3 border-b border-[#f3c43c]/30 pb-3 text-xl leading-normal font-black tracking-widest text-[#fcf6ab] uppercase">
-        <span aria-hidden="true" class="h-6 w-1.5 shrink-0 rounded-full bg-gradient-to-b from-[#fcf6ab] via-[#f3c43c] to-[#a8790f] shadow-[0_0_10px_rgba(243,196,60,0.45)]"></span>
-        เข้าสู่ระบบสมาชิกเดิม
-      </p>
-      <p class="text-left text-base leading-relaxed text-[#f0e6cc]">
-        ล็อกอินเข้าสู่แดชบอร์ดส่วนตัวเพื่อจัดการยอดฝากถอนผ่านระบบออโต้ที่โอนเข้ากระเป๋าทันที เลือกเล่นเกมลิขสิทธิ์แท้จากทุกค่าย และรับการปกป้องข้อมูลด้วย Secure Popup Loader ทุกครั้งที่เข้าใช้งาน
+      <p class="text-left text-base leading-relaxed text-[#f2e4c4]">
+        ล็อกอินเข้าสู่แดชบอร์ดส่วนตัวเพื่อกดยอมรับสิทธิพิเศษต่างๆ ได้ด้วยตนเองผ่านเมนูอัตโนมัติ ทำรายการฝากถอนกับกระเป๋าเงินดิจิทัลโดยตรง และเข้าสู่ระบบผ่าน Secure Transition Popup Modal
+        ที่ป้องกันการรีเฟรชหน้าเว็บซ้ำซ้อนทุกครั้ง
       </p>
       <a
         href="/login"
-        class="mt-1 inline-flex items-center justify-center rounded-full bg-gradient-to-r from-[#fcf6ab] via-[#ebdd65] to-[#a8790f] px-8 py-3 text-sm font-black whitespace-nowrap text-[#1a1204] shadow-[0_10px_30px_rgba(235,221,101,0.3)] transition-all duration-300 hover:-translate-y-1 hover:scale-105 hover:shadow-[0_15px_40px_rgba(235,221,101,0.45)] sm:text-base">
+        class="mt-1 inline-flex items-center justify-center rounded-full bg-gradient-to-r from-[#fbeab0] via-[#f6cf6a] to-[#7a4405] px-8 py-3 text-sm font-black whitespace-nowrap text-[#1a1002] shadow-[0_10px_30px_rgba(246,207,106,0.3)] transition-all duration-300 hover:-translate-y-1 hover:scale-105 hover:shadow-[0_15px_40px_rgba(246,207,106,0.45)] sm:text-base">
         เข้าสู่ระบบ
       </a>
     </div>
 
     <div slot="right" class="flex flex-col gap-4">
-      <p class="flex items-center gap-3 border-b border-[#dfe4e7]/35 pb-3 text-xl leading-normal font-black tracking-widest text-[#dfe4e7] uppercase">
-        <span aria-hidden="true" class="h-6 w-1.5 shrink-0 rounded-full bg-gradient-to-b from-[#dfe4e7] via-[#b5bbbc] to-[#34230b] shadow-[0_0_10px_rgba(181,187,188,0.5)]"></span>
-        สมัครสมาชิกใหม่
-      </p>
-      <p class="text-left text-base leading-relaxed text-[#f0e6cc]">
-        ลงทะเบียนผ่านระบบ AI อัตโนมัติที่ใช้เวลาไม่ถึงนาที เปิดบัญชีเดียวใช้ได้ครบทุกค่ายลิขสิทธิ์แท้ ทั้ง Thunderkick Playtech และ Habanero ข้อมูลของคุณถูกเข้ารหัสความปลอดภัยระดับองค์กรสูงสุด
+      <p class="text-left text-base leading-relaxed text-[#f2e4c4]">
+        เปิดบัญชีเดียวใช้ได้ครบทุกค่ายเกมลิขสิทธิ์แท้ ทั้ง Microgaming NetEnt และ Novomatic ทุกเกมผ่านการรับรองความโปร่งใส ข้อมูลส่วนบุคคลและยอดเครดิตของคุณได้รับการปกป้องด้วยระบบเข้ารหัสขั้นสูง
+        ปลอดภัย มั่นคง และเป็นส่วนตัว 100%
       </p>
       <a
         href="/register"
-        class="mt-1 inline-flex items-center justify-center rounded-full border border-[#f3c43c]/60 bg-[#241a08]/85 px-8 py-3 text-sm font-black whitespace-nowrap text-[#f3c43c] backdrop-blur-sm transition-all duration-300 hover:scale-105 hover:border-[#f3c43c] hover:bg-[#0a0704]/85 hover:shadow-[0_15px_40px_rgba(243,196,60,0.3)] sm:text-base">
+        class="mt-1 inline-flex items-center justify-center rounded-full border border-[#d99a1c]/60 bg-[#241505]/85 px-8 py-3 text-sm font-black whitespace-nowrap text-[#d99a1c] backdrop-blur-sm transition-all duration-300 hover:scale-105 hover:border-[#d99a1c] hover:bg-[#120a02]/85 hover:shadow-[0_15px_40px_rgba(217,154,28,0.3)] sm:text-base">
         สมัครสมาชิก
       </a>
     </div>
-  </ContentBoxTwoPremium>
+  </ContentBoxTwoCyberCut>
 
   <ReviewCardSumo2 />
 

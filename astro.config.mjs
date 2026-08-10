@@ -33,7 +33,7 @@ export default defineConfig({
     "/line": "https://tinyurl.com/4uw46sek",
   },
 
-  site: "https://tt1bet-games.com",
+  site: "https://roman555-game.com",
   integrations: [
     sitemap({
       // /login, /register and /line are forwarding pages that all ship

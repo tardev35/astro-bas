@@ -3,7 +3,7 @@ export interface FeatureItem {
   icon: string;
   title: string;
   description: string;
-  accent?: "gold" | "silver";
+  accent?: "gold" | "crimson";
 }
 
 export interface Props {
@@ -16,40 +16,41 @@ const { items } = Astro.props;
 // the sanctioned "short sub-points under one H2 section" shape. Its text comes
 // from the caller, never from this file.
 //
-// The accent union follows the current brand's two colours. This brand's
-// primary is gold (#ebdd65 / #f3c43c) and chrome-silver (#dfe4e7) is the
-// secondary the wordmark uses for "TT1", so the union is "gold" | "silver" and
-// anything that is not explicitly "silver" renders gold.
+// The accent union follows the current brand's two colours. ROMAN555's primary
+// is the coin gold of the roulette wheel in the logo (#d99a1c / #f6cf6a) and the
+// secondary is the deep crimson of the joker's hat and the hearts on his cards
+// (#c02133), so the union is "gold" | "crimson" and anything that is not
+// explicitly "crimson" renders gold.
 ---
 
 <div class="mt-4 flex flex-col gap-5">
   {
     items.map((item) => {
-      const isSilver = item.accent === "silver";
+      const isCrimson = item.accent === "crimson";
       return (
         <div
-          class={`group flex flex-col items-start gap-4 rounded-2xl border border-[#ebdd65]/25 bg-[#0a0704]/70 p-6 transition-all duration-300 hover:-translate-y-1 sm:flex-row ${
-            isSilver
-              ? "hover:border-[#dfe4e7]/60 hover:bg-[#241a08] hover:shadow-[0_10px_20px_rgba(223,228,231,0.22)]"
-              : "hover:border-[#ebdd65]/60 hover:bg-[#241a08] hover:shadow-[0_10px_20px_rgba(235,221,101,0.26)]"
+          class={`group flex flex-col items-start gap-4 rounded-2xl border border-[#d99a1c]/25 bg-[#120a02]/70 p-6 transition-all duration-300 hover:-translate-y-1 sm:flex-row ${
+            isCrimson
+              ? "hover:border-[#f0556a]/60 hover:bg-[#241505] hover:shadow-[0_10px_20px_rgba(192,33,51,0.26)]"
+              : "hover:border-[#d99a1c]/60 hover:bg-[#241505] hover:shadow-[0_10px_20px_rgba(217,154,28,0.26)]"
           }`}>
           <div
             aria-hidden="true"
             class={`flex h-14 w-14 shrink-0 items-center justify-center rounded-xl text-3xl transition-transform duration-300 group-hover:scale-110 ${
-              isSilver
-                ? "border border-[#dfe4e7]/50 bg-gradient-to-br from-[#dfe4e7] to-[#b5bbbc] shadow-[0_0_15px_rgba(223,228,231,0.4)] group-hover:rotate-3"
-                : "border border-[#ebdd65]/50 bg-gradient-to-br from-[#fcf6ab] via-[#ebdd65] to-[#a8790f] shadow-[0_0_15px_rgba(235,221,101,0.45)]"
+              isCrimson
+                ? "border border-[#f0556a]/50 bg-gradient-to-br from-[#f0556a] via-[#c02133] to-[#7e0f1c] shadow-[0_0_15px_rgba(192,33,51,0.4)] group-hover:rotate-3"
+                : "border border-[#d99a1c]/50 bg-gradient-to-br from-[#fbeab0] via-[#d99a1c] to-[#7a4405] shadow-[0_0_15px_rgba(217,154,28,0.45)]"
             }`}>
             {item.icon}
           </div>
           <div class="flex flex-col gap-2 text-left">
             <h3
               class={`text-xl leading-normal font-black tracking-wide drop-shadow-sm ${
-                isSilver ? "bg-gradient-to-r from-[#dfe4e7] to-[#b5bbbc] bg-clip-text text-transparent" : "bg-gradient-to-r from-[#fcf6ab] to-[#d4b433] bg-clip-text text-transparent"
+                isCrimson ? "bg-gradient-to-r from-[#f0556a] to-[#7e0f1c] bg-clip-text text-transparent" : "bg-gradient-to-r from-[#fbeab0] to-[#a8690a] bg-clip-text text-transparent"
               }`}>
               {item.title}
             </h3>
-            <p class="text-left text-base leading-relaxed text-[#c9bb96] transition-colors group-hover:text-[#f0e6cc]">{item.description}</p>
+            <p class="text-left text-base leading-relaxed text-[#e8c9a0] transition-colors group-hover:text-[#f2e4c4]">{item.description}</p>
           </div>
         </div>
       );
